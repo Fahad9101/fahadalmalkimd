@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fahad Almalki, MD</title>
-  <meta name="description" content="Fahad Almalki, MD — Internal Medicine, Vascular Medicine, Clinical Reasoning, and Quality Improvement." />
+  <meta name="description" content="Fahad Almalki, MD — clinical tools, AF anticoagulation, thrombosis decision support, hyponatremia, CRFT, vascular medicine, and QI projects." />
   <meta property="og:title" content="Fahad Almalki, MD" />
-  <meta property="og:description" content="Clinical tools, CRFT, QI projects, and vascular medicine resources." />
+  <meta property="og:description" content="Clinical tools, CRFT, thrombosis decision support, vascular medicine, and hospital medicine QI." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -20,10 +20,12 @@
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
     <nav class="nav" aria-label="Main navigation">
       <a href="#clinical-tools">Clinical Tools</a>
+      <a href="#af-tool">AF Decision Aid</a>
+      <a href="#thrombosis-engine">Thrombosis Engine</a>
+      <a href="#hyponatremia-tool">Hyponatremia Tool</a>
       <a href="#crft">CRFT</a>
       <a href="#qi-projects">QI Projects</a>
       <a href="#vascular-medicine">Vascular Medicine</a>
-      <a href="#publications">Publications</a>
       <a class="nav-cta" href="#contact">Contact</a>
     </nav>
   </header>
@@ -36,8 +38,9 @@
         <h1>Fahad Almalki, MD</h1>
         <p class="lead">Building practical systems for clinical reasoning, thrombosis care, and hospital medicine quality improvement.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#clinical-tools">Explore Clinical Tools</a>
-          <a class="button secondary" href="#crft">View CRFT</a>
+          <a class="button primary" href="#af-tool">Try AF Decision Aid</a>
+          <a class="button secondary" href="#thrombosis-engine">Open Thrombosis Engine</a>
+          <a class="button secondary" href="#hyponatremia-tool">Hyponatremia Tool</a>
         </div>
       </div>
     </section>
@@ -45,7 +48,8 @@
     <section class="section intro-section">
       <div class="container intro-grid">
         <div>
-          <h2>A professional home for clinical tools, teaching, and systems work.</h2>
+          <span class="label">Professional platform</span>
+          <h2>A home for clinical tools, teaching, and systems work.</h2>
           <p>I am an Internal Medicine physician with fellowship training in General Internal Medicine and Vascular Medicine. My work focuses on clinical reasoning, thrombosis and vascular medicine, inpatient quality improvement, and practical clinical decision-support tools.</p>
           <p>This site brings together clinical tools, educational projects, quality-improvement work, vascular medicine resources, and selected academic outputs.</p>
         </div>
@@ -68,27 +72,253 @@
           <h2>Practical decision-support tools</h2>
           <p>A collection of tools focused on antithrombotic therapy, thrombosis care, inpatient risk assessment, and shared decision-making. These tools support structured clinical thinking and patient-centered discussions; they do not replace clinical judgment, local policy, or specialist consultation.</p>
         </div>
-        <div class="cards three">
+        <div class="cards four">
           <article class="card featured">
             <h3>AF Anticoagulation Shared Decision Aid</h3>
-            <p>Structured support for anticoagulation discussions in atrial fibrillation, including estimated stroke risk, bleeding risk, anticoagulant choice, and situations where warfarin remains preferred, such as moderate-to-severe mitral stenosis or rheumatic valvular heart disease.</p>
-            <a class="text-link" href="#contact">Request access / demo</a>
+            <p>Calculate CHA₂DS₂-VASc and HAS-BLED, identify warfarin-only situations, and generate a concise discussion summary for atrial fibrillation anticoagulation decisions.</p>
+            <a class="text-link" href="#af-tool">Open tool</a>
           </article>
-          <article class="card">
-            <h3>Thrombosis Bedside Checklist</h3>
-            <p>A practical framework for thrombosis with thrombocytopenia, HIT and PF4-spectrum disorders, vaccine-associated immune thrombotic thrombocytopenia considerations, antithrombin deficiency, anti-Xa monitoring pitfalls, and DOAC danger zones.</p>
-            <span class="pill">Coming soon</span>
+          <article class="card featured">
+            <h3>Thrombosis Bedside Engine</h3>
+            <p>Screen for thrombosis with thrombocytopenia, HIT/PF4 spectrum, VITT clues, heparin resistance, antithrombin issues, and DOAC danger zones.</p>
+            <a class="text-link" href="#thrombosis-engine">Open engine</a>
+          </article>
+          <article class="card featured">
+            <h3>Hyponatremia Diagnostic Engine</h3>
+            <p>Walk through hypotonic hyponatremia using symptoms, osmolality, urine studies, volume clues, uric acid, endocrine checks, and next-step treatment safeguards.</p>
+            <a class="text-link" href="#hyponatremia-tool">Open engine</a>
           </article>
           <article class="card">
             <h3>Inpatient Risk & Vascular Medicine Tools</h3>
-            <p>Future tools will focus on inpatient vascular medicine, venous thromboembolism prevention, perioperative vascular risk, post-discharge risk assessment, and practical frameworks for complex internal medicine decisions.</p>
-            <span class="pill">Coming soon</span>
+            <p>Future tools will focus on inpatient vascular medicine, VTE prevention, perioperative vascular risk, post-discharge risk assessment, and complex internal medicine decisions.</p>
+            <span class="pill">Coming next</span>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="crft" class="section">
+    <section id="af-tool" class="section tool-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="label">Interactive Tool</span>
+          <h2>AF Anticoagulation Shared Decision Aid</h2>
+          <p>Designed for structured clinician-patient discussion. It highlights stroke risk score, bleeding-risk modifiers, anticoagulant direction, and “do not miss” situations where warfarin is generally preferred over DOACs.</p>
+        </div>
+
+        <div class="tool-grid">
+          <form id="afForm" class="tool-card" autocomplete="off">
+            <h3>Patient factors</h3>
+            <div class="form-grid two">
+              <label>Age
+                <select id="ageGroup">
+                  <option value="0">&lt;65</option>
+                  <option value="1">65–74</option>
+                  <option value="2">≥75</option>
+                </select>
+              </label>
+              <label>Sex
+                <select id="sex">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </label>
+            </div>
+            <fieldset>
+              <legend>CHA₂DS₂-VASc components</legend>
+              <label class="check"><input type="checkbox" id="chf"> Congestive heart failure / LV dysfunction</label>
+              <label class="check"><input type="checkbox" id="htn"> Hypertension</label>
+              <label class="check"><input type="checkbox" id="dm"> Diabetes mellitus</label>
+              <label class="check"><input type="checkbox" id="stroke"> Prior stroke / TIA / systemic embolism</label>
+              <label class="check"><input type="checkbox" id="vascular"> Vascular disease</label>
+            </fieldset>
+            <fieldset>
+              <legend>Bleeding risk / HAS-BLED flags</legend>
+              <label class="check"><input type="checkbox" id="uncontrolledBP"> Uncontrolled systolic BP / difficult hypertension</label>
+              <label class="check"><input type="checkbox" id="renal"> Abnormal renal function</label>
+              <label class="check"><input type="checkbox" id="liver"> Abnormal liver function</label>
+              <label class="check"><input type="checkbox" id="bleeding"> Prior major bleeding or bleeding predisposition</label>
+              <label class="check"><input type="checkbox" id="labileINR"> Labile INR if on warfarin</label>
+              <label class="check"><input type="checkbox" id="drugsAlcohol"> Concomitant antiplatelet/NSAID or alcohol excess</label>
+            </fieldset>
+            <fieldset>
+              <legend>Anticoagulant choice danger-zone</legend>
+              <label class="check danger"><input type="checkbox" id="mechanicalValve"> Mechanical heart valve</label>
+              <label class="check danger"><input type="checkbox" id="modSevMS"> Moderate-to-severe mitral stenosis</label>
+              <label class="check danger"><input type="checkbox" id="rheumaticAF"> Rheumatic valvular heart disease with AF</label>
+              <label class="check"><input type="checkbox" id="severeRenal"> Severe renal dysfunction / dialysis consideration</label>
+              <label class="check"><input type="checkbox" id="aps"> Antiphospholipid syndrome, especially triple-positive or arterial events</label>
+              <label class="check"><input type="checkbox" id="pregnancy"> Pregnancy or breastfeeding consideration</label>
+            </fieldset>
+            <div class="tool-actions">
+              <button type="button" class="button primary" id="runAf">Generate recommendation</button>
+              <button type="button" class="button neutral" id="resetAf">Reset</button>
+            </div>
+          </form>
+
+          <aside class="result-card" id="afResult" aria-live="polite">
+            <span class="label">Output</span>
+            <h3>AF decision summary</h3>
+            <p>Enter patient factors, then generate a structured summary.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="thrombosis-engine" class="section alt tool-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="label">Interactive Tool</span>
+          <h2>Thrombosis Bedside Engine</h2>
+          <p>A bedside framework for thrombosis with thrombocytopenia and anticoagulant-choice pitfalls. The output is a prioritized checklist: what pattern this resembles, what to send, and what not to miss.</p>
+        </div>
+
+        <div class="tool-grid">
+          <form id="thrombosisForm" class="tool-card" autocomplete="off">
+            <h3>Clinical pattern</h3>
+            <div class="form-grid two">
+              <label>Platelet trend
+                <select id="pltTrend">
+                  <option value="normal">Normal / not falling</option>
+                  <option value="mild">Mild thrombocytopenia or fall &lt;50%</option>
+                  <option value="hitRange">Fall ≥50% or nadir 20–100</option>
+                  <option value="severe">Severe thrombocytopenia &lt;20</option>
+                </select>
+              </label>
+              <label>Thrombosis pattern
+                <select id="thrombosisPattern">
+                  <option value="none">No thrombosis</option>
+                  <option value="typical">Typical VTE/arterial thrombosis</option>
+                  <option value="unusual">Unusual site: cerebral/splanchnic/adrenal/skin necrosis</option>
+                  <option value="progressive">Progressive thrombosis despite anticoagulation</option>
+                </select>
+              </label>
+            </div>
+            <fieldset>
+              <legend>PF4 / HIT spectrum</legend>
+              <label class="check"><input type="checkbox" id="heparinExposure"> Heparin/LMWH exposure within last 5–10 days</label>
+              <label class="check"><input type="checkbox" id="rapidHeparin"> Rapid platelet fall with heparin exposure in previous 30 days</label>
+              <label class="check"><input type="checkbox" id="noAltCause"> No clear alternative explanation for thrombocytopenia</label>
+              <label class="check"><input type="checkbox" id="pf4Positive"> PF4/heparin immunoassay positive or pending with high suspicion</label>
+            </fieldset>
+            <fieldset>
+              <legend>VITT / anti-PF4 clues</legend>
+              <label class="check"><input type="checkbox" id="adenoVaccine"> Adenoviral-vector COVID vaccine 4–42 days prior</label>
+              <label class="check"><input type="checkbox" id="veryHighDimer"> Very high D-dimer</label>
+              <label class="check"><input type="checkbox" id="lowFibrinogen"> Low fibrinogen</label>
+              <label class="check"><input type="checkbox" id="unusualThrombosis"> Cerebral venous sinus, splanchnic, adrenal, or other unusual thrombosis</label>
+            </fieldset>
+            <fieldset>
+              <legend>Anticoagulant pitfalls</legend>
+              <label class="check"><input type="checkbox" id="lowAntiXa"> Low anti-Xa or recurrent thrombosis while on heparin/LMWH</label>
+              <label class="check"><input type="checkbox" id="knownAT"> Known/suspected antithrombin deficiency, nephrotic loss, liver disease, DIC, ECMO, or high heparin requirement</label>
+              <label class="check"><input type="checkbox" id="doacMechanical"> Mechanical valve or moderate-to-severe/rheumatic MS</label>
+              <label class="check"><input type="checkbox" id="doacAPS"> APS high-risk phenotype or arterial thrombosis</label>
+              <label class="check"><input type="checkbox" id="doacRenal"> Severe renal dysfunction, major drug interaction, malabsorption, pregnancy/breastfeeding question</label>
+            </fieldset>
+            <div class="tool-actions">
+              <button type="button" class="button primary" id="runThrombosis">Run bedside engine</button>
+              <button type="button" class="button neutral" id="resetThrombosis">Reset</button>
+            </div>
+          </form>
+
+          <aside class="result-card" id="thrombosisResult" aria-live="polite">
+            <span class="label">Output</span>
+            <h3>Thrombosis checklist</h3>
+            <p>Select the clinical pattern, then generate a bedside checklist.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="hyponatremia-tool" class="section tool-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="label">Interactive Tool</span>
+          <h2>Hyponatremia Diagnostic Engine</h2>
+          <p>A structured bedside tool for hypotonic hyponatremia. It prioritizes severe symptoms first, then walks through serum osmolality, urine osmolality, urine sodium, volume clues, uric acid, endocrine checks, and safe correction guardrails.</p>
+        </div>
+
+        <div class="tool-grid">
+          <form id="hyponaForm" class="tool-card" autocomplete="off">
+            <h3>Core data</h3>
+            <div class="form-grid two">
+              <label>Serum sodium, mmol/L
+                <input type="number" id="na" min="90" max="150" placeholder="e.g., 118">
+              </label>
+              <label>Symptoms
+                <select id="hypoSymptoms">
+                  <option value="none">None / mild nonspecific</option>
+                  <option value="moderate">Moderate: vomiting, confusion, severe headache, marked gait issues</option>
+                  <option value="severe">Severe: seizure, coma, severe neurologic symptoms</option>
+                </select>
+              </label>
+              <label>Measured serum osmolality
+                <select id="serumOsm">
+                  <option value="unknown">Unknown</option>
+                  <option value="low">Low &lt;275 mOsm/kg</option>
+                  <option value="normal">Normal 275–295</option>
+                  <option value="high">High &gt;295</option>
+                </select>
+              </label>
+              <label>Glucose / effective osmotic driver
+                <select id="glucoseDriver">
+                  <option value="no">No major hyperglycemia/mannitol/contrast clue</option>
+                  <option value="yes">Yes: hyperglycemia, mannitol, contrast, or other osmotic driver</option>
+                </select>
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>Urine studies</legend>
+              <div class="form-grid two">
+                <label>Urine osmolality
+                  <select id="urineOsm">
+                    <option value="unknown">Unknown</option>
+                    <option value="veryLow">≤100 mOsm/kg</option>
+                    <option value="high">&gt;100 mOsm/kg</option>
+                  </select>
+                </label>
+                <label>Urine sodium
+                  <select id="urineNa">
+                    <option value="unknown">Unknown</option>
+                    <option value="low">&lt;30 mmol/L</option>
+                    <option value="high">≥30 mmol/L</option>
+                  </select>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Context and modifiers</legend>
+              <label class="check"><input type="checkbox" id="thiazide"> Thiazide or recent diuretic exposure</label>
+              <label class="check"><input type="checkbox" id="loopDiuretic"> Loop diuretic / diuresis may distort urine sodium</label>
+              <label class="check"><input type="checkbox" id="lowSolute"> Low solute intake, beer potomania pattern, tea-and-toast diet, or very low protein/salt intake</label>
+              <label class="check"><input type="checkbox" id="polydipsia"> Primary polydipsia or excess free-water intake</label>
+              <label class="check"><input type="checkbox" id="hypovolemia"> Hypovolemia clues: vomiting, diarrhea, bleeding, poor intake, orthostasis, dry mucosa</label>
+              <label class="check"><input type="checkbox" id="edemaState"> Edema/low effective arterial volume: heart failure, cirrhosis, nephrotic syndrome</label>
+              <label class="check"><input type="checkbox" id="siadClues"> SIADH clues: euvolemic exam, malignancy/pulmonary/CNS trigger, SSRI/SNRI/carbamazepine/opioid/nausea/pain</label>
+              <label class="check"><input type="checkbox" id="adrenalThyroid"> Adrenal insufficiency or severe hypothyroidism possible/not yet excluded</label>
+              <label class="check"><input type="checkbox" id="lowUricAcid"> Low uric acid or high FEUA supports SIADH-like physiology</label>
+              <label class="check danger"><input type="checkbox" id="odsRisk"> High ODS risk: Na ≤105, alcoholism, malnutrition, liver disease, hypokalemia, or very chronic hyponatremia</label>
+            </fieldset>
+
+            <div class="tool-actions">
+              <button type="button" class="button primary" id="runHypona">Run hyponatremia engine</button>
+              <button type="button" class="button neutral" id="resetHypona">Reset</button>
+            </div>
+          </form>
+
+          <aside class="result-card" id="hyponaResult" aria-live="polite">
+            <span class="label">Output</span>
+            <h3>Hyponatremia diagnostic summary</h3>
+            <p>Enter the sodium, symptoms, serum/urine studies, and context to generate a structured pathway.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="crft" class="section alt">
       <div class="container split">
         <div class="section-heading compact">
           <span class="label">CRFT</span>
@@ -109,12 +339,20 @@
       </div>
       <div class="container cards two narrow-top">
         <article class="card">
-          <h3>Purpose</h3>
-          <p>To move clinical reasoning teaching from informal impressions to a structured, observable, and teachable process. Residents frame problems clearly, generate prioritized differentials, interpret data in context, identify dangerous diagnoses, and reflect on how thinking evolves.</p>
+          <h3>Resident reasoning flow</h3>
+          <ol class="number-list">
+            <li>Problem representation: one-sentence syndrome framing.</li>
+            <li>Prioritized differential: dangerous diagnoses first, then likely diagnoses.</li>
+            <li>Data interpretation: what each finding increases or decreases.</li>
+            <li>Management plan: immediate actions, confirmatory tests, and disposition.</li>
+            <li>Anticipation: complications, pivot points, and what would change the plan.</li>
+            <li>Metacognition: uncertainty, bias check, and reassessment plan.</li>
+          </ol>
         </article>
         <article class="card">
-          <h3>Current status</h3>
-          <p>CRFT is being developed as a teaching and quality-improvement tool for resident clinical reasoning education.</p>
+          <h3>Scoring anchor</h3>
+          <p>Each domain can be rated from 0–4: absent, incomplete, adequate, strong, or excellent. Tracking domains over serial cases makes reasoning growth visible and teachable.</p>
+          <a class="button compact-button" href="#contact">Discuss CRFT collaboration</a>
         </article>
       </div>
     </section>
@@ -127,22 +365,10 @@
           <p>Projects focused on inpatient internal medicine, care transitions, thrombosis prevention, perioperative medicine, and diagnostic safety.</p>
         </div>
         <div class="project-list">
-          <article class="project-item">
-            <h3>CTU Early Readmission & Transitional Care Optimization</h3>
-            <p>Identifying preventable patterns in patients readmitted within seven days, including diagnostic uncertainty, medication issues, pending investigations, follow-up gaps, social barriers, and discharge readiness concerns.</p>
-          </article>
-          <article class="project-item">
-            <h3>VTE Prophylaxis Standardization</h3>
-            <p>Improving VTE prophylaxis processes for medical inpatients by clarifying prophylaxis status, reducing documentation ambiguity, improving dashboard reliability, and standardizing decision-making.</p>
-          </article>
-          <article class="project-item">
-            <h3>Perioperative MINS Screening</h3>
-            <p>Supporting postoperative troponin screening, risk recognition, and follow-up pathways for high-risk surgical patients after non-cardiac surgery.</p>
-          </article>
-          <article class="project-item">
-            <h3>Internal Medicine Diagnostic Service Scope</h3>
-            <p>Clarifying the role of General Internal Medicine as a diagnostic and admitting service for complex, undifferentiated, or multisystem presentations.</p>
-          </article>
+          <article class="project-item"><h3>CTU Early Readmission & Transitional Care Optimization</h3><p>Identifying preventable patterns in patients readmitted within seven days, including diagnostic uncertainty, medication issues, pending investigations, follow-up gaps, social barriers, and discharge readiness concerns.</p></article>
+          <article class="project-item"><h3>VTE Prophylaxis Standardization</h3><p>Improving VTE prophylaxis processes for medical inpatients by clarifying prophylaxis status, reducing documentation ambiguity, improving dashboard reliability, and standardizing decision-making.</p></article>
+          <article class="project-item"><h3>Perioperative MINS Screening</h3><p>Supporting postoperative troponin screening, risk recognition, and follow-up pathways for high-risk surgical patients after non-cardiac surgery.</p></article>
+          <article class="project-item"><h3>Internal Medicine Diagnostic Service Scope</h3><p>Clarifying the role of General Internal Medicine as a diagnostic and admitting service for complex, undifferentiated, or multisystem presentations.</p></article>
         </div>
       </div>
     </section>
@@ -152,7 +378,7 @@
         <div class="section-heading compact">
           <span class="label">Vascular Medicine</span>
           <h2>Thrombosis, vascular risk, and complex internal medicine</h2>
-          <p>My vascular medicine interests include venous thromboembolism, antithrombotic therapy, peripheral artery disease, perioperative vascular risk, vascular risk reduction, and complex multisystem vascular presentations.</p>
+          <p>Vascular medicine resources will focus on venous thromboembolism, antithrombotic therapy, peripheral artery disease, perioperative vascular risk, vascular risk reduction, and complex multisystem vascular presentations.</p>
         </div>
         <div class="panel">
           <h3>Focus areas</h3>
@@ -180,6 +406,22 @@
           <article class="card small"><h3>Presentations</h3><p>Coming soon.</p></article>
           <article class="card small"><h3>QI Reports & Digital Tools</h3><p>Coming soon.</p></article>
         </div>
+      </div>
+    </section>
+
+    <section id="references" class="section references-section">
+      <div class="container">
+        <span class="label">References</span>
+        <h2>Clinical source base</h2>
+        <p>The tools use simplified logic derived from major guidelines and peer-reviewed evidence. They are educational decision-support aids, not a substitute for local policy or specialist judgment.</p>
+        <ul class="reference-list">
+          <li>2023 ACC/AHA/ACCP/HRS Guideline for the Diagnosis and Management of Atrial Fibrillation.</li>
+          <li>ASH 2018 guidelines for management of venous thromboembolism: heparin-induced thrombocytopenia.</li>
+          <li>INVICTUS trial: rivaroxaban versus vitamin K antagonist therapy in rheumatic heart disease-associated atrial fibrillation.</li>
+          <li>ASH / ISTH and peer-reviewed guidance on vaccine-induced immune thrombotic thrombocytopenia and anti-PF4 syndromes.</li>
+          <li>European Clinical Practice Guideline on diagnosis and treatment of hyponatraemia.</li>
+          <li>US expert panel recommendations for diagnosis, evaluation, and treatment of hyponatremia.</li>
+        </ul>
       </div>
     </section>
 
