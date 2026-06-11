@@ -20,13 +20,10 @@
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
     <nav class="nav" aria-label="Main navigation">
       <a href="#clinical-tools">Clinical Tools</a>
-      <a href="antithrombotic-safety-assistant.html">Antithrombotic Safety Assistant</a>
-      <a href="#af-tool">AF Decision Aid</a>
-      <a href="#thrombosis-engine">Thrombosis Engine</a>
-      <a href="#hyponatremia-tool">Hyponatremia Tool</a>
       <a href="#crft">CRFT</a>
       <a href="#qi-projects">QI Projects</a>
       <a href="#vascular-medicine">Vascular Medicine</a>
+      <a href="#publications">Publications</a>
       <a class="nav-cta" href="#contact">Contact</a>
     </nav>
   </header>
@@ -75,24 +72,28 @@
         </div>
         <div class="cards four">
           <article class="card featured">
+            <span class="label">Vascular Medicine Tool</span>
             <h3>Antithrombotic Safety Assistant</h3>
-            <p>A clinician checklist for thrombosis on anticoagulation, LMWH/fondaparinux exposure, anti-Xa interpretation, antithrombin deficiency, PF4/HIT/VITT spectrum, APS, DOAC danger zones, and vascular medicine red flags.</p>
+            <p>The main advanced thrombosis/antithrombotic tool. Use this for thrombosis on anticoagulation, LMWH/fondaparinux exposure, anti-Xa interpretation, antithrombin deficiency, PF4/HIT/VITT spectrum, APS, DOAC danger zones, and vascular red flags.</p>
             <a class="text-link" href="antithrombotic-safety-assistant.html">Open standalone page</a>
           </article>
           <article class="card featured">
+            <span class="label">Shared Decision Tool</span>
             <h3>AF Anticoagulation Shared Decision Aid</h3>
             <p>Calculate CHA₂DS₂-VASc and HAS-BLED, identify warfarin-only situations, and generate a concise discussion summary for atrial fibrillation anticoagulation decisions.</p>
             <a class="text-link" href="#af-tool">Open tool</a>
           </article>
           <article class="card featured">
+            <span class="label">GIM Diagnostic Tool</span>
             <h3>Hyponatremia Diagnostic Engine</h3>
             <p>Walk through hypotonic hyponatremia using symptoms, osmolality, urine studies, volume clues, uric acid, endocrine checks, and next-step treatment safeguards.</p>
             <a class="text-link" href="#hyponatremia-tool">Open engine</a>
           </article>
           <article class="card">
-            <h3>Vascular Medicine Tools</h3>
-            <p>Thrombosis, antiplatelet, anticoagulation, PAD, perioperative vascular risk, and complex antithrombotic safety tools.</p>
-            <a class="text-link" href="antithrombotic-safety-assistant.html">Open vascular tool</a>
+            <span class="label">Tool Index</span>
+            <h3>Clinical Tools / Vascular Medicine Tools</h3>
+            <p>All clinician-facing tools now live under this Clinical Tools section. Individual tools should not appear as top-level navigation items.</p>
+            <a class="text-link" href="#clinical-tools">View tools</a>
           </article>
         </div>
       </div>
@@ -164,73 +165,6 @@
         </div>
       </div>
     </section>
-
-    <section id="thrombosis-engine" class="section alt tool-section">
-      <div class="container">
-        <div class="section-heading">
-          <span class="label">Interactive Tool</span>
-          <h2>Thrombosis Bedside Engine</h2>
-          <p>A bedside framework for thrombosis with thrombocytopenia and anticoagulant-choice pitfalls. The output is a prioritized checklist: what pattern this resembles, what to send, and what not to miss.</p>
-        </div>
-
-        <div class="tool-grid">
-          <form id="thrombosisForm" class="tool-card" autocomplete="off">
-            <h3>Clinical pattern</h3>
-            <div class="form-grid two">
-              <label>Platelet trend
-                <select id="pltTrend">
-                  <option value="normal">Normal / not falling</option>
-                  <option value="mild">Mild thrombocytopenia or fall &lt;50%</option>
-                  <option value="hitRange">Fall ≥50% or nadir 20–100</option>
-                  <option value="severe">Severe thrombocytopenia &lt;20</option>
-                </select>
-              </label>
-              <label>Thrombosis pattern
-                <select id="thrombosisPattern">
-                  <option value="none">No thrombosis</option>
-                  <option value="typical">Typical VTE/arterial thrombosis</option>
-                  <option value="unusual">Unusual site: cerebral/splanchnic/adrenal/skin necrosis</option>
-                  <option value="progressive">Progressive thrombosis despite anticoagulation</option>
-                </select>
-              </label>
-            </div>
-            <fieldset>
-              <legend>PF4 / HIT spectrum</legend>
-              <label class="check"><input type="checkbox" id="heparinExposure"> Heparin/LMWH exposure within last 5–10 days</label>
-              <label class="check"><input type="checkbox" id="rapidHeparin"> Rapid platelet fall with heparin exposure in previous 30 days</label>
-              <label class="check"><input type="checkbox" id="noAltCause"> No clear alternative explanation for thrombocytopenia</label>
-              <label class="check"><input type="checkbox" id="pf4Positive"> PF4/heparin immunoassay positive or pending with high suspicion</label>
-            </fieldset>
-            <fieldset>
-              <legend>VITT / anti-PF4 clues</legend>
-              <label class="check"><input type="checkbox" id="adenoVaccine"> Adenoviral-vector COVID vaccine 4–42 days prior</label>
-              <label class="check"><input type="checkbox" id="veryHighDimer"> Very high D-dimer</label>
-              <label class="check"><input type="checkbox" id="lowFibrinogen"> Low fibrinogen</label>
-              <label class="check"><input type="checkbox" id="unusualThrombosis"> Cerebral venous sinus, splanchnic, adrenal, or other unusual thrombosis</label>
-            </fieldset>
-            <fieldset>
-              <legend>Anticoagulant pitfalls</legend>
-              <label class="check"><input type="checkbox" id="lowAntiXa"> Low anti-Xa or recurrent thrombosis while on heparin/LMWH</label>
-              <label class="check"><input type="checkbox" id="knownAT"> Known/suspected antithrombin deficiency, nephrotic loss, liver disease, DIC, ECMO, or high heparin requirement</label>
-              <label class="check"><input type="checkbox" id="doacMechanical"> Mechanical valve or moderate-to-severe/rheumatic MS</label>
-              <label class="check"><input type="checkbox" id="doacAPS"> APS high-risk phenotype or arterial thrombosis</label>
-              <label class="check"><input type="checkbox" id="doacRenal"> Severe renal dysfunction, major drug interaction, malabsorption, pregnancy/breastfeeding question</label>
-            </fieldset>
-            <div class="tool-actions">
-              <button type="button" class="button primary" id="runThrombosis">Run bedside engine</button>
-              <button type="button" class="button neutral" id="resetThrombosis">Reset</button>
-            </div>
-          </form>
-
-          <aside class="result-card" id="thrombosisResult" aria-live="polite">
-            <span class="label">Output</span>
-            <h3>Thrombosis checklist</h3>
-            <p>Select the clinical pattern, then generate a bedside checklist.</p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
 
     <section id="hyponatremia-tool" class="section tool-section">
       <div class="container">
@@ -387,7 +321,7 @@
             <li>Venous thromboembolism</li>
             <li>Anticoagulation and antiplatelet therapy</li>
             <li>Peripheral artery disease</li>
-            <li>Thrombosis with thrombocytopenia</li>
+            <li>Thrombosis with thrombocytopenia and PF4/HIT/VITT-spectrum disorders</li>
             <li>Perioperative vascular risk</li>
             <li>Complex vascular presentations in internal medicine</li>
           </ul>
