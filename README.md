@@ -1,1 +1,1 @@
-Fahad Almalki, MD professional website. Update clarifies the Antithrombotic Safety Assistant for junior residents: 4Ts scoring guidance and MPN/PNH/vascular red-flag microcopy.
+Fahad Almalki, MD website update: added Perioperative DOAC Interruption Planner, Unusual-Site Thrombosis Workup Tool, and MINS/Post-op Troponin Interpretation Tool. Upload App.jsx and styles.css to GitHub repo root.
