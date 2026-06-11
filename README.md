@@ -1,3 +1,1 @@
-Fahad Almalki, MD professional website.
-
-React-in-browser GitHub Pages version. Main edits usually go in App.jsx. Styling in styles.css.
+Fahad Almalki, MD professional website. Update clarifies the Antithrombotic Safety Assistant for junior residents: 4Ts scoring guidance and MPN/PNH/vascular red-flag microcopy.
