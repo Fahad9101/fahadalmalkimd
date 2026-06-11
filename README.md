@@ -1,1 +1,3 @@
-Fahad Almalki, MD professional website. React-in-browser static GitHub Pages app. Most future content/tool edits can be made in App.jsx.
+Fahad Almalki, MD professional website.
+
+React-in-browser GitHub Pages version. Main edits usually go in App.jsx. Styling in styles.css.

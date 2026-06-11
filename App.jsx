@@ -1,24 +1,13 @@
 const { useMemo, useState } = React;
 
-const tools = [
-  {
-    id: 'antithrombotic',
-    title: 'Antithrombotic Safety Assistant',
-    label: 'Vascular medicine tool',
-    subtitle: 'A bedside clinician assistant for thrombosis on anticoagulation, heparin/LMWH/fondaparinux exposure, anti-Xa interpretation, antithrombin physiology, PF4/HIT/VITT spectrum, APS, DOAC danger zones, and vascular red flags.'
-  },
-  {
-    id: 'af',
-    title: 'AF Anticoagulation Decision Aid',
-    label: 'Shared decision aid',
-    subtitle: 'A bedside anticoagulation discussion tool for atrial fibrillation using CHA₂DS₂-VASc, HAS-BLED, estimated 1-, 5-, and 10-year risk framing, and warfarin-vs-DOAC danger-zone checks.'
-  },
-  {
-    id: 'hyponatremia',
-    title: 'Hyponatremia Diagnostic Engine',
-    label: 'GIM diagnostic tool',
-    subtitle: 'A structured approach to hypotonic hyponatremia using symptoms, serum osmolality, urine osmolality, urine sodium, volume context, endocrine mimics, and correction safety.'
-  }
+const toolMeta = [
+  { id: 'af', title: 'AF Anticoagulation Decision Aid', label: 'Stroke and bleeding decision aid', subtitle: 'CHA₂DS₂-VASc, HAS-BLED-style bleeding review, estimated 1/5/10-year stroke risk, anticoagulation effect framing, and warfarin/DOAC danger zones.' },
+  { id: 'antithrombotic', title: 'Antithrombotic Safety Assistant', label: 'Vascular medicine safety tool', subtitle: 'Thrombosis on anticoagulation, LMWH/fondaparinux exposure, anti-Xa interpretation, antithrombin deficiency, PF4/HIT/VITT spectrum, APS, DOAC danger zones, and vascular red flags.' },
+  { id: 'hyponatremia', title: 'Hyponatremia Diagnostic Engine', label: 'GIM diagnostic engine', subtitle: 'Symptoms first, then tonicity, urine osmolality, urine sodium, volume context, low-solute/polydipsia, SIADH mimics, uric acid/FEUA, and correction-safety guardrails.' },
+  { id: 'vte', title: 'Medical Inpatient VTE Prophylaxis Tool', label: 'QI / hospital medicine', subtitle: 'Structured prophylaxis status: pharmacologic, mechanical, already anticoagulated, contraindicated, or reassess in 24 hours.' },
+  { id: 'hypokalemia', title: 'Hypokalemia + Acid–Base Engine', label: 'GIM electrolyte reasoning', subtitle: 'K replacement safety, magnesium, acid–base pattern, urine potassium/chloride, blood pressure, renal vs GI loss, RTA, diuretics, and mineralocorticoid states.' },
+  { id: 'proteinuria', title: 'Proteinuria With Normal Albumin Interpreter', label: 'Renal/GIM reasoning', subtitle: 'Quantifies proteinuria phenotype, explains why albumin may remain normal, flags nephrotic/nephritic patterns, and suggests next checks.' },
+  { id: 'cirrhosis', title: 'Cirrhosis Coagulation / Rebalanced Hemostasis Tool', label: 'Coagulation reasoning', subtitle: 'INR interpretation, fibrinogen/platelet thresholds, procedure/bleeding context, thrombosis paradox, TEG/ROTEM, vitamin K, lupus anticoagulant, factor VIII/vWF logic.' }
 ];
 
 function navigate(route) {
@@ -29,16 +18,6 @@ function currentRoute() {
   const raw = window.location.hash.replace('#', '').replace(/^\//, '');
   return raw || 'home';
 }
-function pct(x) {
-  if (!Number.isFinite(x)) return '—';
-  return `${x.toFixed(x < 10 ? 1 : 0)}%`;
-}
-function cumRisk(annualPct, years) {
-  const p = annualPct / 100;
-  return (1 - Math.pow(1 - p, years)) * 100;
-}
-function clampScore(score, max) { return Math.max(0, Math.min(max, Number(score) || 0)); }
-
 function App() {
   const [route, setRoute] = useState(currentRoute());
   React.useEffect(() => {
@@ -46,487 +25,106 @@ function App() {
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
-  const toolMatch = route.startsWith('tool/') ? route.split('/')[1] : null;
-  return (
-    <>
-      <Header />
-      {toolMatch ? <ToolPage id={toolMatch} /> : <Home route={route} />}
-      <Footer />
-    </>
-  );
+  const toolId = route.startsWith('tool/') ? route.split('/')[1] : null;
+  return <><Header />{toolId ? <ToolPage id={toolId} /> : <Home route={route} />}<Footer /></>;
 }
-
 function Header() {
-  const links = [
-    ['home', 'Home'],
-    ['clinical-tools', 'Clinical Tools'],
-    ['crft', 'CRFT'],
-    ['qi-projects', 'QI Projects'],
-    ['vascular-medicine', 'Vascular Medicine'],
-    ['publications', 'Publications'],
-    ['contact', 'Contact']
-  ];
-  return (
-    <header className="site-header">
-      <button className="brand" onClick={() => navigate('home')} aria-label="Home">
-        <span className="brand-mark">FA</span>
-        <span>Fahad Almalki, MD</span>
-      </button>
-      <nav>
-        {links.map(([id, label]) => <button key={id} onClick={() => navigate(id)}>{label}</button>)}
-      </nav>
-    </header>
-  );
+  const links = [['home','Home'],['clinical-tools','Clinical Tools'],['crft','CRFT'],['qi-projects','QI Projects'],['vascular-medicine','Vascular Medicine'],['publications','Publications'],['contact','Contact']];
+  return <header className="site-header"><button className="brand" onClick={() => navigate('home')}><span className="brand-mark">FA</span><span>Fahad Almalki, MD</span></button><nav>{links.map(([id,label]) => <button key={id} onClick={() => navigate(id)}>{label}</button>)}</nav></header>;
 }
-
 function Home({ route }) {
-  React.useEffect(() => {
-    if (route && route !== 'home') {
-      const el = document.getElementById(route);
-      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-    }
-  }, [route]);
-  return (
-    <main>
-      <section id="home" className="hero compact-hero">
-        <div className="hero-inner">
-          <h1>Fahad Almalki, MD</h1>
-          <p className="hero-subtitle">Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p>
-        </div>
-      </section>
-
-      <section className="section intro-grid">
-        <div>
-          <p className="eyebrow">Professional platform</p>
-          <h2>A home for clinical tools, teaching, and systems work.</h2>
-          <p>This site brings together practical decision-support tools, clinical reasoning education, quality-improvement work, and vascular medicine resources.</p>
-        </div>
-        <div className="focus-card">
-          <p className="eyebrow">Current focus</p>
-          <ul>
-            <li>Antithrombotic decision support</li>
-            <li>Resident clinical reasoning education</li>
-            <li>Inpatient quality and transitions of care</li>
-            <li>Vascular medicine frameworks</li>
-          </ul>
-        </div>
-      </section>
-
-      <section id="clinical-tools" className="section tinted">
-        <p className="eyebrow">Clinical tools</p>
-        <h2>Decision-support tools</h2>
-        <p className="section-lead">Tools open as separate pages inside the app. Each page includes a Back to Home button.</p>
-        <div className="cards">
-          {tools.map(tool => <ToolCard key={tool.id} tool={tool} />)}
-        </div>
-      </section>
-
-      <section id="crft" className="section">
-        <p className="eyebrow">Education</p>
-        <h2>CRFT — Clinical Reasoning Framework for Teaching</h2>
-        <p>CRFT is an educational project designed to help residents practice, structure, and improve clinical reasoning using daily cases, domain-based scoring, feedback, and reflection.</p>
-        <div className="two-column">
-          <InfoBlock title="Core domains" items={["Problem framing", "Hypothesis generation", "Data interpretation", "Management planning", "Anticipation", "Metacognition"]} />
-          <InfoBlock title="Teaching aim" items={["Make reasoning observable", "Identify dangerous misses", "Track growth over time", "Coach reflection and recalibration"]} />
-        </div>
-      </section>
-
-      <section id="qi-projects" className="section tinted">
-        <p className="eyebrow">Quality improvement</p>
-        <h2>QI Projects</h2>
-        <div className="cards compact">
-          <MiniCard title="CTU Early Readmission & Transitional Care" text="Identifying preventable patterns in seven-day readmissions, including discharge readiness, pending investigations, medication issues, and follow-up gaps." />
-          <MiniCard title="VTE Prophylaxis Standardization" text="Clarifying prophylaxis status, reducing documentation ambiguity, and improving reliability of medical inpatient VTE prevention." />
-          <MiniCard title="Perioperative MINS Screening" text="Supporting postoperative myocardial injury detection, risk recognition, and follow-up pathways in high-risk surgical patients." />
-          <MiniCard title="Internal Medicine Diagnostic Service Scope" text="Clarifying the role of GIM in complex undifferentiated or multisystem inpatient presentations." />
-        </div>
-      </section>
-
-      <section id="vascular-medicine" className="section">
-        <p className="eyebrow">Clinical focus</p>
-        <h2>Vascular Medicine</h2>
-        <p>Areas of interest include venous thromboembolism, antithrombotic therapy, peripheral artery disease, perioperative vascular risk, thrombosis with thrombocytopenia, and complex vascular presentations in internal medicine.</p>
-      </section>
-
-      <section id="publications" className="section tinted">
-        <p className="eyebrow">Academic output</p>
-        <h2>Publications & Presentations</h2>
-        <p>Selected publications, abstracts, presentations, quality-improvement reports, and digital tools will be added as they are completed, presented, or published.</p>
-      </section>
-
-      <section id="contact" className="section contact-section">
-        <p className="eyebrow">Contact</p>
-        <h2>Contact</h2>
-        <p>For professional, academic, educational, or quality-improvement inquiries:</p>
-        <p><a className="email-link" href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></p>
-      </section>
-    </main>
-  );
+  React.useEffect(() => { if (route && route !== 'home') { const el = document.getElementById(route); if (el) setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'start' }), 50); } }, [route]);
+  return <main>
+    <section id="home" className="hero"><div className="hero-inner"><h1>Fahad Almalki, MD</h1><p className="hero-subtitle">Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div></section>
+    <section className="section intro-grid"><div><p className="eyebrow">Professional platform</p><h2>A home for clinical tools, teaching, and systems work.</h2><p>This site brings together practical decision-support tools, clinical reasoning education, quality-improvement work, and vascular medicine resources.</p></div><div className="focus-card"><p className="eyebrow">Current focus</p><ul><li>Antithrombotic decision support</li><li>Electrolyte and diagnostic reasoning tools</li><li>Resident clinical reasoning education</li><li>Inpatient quality and transitions of care</li></ul></div></section>
+    <section id="clinical-tools" className="section tinted"><p className="eyebrow">Clinical Tools</p><h2>Bedside decision-support tools</h2><p className="section-lead">Each tool opens as its own page and includes a back/home button. The goal is not to replace judgment; it is to force the right questions at the bedside.</p><div className="cards">{toolMeta.map(tool => <ToolCard key={tool.id} tool={tool} />)}</div></section>
+    <section id="crft" className="section"><p className="eyebrow">CRFT</p><h2>Clinical Reasoning Framework for Teaching</h2><p>CRFT makes resident reasoning visible: problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><div className="two-col"><InfoBlock title="Teaching logic" items={['Start with the syndrome, not the diagnosis.','Prioritize dangerous diagnoses before common diagnoses.','Interpret data by asking: does this change probability or severity?','Anticipate what can deteriorate overnight.','End with metacognition: what would change my mind?']} /><InfoBlock title="Use cases" items={['Daily resident cases','Evaluator scoring','Feedback calibration','Diagnostic delay review','QI teaching archive']} /></div></section>
+    <section id="qi-projects" className="section tinted"><p className="eyebrow">QI Projects</p><h2>Systems that make good care easier</h2><div className="cards"><SimpleCard title="VTE Prophylaxis Standardization" text="Clarify prophylaxis status, contraindications, reassessment, and dashboard reliability for medical inpatients." /><SimpleCard title="CTU Readmission Review" text="Classify early readmissions by diagnostic uncertainty, medication issues, follow-up gaps, social barriers, and discharge readiness." /><SimpleCard title="Perioperative MINS Screening" text="Structured postoperative myocardial injury screening, interpretation, and follow-up pathways." /></div></section>
+    <section id="vascular-medicine" className="section"><p className="eyebrow">Vascular Medicine</p><h2>Thrombosis, PAD, antithrombotic therapy, and vascular risk.</h2><p>Resources here emphasize practical bedside reasoning: when thrombosis is real anticoagulant failure, when it is pseudo-failure, when the drug is wrong for the biology, and when vascular red flags suggest a deeper diagnosis.</p></section>
+    <section id="publications" className="section tinted"><p className="eyebrow">Publications</p><h2>Publications, abstracts, QI reports, and digital tools</h2><p>Selected work will be added as projects are completed, presented, or published.</p></section>
+    <section id="contact" className="section contact"><p className="eyebrow">Contact</p><h2>Professional contact</h2><p><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></p><p><a href="mailto:fahad@fahadalmalkimd.com">fahad@fahadalmalkimd.com</a></p></section>
+  </main>;
 }
-
-function ToolCard({ tool }) {
-  return (
-    <article className="card tool-card">
-      <p className="eyebrow">{tool.label}</p>
-      <h3>{tool.title}</h3>
-      <p>{tool.subtitle}</p>
-      <button className="primary" onClick={() => navigate(`tool/${tool.id}`)}>Open tool</button>
-    </article>
-  );
-}
-function MiniCard({ title, text }) { return <article className="card"><h3>{title}</h3><p>{text}</p></article>; }
+function ToolCard({ tool }) { return <article className="card tool-card"><p className="tag">{tool.label}</p><h3>{tool.title}</h3><p>{tool.subtitle}</p><button className="primary" onClick={() => navigate('tool/' + tool.id)}>Open tool</button></article>; }
+function SimpleCard({ title, text }) { return <article className="card"><h3>{title}</h3><p>{text}</p></article>; }
 function InfoBlock({ title, items }) { return <div className="info-block"><h3>{title}</h3><ul>{items.map(i => <li key={i}>{i}</li>)}</ul></div>; }
-
 function ToolPage({ id }) {
-  const tool = tools.find(t => t.id === id);
-  if (!tool) return <NotFound />;
-  return (
-    <main className="tool-page">
-      <section className="tool-hero">
-        <button className="back" onClick={() => navigate('home')}>← Back to Home</button>
-        <p className="eyebrow">{tool.label}</p>
-        <h1>{tool.title}</h1>
-        <p>{tool.subtitle}</p>
-      </section>
-      {id === 'antithrombotic' && <AntithromboticTool />}
-      {id === 'af' && <AFTool />}
-      {id === 'hyponatremia' && <HyponatremiaTool />}
-    </main>
-  );
+  const meta = toolMeta.find(t => t.id === id);
+  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}</main>;
 }
-function NotFound() { return <main className="tool-page"><section className="tool-hero"><button className="back" onClick={() => navigate('home')}>← Back to Home</button><h1>Page not found</h1></section></main>; }
 
-const chaRisk = {0:0.2,1:0.6,2:2.2,3:3.2,4:4.8,5:7.2,6:9.7,7:11.2,8:10.8,9:12.2};
-const hasBledRisk = {0:1.1,1:1.0,2:1.9,3:3.7,4:8.7,5:12.5,6:12.5,7:12.5,8:12.5,9:12.5};
-const anticoagRRR = 0.64;
+function Field({ label, children, hint }) { return <label className="field"><span>{label}</span>{children}{hint && <small>{hint}</small>}</label>; }
+function Check({ label, checked, onChange }) { return <label className="check"><input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} /> <span>{label}</span></label>; }
+function Num({ value, onChange, min, max, step='1' }) { return <input type="number" value={value} min={min} max={max} step={step} onChange={e => onChange(e.target.value)} />; }
+function Select({ value, onChange, children }) { return <select value={value} onChange={e => onChange(e.target.value)}>{children}</select>; }
+function Output({ title, children, tone='' }) { return <div className={'output ' + tone}><h3>{title}</h3>{children}</div>; }
+function Pill({ children, tone='' }) { return <span className={'pill ' + tone}>{children}</span>; }
+function pct(x) { if (x === null || isNaN(x)) return '—'; return (x < 1 ? x.toFixed(1) : x.toFixed(1)) + '%'; }
+function cumRisk(annual, years) { const p = annual/100; return (1 - Math.pow(1-p, years))*100; }
+function list(items) { const filtered = items.filter(Boolean); return filtered.length ? <ul>{filtered.map((i,idx) => <li key={idx}>{i}</li>)}</ul> : <p>No major flags selected.</p>; }
+function copyText(text) { navigator.clipboard && navigator.clipboard.writeText(text); }
+
+const strokeRisk = {0:0.2,1:0.6,2:2.2,3:3.2,4:4.8,5:7.2,6:9.7,7:11.2,8:10.8,9:12.2};
+const bleedRisk = {0:1.1,1:1.0,2:1.9,3:3.7,4:8.7,5:12.5,6:12.5,7:12.5,8:12.5,9:12.5};
 
 function AFTool() {
-  const [v, setV] = useState({
-    sex:'male', age:'0', chf:false, htn:false, dm:false, stroke:false, vascular:false,
-    renal:false, liver:false, bleed:false, labile:false, drugs:false, alcohol:false,
-    ms:false, mechanical:false, rheumatic:false, lvad:false, pregnancy:false, severeRenal:false, severeLiver:false,
-    interacting:false, absorption:false, falls:false, anemia:false, cancer:false, patientValues:'stroke-prevention'
-  });
-  const age = Number(v.age);
-  const cha = (v.chf?1:0)+(v.htn?1:0)+(age>=75?2:age>=65?1:0)+(v.dm?1:0)+(v.stroke?2:0)+(v.vascular?1:0)+(v.sex==='female'?1:0);
-  const chaNonSex = cha - (v.sex==='female'?1:0);
-  const hasbled = (v.htn?1:0)+(v.renal?1:0)+(v.liver?1:0)+(v.stroke?1:0)+(v.bleed?1:0)+(v.labile?1:0)+(age>65?1:0)+(v.drugs?1:0)+(v.alcohol?1:0);
-  const annualStroke = chaRisk[clampScore(cha,9)] ?? 0;
-  const annualBleed = hasBledRisk[clampScore(hasbled,9)] ?? 12.5;
-  const treatedAnnual = annualStroke * (1 - anticoagRRR);
-  const oneArr = annualStroke - treatedAnnual;
-  const riskRows = [1,5,10].map(y => ({
-    years:y,
-    strokeNo: cumRisk(annualStroke,y),
-    strokeOn: cumRisk(treatedAnnual,y),
-    strokeAvoid: cumRisk(annualStroke,y) - cumRisk(treatedAnnual,y),
-    bleed: cumRisk(annualBleed,y)
-  }));
-  const danger = [];
-  if (v.mechanical) danger.push('Mechanical valve: warfarin pathway; DOACs are not appropriate.');
-  if (v.ms || v.rheumatic) danger.push('Moderate-to-severe mitral stenosis or rheumatic AF: warfarin preferred over DOAC.');
-  if (v.lvad) danger.push('LVAD / complex device anticoagulation: follow device-specific anticoagulation pathway.');
-  if (v.pregnancy) danger.push('Pregnancy/breastfeeding context: do not default to DOAC; use pregnancy/lactation-specific guidance.');
-  if (v.severeRenal) danger.push('Severe renal dysfunction/dialysis/AKI: verify agent-specific renal eligibility and dose.');
-  if (v.severeLiver) danger.push('Significant liver disease/coagulopathy: DOAC suitability and bleeding risk require careful review.');
-  if (v.interacting) danger.push('Strong P-gp/CYP3A4 interacting drugs: verify DOAC exposure risk or reduced efficacy.');
-  if (v.absorption) danger.push('Unreliable GI absorption/bariatric surgery/short gut/active vomiting: DOAC exposure may be unreliable.');
-  const rec = getAfRecommendation(v, cha, chaNonSex, hasbled, danger);
-  const note = `AF anticoagulation discussion: CHA2DS2-VASc ${cha}; estimated untreated ischemic stroke/systemic embolism risk ≈ ${pct(annualStroke)} per year. Estimated risk with effective anticoagulation ≈ ${pct(treatedAnnual)} per year using a communication estimate of ~64% relative risk reduction. HAS-BLED ${hasbled}; estimated major bleeding risk ≈ ${pct(annualBleed)} per year. Recommendation frame: ${rec.primary} Danger-zone checks: ${danger.length ? danger.join(' ') : 'No selected warfarin-only/DOAC danger-zone trigger.'}`;
-
-  return (
-    <section className="section tool-body deep-tool">
-      <div className="tool-grid wide-left">
-        <div className="panel">
-          <h2>1) Stroke risk: CHA₂DS₂-VASc</h2>
-          <div className="form-grid two">
-            <label>Sex<select value={v.sex} onChange={e=>setV({...v, sex:e.target.value})}><option value="male">Male</option><option value="female">Female</option></select></label>
-            <label>Age<input type="number" min="0" value={v.age} onChange={e=>setV({...v, age:e.target.value})} /></label>
-          </div>
-          <div className="check-grid">
-            <Check label="Heart failure / LV dysfunction" checked={v.chf} onChange={e=>setV({...v,chf:e.target.checked})} />
-            <Check label="Hypertension" checked={v.htn} onChange={e=>setV({...v,htn:e.target.checked})} />
-            <Check label="Diabetes" checked={v.dm} onChange={e=>setV({...v,dm:e.target.checked})} />
-            <Check label="Prior stroke/TIA/systemic embolism" checked={v.stroke} onChange={e=>setV({...v,stroke:e.target.checked})} />
-            <Check label="Vascular disease: MI, PAD, aortic plaque" checked={v.vascular} onChange={e=>setV({...v,vascular:e.target.checked})} />
-          </div>
-          <div className="score-strip">
-            <ScoreBox label="CHA₂DS₂-VASc" value={cha} />
-            <ScoreBox label="Annual untreated risk" value={pct(annualStroke)} />
-            <ScoreBox label="Estimated annual risk on OAC" value={pct(treatedAnnual)} />
-          </div>
-        </div>
-
-        <div className="panel">
-          <h2>2) Bleeding risk: HAS-BLED frame</h2>
-          <p className="small">Use bleeding risk to correct modifiable risks and plan monitoring. Do not use it alone to deny anticoagulation when stroke risk is high.</p>
-          <div className="check-grid">
-            <Check label="Uncontrolled hypertension / high SBP" checked={v.htn} onChange={e=>setV({...v,htn:e.target.checked})} />
-            <Check label="Abnormal renal function" checked={v.renal} onChange={e=>setV({...v,renal:e.target.checked})} />
-            <Check label="Abnormal liver function" checked={v.liver} onChange={e=>setV({...v,liver:e.target.checked})} />
-            <Check label="Prior stroke" checked={v.stroke} onChange={e=>setV({...v,stroke:e.target.checked})} />
-            <Check label="Prior major bleeding / bleeding tendency" checked={v.bleed} onChange={e=>setV({...v,bleed:e.target.checked})} />
-            <Check label="Labile INR if on warfarin" checked={v.labile} onChange={e=>setV({...v,labile:e.target.checked})} />
-            <Check label="Age >65" checked={age>65} onChange={()=>{}} disabled />
-            <Check label="Antiplatelet/NSAID exposure" checked={v.drugs} onChange={e=>setV({...v,drugs:e.target.checked})} />
-            <Check label="Alcohol excess" checked={v.alcohol} onChange={e=>setV({...v,alcohol:e.target.checked})} />
-          </div>
-          <div className="score-strip">
-            <ScoreBox label="HAS-BLED" value={hasbled} />
-            <ScoreBox label="Annual major bleeding estimate" value={pct(annualBleed)} />
-            <ScoreBox label="Risk category" value={hasbled>=3?'High caution':'Lower caution'} />
-          </div>
-        </div>
-
-        <div className="panel">
-          <h2>3) Time-horizon shared decision estimate</h2>
-          <RiskTable rows={riskRows} />
-          <p className="small">Estimates are for communication only. Stroke and bleeding calculators come from different cohorts; do not subtract bleeding from stroke as if they were the same outcome.</p>
-        </div>
-
-        <div className="panel">
-          <h2>4) DOAC danger-zone / warfarin-preferred checks</h2>
-          <div className="check-grid">
-            <Check label="Mechanical heart valve" checked={v.mechanical} onChange={e=>setV({...v,mechanical:e.target.checked})} />
-            <Check label="Moderate-to-severe mitral stenosis" checked={v.ms} onChange={e=>setV({...v,ms:e.target.checked})} />
-            <Check label="Rheumatic valvular AF / RHD-AF" checked={v.rheumatic} onChange={e=>setV({...v,rheumatic:e.target.checked})} />
-            <Check label="LVAD / device-specific anticoagulation" checked={v.lvad} onChange={e=>setV({...v,lvad:e.target.checked})} />
-            <Check label="Pregnancy or breastfeeding context" checked={v.pregnancy} onChange={e=>setV({...v,pregnancy:e.target.checked})} />
-            <Check label="Severe renal dysfunction / AKI / dialysis question" checked={v.severeRenal} onChange={e=>setV({...v,severeRenal:e.target.checked})} />
-            <Check label="Advanced liver disease/coagulopathy" checked={v.severeLiver} onChange={e=>setV({...v,severeLiver:e.target.checked})} />
-            <Check label="Major P-gp/CYP3A4 drug interaction" checked={v.interacting} onChange={e=>setV({...v,interacting:e.target.checked})} />
-            <Check label="Unreliable absorption: vomiting, short gut, bariatric surgery" checked={v.absorption} onChange={e=>setV({...v,absorption:e.target.checked})} />
-          </div>
-        </div>
-      </div>
-
-      <div className="panel sticky-output">
-        <h2>Bedside output</h2>
-        <div className="output-section urgent"><h3>Recommendation frame</h3><p>{rec.primary}</p></div>
-        <div className="output-section"><h3>Risk framing</h3><ul><li>CHA₂DS₂-VASc {cha}: untreated annual stroke/embolism estimate ≈ {pct(annualStroke)}.</li><li>With effective anticoagulation, communication estimate ≈ {pct(treatedAnnual)} per year.</li><li>Approximate absolute stroke-risk reduction ≈ {pct(oneArr)} in 1 year and {pct(riskRows[1].strokeAvoid)} over 5 years.</li><li>HAS-BLED {hasbled}: major bleeding estimate ≈ {pct(annualBleed)} per year; correct modifiable risks.</li></ul></div>
-        {danger.length > 0 && <div className="output-section danger"><h3>Danger zones</h3><ul>{danger.map((d,i)=><li key={i}>{d}</li>)}</ul></div>}
-        <div className="output-section"><h3>Do-not-miss actions</h3><ul>{rec.actions.map((a,i)=><li key={i}>{a}</li>)}</ul></div>
-        <CopyBox text={note} />
-        <p className="small">Clinician decision support only. Confirm with local policy, patient-specific factors, and specialist input when needed.</p>
-      </div>
-    </section>
-  );
-}
-
-function getAfRecommendation(v, cha, chaNonSex, hasbled, danger) {
-  if (v.mechanical || v.ms || v.rheumatic) {
-    return { primary:'Warfarin-centered pathway. Do not default to DOAC because a warfarin-preferred condition is selected.', actions:['Confirm valve/rheumatic diagnosis and target INR pathway.', 'Avoid aspirin as a substitute for anticoagulation.', 'Address bleeding risks, but do not let HAS-BLED alone cancel stroke prevention.'] };
-  }
-  const high = (v.sex==='male' && cha>=2) || (v.sex==='female' && cha>=3);
-  const intermediate = (v.sex==='male' && cha===1) || (v.sex==='female' && cha===2);
-  const low = chaNonSex === 0;
-  if (high) return { primary:'Anticoagulation generally favored if no absolute contraindication. DOAC usually preferred over warfarin unless a danger-zone condition applies.', actions:['Choose agent/dose using renal function, age, weight, liver function, interactions, adherence, and cost/access.', 'Avoid routine aspirin or DAPT as an alternative to anticoagulation when anticoagulation is indicated.', 'Mitigate bleeding risks: BP, NSAIDs/antiplatelets, alcohol, anemia source, renal/liver review, falls plan.'] };
-  if (intermediate) return { primary:'Intermediate stroke risk. Shared decision-making is appropriate; look for risk modifiers and patient values.', actions:['Review AF burden, left atrial size, kidney disease, obesity, sleep apnea, vascular burden, and patient preference.', 'Discuss absolute risk over 1 and 5 years rather than score alone.', 'Reassess periodically because risk changes with age and new comorbidity.'] };
-  if (low) return { primary:'Low risk by CHA₂DS₂-VASc framework. Anticoagulation is usually not needed solely for AF stroke prevention.', actions:['Do not use aspirin solely for AF stroke prevention.', 'Reassess when age or comorbidities change.', 'Treat risk factors and clarify whether AF diagnosis/episode burden is accurate.'] };
-  return { primary:'Individualize using risk modifiers, patient values, and bleeding-risk mitigation.', actions:['Clarify indication and stroke-risk modifiers.', 'Reassess bleeding risks and modifiable factors.', 'Document shared decision discussion.'] };
-}
-
-function RiskTable({ rows }) {
-  return <div className="risk-table"><table><thead><tr><th>Time</th><th>Stroke/embolism if untreated</th><th>Estimated on OAC</th><th>Estimated absolute stroke reduction</th><th>Major bleeding estimate</th></tr></thead><tbody>{rows.map(r=><tr key={r.years}><td>{r.years} year{r.years>1?'s':''}</td><td>{pct(r.strokeNo)}</td><td>{pct(r.strokeOn)}</td><td>{pct(r.strokeAvoid)}</td><td>{pct(r.bleed)}</td></tr>)}</tbody></table></div>;
+  const [s,setS] = useState({sex:'male', age:'0', chf:false, htn:false, dm:false, stroke:false, vascular:false, renal:false, liver:false, bleed:false, labile:false, drugs:false, alcohol:false, mechanical:false, ms:false, rheumatic:false, pregnant:false, severeRenal:false, severeLiver:false, aps:false, adherence:false, falls:false, anemia:false});
+  const chads = (s.chf?1:0)+(s.htn?1:0)+(s.dm?1:0)+(s.stroke?2:0)+(s.vascular?1:0)+(s.sex==='female'?1:0)+(s.age==='65'?1:0)+(s.age==='75'?2:0);
+  const hasbled = (s.htn?1:0)+(s.renal?1:0)+(s.liver?1:0)+(s.stroke?1:0)+(s.bleed?1:0)+(s.labile?1:0)+((s.age==='65'||s.age==='75')?1:0)+(s.drugs?1:0)+(s.alcohol?1:0);
+  const annualStroke = strokeRisk[Math.min(chads,9)] || 0;
+  const annualBleed = bleedRisk[Math.min(hasbled,9)] || 1.1;
+  const treatedStroke = annualStroke * 0.35;
+  const decision = (s.mechanical||s.ms||s.rheumatic) ? 'Warfarin-preferred zone' : chads >= (s.sex==='female'?3:2) ? 'Anticoagulation usually recommended' : chads === (s.sex==='female'?2:1) ? 'Intermediate zone: shared decision' : 'Low annual stroke risk: usually no anticoagulation';
+  const danger = [s.mechanical && 'Mechanical valve: DOACs should not be used; warfarin pathway.', s.ms && 'Moderate-to-severe mitral stenosis: warfarin preferred.', s.rheumatic && 'Rheumatic AF: warfarin favored based on rheumatic-valvular AF data.', s.pregnant && 'Pregnancy/breastfeeding context: anticoagulant choice requires specialist pathway.', s.severeRenal && 'Severe renal dysfunction: DOAC dose/choice may be unsafe or off-label.', s.severeLiver && 'Significant liver disease/coagulopathy: DOAC bleeding and metabolism concerns.', s.aps && 'Known/suspected high-risk APS: avoid reflex DOAC use.', s.adherence && 'Adherence concern: DOAC short half-life makes missed doses matter.', s.falls && 'Falls/frailty: do not automatically withhold AC; quantify falls/trauma risk and modifiable factors.', s.anemia && 'Unexplained anemia/occult bleed: investigate and mitigate bleeding source.'];
+  const note = `AF anticoagulation discussion: CHA2DS2-VASc ${chads}, estimated untreated stroke/systemic embolism risk ~${pct(annualStroke)} at 1 year, ${pct(cumRisk(annualStroke,5))} at 5 years, ${pct(cumRisk(annualStroke,10))} at 10 years. Estimated on-anticoagulation residual stroke risk ~${pct(treatedStroke)} at 1 year. HAS-BLED-style score ${hasbled}, estimated major bleeding risk ~${pct(annualBleed)} / year. Decision frame: ${decision}. Key cautions: ${danger.filter(Boolean).join(' ') || 'no major danger-zone selected.'}`;
+  return <ToolShell disclaimer="Risk estimates are approximations to support shared decision-making, not individualized prediction. Use local policy and clinical judgment.">
+    <div className="tool-grid"><div className="panel"><h2>Stroke risk: CHA₂DS₂-VASc</h2><Field label="Age"><Select value={s.age} onChange={v=>setS({...s,age:v})}><option value="0">&lt;65</option><option value="65">65–74</option><option value="75">≥75</option></Select></Field><Field label="Sex"><Select value={s.sex} onChange={v=>setS({...s,sex:v})}><option value="male">Male</option><option value="female">Female</option></Select></Field><Check label="Heart failure / LV dysfunction" checked={s.chf} onChange={v=>setS({...s,chf:v})}/><Check label="Hypertension" checked={s.htn} onChange={v=>setS({...s,htn:v})}/><Check label="Diabetes" checked={s.dm} onChange={v=>setS({...s,dm:v})}/><Check label="Prior stroke/TIA/systemic embolism" checked={s.stroke} onChange={v=>setS({...s,stroke:v})}/><Check label="Vascular disease: MI/PAD/aortic plaque" checked={s.vascular} onChange={v=>setS({...s,vascular:v})}/></div>
+    <div className="panel"><h2>Bleeding and danger-zone review</h2><Check label="Abnormal renal function" checked={s.renal} onChange={v=>setS({...s,renal:v})}/><Check label="Abnormal liver function" checked={s.liver} onChange={v=>setS({...s,liver:v})}/><Check label="Prior major bleeding / predisposition" checked={s.bleed} onChange={v=>setS({...s,bleed:v})}/><Check label="Labile INR if on warfarin" checked={s.labile} onChange={v=>setS({...s,labile:v})}/><Check label="Antiplatelet/NSAID or interacting drugs" checked={s.drugs} onChange={v=>setS({...s,drugs:v})}/><Check label="Alcohol excess" checked={s.alcohol} onChange={v=>setS({...s,alcohol:v})}/><hr/><Check label="Mechanical valve" checked={s.mechanical} onChange={v=>setS({...s,mechanical:v})}/><Check label="Moderate-to-severe mitral stenosis" checked={s.ms} onChange={v=>setS({...s,ms:v})}/><Check label="Rheumatic valvular disease" checked={s.rheumatic} onChange={v=>setS({...s,rheumatic:v})}/><Check label="Pregnancy/breastfeeding context" checked={s.pregnant} onChange={v=>setS({...s,pregnant:v})}/><Check label="Severe renal disease / dialysis / unstable AKI" checked={s.severeRenal} onChange={v=>setS({...s,severeRenal:v})}/><Check label="Significant liver disease/coagulopathy" checked={s.severeLiver} onChange={v=>setS({...s,severeLiver:v})}/><Check label="Known/suspected APS" checked={s.aps} onChange={v=>setS({...s,aps:v})}/><Check label="Adherence or absorption concern" checked={s.adherence} onChange={v=>setS({...s,adherence:v})}/><Check label="Falls/frailty/trauma risk" checked={s.falls} onChange={v=>setS({...s,falls:v})}/><Check label="Unexplained anemia/occult bleeding concern" checked={s.anemia} onChange={v=>setS({...s,anemia:v})}/></div></div>
+    <div className="result-grid"><Output title="Decision frame" tone="highlight"><p><Pill tone="blue">CHA₂DS₂-VASc {chads}</Pill> <Pill tone="amber">HAS-BLED style {hasbled}</Pill></p><h4>{decision}</h4><p>Teaching point: separate the <b>need for stroke prevention</b> from the <b>choice of anticoagulant</b>. A high bleeding score usually means “fix bleeding risks and monitor,” not automatically “withhold anticoagulation.”</p></Output><Output title="Estimated risk frame"><table><tbody><tr><th></th><th>1 year</th><th>5 years</th><th>10 years</th></tr><tr><td>Untreated stroke/systemic embolism</td><td>{pct(annualStroke)}</td><td>{pct(cumRisk(annualStroke,5))}</td><td>{pct(cumRisk(annualStroke,10))}</td></tr><tr><td>Estimated on anticoagulation</td><td>{pct(treatedStroke)}</td><td>{pct(cumRisk(treatedStroke,5))}</td><td>{pct(cumRisk(treatedStroke,10))}</td></tr><tr><td>Absolute risk reduction</td><td>{pct(annualStroke-treatedStroke)}</td><td>{pct(cumRisk(annualStroke,5)-cumRisk(treatedStroke,5))}</td><td>{pct(cumRisk(annualStroke,10)-cumRisk(treatedStroke,10))}</td></tr><tr><td>Major bleeding estimate</td><td>{pct(annualBleed)}</td><td>{pct(cumRisk(annualBleed,5))}</td><td>{pct(cumRisk(annualBleed,10))}</td></tr></tbody></table></Output><Output title="Do-not-miss cautions" tone="warning">{list(danger)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div>
+  </ToolShell>;
 }
 
 function AntithromboticTool() {
-  const [v, setV] = useState({
-    scenario:'new-thrombosis', med:'lmwh', thrombosisOnAC:false, adherenceConcern:false, wrongDose:false, renal:false, liver:false, interaction:false, absorption:false, weightExtreme:false,
-    plateletFall:false, plateletNadir:'', plateletFallPct:'', heparinDays:'5-10', thrombosisNew:false, skinNecrosis:false, systemicReaction:false, otherCause:'possible', vaccine:false, unusualSite:false, arterial:false, dDimerHigh:false, fibrinogenLow:false,
-    antiXa:false, antiXaDrug:'lmwh', antiXaLevel:'', antiXaTiming:'unknown', atDef:false, atLevel:'', nephrotic:false, dic:false, acuteThrombosis:false, pregnancy:false,
-    aps:false, triplePositive:false, lupusAnticoag:false, recurrentOnDoac:false, mechanical:false, rheumaticMS:false, cancer:false, myeloproliferative:false, pnh:false, malignancy:false, vasculitis:false
-  });
-  const set = (k,val) => setV(s => ({...s,[k]:val}));
-  const fourT = calculate4T(v);
-  const out = buildAntithromboticOutput(v, fourT);
-  const note = `Antithrombotic Safety Assistant: scenario ${v.scenario}; medication ${v.med}; 4Ts estimate ${fourT.score} (${fourT.category}). Key actions: ${out.actions.join(' ')} Key labs/checks: ${out.labs.join('; ')}.`;
-
-  return (
-    <section className="section tool-body deep-tool">
-      <div className="tool-grid wide-left">
-        <div className="panel">
-          <h2>1) What problem are you solving?</h2>
-          <div className="form-grid two">
-            <label>Scenario<select value={v.scenario} onChange={e=>set('scenario',e.target.value)}><option value="new-thrombosis">New/progressive thrombosis</option><option value="thrombocytopenia-thrombosis">Thrombocytopenia + thrombosis</option><option value="anti-xa">Anti-Xa interpretation</option><option value="anticoagulant-choice">Choosing anticoagulant</option><option value="bleeding-thrombosis">Bleeding risk + thrombosis tension</option></select></label>
-            <label>Current/recent drug<select value={v.med} onChange={e=>set('med',e.target.value)}><option value="ufh">UFH</option><option value="lmwh">LMWH</option><option value="fondaparinux">Fondaparinux</option><option value="doac">DOAC</option><option value="warfarin">Warfarin</option><option value="antiplatelet">Antiplatelet only</option><option value="none">No anticoagulant</option></select></label>
-          </div>
-          <div className="check-grid">
-            <Check label="Thrombosis occurred while on anticoagulation" checked={v.thrombosisOnAC} onChange={e=>set('thrombosisOnAC',e.target.checked)} />
-            <Check label="Adherence / missed doses / access concern" checked={v.adherenceConcern} onChange={e=>set('adherenceConcern',e.target.checked)} />
-            <Check label="Wrong dose, wrong timing, or not yet therapeutic" checked={v.wrongDose} onChange={e=>set('wrongDose',e.target.checked)} />
-            <Check label="Renal dysfunction affects drug exposure" checked={v.renal} onChange={e=>set('renal',e.target.checked)} />
-            <Check label="Liver disease/coagulopathy affects choice" checked={v.liver} onChange={e=>set('liver',e.target.checked)} />
-            <Check label="Major interaction: P-gp/CYP3A4/antiplatelet/NSAID" checked={v.interaction} onChange={e=>set('interaction',e.target.checked)} />
-            <Check label="Unreliable absorption: vomiting, short gut, bariatric surgery" checked={v.absorption} onChange={e=>set('absorption',e.target.checked)} />
-            <Check label="Weight extreme / pregnancy / special PK context" checked={v.weightExtreme} onChange={e=>set('weightExtreme',e.target.checked)} />
-          </div>
-        </div>
-
-        <div className="panel">
-          <h2>2) PF4 / HIT / VITT screen</h2>
-          <div className="form-grid two">
-            <label>Platelet fall %<input type="number" value={v.plateletFallPct} placeholder="e.g. 55" onChange={e=>set('plateletFallPct',e.target.value)} /></label>
-            <label>Platelet nadir<input type="number" value={v.plateletNadir} placeholder="e.g. 45" onChange={e=>set('plateletNadir',e.target.value)} /></label>
-            <label>Heparin timing<select value={v.heparinDays} onChange={e=>set('heparinDays',e.target.value)}><option value="5-10">Day 5-10 or ≤1 day with recent exposure</option><option value="possible">Possible but not classic</option><option value="unlikely">≤4 days without recent exposure or >10d unclear</option></select></label>
-            <label>Other cause<select value={v.otherCause} onChange={e=>set('otherCause',e.target.value)}><option value="none">No other clear cause</option><option value="possible">Possible other cause</option><option value="definite">Definite other cause</option></select></label>
-          </div>
-          <div className="check-grid">
-            <Check label="Platelet fall / thrombocytopenia present" checked={v.plateletFall} onChange={e=>set('plateletFall',e.target.checked)} />
-            <Check label="New thrombosis, extension, skin necrosis, or acute systemic reaction" checked={v.thrombosisNew} onChange={e=>set('thrombosisNew',e.target.checked)} />
-            <Check label="Skin necrosis after heparin injection" checked={v.skinNecrosis} onChange={e=>set('skinNecrosis',e.target.checked)} />
-            <Check label="Acute systemic reaction after IV heparin bolus" checked={v.systemicReaction} onChange={e=>set('systemicReaction',e.target.checked)} />
-            <Check label="Recent adenoviral vaccine / VITT-compatible timing" checked={v.vaccine} onChange={e=>set('vaccine',e.target.checked)} />
-            <Check label="Unusual site: CVST, splanchnic, adrenal, limb ischemia" checked={v.unusualSite} onChange={e=>set('unusualSite',e.target.checked)} />
-            <Check label="Very high D-dimer" checked={v.dDimerHigh} onChange={e=>set('dDimerHigh',e.target.checked)} />
-            <Check label="Low fibrinogen" checked={v.fibrinogenLow} onChange={e=>set('fibrinogenLow',e.target.checked)} />
-          </div>
-          <div className="score-strip"><ScoreBox label="Estimated 4Ts" value={fourT.score} /><ScoreBox label="Category" value={fourT.category} /><ScoreBox label="PF4 action" value={fourT.actionShort} /></div>
-        </div>
-
-        <div className="panel">
-          <h2>3) Anti-Xa / antithrombin physiology</h2>
-          <div className="form-grid two">
-            <label>Anti-Xa assay context<select value={v.antiXaDrug} onChange={e=>set('antiXaDrug',e.target.value)}><option value="ufh">UFH-calibrated anti-Xa</option><option value="lmwh">LMWH-calibrated anti-Xa</option><option value="fondaparinux">Fondaparinux-calibrated anti-Xa</option><option value="apixaban">Apixaban-calibrated level</option><option value="rivaroxaban">Rivaroxaban-calibrated level</option><option value="unknown">Unknown calibration</option></select></label>
-            <label>Reported level<input value={v.antiXaLevel} placeholder="optional" onChange={e=>set('antiXaLevel',e.target.value)} /></label>
-            <label>Sampling timing<select value={v.antiXaTiming} onChange={e=>set('antiXaTiming',e.target.value)}><option value="unknown">Unknown timing</option><option value="peak-correct">Peak at correct time</option><option value="too-early">Too early</option><option value="too-late">Too late / trough</option><option value="steady-state">Steady-state confirmed</option></select></label>
-            <label>Antithrombin activity %<input type="number" value={v.atLevel} placeholder="optional" onChange={e=>set('atLevel',e.target.value)} /></label>
-          </div>
-          <div className="check-grid">
-            <Check label="Anti-Xa result is being used for decision-making" checked={v.antiXa} onChange={e=>set('antiXa',e.target.checked)} />
-            <Check label="Known/suspected antithrombin deficiency" checked={v.atDef} onChange={e=>set('atDef',e.target.checked)} />
-            <Check label="Nephrotic-range protein loss / low albumin context" checked={v.nephrotic} onChange={e=>set('nephrotic',e.target.checked)} />
-            <Check label="DIC/consumption/sepsis/post-op/ECMO context" checked={v.dic} onChange={e=>set('dic',e.target.checked)} />
-            <Check label="Acute thrombosis may transiently lower AT" checked={v.acuteThrombosis} onChange={e=>set('acuteThrombosis',e.target.checked)} />
-            <Check label="Pregnancy/postpartum special anticoagulation context" checked={v.pregnancy} onChange={e=>set('pregnancy',e.target.checked)} />
-          </div>
-        </div>
-
-        <div className="panel">
-          <h2>4) APS / DOAC danger zones / vascular red flags</h2>
-          <div className="check-grid">
-            <Check label="APS known or suspected" checked={v.aps} onChange={e=>set('aps',e.target.checked)} />
-            <Check label="Triple-positive APS or strongly positive lupus anticoagulant" checked={v.triplePositive} onChange={e=>set('triplePositive',e.target.checked)} />
-            <Check label="Arterial thrombosis / stroke / limb ischemia" checked={v.arterial} onChange={e=>set('arterial',e.target.checked)} />
-            <Check label="Recurrent thrombosis while on DOAC" checked={v.recurrentOnDoac} onChange={e=>set('recurrentOnDoac',e.target.checked)} />
-            <Check label="Mechanical valve" checked={v.mechanical} onChange={e=>set('mechanical',e.target.checked)} />
-            <Check label="Moderate-to-severe MS / rheumatic AF" checked={v.rheumaticMS} onChange={e=>set('rheumaticMS',e.target.checked)} />
-            <Check label="Active cancer / occult malignancy concern" checked={v.malignancy} onChange={e=>set('malignancy',e.target.checked)} />
-            <Check label="MPN features: high Hb/Hct, platelets, splanchnic thrombosis" checked={v.myeloproliferative} onChange={e=>set('myeloproliferative',e.target.checked)} />
-            <Check label="PNH features: hemolysis/cytopenias/unusual thrombosis" checked={v.pnh} onChange={e=>set('pnh',e.target.checked)} />
-            <Check label="Vasculitis/anatomic vascular lesion possible" checked={v.vasculitis} onChange={e=>set('vasculitis',e.target.checked)} />
-          </div>
-        </div>
-      </div>
-
-      <div className="panel sticky-output">
-        <h2>Bedside output</h2>
-        {out.urgent.length > 0 && <div className="output-section danger"><h3>Urgent red flags</h3><ul>{out.urgent.map((x,i)=><li key={i}>{x}</li>)}</ul></div>}
-        <div className="output-section"><h3>Most important interpretation</h3><ul>{out.interpretation.map((x,i)=><li key={i}>{x}</li>)}</ul></div>
-        <div className="output-section"><h3>Immediate actions</h3><ul>{out.actions.map((x,i)=><li key={i}>{x}</li>)}</ul></div>
-        <div className="output-section"><h3>Labs / data to check now</h3><ul>{out.labs.map((x,i)=><li key={i}>{x}</li>)}</ul></div>
-        <div className="output-section"><h3>Medication strategy cautions</h3><ul>{out.meds.map((x,i)=><li key={i}>{x}</li>)}</ul></div>
-        <div className="output-section"><h3>Common bedside pitfalls</h3><ul>{out.pitfalls.map((x,i)=><li key={i}>{x}</li>)}</ul></div>
-        <CopyBox text={note} />
-        <p className="small">Clinician decision support only. Use local policy, patient-specific judgment, and hematology/vascular/cardiology input when needed.</p>
-      </div>
-    </section>
-  );
+  const [s,setS]=useState({newClot:false, arterial:false, unusual:false, massive:false, anticoag:'lmwh', doses:false, wrongDose:false, renal:false, obesity:false, absorption:false, malignancy:false, pregnancy:false, pltFall:false, heparin5:false, vaccine:false, necrosis:false, thrombosisOnHeparin:false, pf4Prev:false, atLow:false, nephrotic:false, liver:false, dic:false, antiXa:false, antiXaTiming:'unknown', aps:false, tripleAPS:false, valve:false, ms:false, cancer:false, mpn:false, pnh:false, vasculitis:false, anatomic:false, postop:false, infection:false, tPlatelet:'1', tTiming:'1', tThrombosis:'0', tOther:'1'});
+  const fourT = Number(s.tPlatelet)+Number(s.tTiming)+Number(s.tThrombosis)+Number(s.tOther);
+  const hitProb = fourT <= 3 ? 'Low HIT probability' : fourT <=5 ? 'Intermediate HIT probability' : 'High HIT probability';
+  const red=[s.massive&&'Massive/submassive PE, limb-threatening thrombosis, stroke, mesenteric ischemia, or organ-threatening event: urgent escalation.',s.arterial&&'Arterial thrombosis: think APS, HIT/PF4, MPN, PNH, embolic source, vasculitis, anatomic lesion.',s.unusual&&'Unusual-site thrombosis: splanchnic/cerebral/adrenal/skin necrosis pattern needs non-routine thrombosis workup.',s.pltFall&&'Thrombocytopenia with thrombosis: PF4/HIT/VITT spectrum until proven otherwise.',s.necrosis&&'Skin necrosis or adrenal hemorrhage pattern: HIT/PF4, warfarin necrosis, DIC, APS/catastrophic APS.',s.tripleAPS&&'Triple-positive/high-risk APS: avoid DOAC as default; warfarin or specialist pathway.',s.valve&&'Mechanical valve: DOAC danger zone.',s.ms&&'Moderate-to-severe mitral stenosis/rheumatic AF: warfarin pathway.'];
+  const pseudo=[s.doses&&'Missed doses/holding for procedures: pseudo-failure before declaring drug failure.',s.wrongDose&&'Wrong dose or wrong renal adjustment: verify indication dose, weight, renal function, and start date.',s.renal&&'Renal dysfunction: DOAC/LMWH accumulation or under/over-dosing depending on agent and timing.',s.obesity&&'Extreme weight: consider drug exposure, dosing caps, and whether monitoring is interpretable.',s.absorption&&'Poor absorption: vomiting, bowel resection, feeding tube, interacting food/meds may make oral agents unreliable.',s.malignancy&&'Cancer-associated thrombosis: recurrent VTE may need class switch/intensification after adherence confirmed.',s.pregnancy&&'Pregnancy/postpartum: physiology and drug choice change; avoid casual DOAC selection.'];
+  const heparin=[s.atLow&&'Low antithrombin can reduce UFH/LMWH/fondaparinux effect because these amplify AT activity.',s.nephrotic&&'Nephrotic protein loss can lower AT and increase thrombosis risk.',s.liver&&'Liver disease can lower AT and also distort INR-based thinking.',s.dic&&'DIC/sepsis can consume AT and create heparin resistance patterns.',s.antiXa&&`Anti-Xa selected: timing = ${s.antiXaTiming}. Interpret only if assay is drug-calibrated and sampled at the right time.`];
+  const pf4=[s.heparin5&&'Heparin exposure 5–10 days before platelet fall fits typical HIT timing.',s.pf4Prev&&'Recent heparin exposure can cause rapid-onset HIT after re-exposure.',s.vaccine&&'Recent adenoviral-vector vaccine + thrombosis/thrombocytopenia suggests VITT/PF4-spectrum review.',s.thrombosisOnHeparin&&'Thrombosis progressing on heparin/LMWH plus platelet fall is a HIT emergency pattern.'];
+  const workup=[s.mpn&&'MPN screen: CBC trend, JAK2/CALR/MPL when splanchnic/unusual thrombosis or erythro/thrombocytosis.',s.pnh&&'PNH screen: flow cytometry if hemolysis/cytopenias/unusual thrombosis.',s.vasculitis&&'Vasculitis/inflammation: ESR/CRP, complements, ANCA/ANA/APS context when arterial/multisystem.',s.anatomic&&'Anatomic lesion: May-Thurner, thoracic outlet, catheter/device, tumor compression, aneurysm/mural thrombus.',s.cancer&&'Malignancy: age-appropriate and phenotype-directed evaluation; avoid indiscriminate testing.',s.infection&&'Infection/inflammation can drive thrombosis and thrombocytopenia; search for source if clinical clues.',s.postop&&'Postoperative thrombosis: check prophylaxis interruptions, bleeding holds, immobility, catheter/device.'];
+  const immediate=[fourT>=4&&'If HIT probability intermediate/high: stop all heparin/LMWH flushes, send PF4 immunoassay ± functional assay, start non-heparin anticoagulant if no prohibitive bleeding.',s.vaccine&&'If VITT suspected: avoid heparin until clarified, send PF4 ELISA, fibrinogen, D-dimer; urgent hematology; IVIG pathway if likely.',s.atLow&&'If thrombosis on UFH/LMWH with low AT/heparin resistance: do not just increase dose blindly; verify anti-Xa assay/timing and consider non-AT-dependent anticoagulant strategy with hematology.',s.tripleAPS&&'If high-risk APS: avoid DOAC continuation after recurrent thrombosis; consider warfarin/heparin specialist plan.',s.newClot&&'Confirm true new/progressive thrombosis with imaging comparison before labeling failure.'];
+  const note=`Antithrombotic Safety Assistant: anticoagulant=${s.anticoag}; true/progressive thrombosis=${s.newClot?'yes':'no'}; 4Ts=${fourT} (${hitProb}). Key red flags: ${red.filter(Boolean).join(' ')||'none selected'}. Pseudo-failure checks: ${pseudo.filter(Boolean).join(' ')||'none selected'}. Heparin/anti-Xa/AT issues: ${heparin.filter(Boolean).join(' ')||'none selected'}. PF4 spectrum: ${pf4.filter(Boolean).join(' ')||'none selected'}. Immediate considerations: ${immediate.filter(Boolean).join(' ')||'confirm phenotype and medication history.'}`;
+  return <ToolShell disclaimer="This tool is a safety checklist. It does not replace urgent hematology/vascular/cardiology input for organ- or limb-threatening thrombosis."><div className="tool-grid"><div className="panel"><h2>Event phenotype</h2><Check label="Confirmed new/progressive thrombosis while anticoagulated" checked={s.newClot} onChange={v=>setS({...s,newClot:v})}/><Check label="Arterial thrombosis" checked={s.arterial} onChange={v=>setS({...s,arterial:v})}/><Check label="Unusual-site thrombosis" checked={s.unusual} onChange={v=>setS({...s,unusual:v})}/><Check label="Massive/submassive or organ/limb-threatening" checked={s.massive} onChange={v=>setS({...s,massive:v})}/><Field label="Current anticoagulant"><Select value={s.anticoag} onChange={v=>setS({...s,anticoag:v})}><option value="ufh">UFH</option><option value="lmwh">LMWH</option><option value="fondaparinux">Fondaparinux</option><option value="doac">DOAC</option><option value="warfarin">Warfarin</option><option value="none">None/held</option></Select></Field></div><div className="panel"><h2>Pseudo-failure checklist</h2><Check label="Missed doses / held for procedure" checked={s.doses} onChange={v=>setS({...s,doses:v})}/><Check label="Wrong dose / wrong renal adjustment" checked={s.wrongDose} onChange={v=>setS({...s,wrongDose:v})}/><Check label="Renal dysfunction" checked={s.renal} onChange={v=>setS({...s,renal:v})}/><Check label="Extreme body weight" checked={s.obesity} onChange={v=>setS({...s,obesity:v})}/><Check label="Absorption concern" checked={s.absorption} onChange={v=>setS({...s,absorption:v})}/><Check label="Cancer-associated thrombosis" checked={s.malignancy} onChange={v=>setS({...s,malignancy:v})}/><Check label="Pregnancy/postpartum" checked={s.pregnancy} onChange={v=>setS({...s,pregnancy:v})}/></div><div className="panel"><h2>PF4/HIT/VITT screen</h2><Check label="Platelet fall / thrombocytopenia" checked={s.pltFall} onChange={v=>setS({...s,pltFall:v})}/><Check label="Heparin exposure 5–10 days" checked={s.heparin5} onChange={v=>setS({...s,heparin5:v})}/><Check label="Recent heparin exposure with rapid fall" checked={s.pf4Prev} onChange={v=>setS({...s,pf4Prev:v})}/><Check label="Thrombosis progressing on heparin/LMWH" checked={s.thrombosisOnHeparin} onChange={v=>setS({...s,thrombosisOnHeparin:v})}/><Check label="Recent adenoviral-vector vaccine context" checked={s.vaccine} onChange={v=>setS({...s,vaccine:v})}/><Check label="Skin necrosis/adrenal hemorrhage pattern" checked={s.necrosis} onChange={v=>setS({...s,necrosis:v})}/><div className="mini-grid"><Field label="Platelet fall"><Select value={s.tPlatelet} onChange={v=>setS({...s,tPlatelet:v})}><option value="0">0</option><option value="1">1</option><option value="2">2</option></Select></Field><Field label="Timing"><Select value={s.tTiming} onChange={v=>setS({...s,tTiming:v})}><option value="0">0</option><option value="1">1</option><option value="2">2</option></Select></Field><Field label="Thrombosis"><Select value={s.tThrombosis} onChange={v=>setS({...s,tThrombosis:v})}><option value="0">0</option><option value="1">1</option><option value="2">2</option></Select></Field><Field label="Other causes"><Select value={s.tOther} onChange={v=>setS({...s,tOther:v})}><option value="0">0</option><option value="1">1</option><option value="2">2</option></Select></Field></div></div><div className="panel"><h2>AT / anti-Xa / DOAC danger zones</h2><Check label="Known/suspected low antithrombin" checked={s.atLow} onChange={v=>setS({...s,atLow:v})}/><Check label="Nephrotic syndrome/protein loss" checked={s.nephrotic} onChange={v=>setS({...s,nephrotic:v})}/><Check label="Liver disease" checked={s.liver} onChange={v=>setS({...s,liver:v})}/><Check label="DIC/sepsis/consumption" checked={s.dic} onChange={v=>setS({...s,dic:v})}/><Check label="Anti-Xa being interpreted" checked={s.antiXa} onChange={v=>setS({...s,antiXa:v})}/><Field label="Anti-Xa timing"><Select value={s.antiXaTiming} onChange={v=>setS({...s,antiXaTiming:v})}><option value="unknown">unknown</option><option value="peak">peak/right time</option><option value="trough">trough/wrong time</option><option value="after hold">after held doses</option></Select></Field><Check label="Known/suspected APS" checked={s.aps} onChange={v=>setS({...s,aps:v})}/><Check label="Triple-positive/high-risk APS" checked={s.tripleAPS} onChange={v=>setS({...s,tripleAPS:v})}/><Check label="Mechanical valve" checked={s.valve} onChange={v=>setS({...s,valve:v})}/><Check label="Moderate-to-severe MS/rheumatic AF" checked={s.ms} onChange={v=>setS({...s,ms:v})}/></div><div className="panel"><h2>Deep vascular red flags</h2><Check label="MPN clue" checked={s.mpn} onChange={v=>setS({...s,mpn:v})}/><Check label="PNH clue" checked={s.pnh} onChange={v=>setS({...s,pnh:v})}/><Check label="Vasculitis/systemic inflammation" checked={s.vasculitis} onChange={v=>setS({...s,vasculitis:v})}/><Check label="Anatomic lesion/device/compression" checked={s.anatomic} onChange={v=>setS({...s,anatomic:v})}/><Check label="Malignancy concern" checked={s.cancer} onChange={v=>setS({...s,cancer:v})}/><Check label="Post-op/immobility/catheter context" checked={s.postop} onChange={v=>setS({...s,postop:v})}/><Check label="Infection/inflammation context" checked={s.infection} onChange={v=>setS({...s,infection:v})}/></div></div><div className="result-grid"><Output title="Immediate safety frame" tone="highlight"><p><Pill tone={fourT>=4?'red':'blue'}>4Ts {fourT}: {hitProb}</Pill></p>{list(immediate)}</Output><Output title="Red flags" tone="warning">{list(red)}</Output><Output title="Pseudo-failure before true failure">{list(pseudo)}</Output><Output title="Heparin / fondaparinux / anti-Xa / AT reasoning">{list(heparin)}</Output><Output title="PF4 spectrum">{list(pf4)}</Output><Output title="Niche vascular workup prompts">{list(workup)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>;
 }
 
-function calculate4T(v) {
-  const fall = Number(v.plateletFallPct); const nadir = Number(v.plateletNadir);
-  let t1 = 0;
-  if (v.plateletFall && ((fall >= 50) || (nadir >= 20 && fall >= 30))) t1 = 2;
-  else if (v.plateletFall && ((fall >= 30) || (nadir >= 10))) t1 = 1;
-  let t2 = v.heparinDays === '5-10' ? 2 : v.heparinDays === 'possible' ? 1 : 0;
-  let t3 = (v.thrombosisNew || v.skinNecrosis || v.systemicReaction) ? 2 : 0;
-  let t4 = v.otherCause === 'none' ? 2 : v.otherCause === 'possible' ? 1 : 0;
-  const score = t1+t2+t3+t4;
-  const category = score >= 6 ? 'High' : score >= 4 ? 'Intermediate' : 'Low';
-  const actionShort = score >= 4 ? 'Treat as HIT until proven otherwise' : 'HIT less likely';
-  return { score, category, actionShort, parts:[t1,t2,t3,t4] };
+function HyponatremiaTool(){
+ const [s,setS]=useState({na:'124',glucose:'5.5',sym:'mild',serumOsm:'',urineOsm:'',urineNa:'',volume:'unknown',diuretic:false,thiazide:false,lowSolute:false,polydipsia:false,edema:false,siadh:false,adrenal:false,thyroid:false,uric:false,ods:false,hypokalemia:false,malnutrition:false,liver:false,alcohol:false});
+ const na=Number(s.na), glu=Number(s.glucose), serum=Number(s.serumOsm), uosm=Number(s.urineOsm), una=Number(s.urineNa); const corrected= na + Math.max(0,(glu-5.6))*0.4;
+ let pathway='Enter serum osmolality and urine studies to classify.'; let reasoning=[]; let action=[];
+ if(s.sym==='severe'){action.push('Severe symptoms: treat as emergency; hypertonic saline bolus pathway while monitoring Na frequently. Do not wait for full urine workup.');}
+ if(serum){ if(serum>=275) {pathway='Non-hypotonic or translocational hyponatremia'; reasoning.push('Check glucose, mannitol, contrast, pseudohyponatremia from lipids/protein. Do not fluid restrict automatically.');} else {pathway='Hypotonic hyponatremia'; reasoning.push('Hypotonicity confirmed: now decide whether ADH is off or on using urine osmolality.'); if(uosm){ if(uosm<100){pathway+=' → ADH-off pattern'; reasoning.push('Urine Osm <100: kidney is appropriately dumping free water. Think primary polydipsia, low solute intake, reset after water load.'); if(s.lowSolute) reasoning.push('Low solute clue: tea/toast/beer potomania physiology; adding solute can rapidly autocorrect sodium.'); if(s.polydipsia) reasoning.push('Polydipsia clue: water intake exceeds excretory capacity.'); action.push('Watch for rapid autocorrection once solute/volume is given; consider desmopressin strategy if high ODS risk.'); } else {pathway+=' → ADH-on pattern'; reasoning.push('Urine Osm ≥100: ADH is active; now urine sodium and volume context matter.'); if(una || una===0){ if(una<30){reasoning.push('Urine Na <30 suggests low effective arterial volume: hypovolemia, heart failure, cirrhosis, nephrosis, or low intake.');} else {reasoning.push('Urine Na ≥30 suggests SIADH, adrenal insufficiency, renal salt loss, or diuretic-confounded hypovolemia.');} } } } } }
+ if(s.volume==='hypovolemic') action.push('Hypovolemic phenotype: isotonic saline may correct both volume and ADH stimulus; monitor for brisk water diuresis and overcorrection.');
+ if(s.edema||s.volume==='hypervolemic') action.push('Edematous/low effective arterial volume: treat underlying HF/cirrhosis/nephrosis; fluid restriction/diuretics strategy depends on hemodynamics.');
+ if(s.siadh) reasoning.push('SIADH is a diagnosis of pattern plus exclusion: hypotonic, urine Osm >100, urine Na often >30, clinically euvolemic, no adrenal/thyroid failure, no effective volume depletion.');
+ if(s.thiazide) reasoning.push('Thiazide-associated hyponatremia can mimic SIADH; stop thiazide and monitor for autocorrection.');
+ if(!s.adrenal) action.push('Before final SIADH label, exclude adrenal insufficiency when clinical context supports it.');
+ if(!s.thyroid) action.push('Check thyroid status when clinically indicated; severe hypothyroidism is an uncommon but important mimic.');
+ const highRisk=s.ods||s.hypokalemia||s.malnutrition||s.liver||s.alcohol;
+ if(highRisk) action.push('High ODS risk: use stricter correction targets, frequent Na checks, and consider desmopressin clamp if sodium starts rising quickly.');
+ action.push('Typical safety ceiling: avoid correction >10 mmol/L in 24 h; use ≤8 mmol/L/24 h in high-risk patients.');
+ const note=`Hyponatremia: measured Na ${na}, glucose ${glu}, corrected Na ~${corrected.toFixed(1)}. Symptoms: ${s.sym}. Serum Osm ${s.serumOsm||'not entered'}, urine Osm ${s.urineOsm||'not entered'}, urine Na ${s.urineNa||'not entered'}. Pathway: ${pathway}. Reasoning: ${reasoning.join(' ')} Actions/safety: ${action.join(' ')}`;
+ return <ToolShell disclaimer="In severe symptomatic hyponatremia, symptoms drive emergency treatment before diagnostic perfection."><div className="tool-grid"><div className="panel"><h2>Core inputs</h2><Field label="Measured serum sodium"><Num value={s.na} onChange={v=>setS({...s,na:v})}/></Field><Field label="Glucose mmol/L"><Num value={s.glucose} onChange={v=>setS({...s,glucose:v})} step="0.1"/></Field><Field label="Symptoms"><Select value={s.sym} onChange={v=>setS({...s,sym:v})}><option value="none">None/minimal</option><option value="mild">Mild/moderate</option><option value="severe">Severe: seizure, coma, severe confusion, severe vomiting/resp distress</option></Select></Field><Field label="Serum osmolality"><Num value={s.serumOsm} onChange={v=>setS({...s,serumOsm:v})}/></Field><Field label="Urine osmolality"><Num value={s.urineOsm} onChange={v=>setS({...s,urineOsm:v})}/></Field><Field label="Urine sodium"><Num value={s.urineNa} onChange={v=>setS({...s,urineNa:v})}/></Field></div><div className="panel"><h2>Context</h2><Field label="Clinical volume phenotype"><Select value={s.volume} onChange={v=>setS({...s,volume:v})}><option value="unknown">unclear</option><option value="hypovolemic">hypovolemic</option><option value="euvolemic">euvolemic</option><option value="hypervolemic">edematous/hypervolemic</option></Select></Field><Check label="Thiazide/diuretic confounder" checked={s.thiazide} onChange={v=>setS({...s,thiazide:v})}/><Check label="Low solute intake" checked={s.lowSolute} onChange={v=>setS({...s,lowSolute:v})}/><Check label="Primary polydipsia clue" checked={s.polydipsia} onChange={v=>setS({...s,polydipsia:v})}/><Check label="Edema/low effective arterial volume" checked={s.edema} onChange={v=>setS({...s,edema:v})}/><Check label="SIADH clue: pain, nausea, CNS/lung disease, meds, malignancy" checked={s.siadh} onChange={v=>setS({...s,siadh:v})}/><Check label="Adrenal insufficiency excluded" checked={s.adrenal} onChange={v=>setS({...s,adrenal:v})}/><Check label="Severe hypothyroidism excluded" checked={s.thyroid} onChange={v=>setS({...s,thyroid:v})}/><Check label="Low uric acid / high FEUA supports SIADH pattern" checked={s.uric} onChange={v=>setS({...s,uric:v})}/></div><div className="panel"><h2>ODS risk</h2><Check label="Na ≤105 or very chronic/unknown duration" checked={s.ods} onChange={v=>setS({...s,ods:v})}/><Check label="Hypokalemia" checked={s.hypokalemia} onChange={v=>setS({...s,hypokalemia:v})}/><Check label="Malnutrition" checked={s.malnutrition} onChange={v=>setS({...s,malnutrition:v})}/><Check label="Advanced liver disease" checked={s.liver} onChange={v=>setS({...s,liver:v})}/><Check label="Alcohol use disorder" checked={s.alcohol} onChange={v=>setS({...s,alcohol:v})}/></div></div><div className="result-grid"><Output title="Pathway" tone="highlight"><h4>{pathway}</h4><p>Corrected Na for hyperglycemia: <b>{corrected.toFixed(1)}</b></p></Output><Output title="Reasoning that should stick">{list(reasoning)}</Output><Output title="Next actions / treatment guardrails" tone="warning">{list(action)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>;
 }
 
-function buildAntithromboticOutput(v, fourT) {
-  const urgent=[], interpretation=[], actions=[], labs=[], meds=[], pitfalls=[];
-  if (v.thrombosisOnAC) interpretation.push('Do not call this true anticoagulant failure until adherence, dosing, timing, renal/liver function, interactions, absorption, and correct indication are verified.');
-  if (v.adherenceConcern || v.wrongDose || v.interaction || v.absorption) interpretation.push('Pseudo-failure is plausible: missed doses, underdosing, interactions, or poor absorption can mimic anticoagulant failure.');
-  if (v.plateletFall || v.thrombosisNew || fourT.score >= 4) interpretation.push(`HIT probability by 4Ts is ${fourT.category} (${fourT.score}/8).`);
-  if (fourT.score >= 4) { urgent.push('Intermediate/high 4Ts: avoid heparin exposure while evaluating unless a specialist-directed exception exists.'); actions.push('Stop UFH/LMWH/heparin flushes and start a non-heparin anticoagulant if anticoagulation is needed and bleeding risk allows.'); labs.push('PF4/heparin immunoassay; if positive or discordant, functional assay such as SRA/HIPA depending on local lab.'); }
-  else { pitfalls.push('Low 4Ts has high negative predictive value only if the score was calculated carefully and platelet timing is reliable.'); }
-  if (v.vaccine || (v.unusualSite && v.plateletFall && v.dDimerHigh)) { urgent.push('VITT/PF4-spectrum pattern possible: thrombosis at unusual site + thrombocytopenia + high D-dimer ± low fibrinogen after adenoviral vaccine is an emergency pattern.'); actions.push('Discuss urgently with hematology; use non-heparin anticoagulation and IVIG pathway per local protocol when VITT is suspected.'); labs.push('PF4 ELISA, platelet count trend, D-dimer, fibrinogen, PT/aPTT, imaging for CVST/splanchnic thrombosis if symptoms fit.'); }
-  if (v.antiXa) { interpretation.push(getAntiXaInterpretation(v)); labs.push('Confirm exact anti-Xa assay calibration, dose time, sample time, renal function, weight, albumin, antithrombin activity, and whether drug-specific DOAC level is needed.'); pitfalls.push('Anti-Xa assays are not interchangeable: UFH, LMWH, fondaparinux, apixaban, and rivaroxaban require correct calibration/context.'); }
-  if (v.atDef || Number(v.atLevel) < 70 || v.nephrotic || v.dic) { interpretation.push('Antithrombin issue may reduce the effect of UFH, LMWH, and fondaparinux because these drugs depend on antithrombin activity.'); meds.push('If clinically important AT deficiency/heparin resistance is present, consider AT-independent agents such as direct thrombin inhibitor or DOAC when appropriate, or AT replacement in selected specialist-directed settings.'); labs.push('Antithrombin activity; repeat when acute thrombosis/heparin/consumption state has resolved if inherited deficiency is being considered.'); }
-  if (v.med === 'fondaparinux') meds.push('Fondaparinux is often used as a non-heparin option in HIT pathways, but it is still antithrombin-dependent and anti-Xa interpretation requires fondaparinux calibration.');
-  if (v.med === 'lmwh') meds.push('LMWH effect is antithrombin-dependent; peak anti-Xa is usually drawn about 4 hours after dose at steady state when monitoring is indicated.');
-  if (v.med === 'ufh') meds.push('UFH monitoring discordance can occur; compare aPTT vs anti-Xa, acute phase factors, antithrombin, and heparin resistance context.');
-  if (v.med === 'doac') meds.push('For DOAC failure concerns, verify adherence, last dose, renal/liver function, P-gp/CYP3A4 interactions, absorption, and whether the indication is a DOAC danger zone.');
-  if (v.aps || v.triplePositive || v.recurrentOnDoac) { urgent.push('APS danger zone if triple-positive, arterial thrombosis, or recurrent thrombosis on DOAC.'); meds.push('High-risk APS is generally warfarin-centered rather than DOAC-centered; urgent specialist review if arterial/recurrent event.'); labs.push('APS panel: lupus anticoagulant, anticardiolipin IgG/IgM, beta-2 glycoprotein I IgG/IgM; repeat ≥12 weeks for classification if relevant.'); }
-  if (v.mechanical || v.rheumaticMS) { urgent.push('Mechanical valve or rheumatic moderate-to-severe MS: DOAC is not the default pathway.'); meds.push('Use warfarin-centered pathway unless specialist-directed exception.'); }
-  if (v.arterial || v.unusualSite || v.myeloproliferative || v.pnh || v.malignancy || v.vasculitis) { interpretation.push('Arterial or unusual-site thrombosis should trigger vascular medicine differential beyond standard VTE recurrence.'); labs.push('Consider CBC/smear, JAK2/CALR/MPL if MPN pattern, PNH flow if cytopenia/hemolysis/unusual site, malignancy evaluation guided by history/exam, and vascular imaging/anatomic review.'); }
-  actions.push('Map the timeline: thrombosis date, anticoagulant start date, dose changes, platelet trend, procedures, infection, malignancy, pregnancy/postpartum, vaccine, and heparin flushes.');
-  actions.push('Clarify immediate risk: limb/organ threat, PE burden/RV strain, CVST/splanchnic site, bleeding, renal/liver function, and need for procedure.');
-  labs.push('CBC with smear, PT/INR, aPTT, fibrinogen, D-dimer, creatinine/eGFR, liver panel, albumin, urinalysis/proteinuria if AT loss suspected.');
-  if (!interpretation.length) interpretation.push('No major danger-zone selected. Continue structured review of indication, drug exposure, labs, and thrombosis phenotype.');
-  if (!meds.length) meds.push('Medication choice should match indication, organ function, interactions, bleeding risk, and whether HIT/APS/valvular/AT-dependent pathways are present.');
-  pitfalls.push('Do not bridge to warfarin alone in acute HIT before platelet recovery; avoid early warfarin-only therapy in suspected HIT without specialist pathway.');
-  pitfalls.push('Do not interpret “normal” INR/aPTT as proof that DOAC is absent or ineffective.');
-  pitfalls.push('Do not send broad inherited thrombophilia testing during acute thrombosis/anticoagulation unless it will change immediate management.');
-  return { urgent, interpretation, actions, labs, meds, pitfalls };
-}
+function VTETool(){ const [s,setS]=useState({active:false, bleeding:false, plt:'180', renal:'normal', procedure:false, vte:false, cancer:false, immobile:false, infection:false, hf:false, prior:false, contraindication:false}); const plt=Number(s.plt); const risk=[s.vte,s.cancer,s.immobile,s.infection,s.hf,s.prior].filter(Boolean).length; let rec='No pharmacologic prophylaxis trigger selected; reassess daily.'; if(s.active) rec='Already therapeutically anticoagulated: do not add prophylaxis; document indication and reassess holds.'; else if(s.bleeding||s.contraindication||plt<50||s.procedure) rec='Hold pharmacologic prophylaxis; document reason and reassess within 24 hours. Use mechanical prophylaxis if appropriate.'; else if(risk>=1) rec='Order pharmacologic VTE prophylaxis unless local contraindication exists.'; const labs=[plt<50&&'Platelets <50: bleeding/hold threshold context; reassess trend and reason.',s.renal==='severe'&&'Severe renal dysfunction: choose UFH or renal-adjusted strategy per policy.',s.procedure&&'Procedure planned: specify timing of hold and restart.',s.bleeding&&'Active bleeding: document site, stability, and restart plan.']; const note=`VTE prophylaxis: active therapeutic anticoagulation ${s.active?'yes':'no'}, bleeding/hold ${s.bleeding||s.contraindication?'yes':'no'}, platelets ${plt}, renal ${s.renal}, risk factors ${risk}. Recommendation: ${rec}`; return <ToolShell><div className="tool-grid"><div className="panel"><h2>Status</h2><Check label="Already therapeutically anticoagulated" checked={s.active} onChange={v=>setS({...s,active:v})}/><Check label="Active bleeding" checked={s.bleeding} onChange={v=>setS({...s,bleeding:v})}/><Field label="Platelets"><Num value={s.plt} onChange={v=>setS({...s,plt:v})}/></Field><Field label="Renal function"><Select value={s.renal} onChange={v=>setS({...s,renal:v})}><option value="normal">normal/mild</option><option value="moderate">moderate CKD</option><option value="severe">severe CKD/AKI/dialysis</option></Select></Field><Check label="Procedure/neuraxial/operation planned" checked={s.procedure} onChange={v=>setS({...s,procedure:v})}/><Check label="Other contraindication documented" checked={s.contraindication} onChange={v=>setS({...s,contraindication:v})}/></div><div className="panel"><h2>VTE risk prompts</h2><Check label="Acute medical admission/reduced mobility" checked={s.immobile} onChange={v=>setS({...s,immobile:v})}/><Check label="Active cancer" checked={s.cancer} onChange={v=>setS({...s,cancer:v})}/><Check label="Infection/inflammation" checked={s.infection} onChange={v=>setS({...s,infection:v})}/><Check label="Heart/respiratory failure" checked={s.hf} onChange={v=>setS({...s,hf:v})}/><Check label="Prior VTE/thrombophilia" checked={s.prior} onChange={v=>setS({...s,prior:v})}/><Check label="Known acute VTE?" checked={s.vte} onChange={v=>setS({...s,vte:v})}/></div></div><div className="result-grid"><Output title="Prophylaxis status" tone="highlight"><h4>{rec}</h4></Output><Output title="Documentation prompts">{list(labs)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>}
+function HypokalemiaTool(){ const [s,setS]=useState({k:'2.9',hco3:'18',bp:'normal',mg:false, urineK:'', urineCl:'', diarrhea:false, vomiting:false, diuretic:false, rta:false}); const k=Number(s.k), h=Number(s.hco3), uk=Number(s.urineK), ucl=Number(s.urineCl); let pattern=h<22?'Metabolic acidosis pattern':h>28?'Metabolic alkalosis pattern':'No clear bicarbonate pattern'; let reasons=[]; if(k<2.5) reasons.push('Severe hypokalemia: telemetry/urgent replacement if symptomatic, ECG changes, or high-risk comorbidity.'); if(s.mg) reasons.push('Hypomagnesemia makes K hard to correct; replace Mg.'); if(h<22){ if(s.diarrhea) reasons.push('Acidosis + diarrhea: GI bicarbonate and potassium loss likely.'); if(s.rta) reasons.push('Consider RTA if acidosis with renal K wasting and no diarrhea.'); if(uk>20) reasons.push('Urine K high despite hypokalemia: renal K wasting.'); }
+ if(h>28){ if(s.vomiting && ucl<20) reasons.push('Vomiting/NG suction: low urine chloride chloride-responsive alkalosis.'); if(s.diuretic) reasons.push('Diuretic effect can raise urine chloride if active.'); if(s.bp==='high') reasons.push('Hypertension + alkalosis + renal K wasting: mineralocorticoid excess pattern.'); }
+ const note=`Hypokalemia: K ${k}, HCO3 ${h}, BP ${s.bp}. Pattern: ${pattern}. Reasoning: ${reasons.join(' ')||'Need urine K/Cl and clinical context.'}`; return <ToolShell><div className="tool-grid"><div className="panel"><h2>Inputs</h2><Field label="Potassium"><Num value={s.k} onChange={v=>setS({...s,k:v})} step="0.1"/></Field><Field label="Bicarbonate"><Num value={s.hco3} onChange={v=>setS({...s,hco3:v})}/></Field><Field label="BP"><Select value={s.bp} onChange={v=>setS({...s,bp:v})}><option value="low">low</option><option value="normal">normal</option><option value="high">high</option></Select></Field><Field label="Urine potassium"><Num value={s.urineK} onChange={v=>setS({...s,urineK:v})}/></Field><Field label="Urine chloride"><Num value={s.urineCl} onChange={v=>setS({...s,urineCl:v})}/></Field><Check label="Hypomagnesemia" checked={s.mg} onChange={v=>setS({...s,mg:v})}/><Check label="Diarrhea" checked={s.diarrhea} onChange={v=>setS({...s,diarrhea:v})}/><Check label="Vomiting/NG suction" checked={s.vomiting} onChange={v=>setS({...s,vomiting:v})}/><Check label="Diuretic use" checked={s.diuretic} onChange={v=>setS({...s,diuretic:v})}/><Check label="RTA context" checked={s.rta} onChange={v=>setS({...s,rta:v})}/></div></div><div className="result-grid"><Output title="Pattern" tone="highlight"><h4>{pattern}</h4></Output><Output title="Reasoning">{list(reasons)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>}
+function ProteinuriaTool(){ const [s,setS]=useState({acr:'',pcr:'150',albumin:'38',egfr:'90',hem:false,edema:false,dm:false,lupus:false}); const pcr=Number(s.pcr), alb=Number(s.albumin); let category=pcr>=3000?'Nephrotic-range proteinuria':pcr>=500?'Clinically significant non-nephrotic proteinuria':pcr>150?'Mild proteinuria':'Normal/near-normal PCR'; let reasons=[]; if(alb>=35&&pcr>500) reasons.push('Serum albumin can remain normal despite proteinuria when hepatic synthesis, nutrition, inflammation state, and duration compensate.'); if(pcr>=3000||s.edema) reasons.push('Nephrotic syndrome requires edema/hypoalbuminemia/lipid/thrombosis assessment, not PCR alone.'); if(s.hem) reasons.push('Hematuria plus proteinuria suggests glomerular/nephritic phenotype; check sediment, complements/serologies based on context.'); if(s.lupus) reasons.push('Lupus context: quantify proteinuria, urine sediment, complements, anti-dsDNA; consider nephrology threshold.'); const note=`Proteinuria: PCR ${pcr} mg/g or equivalent entry, serum albumin ${alb}. Category: ${category}. Reasoning: ${reasons.join(' ')}`; return <ToolShell><div className="tool-grid"><div className="panel"><h2>Inputs</h2><Field label="Urine PCR or equivalent"><Num value={s.pcr} onChange={v=>setS({...s,pcr:v})}/></Field><Field label="Serum albumin g/L"><Num value={s.albumin} onChange={v=>setS({...s,albumin:v})}/></Field><Field label="eGFR"><Num value={s.egfr} onChange={v=>setS({...s,egfr:v})}/></Field><Check label="Hematuria / active sediment" checked={s.hem} onChange={v=>setS({...s,hem:v})}/><Check label="Edema" checked={s.edema} onChange={v=>setS({...s,edema:v})}/><Check label="Diabetes" checked={s.dm} onChange={v=>setS({...s,dm:v})}/><Check label="Lupus/systemic disease" checked={s.lupus} onChange={v=>setS({...s,lupus:v})}/></div></div><div className="result-grid"><Output title="Proteinuria phenotype" tone="highlight"><h4>{category}</h4></Output><Output title="Reasoning">{list(reasons)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>}
+function CirrhosisTool(){ const [s,setS]=useState({inr:'2.0',plt:'55',fib:'1.2',bleed:false,procedure:false,thrombosis:false,vitk:false,teg:false,la:false}); const inr=Number(s.inr), plt=Number(s.plt), fib=Number(s.fib); const ideas=['INR in cirrhosis reflects reduced procoagulant factors but misses reduced anticoagulants, high factor VIII, and vWF/endothelial activation. It is not a simple bleeding-risk meter.']; if(fib<1.5) ideas.push('Low fibrinogen is more actionable than INR in bleeding/procedure contexts.'); if(plt<50) ideas.push('Platelets near/below 50 matter for procedures/active bleeding, but threshold depends on procedure risk and local policy.'); if(s.thrombosis) ideas.push('Cirrhosis can be prothrombotic despite high INR: portal vein thrombosis/VTE risk remains real.'); if(s.vitk) ideas.push('Vitamin K helps only if deficiency/cholestasis/poor intake/warfarin effect; it does not fix rebalanced hemostasis.'); if(s.teg) ideas.push('TEG/ROTEM may guide product use better than INR in bleeding/procedure settings when available.'); if(s.la) ideas.push('Lupus anticoagulant can prolong clotting assays and coexist with thrombosis risk; interpret with clinical context.'); const note=`Cirrhosis hemostasis: INR ${inr}, platelets ${plt}, fibrinogen ${fib}. Context bleed=${s.bleed}, procedure=${s.procedure}, thrombosis=${s.thrombosis}. Reasoning: ${ideas.join(' ')}`; return <ToolShell><div className="tool-grid"><div className="panel"><h2>Inputs</h2><Field label="INR"><Num value={s.inr} onChange={v=>setS({...s,inr:v})} step="0.1"/></Field><Field label="Platelets"><Num value={s.plt} onChange={v=>setS({...s,plt:v})}/></Field><Field label="Fibrinogen g/L"><Num value={s.fib} onChange={v=>setS({...s,fib:v})} step="0.1"/></Field><Check label="Active bleeding" checked={s.bleed} onChange={v=>setS({...s,bleed:v})}/><Check label="Procedure planned" checked={s.procedure} onChange={v=>setS({...s,procedure:v})}/><Check label="Thrombosis present/concern" checked={s.thrombosis} onChange={v=>setS({...s,thrombosis:v})}/><Check label="Vitamin K given/considered" checked={s.vitk} onChange={v=>setS({...s,vitk:v})}/><Check label="TEG/ROTEM available" checked={s.teg} onChange={v=>setS({...s,teg:v})}/><Check label="Lupus anticoagulant positive" checked={s.la} onChange={v=>setS({...s,la:v})}/></div></div><div className="result-grid"><Output title="Rebalanced hemostasis frame" tone="highlight">{list(ideas)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>}
 
-function getAntiXaInterpretation(v) {
-  const timing = v.antiXaTiming;
-  const cal = v.antiXaDrug;
-  const timingText = timing === 'peak-correct' ? 'timing appears appropriate' : timing === 'too-early' ? 'sample may be too early and falsely high' : timing === 'too-late' ? 'sample may be late/trough and falsely low for peak interpretation' : timing === 'steady-state' ? 'steady state confirmed' : 'timing is unknown, so interpretation is limited';
-  const calText = cal === 'unknown' ? 'assay calibration is unknown; result may not be interpretable' : `${cal.toUpperCase()} calibration selected`;
-  return `Anti-Xa interpretation: ${calText}; ${timingText}. Always interpret with dose schedule, last dose time, renal function, body weight, pregnancy status, albumin/protein loss, and antithrombin status.`;
-}
-
-function HyponatremiaTool() {
-  const [v, setV] = useState({ sodium:'', symptoms:'none', serumOsm:'', urineOsm:'', urineNa:'', glucose:false, thiazide:false, lowSolute:false, polydipsia:false, hypovolemia:false, edema:false, siadh:false, adrenalThyroid:false, lowUric:false, ods:false });
-  const so = Number(v.serumOsm), uo = Number(v.urineOsm), un = Number(v.urineNa), na = Number(v.sodium);
-  const out = [];
-  if (v.symptoms === 'severe') out.push('Severe symptoms: urgent hypertonic saline pathway and monitored correction are safety priorities.');
-  if (na && na < 120) out.push('Profound hyponatremia: high-risk situation; define chronicity and correction limits.');
-  if (so && so >= 275) out.push('Not clearly hypotonic: consider hyperglycemia, mannitol, pseudohyponatremia, or other osmotic drivers before SIADH labeling.');
-  if (v.glucose) out.push('Correct sodium for hyperglycemia/osmotic driver before interpreting severity.');
-  if (uo && uo < 100) out.push('Urine Osm <100: ADH suppressed pattern; consider primary polydipsia, low solute intake, or reset after water load.');
-  if (uo && uo >= 100 && un < 30) out.push('Urine Osm ≥100 with urine Na <30: consider low effective arterial volume, hypovolemia, heart failure/cirrhosis/nephrosis, or diuretic confounding.');
-  if (uo && uo >= 100 && un >= 30) out.push('Urine Osm ≥100 with urine Na ≥30: SIADH, adrenal insufficiency, hypothyroidism, renal salt wasting, or diuretic effect are key pathways.');
-  if (v.thiazide) out.push('Thiazide-associated hyponatremia can mimic SIADH; stop culprit and reassess.');
-  if (v.lowSolute) out.push('Low solute intake/beer potomania pattern: correction can be brisk once solute is given; monitor closely.');
-  if (v.polydipsia) out.push('Primary polydipsia possible, especially if urine osmolality is very low.');
-  if (v.hypovolemia) out.push('Hypovolemia clues: treat volume depletion carefully and monitor for rapid water diuresis.');
-  if (v.edema) out.push('Edematous/low effective arterial volume state: manage underlying HF/cirrhosis/nephrosis; fluid restriction/diuresis strategy depends on context.');
-  if (v.siadh) out.push('SIADH clues present: confirm hypotonicity, non-suppressed urine Osm, urine Na usually ≥30, and exclude adrenal/thyroid mimics.');
-  if (!v.adrenalThyroid) out.push('Before labeling SIADH, check/exclude adrenal insufficiency and clinically relevant hypothyroidism.');
-  if (v.lowUric) out.push('Low uric acid/raised FEUA can support SIADH but is not standalone diagnostic.');
-  if (v.ods) out.push('ODS risk: use conservative correction targets and frequent sodium monitoring.');
-  if (!out.length) out.push('Enter serum/urine data and clinical context to generate a structured pathway.');
-  return (
-    <section className="section tool-body">
-      <div className="form-grid">
-        <label>Serum sodium<input type="number" value={v.sodium} onChange={e=>setV({...v, sodium:e.target.value})} /></label>
-        <label>Symptoms<select value={v.symptoms} onChange={e=>setV({...v, symptoms:e.target.value})}><option value="none">None/mild</option><option value="moderate">Moderate</option><option value="severe">Severe</option></select></label>
-        <label>Serum osmolality<input type="number" value={v.serumOsm} onChange={e=>setV({...v, serumOsm:e.target.value})} /></label>
-        <label>Urine osmolality<input type="number" value={v.urineOsm} onChange={e=>setV({...v, urineOsm:e.target.value})} /></label>
-        <label>Urine sodium<input type="number" value={v.urineNa} onChange={e=>setV({...v, urineNa:e.target.value})} /></label>
-      </div>
-      <div className="check-grid">
-        {['glucose','thiazide','lowSolute','polydipsia','hypovolemia','edema','siadh','adrenalThyroid','lowUric','ods'].map(k => <Check key={k} label={hypoLabels[k]} checked={v[k]} onChange={e=>setV({...v,[k]:e.target.checked})} />)}
-      </div>
-      <Output title="Hyponatremia output" items={out} />
-    </section>
-  );
-}
-const hypoLabels = { glucose:'Hyperglycemia/osmotic driver', thiazide:'Thiazide/diuretic effect', lowSolute:'Low solute intake', polydipsia:'Polydipsia suspected', hypovolemia:'Hypovolemia clues', edema:'Edema/low effective arterial volume', siadh:'SIADH clues', adrenalThyroid:'Adrenal/thyroid mimics excluded', lowUric:'Low uric acid / high FEUA support', ods:'ODS high-risk features' };
-
-function Check({ label, checked, onChange, disabled=false }) { return <label className={`check ${disabled?'disabled':''}`}><input type="checkbox" checked={checked} onChange={onChange} disabled={disabled} /><span>{label}</span></label>; }
-function ScoreBox({ label, value }) { return <div className="score-box"><span>{label}</span><strong>{value}</strong></div>; }
-function Output({ title, items }) { return <div className="output"><h3>{title}</h3><ul>{items.map((i, idx) => <li key={idx}>{i}</li>)}</ul><p className="small">Clinician decision support only. Use local policy, patient-specific judgment, and specialist input when needed.</p></div>; }
-function CopyBox({ text }) { const [ok,setOk]=useState(false); return <div className="copy-box"><textarea readOnly value={text} /><button className="primary" onClick={()=>{navigator.clipboard && navigator.clipboard.writeText(text); setOk(true); setTimeout(()=>setOk(false),1500);}}>{ok?'Copied':'Copy note'}</button></div>; }
-function Footer() { return <footer><span>© Fahad Almalki, MD</span><span><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></span></footer>; }
+function ToolShell({children, disclaimer}){return <section className="section tool-shell"><div className="disclaimer"><b>Clinician-use note:</b> {disclaimer || 'Decision support only. Verify with local policy, patient-specific details, and specialist input when needed.'}</div>{children}</section>}
+function Footer(){return <footer><div><b>Fahad Almalki, MD</b><p>Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div><div><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></div></footer>}
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
