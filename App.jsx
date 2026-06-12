@@ -15,6 +15,25 @@ const toolMeta = [
   { id: 'vascular-clinic-pathways', title: 'Vascular Clinic Pathways', label: 'Clinic visit standardization', subtitle: 'Junior-friendly visit pathways for suspected PAD, confirmed PAD, chronic VTE/arterial thrombosis, newly diagnosed VTE/arterial thrombosis, CLTI red flags, antithrombotic choices, workup, counseling, follow-up, and copy-ready clinic notes.' }
 ];
 
+// Soft access gate for GitHub Pages.
+// This is not true security because static-site code is public.
+// For true registered-user access, put the tools behind Cloudflare Access or another server-side auth layer.
+const ACCESS_USERNAME = 'fahad';
+const ACCESS_PASSWORD = 'ChangeThisPassword2026!';
+
+const toolCategories = [
+  {
+    title: 'Vascular / Thrombosis Tools',
+    description: 'Antithrombotic decisions, thrombosis workup, PAD clinic pathways, perioperative anticoagulation, and VTE prophylaxis.',
+    ids: ['antithrombotic', 'af', 'periop-doac', 'unusual-thrombosis', 'vte', 'surgical-vte', 'vascular-clinic-pathways']
+  },
+  {
+    title: 'General Internal Medicine Tools',
+    description: 'Electrolytes, renal interpretation, perioperative medicine, and complex inpatient diagnostic reasoning.',
+    ids: ['hyponatremia', 'hypokalemia', 'proteinuria', 'cirrhosis', 'mins']
+  }
+];
+
 function navigate(route) {
   window.location.hash = route;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -40,9 +59,9 @@ function Header() {
 function Home({ route }) {
   React.useEffect(() => { if (route && route !== 'home') { const el = document.getElementById(route); if (el) setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'start' }), 50); } }, [route]);
   return <main>
-    <section id="home" className="hero"><div className="hero-inner"><h1>Fahad Almalki, MD</h1><p className="hero-subtitle">Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div></section>
+    <section id="home" className="hero compact-hero"><div className="hero-inner"><p className="hero-subtitle hero-subtitle-only">General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div></section>
     <section className="section intro-grid"><div><p className="eyebrow">Professional platform</p><h2>A home for clinical tools, teaching, and systems work.</h2><p>This site brings together practical decision-support tools, clinical reasoning education, quality-improvement work, and vascular medicine resources.</p></div><div className="focus-card"><p className="eyebrow">Current focus</p><ul><li>Antithrombotic decision support</li><li>Electrolyte and diagnostic reasoning tools</li><li>Resident clinical reasoning education</li><li>Inpatient quality and transitions of care</li></ul></div></section>
-    <section id="clinical-tools" className="section tinted"><p className="eyebrow">Clinical Tools</p><h2>Bedside decision-support tools</h2><p className="section-lead">Each tool opens as its own page and includes a back/home button. The goal is not to replace judgment; it is to force the right questions at the bedside.</p><div className="cards">{toolMeta.map(tool => <ToolCard key={tool.id} tool={tool} />)}</div></section>
+    <section id="clinical-tools" className="section tinted"><p className="eyebrow">Clinical Tools</p><h2>Bedside decision-support tools</h2><p className="section-lead">Each tool opens as its own page and includes a back/home button. The goal is not to replace judgment; it is to force the right questions at the bedside.</p><ToolGroups /></section>
     <section id="crft" className="section"><p className="eyebrow">CRFT</p><h2>Clinical Reasoning Framework for Teaching</h2><p>CRFT makes resident reasoning visible: problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><div className="two-col"><InfoBlock title="Teaching logic" items={['Start with the syndrome, not the diagnosis.','Prioritize dangerous diagnoses before common diagnoses.','Interpret data by asking: does this change probability or severity?','Anticipate what can deteriorate overnight.','End with metacognition: what would change my mind?']} /><InfoBlock title="Use cases" items={['Daily resident cases','Evaluator scoring','Feedback calibration','Diagnostic delay review','QI teaching archive']} /></div></section>
     <section id="qi-projects" className="section tinted"><p className="eyebrow">QI Projects</p><h2>Systems that make good care easier</h2><div className="cards"><SimpleCard title="VTE Prophylaxis Standardization" text="Clarify prophylaxis status, contraindications, reassessment, and dashboard reliability for medical inpatients." /><SimpleCard title="CTU Readmission Review" text="Classify early readmissions by diagnostic uncertainty, medication issues, follow-up gaps, social barriers, and discharge readiness." /><SimpleCard title="Perioperative MINS Screening" text="Structured postoperative myocardial injury screening, interpretation, and follow-up pathways." /></div></section>
     <section id="vascular-medicine" className="section"><p className="eyebrow">Vascular Medicine</p><h2>Thrombosis, PAD, antithrombotic therapy, and vascular risk.</h2><p>Resources here emphasize practical bedside reasoning: when thrombosis is real anticoagulant failure, when it is pseudo-failure, when the drug is wrong for the biology, and when vascular red flags suggest a deeper diagnosis.</p></section>
@@ -51,11 +70,34 @@ function Home({ route }) {
   </main>;
 }
 function ToolCard({ tool }) { return <article className="card tool-card"><p className="tag">{tool.label}</p><h3>{tool.title}</h3><p>{tool.subtitle}</p><button className="primary" onClick={() => navigate('tool/' + tool.id)}>Open tool</button></article>; }
+function ToolGroups() {
+  return <div className="tool-groups">{toolCategories.map(group => <section className="tool-group" key={group.title}><div className="tool-group-heading"><p className="eyebrow">{group.title}</p><p>{group.description}</p></div><div className="cards">{group.ids.map(id => toolMeta.find(t => t.id === id)).filter(Boolean).map(tool => <ToolCard key={tool.id} tool={tool} />)}</div></section>)}</div>;
+}
 function SimpleCard({ title, text }) { return <article className="card"><h3>{title}</h3><p>{text}</p></article>; }
 function InfoBlock({ title, items }) { return <div className="info-block"><h3>{title}</h3><ul>{items.map(i => <li key={i}>{i}</li>)}</ul></div>; }
 function ToolPage({ id }) {
   const meta = toolMeta.find(t => t.id === id);
-  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}{id === 'vascular-clinic-pathways' && <VascularClinicPathwaysTool />}</main>;
+  const [authed, setAuthed] = useState(() => localStorage.getItem('fahadToolsAccess') === 'true');
+  if (!authed) {
+    return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><h1>{meta?.title || 'Protected tool'}</h1><p>{meta?.subtitle}</p></section><AccessGate onSuccess={() => setAuthed(true)} /></main>;
+  }
+  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><button className="ghost" onClick={() => { localStorage.removeItem('fahadToolsAccess'); setAuthed(false); }}>Log out tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}{id === 'vascular-clinic-pathways' && <VascularClinicPathwaysTool />}</main>;
+}
+function AccessGate({ onSuccess }) {
+  const [u, setU] = useState('');
+  const [p, setP] = useState('');
+  const [err, setErr] = useState('');
+  function submit(e) {
+    e.preventDefault();
+    if (u === ACCESS_USERNAME && p === ACCESS_PASSWORD) {
+      localStorage.setItem('fahadToolsAccess', 'true');
+      setErr('');
+      onSuccess();
+    } else {
+      setErr('Incorrect username or password.');
+    }
+  }
+  return <section className="section access-section"><div className="access-card"><p className="eyebrow">Protected clinical tools</p><h2>Sign in to open this tool</h2><p className="muted">The home page remains public. Tool pages are gated for invited users.</p><form onSubmit={submit} className="access-form"><label>Username<input value={u} onChange={e=>setU(e.target.value)} autoComplete="username" /></label><label>Password<input type="password" value={p} onChange={e=>setP(e.target.value)} autoComplete="current-password" /></label>{err && <p className="error-text">{err}</p>}<button className="primary" type="submit">Open tool</button></form><p className="small-note">Technical note: this is a static-site gate for convenience. Do not place confidential patient data or restricted content here.</p></div></section>;
 }
 
 function Field({ label, children, hint }) { return <label className="field"><span>{label}</span>{children}{hint && <small>{hint}</small>}</label>; }
