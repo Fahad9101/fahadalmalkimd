@@ -11,7 +11,8 @@ const toolMeta = [
   { id: 'cirrhosis', title: 'Cirrhosis Coagulation / Rebalanced Hemostasis Tool', label: 'Coagulation reasoning', subtitle: 'INR interpretation, fibrinogen/platelet thresholds, procedure/bleeding context, thrombosis paradox, TEG/ROTEM, vitamin K, lupus anticoagulant, factor VIII/vWF logic.' },
   { id: 'periop-doac', title: 'Perioperative DOAC Interruption Planner', label: 'PAUSE-style perioperative anticoagulation', subtitle: 'Procedure bleeding risk, neuraxial flag, DOAC type, renal function, pre-op hold timing, post-op restart timing, and bridging cautions.' },
   { id: 'unusual-thrombosis', title: 'Unusual-Site Thrombosis Workup Tool', label: 'Niche vascular medicine workup', subtitle: 'Splanchnic, hepatic/portal, cerebral venous, renal vein, upper-extremity, young arterial thrombosis, OCP/estrogen, Lp(a), APS, JAK2/MPN, PNH, malignancy, vasculitis, and anatomic triggers.' },
-  { id: 'mins', title: 'MINS / Post-op Troponin Interpretation Tool', label: 'Perioperative GIM', subtitle: 'Postoperative troponin elevation, ischemic vs non-ischemic triggers, ECG/symptoms, anemia, sepsis, PE, hypotension, repeat testing, and follow-up actions.' }
+  { id: 'mins', title: 'MINS / Post-op Troponin Interpretation Tool', label: 'Perioperative GIM', subtitle: 'Postoperative troponin elevation, ischemic vs non-ischemic triggers, ECG/symptoms, anemia, sepsis, PE, hypotension, repeat testing, and follow-up actions.' },
+  { id: 'vascular-clinic-pathways', title: 'Vascular Clinic Pathways', label: 'Clinic visit standardization', subtitle: 'Junior-friendly visit pathways for suspected PAD, confirmed PAD, chronic VTE/arterial thrombosis, newly diagnosed VTE/arterial thrombosis, CLTI red flags, antithrombotic choices, workup, counseling, follow-up, and copy-ready clinic notes.' }
 ];
 
 function navigate(route) {
@@ -54,7 +55,7 @@ function SimpleCard({ title, text }) { return <article className="card"><h3>{tit
 function InfoBlock({ title, items }) { return <div className="info-block"><h3>{title}</h3><ul>{items.map(i => <li key={i}>{i}</li>)}</ul></div>; }
 function ToolPage({ id }) {
   const meta = toolMeta.find(t => t.id === id);
-  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}</main>;
+  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}{id === 'vascular-clinic-pathways' && <VascularClinicPathwaysTool />}</main>;
 }
 
 function Field({ label, children, hint }) { return <label className="field"><span>{label}</span>{children}{hint && <small>{hint}</small>}</label>; }
@@ -285,6 +286,140 @@ function MINSTool(){
   else actions.push('If high-risk patient and within local screening pathway, continue scheduled postoperative troponin surveillance.');
   const note=`Post-op troponin assessment: day ${s.postday}, hs-troponin ${s.troponin||'not entered'} with ULN ${s.uln}, delta ${s.delta||'not entered'}. Category: ${category}. Reasoning: ${reasoning.join(' ')} Actions: ${actions.join(' ')}`;
   return <ToolShell disclaimer="MINS tool for postoperative myocardial injury triage. It does not replace ACS/PE/sepsis/bleeding evaluation."><div className="tool-grid"><div className="panel"><h2>Troponin + timing</h2><Field label="Post-op day"><Select value={s.postday} onChange={v=>setS({...s,postday:v})}><option value="0">Day 0</option><option value="1">Day 1</option><option value="2">Day 2</option><option value="3">Day 3</option><option value=">3">After day 3</option></Select></Field><Field label="hs-Troponin value"><Num value={s.troponin} onChange={v=>setS({...s,troponin:v})}/></Field><Field label="Assay ULN / 99th percentile"><Num value={s.uln} onChange={v=>setS({...s,uln:v})}/></Field><Field label="Delta/change if known"><Num value={s.delta} onChange={v=>setS({...s,delta:v})}/></Field><Check label="Chest pain, dyspnea, shock, arrhythmia, or ischemic symptoms" checked={s.symptoms} onChange={v=>setS({...s,symptoms:v})}/><Check label="New ischemic ECG change" checked={s.ecg} onChange={v=>setS({...s,ecg:v})}/></div><div className="panel"><h2>Competing causes / triggers</h2><Check label="Hypotension/tachycardia/hypoxia" checked={s.hypotension} onChange={v=>setS({...s,hypotension:v})}/><Check label="Anemia" checked={s.anemia} onChange={v=>setS({...s,anemia:v})}/><Check label="Bleeding" checked={s.bleeding} onChange={v=>setS({...s,bleeding:v})}/><Check label="Sepsis/infection" checked={s.sepsis} onChange={v=>setS({...s,sepsis:v})}/><Check label="PE concern" checked={s.pe} onChange={v=>setS({...s,pe:v})}/><Check label="AKI" checked={s.aki} onChange={v=>setS({...s,aki:v})}/><Check label="Known CAD / vascular disease" checked={s.cad} onChange={v=>setS({...s,cad:v})}/><Check label="CKD / chronically elevated troponin possible" checked={s.ckd} onChange={v=>setS({...s,ckd:v})}/></div></div><div className="result-grid"><Output title="Interpretation" tone="highlight"><h4>{category}</h4><p>Troponin above ULN: <b>{abnormal?'yes':'no/unknown'}</b>. Dynamic change entered: <b>{dynamic?'yes':'no/unknown'}</b>.</p></Output><Output title="Reasoning that should stick">{list(reasoning)}</Output><Output title="Next bedside actions" tone="warning">{list(actions)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>
+}
+
+
+function VascularClinicPathwaysTool(){
+  const [s,setS]=useState({pathway:'suspected-pad',acuteLimb:false,restPain:false,wound:false,gangrene:false,infection:false,abi:'',tbi:'',exertional:true,atypical:false,pulses:false,diabetes:false,ckd:false,smoker:false,ldl:'',statin:false,antiplatelet:false,bleed:false,hf:false,revasc:false,af:false,fullAC:false,priorVte:false,newVte:false,unprovoked:false,cancer:false,ocp:false,preg:false,arterial:false,young:false,recurrent:false,aps:false,mpn:false,pnh:false,lpa:false,dyspnea:false,pts:false,renal:'normal'});
+  const padRed=[]; const diagnostics=[]; const treatment=[]; const education=[]; const referrals=[]; const follow=[]; const dontmiss=[];
+  const isPADPath=s.pathway==='suspected-pad'||s.pathway==='confirmed-pad'||s.pathway==='clti';
+  const isThrombosisPath=s.pathway==='new-thrombosis'||s.pathway==='chronic-thrombosis';
+  if(s.acuteLimb) padRed.push('Acute limb ischemia red flag: sudden pain/pallor/pulselessness/poikilothermia/paresthesia/paralysis → emergency vascular surgery/ED pathway, do not manage as routine clinic PAD.');
+  if(s.restPain||s.wound||s.gangrene) padRed.push('CLTI red flag: ischemic rest pain, nonhealing ulcer, gangrene, or tissue loss → urgent vascular imaging/referral and foot/wound protection.');
+  if(s.infection&&s.wound) padRed.push('Wound + infection in suspected ischemic limb: source control/antibiotics + urgent perfusion assessment; infection can convert a slow PAD visit into limb-threatening disease.');
+
+  if(s.pathway==='suspected-pad'){
+    diagnostics.push('Start with syndrome: exertional calf/thigh/buttock symptoms, walking distance, relief with rest, pulses, bruits, skin/foot exam, wounds, neurologic/spine mimics.');
+    diagnostics.push('Order resting ABI with Doppler waveforms. If ABI is noncompressible/high or diabetes/CKD suggests calcified vessels, add TBI/toe pressure.');
+    diagnostics.push('If symptoms are classic but resting ABI normal, request exercise ABI or treadmill testing if available.');
+    diagnostics.push('Do not jump to CTA/MRA unless PAD is confirmed and revascularization is being considered, or CLTI/acute limb concern exists.');
+    treatment.push('Begin risk reduction while confirming diagnosis: smoking cessation, BP/diabetes optimization, lipid intensification if vascular risk is high, walking program, foot care.');
+    follow.push('Follow up with ABI/TBI results and decide: no PAD/mimic, confirmed PAD medical therapy, or urgent CLTI/revascularization pathway.');
+  }
+  if(s.pathway==='confirmed-pad'){
+    diagnostics.push('Define PAD phenotype: asymptomatic ABI-only, claudication, lifestyle-limiting claudication, post-revascularization, or CLTI. Management intensity depends on phenotype.');
+    treatment.push('Ensure high-intensity statin or maximally tolerated lipid therapy; document LDL and intensify if above local vascular target.');
+    treatment.push('Use single antiplatelet therapy for symptomatic PAD unless contraindicated; do not use full-dose anticoagulation for PAD alone without another indication.');
+    if(!s.bleed) treatment.push('Consider vascular-dose rivaroxaban 2.5 mg BID + aspirin in selected symptomatic PAD or post-revascularization patients with acceptable bleeding risk and no need for full-dose anticoagulation.');
+    if(s.hf) treatment.push('Avoid cilostazol in heart failure.'); else treatment.push('For lifestyle-limiting claudication despite exercise/risk-factor therapy, cilostazol can be considered if no heart failure.');
+    treatment.push('Structured/supervised exercise therapy is treatment, not just advice: prescribe walking to moderate claudication, rest, repeat, with progression.');
+    referrals.push('Revascularization referral if CLTI, lifestyle-limiting claudication despite GDMT/exercise, or anatomy/imaging suggests treatable lesion.');
+    follow.push('Track walking distance, wound status, pulses, medication adherence, LDL, smoking, BP/diabetes, and interval vascular events.');
+  }
+  if(s.pathway==='clti'){
+    diagnostics.push('CLTI visit = limb-threat staging: wound location/depth, infection, ischemic rest pain, toe pressure/TBI, Doppler waveforms, neuropathy, diabetes/renal status.');
+    diagnostics.push('Obtain anatomic imaging if revascularization is being planned: duplex/CTA/MRA/angiography based on renal function, local pathway, and urgency.');
+    treatment.push('Protect the limb: offloading, wound care, infection treatment, pain control, avoid compression until arterial perfusion is understood, optimize antithrombotic/statin therapy.');
+    referrals.push('Urgent vascular surgery/interventional referral; wound/diabetic foot team if ulcer/infection; consider admission if infection, uncontrolled pain, rapidly progressive tissue loss, or social inability to protect limb.');
+    dontmiss.push('Do not debride aggressively or compress a severely ischemic limb without perfusion plan.');
+  }
+  if(s.pathway==='new-thrombosis'){
+    diagnostics.push('First classify the event: venous vs arterial, site, severity, provoked vs unprovoked, recurrence, unusual site, cancer-associated, pregnancy/OCP context, and whether this is acute vs chronic imaging.');
+    diagnostics.push('For VTE: assess PE severity, bleeding risk, renal/liver function, weight, drug interactions, cancer clues, APS clues, and need for admission vs outpatient treatment.');
+    diagnostics.push('For arterial thrombosis: separate embolic, atherosclerotic plaque, vasculitis, dissection/anatomic lesion, APS/MPN/PNH, and cardioembolic sources.');
+    treatment.push('Start appropriate anticoagulation promptly if VTE and no contraindication; choose DOAC vs LMWH vs warfarin based on renal/liver function, cancer, APS, pregnancy, drug interactions, adherence, and procedure needs.');
+    if(s.arterial) treatment.push('Arterial event requires antiplatelet/statin/vascular imaging/cardiac source evaluation; anticoagulation only if embolic/AF/VTE/APS or another clear indication.');
+    if(s.ocp||s.preg) treatment.push('Document estrogen/pregnancy/postpartum as provoking context; counsel to stop estrogen if appropriate and coordinate pregnancy-safe anticoagulation if relevant.');
+    if(s.young||s.recurrent||s.arterial) diagnostics.push('Targeted acquired thrombophilia workup is higher-yield than broad inherited panels: APS, JAK2/MPN, PNH when clues, Lp(a) for premature arterial disease, nephrotic syndrome, malignancy/local anatomy.');
+    follow.push('Before discharge/clinic close: define anticoagulant, dose, duration plan, follow-up date, bleeding precautions, return precautions, and pending tests owner.');
+  }
+  if(s.pathway==='chronic-thrombosis'){
+    diagnostics.push('Reconstruct the timeline: index event, provoking factor, imaging proof, anticoagulant history, recurrence vs residual clot, bleeding history, and patient preference.');
+    diagnostics.push('Classify duration decision: transient provoked, persistent risk factor, unprovoked, recurrent, cancer-associated, APS/high-risk thrombophilia, or anticoagulation failure.');
+    treatment.push('For unprovoked/recurrent/persistent-risk VTE, reassess extended anticoagulation unless bleeding risk outweighs benefit. For transient provoked VTE, document why stopping is reasonable after treatment phase.');
+    if(s.dyspnea) diagnostics.push('Dyspnea/exercise limitation after PE: screen for CTEPH/CTEPD with echo and V/Q-based pathway if persistent and unexplained.');
+    if(s.pts) treatment.push('Post-thrombotic symptoms: confirm no acute recurrence, assess venous obstruction/reflux, compression if tolerated, exercise/weight/skin care, and consider venous referral when severe.');
+    if(s.recurrent) diagnostics.push('Recurrent thrombosis on therapy: do not call it failure until adherence, dose, drug interactions, renal/liver function, absorption, weight, imaging chronicity, APS/cancer/MPN/PNH are checked.');
+    follow.push('Annual/interval review: ongoing indication, bleeding risk, renal/liver function, CBC, drug interactions, procedures, patient values, and whether dose reduction is appropriate for secondary prevention.');
+  }
+
+  if(isPADPath){
+    if(s.diabetes||s.ckd) diagnostics.push('Diabetes/CKD can make ABI falsely high/noncompressible: TBI/toe pressure and waveforms matter.');
+    if(s.smoker) treatment.push('Smoking cessation is limb therapy: document readiness, offer pharmacotherapy/referral, and revisit every visit.');
+    education.push('Teach the PAD triad to patients: walking program, foot protection, and cardiovascular risk reduction. PAD is a heart/brain risk marker, not only a leg problem.');
+    dontmiss.push('Always remove shoes/socks and inspect feet. A PAD visit without a foot exam can miss CLTI.');
+  }
+  if(isThrombosisPath){
+    if(s.aps) dontmiss.push('APS clue: arterial/recurrent thrombosis, pregnancy morbidity, thrombocytopenia/livedo/prolonged aPTT. Avoid reflex DOAC in high-risk APS.');
+    if(s.mpn) diagnostics.push('MPN/JAK2 clue: erythrocytosis, thrombocytosis, leukocytosis, splenomegaly, splanchnic/Budd–Chiari thrombosis.');
+    if(s.pnh) diagnostics.push('PNH clue: unusual-site thrombosis + hemolysis/cytopenias/dark urine/high LDH/low haptoglobin.');
+    if(s.lpa) diagnostics.push('Lp(a) is most relevant in premature/recurrent arterial disease or strong family/premature ASCVD phenotype.');
+    education.push('Teach the patient the anticoagulation plan in one sentence: why they are taking it, how long, what bleeding signs matter, and who owns follow-up.');
+  }
+  const clinicClose=['Problem representation documented in one line.','Red flags addressed before routine management.','Medication reconciliation completed: antiplatelet/anticoagulant/statin/NSAIDs/interactions.','Labs/imaging ordered with a named reason, not a reflex panel.','Follow-up interval and escalation instructions documented.'];
+  const selectedPath={
+    'suspected-pad':'Suspected PAD visit', 'confirmed-pad':'Confirmed PAD visit', 'clti':'CLTI / limb-threat pathway', 'new-thrombosis':'New VTE or arterial thrombosis visit', 'chronic-thrombosis':'Chronic VTE / arterial thrombosis follow-up'
+  }[s.pathway];
+  const note=`Vascular clinic pathway: ${selectedPath}. Red flags: ${padRed.join(' ')||'none selected'}. Diagnostics: ${diagnostics.join(' ')} Treatment/plan: ${treatment.join(' ')} Referrals: ${referrals.join(' ')||'none selected'} Follow-up: ${follow.join(' ')}.`;
+  return <ToolShell disclaimer="Clinic pathway support for clinician use. This is designed to standardize vascular clinic visits for juniors; adapt to local referral pathways, imaging availability, and specialist input.">
+    <div className="tool-grid">
+      <div className="panel"><h2>Choose visit pathway</h2>
+        <Field label="Clinic pathway"><Select value={s.pathway} onChange={v=>setS({...s,pathway:v})}>
+          <option value="suspected-pad">Suspected PAD</option><option value="confirmed-pad">Confirmed PAD</option><option value="clti">CLTI / limb-threat</option><option value="new-thrombosis">New VTE or arterial thrombosis</option><option value="chronic-thrombosis">Chronic VTE / arterial thrombosis follow-up</option>
+        </Select><HelpText>The aim is to make the visit reproducible: identify danger, classify phenotype, order the right tests, start standard care, and close the loop.</HelpText></Field>
+        <Check label="Acute limb ischemia concern" checked={s.acuteLimb} onChange={v=>setS({...s,acuteLimb:v})} help="Sudden pain, pallor, pulselessness, poikilothermia, paresthesia, paralysis = emergency, not routine clinic."/>
+        <Check label="Rest pain" checked={s.restPain} onChange={v=>setS({...s,restPain:v})}/>
+        <Check label="Nonhealing wound/ulcer" checked={s.wound} onChange={v=>setS({...s,wound:v})}/>
+        <Check label="Gangrene/tissue loss" checked={s.gangrene} onChange={v=>setS({...s,gangrene:v})}/>
+        <Check label="Wound infection/cellulitis" checked={s.infection} onChange={v=>setS({...s,infection:v})}/>
+      </div>
+      <div className="panel"><h2>PAD phenotype inputs</h2>
+        <Field label="ABI if known"><Num value={s.abi} onChange={v=>setS({...s,abi:v})} step="0.01"/><HelpText>ABI ≤0.90 supports PAD; very high/noncompressible ABI needs toe pressure/TBI/waveforms.</HelpText></Field>
+        <Field label="TBI/toe pressure if known"><Num value={s.tbi} onChange={v=>setS({...s,tbi:v})} step="0.01"/></Field>
+        <Check label="Exertional leg symptoms relieved by rest" checked={s.exertional} onChange={v=>setS({...s,exertional:v})}/>
+        <Check label="Atypical leg symptoms / mimic possible" checked={s.atypical} onChange={v=>setS({...s,atypical:v})}/>
+        <Check label="Reduced/absent pulses or bruits" checked={s.pulses} onChange={v=>setS({...s,pulses:v})}/>
+        <Check label="Diabetes" checked={s.diabetes} onChange={v=>setS({...s,diabetes:v})}/>
+        <Check label="CKD" checked={s.ckd} onChange={v=>setS({...s,ckd:v})}/>
+        <Check label="Current smoker" checked={s.smoker} onChange={v=>setS({...s,smoker:v})}/>
+        <Field label="LDL if known"><Num value={s.ldl} onChange={v=>setS({...s,ldl:v})} step="0.1"/></Field>
+      </div>
+      <div className="panel"><h2>Thrombosis phenotype inputs</h2>
+        <Check label="New VTE" checked={s.newVte} onChange={v=>setS({...s,newVte:v})}/>
+        <Check label="Unprovoked or persistent-risk event" checked={s.unprovoked} onChange={v=>setS({...s,unprovoked:v})}/>
+        <Check label="Prior VTE" checked={s.priorVte} onChange={v=>setS({...s,priorVte:v})}/>
+        <Check label="Arterial thrombosis phenotype" checked={s.arterial} onChange={v=>setS({...s,arterial:v})}/>
+        <Check label="Young patient / premature arterial disease" checked={s.young} onChange={v=>setS({...s,young:v})}/>
+        <Check label="Recurrent thrombosis" checked={s.recurrent} onChange={v=>setS({...s,recurrent:v})}/>
+        <Check label="Cancer concern" checked={s.cancer} onChange={v=>setS({...s,cancer:v})}/>
+        <Check label="OCP/estrogen or pregnancy/postpartum context" checked={s.ocp||s.preg} onChange={v=>setS({...s,ocp:v,preg:v})}/>
+        <Check label="Dyspnea after PE / CTEPH concern" checked={s.dyspnea} onChange={v=>setS({...s,dyspnea:v})}/>
+        <Check label="Post-thrombotic syndrome symptoms" checked={s.pts} onChange={v=>setS({...s,pts:v})}/>
+      </div>
+      <div className="panel"><h2>Medication / biology checks</h2>
+        <Check label="Already on statin" checked={s.statin} onChange={v=>setS({...s,statin:v})}/>
+        <Check label="Already on antiplatelet" checked={s.antiplatelet} onChange={v=>setS({...s,antiplatelet:v})}/>
+        <Check label="High bleeding risk" checked={s.bleed} onChange={v=>setS({...s,bleed:v})}/>
+        <Check label="Heart failure" checked={s.hf} onChange={v=>setS({...s,hf:v})} help="Cilostazol is avoided in heart failure."/>
+        <Check label="Prior revascularization" checked={s.revasc} onChange={v=>setS({...s,revasc:v})}/>
+        <Check label="AF or other full-dose anticoagulation indication" checked={s.af||s.fullAC} onChange={v=>setS({...s,af:v,fullAC:v})}/>
+        <Check label="APS clue" checked={s.aps} onChange={v=>setS({...s,aps:v})}/>
+        <Check label="MPN/JAK2 clue" checked={s.mpn} onChange={v=>setS({...s,mpn:v})}/>
+        <Check label="PNH clue" checked={s.pnh} onChange={v=>setS({...s,pnh:v})}/>
+        <Check label="Lp(a) clue" checked={s.lpa} onChange={v=>setS({...s,lpa:v})}/>
+      </div>
+    </div>
+    <div className="result-grid">
+      <Output title="Danger first" tone={padRed.length?'warning':'highlight'}>{list(padRed.length?padRed:['No emergency limb-threat flag selected. Still document pulses, feet/wounds, and return precautions.'])}</Output>
+      <Output title="Diagnostic pathway">{list(diagnostics)}</Output>
+      <Output title="Treatment / standard care" tone="highlight">{list(treatment.length?treatment:['Select a pathway and phenotype inputs to generate standard care prompts.'])}</Output>
+      <Output title="Referrals / escalation">{list(referrals.length?referrals:['No urgent referral generated by selected inputs; use local pathways if symptoms are severe, progressive, or diagnosis uncertain.'])}</Output>
+      <Output title="Patient education">{list(education)}</Output>
+      <Output title="Close-the-loop checklist">{list([...follow,...clinicClose])}</Output>
+      <Output title="Do not miss / resident teaching points" tone="warning">{list(dontmiss.length?dontmiss:['Do not close a vascular visit without classifying phenotype, checking antithrombotics/statin, and assigning follow-up for pending tests.'])}</Output>
+      <Output title="Copy-ready clinic note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output>
+    </div>
+  </ToolShell>
 }
 
 function ToolShell({children, disclaimer}){return <section className="section tool-shell"><div className="disclaimer"><b>Clinician-use note:</b> {disclaimer || 'Decision support only. Verify with local policy, patient-specific details, and specialist input when needed.'}</div>{children}</section>}
