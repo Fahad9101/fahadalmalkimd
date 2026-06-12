@@ -7,12 +7,13 @@ const toolMeta = [
   { id: 'vte', title: 'Medical Inpatient VTE Prophylaxis Tool', label: 'QI / hospital medicine', subtitle: 'Structured prophylaxis status: pharmacologic, mechanical, already anticoagulated, contraindicated, or reassess in 24 hours.' },
   { id: 'surgical-vte', title: 'Post-op DVT/VTE Prophylaxis Assistant', label: 'Surgical prophylaxis: orthopedic + non-orthopedic', subtitle: 'Thrombosis Canada-style bedside tool for orthopedic and non-orthopedic surgical prophylaxis: procedure type, bleeding risk, VTE risk, renal function, neuraxial timing, mechanical vs pharmacologic prophylaxis, and duration prompts.' },
   { id: 'hypokalemia', title: 'Hypokalemia + Acid–Base Engine', label: 'GIM electrolyte reasoning', subtitle: 'K replacement safety, magnesium, acid–base pattern, urine potassium/chloride, blood pressure, renal vs GI loss, RTA, diuretics, and mineralocorticoid states.' },
-  { id: 'proteinuria', title: 'Proteinuria With Normal Albumin Interpreter', label: 'Renal/GIM reasoning', subtitle: 'Quantifies proteinuria phenotype, explains why albumin may remain normal, flags nephrotic/nephritic patterns, and suggests next checks.' },
-  { id: 'cirrhosis', title: 'Cirrhosis Coagulation / Rebalanced Hemostasis Tool', label: 'Coagulation reasoning', subtitle: 'INR interpretation, fibrinogen/platelet thresholds, procedure/bleeding context, thrombosis paradox, TEG/ROTEM, vitamin K, lupus anticoagulant, factor VIII/vWF logic.' },
+  { id: 'proteinuria', title: 'Proteinuria Interpreter', label: 'Renal/GIM reasoning', subtitle: 'Proteinuria phenotype, nephrotic/nephritic flags, albumin context, systemic clues, and next bedside checks.' },
+  { id: 'cirrhosis', title: 'Coagulation in Cirrhosis', label: 'Coagulation reasoning', subtitle: 'INR interpretation, fibrinogen/platelet thresholds, procedure/bleeding context, thrombosis paradox, TEG/ROTEM, vitamin K, lupus anticoagulant, factor VIII/vWF logic.' },
   { id: 'periop-doac', title: 'Perioperative DOAC Interruption Planner', label: 'PAUSE-style perioperative anticoagulation', subtitle: 'Procedure bleeding risk, neuraxial flag, DOAC type, renal function, pre-op hold timing, post-op restart timing, and bridging cautions.' },
   { id: 'unusual-thrombosis', title: 'Unusual-Site Thrombosis Workup Tool', label: 'Niche vascular medicine workup', subtitle: 'Splanchnic, hepatic/portal, cerebral venous, renal vein, upper-extremity, young arterial thrombosis, OCP/estrogen, Lp(a), APS, JAK2/MPN, PNH, malignancy, vasculitis, and anatomic triggers.' },
-  { id: 'mins', title: 'MINS / Post-op Troponin Interpretation Tool', label: 'Perioperative GIM', subtitle: 'Postoperative troponin elevation, ischemic vs non-ischemic triggers, ECG/symptoms, anemia, sepsis, PE, hypotension, repeat testing, and follow-up actions.' },
-  { id: 'vascular-clinic-pathways', title: 'Vascular Clinic Pathways', label: 'Clinic visit standardization', subtitle: 'Junior-friendly visit pathways for suspected PAD, confirmed PAD, chronic VTE/arterial thrombosis, newly diagnosed VTE/arterial thrombosis, CLTI red flags, antithrombotic choices, workup, counseling, follow-up, and copy-ready clinic notes.' }
+  { id: 'mins', title: 'MINS Probability & Tracker Tool', label: 'Perioperative GIM', subtitle: 'Postoperative troponin probability framing, serial tracking, ischemic vs non-ischemic triggers, ECG/symptoms, anemia, sepsis, PE, hypotension, and follow-up actions.' },
+  { id: 'vascular-clinic-pathways', title: 'PAD / Vascular Clinic Pathway', label: 'PAD clinic visit standardization', subtitle: 'Junior-friendly pathway for suspected PAD, confirmed PAD, CLTI red flags, ABI/TBI logic, antithrombotic choices, risk-factor care, referral triggers, counseling, and follow-up.' },
+  { id: 'thrombosis-clinic-pathway', title: 'Thrombosis Clinic Pathway', label: 'VTE / arterial thrombosis clinic standardization', subtitle: 'Clinic pathway for new or chronic VTE/arterial thrombosis: provoked vs unprovoked, duration, recurrence, APS/MPN/PNH/Lp(a), CTEPH/PTS, antithrombotic choice, and follow-up.' }
 ];
 
 // Soft access gate for GitHub Pages.
@@ -23,13 +24,18 @@ const ACCESS_PASSWORD = 'ChangeThisPassword2026!';
 
 const toolCategories = [
   {
-    title: 'Vascular / Thrombosis Tools',
-    description: 'Antithrombotic decisions, thrombosis workup, PAD clinic pathways, perioperative anticoagulation, and VTE prophylaxis.',
-    ids: ['antithrombotic', 'af', 'periop-doac', 'unusual-thrombosis', 'vte', 'surgical-vte', 'vascular-clinic-pathways']
+    title: 'Vascular Medicine Clinic Tools',
+    description: 'PAD, CLTI, vascular risk reduction, limb-threat triage, referral triggers, and clinic standardization.',
+    ids: ['vascular-clinic-pathways']
+  },
+  {
+    title: 'Thrombosis / Antithrombotic Tools',
+    description: 'Anticoagulant safety, AF, DOAC interruption, unusual-site thrombosis, VTE prophylaxis, and thrombosis clinic follow-up.',
+    ids: ['antithrombotic', 'af', 'periop-doac', 'unusual-thrombosis', 'vte', 'surgical-vte', 'thrombosis-clinic-pathway']
   },
   {
     title: 'General Internal Medicine Tools',
-    description: 'Electrolytes, renal interpretation, perioperative medicine, and complex inpatient diagnostic reasoning.',
+    description: 'Electrolytes, renal interpretation, perioperative troponin reasoning, and complex inpatient diagnostic reasoning.',
     ids: ['hyponatremia', 'hypokalemia', 'proteinuria', 'cirrhosis', 'mins']
   }
 ];
@@ -53,16 +59,16 @@ function App() {
   return <><Header />{toolId ? <ToolPage id={toolId} /> : <Home route={route} />}<Footer /></>;
 }
 function Header() {
-  const links = [['home','Home'],['clinical-tools','Clinical Tools'],['crft','CRFT'],['qi-projects','QI Projects'],['vascular-medicine','Vascular Medicine'],['publications','Publications'],['contact','Contact']];
+  const links = [['home','Home'],['clinical-tools','Tools'],['crft','CRFT'],['qi-projects','QI Projects'],['vascular-medicine','Vascular Medicine'],['publications','Publications'],['contact','Contact']];
   return <header className="site-header"><button className="brand" onClick={() => navigate('home')}><span className="brand-mark">FA</span><span>Fahad Almalki, MD</span></button><nav>{links.map(([id,label]) => <button key={id} onClick={() => navigate(id)}>{label}</button>)}</nav></header>;
 }
 function Home({ route }) {
   React.useEffect(() => { if (route && route !== 'home') { const el = document.getElementById(route); if (el) setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'start' }), 50); } }, [route]);
   return <main>
-    <section id="home" className="hero compact-hero"><div className="hero-inner"><p className="hero-subtitle hero-subtitle-only">General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div></section>
-    <section className="section intro-grid"><div><p className="eyebrow">Professional platform</p><h2>A home for clinical tools, teaching, and systems work.</h2><p>This site brings together practical decision-support tools, clinical reasoning education, quality-improvement work, and vascular medicine resources.</p></div><div className="focus-card"><p className="eyebrow">Current focus</p><ul><li>Antithrombotic decision support</li><li>Electrolyte and diagnostic reasoning tools</li><li>Resident clinical reasoning education</li><li>Inpatient quality and transitions of care</li></ul></div></section>
-    <section id="clinical-tools" className="section tinted"><p className="eyebrow">Clinical Tools</p><h2>Bedside decision-support tools</h2><p className="section-lead">Each tool opens as its own page and includes a back/home button. The goal is not to replace judgment; it is to force the right questions at the bedside.</p><ToolGroups /></section>
-    <section id="crft" className="section"><p className="eyebrow">CRFT</p><h2>Clinical Reasoning Framework for Teaching</h2><p>CRFT makes resident reasoning visible: problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><div className="two-col"><InfoBlock title="Teaching logic" items={['Start with the syndrome, not the diagnosis.','Prioritize dangerous diagnoses before common diagnoses.','Interpret data by asking: does this change probability or severity?','Anticipate what can deteriorate overnight.','End with metacognition: what would change my mind?']} /><InfoBlock title="Use cases" items={['Daily resident cases','Evaluator scoring','Feedback calibration','Diagnostic delay review','QI teaching archive']} /></div></section>
+    <section id="home" className="hero compact-hero journey-hero"><div className="hero-inner"><p className="hero-subtitle hero-subtitle-only">General General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div></section>
+    <section className="section joyful-intro"><div className="learning-photo" aria-hidden="true"><div className="orbit orbit-one"></div><div className="orbit orbit-two"></div><div className="learning-icon">🩺</div><div className="spark spark-a">ECG</div><div className="spark spark-b">ABI</div><div className="spark spark-c">Na⁺</div></div><div className="joy-copy"><p className="eyebrow">Joyful bedside learning</p><h2>A practical journey through GIM and vascular medicine.</h2><p>Tools designed to make difficult clinical decisions easier to reason through, teach, and document at the bedside.</p></div></section>
+    <section id="clinical-tools" className="section tinted tools-section"><p className="eyebrow">Tools</p><h2>Bedside decision-support tools</h2><ToolGroups /></section>
+    <section id="crft" className="section crft-clean"><p className="eyebrow">CRFT</p><h2>Clinical Reasoning Framework for Teaching</h2></section>
     <section id="qi-projects" className="section tinted"><p className="eyebrow">QI Projects</p><h2>Systems that make good care easier</h2><div className="cards"><SimpleCard title="VTE Prophylaxis Standardization" text="Clarify prophylaxis status, contraindications, reassessment, and dashboard reliability for medical inpatients." /><SimpleCard title="CTU Readmission Review" text="Classify early readmissions by diagnostic uncertainty, medication issues, follow-up gaps, social barriers, and discharge readiness." /><SimpleCard title="Perioperative MINS Screening" text="Structured postoperative myocardial injury screening, interpretation, and follow-up pathways." /></div></section>
     <section id="vascular-medicine" className="section"><p className="eyebrow">Vascular Medicine</p><h2>Thrombosis, PAD, antithrombotic therapy, and vascular risk.</h2><p>Resources here emphasize practical bedside reasoning: when thrombosis is real anticoagulant failure, when it is pseudo-failure, when the drug is wrong for the biology, and when vascular red flags suggest a deeper diagnosis.</p></section>
     <section id="publications" className="section tinted"><p className="eyebrow">Publications</p><h2>Publications, abstracts, QI reports, and digital tools</h2><p>Selected work will be added as projects are completed, presented, or published.</p></section>
@@ -81,7 +87,7 @@ function ToolPage({ id }) {
   if (!authed) {
     return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><h1>{meta?.title || 'Protected tool'}</h1><p>{meta?.subtitle}</p></section><AccessGate onSuccess={() => setAuthed(true)} /></main>;
   }
-  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><button className="ghost" onClick={() => { localStorage.removeItem('fahadToolsAccess'); setAuthed(false); }}>Log out tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}{id === 'vascular-clinic-pathways' && <VascularClinicPathwaysTool />}</main>;
+  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><button className="ghost" onClick={() => { localStorage.removeItem('fahadToolsAccess'); setAuthed(false); }}>Log out tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}{id === 'vascular-clinic-pathways' && <VascularClinicPathwaysTool mode="vascular" />}{id === 'thrombosis-clinic-pathway' && <VascularClinicPathwaysTool mode="thrombosis" />}</main>;
 }
 function AccessGate({ onSuccess }) {
   const [u, setU] = useState('');
@@ -331,8 +337,9 @@ function MINSTool(){
 }
 
 
-function VascularClinicPathwaysTool(){
-  const [s,setS]=useState({pathway:'suspected-pad',acuteLimb:false,restPain:false,wound:false,gangrene:false,infection:false,abi:'',tbi:'',exertional:true,atypical:false,pulses:false,diabetes:false,ckd:false,smoker:false,ldl:'',statin:false,antiplatelet:false,bleed:false,hf:false,revasc:false,af:false,fullAC:false,priorVte:false,newVte:false,unprovoked:false,cancer:false,ocp:false,preg:false,arterial:false,young:false,recurrent:false,aps:false,mpn:false,pnh:false,lpa:false,dyspnea:false,pts:false,renal:'normal'});
+function VascularClinicPathwaysTool({mode='all'}={}){
+  const defaultPathway = mode==='thrombosis' ? 'new-thrombosis' : 'suspected-pad';
+  const [s,setS]=useState({pathway:defaultPathway,acuteLimb:false,restPain:false,wound:false,gangrene:false,infection:false,abi:'',tbi:'',exertional:true,atypical:false,pulses:false,diabetes:false,ckd:false,smoker:false,ldl:'',statin:false,antiplatelet:false,bleed:false,hf:false,revasc:false,af:false,fullAC:false,priorVte:false,newVte:false,unprovoked:false,cancer:false,ocp:false,preg:false,arterial:false,young:false,recurrent:false,aps:false,mpn:false,pnh:false,lpa:false,dyspnea:false,pts:false,renal:'normal'});
   const padRed=[]; const diagnostics=[]; const treatment=[]; const education=[]; const referrals=[]; const follow=[]; const dontmiss=[];
   const isPADPath=s.pathway==='suspected-pad'||s.pathway==='confirmed-pad'||s.pathway==='clti';
   const isThrombosisPath=s.pathway==='new-thrombosis'||s.pathway==='chronic-thrombosis';
@@ -407,8 +414,8 @@ function VascularClinicPathwaysTool(){
     <div className="tool-grid">
       <div className="panel"><h2>Choose visit pathway</h2>
         <Field label="Clinic pathway"><Select value={s.pathway} onChange={v=>setS({...s,pathway:v})}>
-          <option value="suspected-pad">Suspected PAD</option><option value="confirmed-pad">Confirmed PAD</option><option value="clti">CLTI / limb-threat</option><option value="new-thrombosis">New VTE or arterial thrombosis</option><option value="chronic-thrombosis">Chronic VTE / arterial thrombosis follow-up</option>
-        </Select><HelpText>The aim is to make the visit reproducible: identify danger, classify phenotype, order the right tests, start standard care, and close the loop.</HelpText></Field>
+          {mode !== 'thrombosis' && <option value="suspected-pad">Suspected PAD</option>}{mode !== 'thrombosis' && <option value="confirmed-pad">Confirmed PAD</option>}{mode !== 'thrombosis' && <option value="clti">CLTI / limb-threat</option>}{mode !== 'vascular' && <option value="new-thrombosis">New VTE or arterial thrombosis</option>}{mode !== 'vascular' && <option value="chronic-thrombosis">Chronic VTE / arterial thrombosis follow-up</option>}
+        </Select><HelpText>{mode==='vascular'?'Vascular clinic pathway: suspected PAD, confirmed PAD, or CLTI/limb-threat.':mode==='thrombosis'?'Thrombosis clinic pathway: new or chronic VTE/arterial thrombosis follow-up.':'The aim is to make the visit reproducible: identify danger, classify phenotype, order the right tests, start standard care, and close the loop.'}</HelpText></Field>
         <Check label="Acute limb ischemia concern" checked={s.acuteLimb} onChange={v=>setS({...s,acuteLimb:v})} help="Sudden pain, pallor, pulselessness, poikilothermia, paresthesia, paralysis = emergency, not routine clinic."/>
         <Check label="Rest pain" checked={s.restPain} onChange={v=>setS({...s,restPain:v})}/>
         <Check label="Nonhealing wound/ulcer" checked={s.wound} onChange={v=>setS({...s,wound:v})}/>
@@ -465,6 +472,6 @@ function VascularClinicPathwaysTool(){
 }
 
 function ToolShell({children, disclaimer}){return <section className="section tool-shell"><div className="disclaimer"><b>Clinician-use note:</b> {disclaimer || 'Decision support only. Verify with local policy, patient-specific details, and specialist input when needed.'}</div>{children}</section>}
-function Footer(){return <footer><div><b>Fahad Almalki, MD</b><p>Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div><div><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></div></footer>}
+function Footer(){return <footer><div><b>Fahad Almalki, MD</b><p>General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</p></div><div><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></div></footer>}
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);

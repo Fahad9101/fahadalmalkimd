@@ -26,3 +26,104 @@ pre { white-space: pre-wrap; word-break: break-word; }
 .error-text { color: #b42318; font-weight: 700; margin: .25rem 0 0; }
 .small-note { font-size: .82rem; color: var(--muted, #5d6d76); margin-top: 1rem; }
 .muted { color: var(--muted, #5d6d76); }
+
+/* Visual refresh: joyful GIM + vascular learning journey */
+:root{
+  --coral:#f9735b;
+  --gold:#f3b23c;
+  --sky:#dff7fb;
+  --mint:#ddf7ec;
+}
+body{
+  background:
+    radial-gradient(circle at 8% 8%, rgba(13,116,137,.08), transparent 28%),
+    radial-gradient(circle at 92% 18%, rgba(249,115,91,.07), transparent 26%),
+    linear-gradient(180deg,#ffffff 0%,#fbfdfe 55%,#f6fbfc 100%);
+}
+.journey-hero{
+  min-height: 270px;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(255,255,255,.20), transparent 13%),
+    radial-gradient(circle at 80% 30%, rgba(243,178,60,.16), transparent 16%),
+    linear-gradient(135deg, rgba(9,44,57,.98), rgba(9,86,98,.94)),
+    repeating-linear-gradient(120deg, rgba(255,255,255,.06) 0 2px, transparent 2px 110px);
+  overflow:hidden;
+  position:relative;
+}
+.journey-hero:after{
+  content:"";
+  position:absolute;
+  inset:auto -12% -70% -12%;
+  height:170px;
+  background:rgba(255,255,255,.12);
+  border-radius:50% 50% 0 0;
+}
+.journey-hero .hero-inner{position:relative;z-index:1;}
+.hero-subtitle-only{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:999px;
+  padding:16px 24px;
+  display:inline-block;
+  box-shadow:0 20px 60px rgba(0,0,0,.14);
+}
+.joyful-intro{
+  display:grid;
+  grid-template-columns:minmax(260px,420px) 1fr;
+  gap:44px;
+  align-items:center;
+  background:
+    linear-gradient(120deg, rgba(223,247,251,.75), rgba(255,255,255,.88)),
+    radial-gradient(circle at 35% 25%, rgba(243,178,60,.16), transparent 22%);
+}
+.learning-photo{
+  min-height:300px;
+  border-radius:34px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg, rgba(13,86,102,.92), rgba(10,116,137,.84)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Cg fill='none' stroke='rgba(255,255,255,.24)' stroke-width='3'%3E%3Cpath d='M80 360c120-95 225-115 365-55 95 40 170 28 255-72'/%3E%3Cpath d='M100 120h210v120H100zM490 95h190v120H490zM380 315h210v90H380z'/%3E%3Cpath d='M132 166h135M132 198h95M525 140h120M525 172h84M420 355h130'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:cover;
+  box-shadow:0 28px 70px rgba(15,37,48,.18);
+}
+.learning-photo:before{
+  content:"";
+  position:absolute;
+  inset:20px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:26px;
+}
+.learning-icon{
+  position:absolute;
+  left:50%;top:52%;transform:translate(-50%,-50%);
+  width:112px;height:112px;border-radius:34px;
+  display:grid;place-items:center;
+  font-size:54px;
+  background:rgba(255,255,255,.95);
+  box-shadow:0 18px 45px rgba(0,0,0,.18);
+}
+.orbit{position:absolute;border:1px dashed rgba(255,255,255,.45);border-radius:50%;}
+.orbit-one{width:250px;height:250px;left:50%;top:52%;transform:translate(-50%,-50%)}
+.orbit-two{width:360px;height:180px;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-14deg)}
+.spark{position:absolute;background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;letter-spacing:.12em;color:var(--teal);box-shadow:0 12px 26px rgba(0,0,0,.14)}
+.spark-a{left:46px;top:58px}.spark-b{right:42px;top:84px}.spark-c{left:62%;bottom:46px}
+.joy-copy h2{max-width:850px;}
+.joy-copy p:not(.eyebrow){font-size:1.12rem;color:var(--muted);line-height:1.7;max-width:720px;}
+.tools-section{background:
+  radial-gradient(circle at 8% 5%, rgba(13,116,137,.10), transparent 25%),
+  radial-gradient(circle at 92% 4%, rgba(249,115,91,.08), transparent 24%),
+  var(--pale);
+}
+.crft-clean{background:linear-gradient(120deg,#fff,#f8fcfd);}
+.tool-group-heading .eyebrow{color:var(--teal);}
+.tool-card{transition:transform .18s ease, box-shadow .18s ease;}
+.tool-card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(15,37,48,.11);}
+.tool-card:nth-child(3n+1){border-top:4px solid var(--teal2)}
+.tool-card:nth-child(3n+2){border-top:4px solid var(--gold)}
+.tool-card:nth-child(3n+3){border-top:4px solid var(--coral)}
+@media(max-width:850px){
+  .joyful-intro{grid-template-columns:1fr;}
+  .learning-photo{min-height:240px;}
+  .hero-subtitle-only{border-radius:24px;}
+}

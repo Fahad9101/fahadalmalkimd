@@ -1,5 +1,9 @@
-# Fahad Almalki, MD website
+Fahad Almalki, MD professional website.
 
-React-in-browser GitHub Pages site. This update removes the large name from the hero, categorizes clinical tools into Vascular/Thrombosis and General Internal Medicine, and adds a client-side access gate for tool pages.
-
-Important: the access gate is not true server-side security because GitHub Pages is static and repository code is public. For real registered-user access, use Cloudflare Access, GitHub Enterprise private Pages, or another server-side authentication layer.
+Update notes:
+- Hero simplified to subtitle only: General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement.
+- Removed extra homepage focus/text blocks and CRFT explanation cards.
+- Tools categorized into Vascular Medicine Clinic, Thrombosis/Antithrombotic, and General Internal Medicine.
+- Renamed Proteinuria Interpreter, Coagulation in Cirrhosis, and MINS Probability & Tracker Tool.
+- Split clinic pathway cards into PAD/Vascular Clinic Pathway and Thrombosis Clinic Pathway.
+- Added visual/joyful learning journey design elements.
