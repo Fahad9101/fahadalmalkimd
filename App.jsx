@@ -5,6 +5,7 @@ const toolMeta = [
   { id: 'antithrombotic', title: 'Antithrombotic Safety Assistant', label: 'Vascular medicine safety tool', subtitle: 'Thrombosis on anticoagulation, LMWH/fondaparinux exposure, anti-Xa interpretation, antithrombin deficiency, PF4/HIT/VITT spectrum, APS, DOAC danger zones, and vascular red flags.' },
   { id: 'hyponatremia', title: 'Hyponatremia Diagnostic Engine', label: 'GIM diagnostic engine', subtitle: 'Symptoms first, then tonicity, urine osmolality, urine sodium, volume context, low-solute/polydipsia, SIADH mimics, uric acid/FEUA, and correction-safety guardrails.' },
   { id: 'vte', title: 'Medical Inpatient VTE Prophylaxis Tool', label: 'QI / hospital medicine', subtitle: 'Structured prophylaxis status: pharmacologic, mechanical, already anticoagulated, contraindicated, or reassess in 24 hours.' },
+  { id: 'surgical-vte', title: 'Post-op DVT/VTE Prophylaxis Assistant', label: 'Surgical prophylaxis: orthopedic + non-orthopedic', subtitle: 'Thrombosis Canada-style bedside tool for orthopedic and non-orthopedic surgical prophylaxis: procedure type, bleeding risk, VTE risk, renal function, neuraxial timing, mechanical vs pharmacologic prophylaxis, and duration prompts.' },
   { id: 'hypokalemia', title: 'Hypokalemia + Acid–Base Engine', label: 'GIM electrolyte reasoning', subtitle: 'K replacement safety, magnesium, acid–base pattern, urine potassium/chloride, blood pressure, renal vs GI loss, RTA, diuretics, and mineralocorticoid states.' },
   { id: 'proteinuria', title: 'Proteinuria With Normal Albumin Interpreter', label: 'Renal/GIM reasoning', subtitle: 'Quantifies proteinuria phenotype, explains why albumin may remain normal, flags nephrotic/nephritic patterns, and suggests next checks.' },
   { id: 'cirrhosis', title: 'Cirrhosis Coagulation / Rebalanced Hemostasis Tool', label: 'Coagulation reasoning', subtitle: 'INR interpretation, fibrinogen/platelet thresholds, procedure/bleeding context, thrombosis paradox, TEG/ROTEM, vitamin K, lupus anticoagulant, factor VIII/vWF logic.' },
@@ -53,7 +54,7 @@ function SimpleCard({ title, text }) { return <article className="card"><h3>{tit
 function InfoBlock({ title, items }) { return <div className="info-block"><h3>{title}</h3><ul>{items.map(i => <li key={i}>{i}</li>)}</ul></div>; }
 function ToolPage({ id }) {
   const meta = toolMeta.find(t => t.id === id);
-  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}</main>;
+  return <main className="tool-page"><section className="tool-hero"><button className="ghost" onClick={() => navigate('home')}>← Back to Home</button><button className="ghost" onClick={() => navigate('clinical-tools')}>Tools</button><h1>{meta?.title || 'Tool'}</h1><p>{meta?.subtitle}</p></section>{id === 'af' && <AFTool />}{id === 'antithrombotic' && <AntithromboticTool />}{id === 'hyponatremia' && <HyponatremiaTool />}{id === 'vte' && <VTETool />}{id === 'surgical-vte' && <SurgicalVTETool />}{id === 'hypokalemia' && <HypokalemiaTool />}{id === 'proteinuria' && <ProteinuriaTool />}{id === 'cirrhosis' && <CirrhosisTool />}{id === 'periop-doac' && <PeriopDOACTool />}{id === 'unusual-thrombosis' && <UnusualThrombosisTool />}{id === 'mins' && <MINSTool />}</main>;
 }
 
 function Field({ label, children, hint }) { return <label className="field"><span>{label}</span>{children}{hint && <small>{hint}</small>}</label>; }
@@ -122,6 +123,93 @@ function HyponatremiaTool(){
 }
 
 function VTETool(){ const [s,setS]=useState({active:false, bleeding:false, plt:'180', renal:'normal', procedure:false, vte:false, cancer:false, immobile:false, infection:false, hf:false, prior:false, contraindication:false}); const plt=Number(s.plt); const risk=[s.vte,s.cancer,s.immobile,s.infection,s.hf,s.prior].filter(Boolean).length; let rec='No pharmacologic prophylaxis trigger selected; reassess daily.'; if(s.active) rec='Already therapeutically anticoagulated: do not add prophylaxis; document indication and reassess holds.'; else if(s.bleeding||s.contraindication||plt<50||s.procedure) rec='Hold pharmacologic prophylaxis; document reason and reassess within 24 hours. Use mechanical prophylaxis if appropriate.'; else if(risk>=1) rec='Order pharmacologic VTE prophylaxis unless local contraindication exists.'; const labs=[plt<50&&'Platelets <50: bleeding/hold threshold context; reassess trend and reason.',s.renal==='severe'&&'Severe renal dysfunction: choose UFH or renal-adjusted strategy per policy.',s.procedure&&'Procedure planned: specify timing of hold and restart.',s.bleeding&&'Active bleeding: document site, stability, and restart plan.']; const note=`VTE prophylaxis: active therapeutic anticoagulation ${s.active?'yes':'no'}, bleeding/hold ${s.bleeding||s.contraindication?'yes':'no'}, platelets ${plt}, renal ${s.renal}, risk factors ${risk}. Recommendation: ${rec}`; return <ToolShell><div className="tool-grid"><div className="panel"><h2>Status</h2><Check label="Already therapeutically anticoagulated" checked={s.active} onChange={v=>setS({...s,active:v})}/><Check label="Active bleeding" checked={s.bleeding} onChange={v=>setS({...s,bleeding:v})}/><Field label="Platelets"><Num value={s.plt} onChange={v=>setS({...s,plt:v})}/></Field><Field label="Renal function"><Select value={s.renal} onChange={v=>setS({...s,renal:v})}><option value="normal">normal/mild</option><option value="moderate">moderate CKD</option><option value="severe">severe CKD/AKI/dialysis</option></Select></Field><Check label="Procedure/neuraxial/operation planned" checked={s.procedure} onChange={v=>setS({...s,procedure:v})}/><Check label="Other contraindication documented" checked={s.contraindication} onChange={v=>setS({...s,contraindication:v})}/></div><div className="panel"><h2>VTE risk prompts</h2><Check label="Acute medical admission/reduced mobility" checked={s.immobile} onChange={v=>setS({...s,immobile:v})}/><Check label="Active cancer" checked={s.cancer} onChange={v=>setS({...s,cancer:v})}/><Check label="Infection/inflammation" checked={s.infection} onChange={v=>setS({...s,infection:v})}/><Check label="Heart/respiratory failure" checked={s.hf} onChange={v=>setS({...s,hf:v})}/><Check label="Prior VTE/thrombophilia" checked={s.prior} onChange={v=>setS({...s,prior:v})}/><Check label="Known acute VTE?" checked={s.vte} onChange={v=>setS({...s,vte:v})}/></div></div><div className="result-grid"><Output title="Prophylaxis status" tone="highlight"><h4>{rec}</h4></Output><Output title="Documentation prompts">{list(labs)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>}
+
+function SurgicalVTETool(){
+  const [s,setS]=useState({
+    surgery:'hip-knee', fracture:false, cancer:false, generalRisk:'moderate', bleedRisk:'moderate', neuraxial:false,
+    activeBleed:false, plt:'180', renal:'normal', priorVte:false, thrombophilia:false, immobile:true, obesity:false, estrogen:false,
+    age:false, infection:false, epidural:false, alreadyAC:false, plannedProcedure:false
+  });
+  const plt=Number(s.plt);
+  const riskCount=[s.fracture,s.cancer,s.priorVte,s.thrombophilia,s.immobile,s.obesity,s.estrogen,s.age,s.infection].filter(Boolean).length;
+  const majorOrtho=['hip-knee','hip-fracture'].includes(s.surgery);
+  const lowerRiskOrtho=['arthroscopy','upper-limb'].includes(s.surgery);
+  const nonOrtho=s.surgery==='nonortho';
+  const contraindicated=s.activeBleed||plt<50||s.epidural||s.alreadyAC;
+  let category=[]; let plan=[]; let agent=[]; let duration=[]; let timing=[]; let reasoning=[]; let dontmiss=[];
+  if(s.alreadyAC){ category.push('Already therapeutically anticoagulated'); plan.push('Do not add routine prophylactic anticoagulation on top of therapeutic anticoagulation. Manage perioperative interruption/restart separately.'); }
+  if(s.activeBleed) { category.push('Active bleeding/high immediate bleeding risk'); plan.push('Hold pharmacologic prophylaxis now; use mechanical prophylaxis if feasible and reassess daily.'); }
+  if(plt<50) { category.push('Platelets <50 ×10⁹/L context'); plan.push('Usually hold pharmacologic prophylaxis or individualize with hematology/surgery if thrombosis risk is extreme.'); }
+  if(s.epidural||s.neuraxial) { dontmiss.push('Neuraxial/epidural timing is a high-consequence safety issue. Follow local anesthesia/neuraxial timing rules for LMWH/UFH/DOAC start and catheter removal.'); }
+  if(majorOrtho){
+    category.push('Major orthopedic surgery: high baseline VTE risk');
+    reasoning.push('Hip/knee arthroplasty and hip fracture have enough VTE risk that evidence-based prophylaxis is routine unless bleeding risk dominates.');
+    plan.push('Use pharmacologic prophylaxis unless contraindicated; add mechanical prophylaxis early when bleeding risk is high or mobility is poor.');
+    agent.push('Typical options depend on local policy and surgery: LMWH is a standard default; DOACs may be used after elective hip/knee arthroplasty when appropriate; aspirin-only pathways are protocol-dependent and usually for selected lower-risk arthroplasty patients.');
+    duration.push(s.surgery==='hip-fracture'?'Consider extended prophylaxis, commonly about 4–6 weeks after hip fracture/major hip surgery when bleeding risk allows.':'Consider extended prophylaxis after hip/knee arthroplasty; many pathways use about 10–14 days for knee and up to 35 days/4–6 weeks for hip, depending on local protocol and patient risk.');
+  } else if(lowerRiskOrtho){
+    category.push('Lower-risk orthopedic procedure');
+    reasoning.push('Routine anticoagulant prophylaxis is often not needed for minor/lower-limb arthroscopy or upper-limb surgery unless patient-specific VTE risk is high or immobilization is substantial.');
+    plan.push(riskCount>=2?'Consider pharmacologic prophylaxis because patient-specific risk factors are accumulating.':'Early mobilization ± mechanical prophylaxis; pharmacologic prophylaxis only if patient-specific VTE risk is high.');
+    duration.push('If prophylaxis is used, duration should match immobilization and local protocol rather than automatic extended major-ortho duration.');
+  } else if(nonOrtho){
+    category.push('Non-orthopedic surgery: risk-stratify rather than automatic prophylaxis');
+    reasoning.push('For non-orthopedic surgery, prophylaxis depends on procedure magnitude, patient VTE risk, and bleeding risk. Major cancer surgery, prolonged immobility, prior VTE, thrombophilia, and infection raise risk.');
+    if(s.bleedRisk==='high') plan.push('If bleeding risk is high: mechanical prophylaxis first, then start pharmacologic prophylaxis when hemostasis is secure.');
+    else if(riskCount>=2||s.generalRisk==='high'||s.cancer) plan.push('Pharmacologic prophylaxis is favored if hemostasis is adequate, often with LMWH or UFH depending on renal function and local policy.');
+    else if(riskCount===1||s.generalRisk==='moderate') plan.push('Moderate risk: pharmacologic or mechanical prophylaxis depending on bleeding risk and mobility; reassess daily.');
+    else plan.push('Low risk and mobile: early ambulation may be enough; avoid automatic anticoagulant prophylaxis if bleeding risk exceeds benefit.');
+    if(s.cancer) duration.push('Major abdominal/pelvic cancer surgery may need extended prophylaxis, commonly up to 4 weeks, if bleeding risk is acceptable.');
+    else duration.push('Most non-orthopedic prophylaxis is continued while inpatient or until mobility recovers; extended prophylaxis is reserved for selected high-risk groups.');
+  }
+  if(!contraindicated && s.renal==='severe') agent.push('Severe renal dysfunction: avoid unadjusted LMWH accumulation; consider UFH or renal-adjusted/local protocol strategy.');
+  if(!contraindicated && s.bleedRisk==='high') timing.push('Start pharmacologic prophylaxis only after surgical hemostasis is secure; mechanical prophylaxis can bridge the immediate high-bleeding-risk period.');
+  if(!contraindicated && s.bleedRisk!=='high') timing.push('Common bedside frame: start post-op prophylaxis once hemostasis is secure and surgeon/anesthesia timing allows; do not start blindly before neuraxial/epidural safety is addressed.');
+  dontmiss.push('Do not confuse DVT prophylaxis with therapeutic anticoagulation for known acute VTE. Known/suspected acute VTE needs a treatment pathway, not prophylaxis dosing.');
+  dontmiss.push('Document one of four states: ordered, contraindicated/on hold with reason, mechanical only with reason, or already therapeutically anticoagulated.');
+  dontmiss.push('Daily reassessment matters: bleeding risk usually changes faster than thrombosis risk after surgery.');
+  const summary=[...category,...reasoning,...plan,...agent,...timing,...duration].filter(Boolean).join(' ');
+  const note=`Post-op VTE prophylaxis assessment: surgery ${s.surgery}, bleeding risk ${s.bleedRisk}, renal ${s.renal}, platelets ${plt}, risk factors ${riskCount}, neuraxial/epidural concern ${s.neuraxial||s.epidural}, already anticoagulated ${s.alreadyAC}. Impression/action: ${summary}`;
+  return <ToolShell disclaimer="Surgical VTE prophylaxis assistant based on a Thrombosis Canada-style approach. Always verify with local surgical/anesthesia policy, especially neuraxial/epidural timing.">
+    <div className="tool-grid">
+      <div className="panel"><h2>Procedure type</h2>
+        <Field label="Surgery category"><Select value={s.surgery} onChange={v=>setS({...s,surgery:v})}>
+          <option value="hip-knee">Elective hip/knee arthroplasty</option><option value="hip-fracture">Hip fracture / major hip surgery</option><option value="arthroscopy">Knee arthroscopy / minor lower-limb procedure</option><option value="upper-limb">Upper-limb orthopedic procedure</option><option value="nonortho">Non-orthopedic surgery</option>
+        </Select><HelpText>Major hip/knee procedures are high VTE-risk by default. Non-orthopedic surgery needs patient + procedure risk stratification.</HelpText></Field>
+        <Field label="Procedure bleeding risk"><Select value={s.bleedRisk} onChange={v=>setS({...s,bleedRisk:v})}><option value="low">Low</option><option value="moderate">Moderate</option><option value="high">High / critical-site / high-consequence</option></Select></Field>
+        {s.surgery==='nonortho' && <Field label="Non-orthopedic procedure VTE risk"><Select value={s.generalRisk} onChange={v=>setS({...s,generalRisk:v})}><option value="low">Low: short/minor and mobile</option><option value="moderate">Moderate: abdominal/pelvic, longer surgery, reduced mobility</option><option value="high">High: major cancer, major abdominal/pelvic, trauma, ICU, prolonged immobility</option></Select></Field>}
+        <Check label="Neuraxial anesthesia or spinal/epidural procedure" checked={s.neuraxial} onChange={v=>setS({...s,neuraxial:v})} help="High-consequence bleeding site: prophylaxis timing must follow anesthesia/neuraxial rules." />
+        <Check label="Epidural catheter currently in place" checked={s.epidural} onChange={v=>setS({...s,epidural:v})} />
+      </div>
+      <div className="panel"><h2>Bleeding / medication safety</h2>
+        <Check label="Already therapeutically anticoagulated" checked={s.alreadyAC} onChange={v=>setS({...s,alreadyAC:v})} help="Do not stack prophylaxis on top of therapeutic anticoagulation." />
+        <Check label="Active bleeding or unsecured hemostasis" checked={s.activeBleed} onChange={v=>setS({...s,activeBleed:v})} />
+        <Field label="Platelets"><Num value={s.plt} onChange={v=>setS({...s,plt:v})}/><HelpText>Very low platelets shift toward hold/mechanical/reassess rather than automatic pharmacologic prophylaxis.</HelpText></Field>
+        <Field label="Renal function"><Select value={s.renal} onChange={v=>setS({...s,renal:v})}><option value="normal">Normal/mild CKD</option><option value="moderate">Moderate CKD</option><option value="severe">Severe CKD/AKI/dialysis</option></Select></Field>
+      </div>
+      <div className="panel"><h2>Patient VTE-risk modifiers</h2>
+        <Check label="Hip fracture / major trauma" checked={s.fracture} onChange={v=>setS({...s,fracture:v})}/>
+        <Check label="Active cancer or cancer surgery" checked={s.cancer} onChange={v=>setS({...s,cancer:v})}/>
+        <Check label="Prior VTE" checked={s.priorVte} onChange={v=>setS({...s,priorVte:v})}/>
+        <Check label="Known high-risk thrombophilia" checked={s.thrombophilia} onChange={v=>setS({...s,thrombophilia:v})}/>
+        <Check label="Reduced mobility/expected immobility" checked={s.immobile} onChange={v=>setS({...s,immobile:v})}/>
+        <Check label="Obesity" checked={s.obesity} onChange={v=>setS({...s,obesity:v})}/>
+        <Check label="Estrogen/OCP or pregnancy/postpartum context" checked={s.estrogen} onChange={v=>setS({...s,estrogen:v})}/>
+        <Check label="Older age/frailty" checked={s.age} onChange={v=>setS({...s,age:v})}/>
+        <Check label="Acute infection/inflammation/ICU" checked={s.infection} onChange={v=>setS({...s,infection:v})}/>
+      </div>
+    </div>
+    <div className="result-grid">
+      <Output title="Suggested prophylaxis frame" tone="highlight"><h4>{category.join(' · ')||'Enter procedure context'}</h4>{list(plan)}</Output>
+      <Output title="Agent / renal / mechanical reasoning">{list(agent.length?agent:['Select agent by local protocol. Core bedside choice is usually LMWH vs UFH vs mechanical based on renal function, bleeding risk, and procedure type.'])}</Output>
+      <Output title="Start / restart timing" tone="warning">{list(timing)}</Output>
+      <Output title="Duration prompt">{list(duration)}</Output>
+      <Output title="Do not miss">{list(dontmiss)}</Output>
+      <Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output>
+    </div>
+  </ToolShell>
+}
+
 function HypokalemiaTool(){ const [s,setS]=useState({k:'2.9',hco3:'18',bp:'normal',mg:false, urineK:'', urineCl:'', diarrhea:false, vomiting:false, diuretic:false, rta:false}); const k=Number(s.k), h=Number(s.hco3), uk=Number(s.urineK), ucl=Number(s.urineCl); let pattern=h<22?'Metabolic acidosis pattern':h>28?'Metabolic alkalosis pattern':'No clear bicarbonate pattern'; let reasons=[]; if(k<2.5) reasons.push('Severe hypokalemia: telemetry/urgent replacement if symptomatic, ECG changes, or high-risk comorbidity.'); if(s.mg) reasons.push('Hypomagnesemia makes K hard to correct; replace Mg.'); if(h<22){ if(s.diarrhea) reasons.push('Acidosis + diarrhea: GI bicarbonate and potassium loss likely.'); if(s.rta) reasons.push('Consider RTA if acidosis with renal K wasting and no diarrhea.'); if(uk>20) reasons.push('Urine K high despite hypokalemia: renal K wasting.'); }
  if(h>28){ if(s.vomiting && ucl<20) reasons.push('Vomiting/NG suction: low urine chloride chloride-responsive alkalosis.'); if(s.diuretic) reasons.push('Diuretic effect can raise urine chloride if active.'); if(s.bp==='high') reasons.push('Hypertension + alkalosis + renal K wasting: mineralocorticoid excess pattern.'); }
  const note=`Hypokalemia: K ${k}, HCO3 ${h}, BP ${s.bp}. Pattern: ${pattern}. Reasoning: ${reasons.join(' ')||'Need urine K/Cl and clinical context.'}`; return <ToolShell><div className="tool-grid"><div className="panel"><h2>Inputs</h2><Field label="Potassium"><Num value={s.k} onChange={v=>setS({...s,k:v})} step="0.1"/></Field><Field label="Bicarbonate"><Num value={s.hco3} onChange={v=>setS({...s,hco3:v})}/></Field><Field label="BP"><Select value={s.bp} onChange={v=>setS({...s,bp:v})}><option value="low">low</option><option value="normal">normal</option><option value="high">high</option></Select></Field><Field label="Urine potassium"><Num value={s.urineK} onChange={v=>setS({...s,urineK:v})}/></Field><Field label="Urine chloride"><Num value={s.urineCl} onChange={v=>setS({...s,urineCl:v})}/></Field><Check label="Hypomagnesemia" checked={s.mg} onChange={v=>setS({...s,mg:v})}/><Check label="Diarrhea" checked={s.diarrhea} onChange={v=>setS({...s,diarrhea:v})}/><Check label="Vomiting/NG suction" checked={s.vomiting} onChange={v=>setS({...s,vomiting:v})}/><Check label="Diuretic use" checked={s.diuretic} onChange={v=>setS({...s,diuretic:v})}/><Check label="RTA context" checked={s.rta} onChange={v=>setS({...s,rta:v})}/></div></div><div className="result-grid"><Output title="Pattern" tone="highlight"><h4>{pattern}</h4></Output><Output title="Reasoning">{list(reasons)}</Output><Output title="Copy-ready note"><pre>{note}</pre><button className="ghost" onClick={()=>copyText(note)}>Copy note</button></Output></div></ToolShell>}
