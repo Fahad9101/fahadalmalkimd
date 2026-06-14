@@ -1,19 +1,31 @@
-# Fahad Almalki, MD — Clinical Operating System Update
+# FahadAlmalkiMD Clinical Operating System
 
-This update reorganizes the website as a clinical operating system:
+GitHub Pages static React-in-browser site for FahadAlmalkiMD.com.
 
-- Public home page only
-- Protected clinical pathway library using a soft static-site login gate
-- Clinical pathway categories:
-  - Vascular Medicine Clinic Pathways
-  - Antithrombotic Safety Pathways
-  - General Internal Medicine Diagnostic Reasoning
-  - CTU / Rounding Standard
+## Current update
 
-Replace App.jsx and styles.css in the repository root. Keep CNAME for GitHub Pages.
+Adds **Diarrhea Diagnostic Pathway** under General Internal Medicine Diagnostic Reasoning.
 
-Default soft-gate credentials inside App.jsx:
-- Username: fahad
-- Password: ChangeThisPassword2026!
+The diarrhea tool includes:
+- Danger-first screen
+- Acute vs persistent vs chronic/recurrent duration
+- Watery vs inflammatory vs fatty phenotype
+- Osmotic vs secretory reasoning
+- Optional stool osmotic gap calculator
+- Medication/iatrogenic screen
+- C. difficile risk screen
+- Bile acid diarrhea clues
+- Pancreatic exocrine insufficiency clues
+- Microscopic colitis clues
+- Celiac/inflammatory/alarm prompts
+- Minimum tests and treatment guardrails
+- Copy-ready documentation note
 
-Important: GitHub Pages is static. This soft gate is not true security. For real privacy, put the protected tools behind Cloudflare Access or a server-auth layer.
+## Files to upload
+
+Replace only:
+- `App.jsx`
+- `styles.css`
+- `README.md`
+
+Keep `CNAME` unchanged unless GitHub Pages asks for it.
