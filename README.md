@@ -1,1 +1,1 @@
-Fahad Almalki, MD professional clinical pathway site. Runtime hard reset: browser-compatible React without import/export statements. Main editable file: App.jsx.
+Emergency single-file static recovery. No React/Babel/App.jsx required.
