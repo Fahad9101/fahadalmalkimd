@@ -1,1 +1,1 @@
-Emergency single-file static recovery. No React/Babel/App.jsx required.
+Fahad Almalki, MD clinical pathway system. Single-file static version with restored pathway library and key guided tools.
