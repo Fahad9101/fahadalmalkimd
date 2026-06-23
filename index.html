@@ -25,7 +25,7 @@ h3{font-size:22px;margin:0 0 10px}
 h4{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#086274;margin:22px 0 10px}
 p{color:#425563}.lead{font-size:18px;max-width:900px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 16px 32px rgba(4,42,52,.06)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.section{margin:36px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.unitrow{display:grid;grid-template-columns:1fr 120px;gap:8px}.section{margin:36px 0}
 small,.eyebrow{display:block;color:#006778;text-transform:uppercase;font-weight:900;letter-spacing:.18em;font-size:12px;margin-bottom:10px}
 .primary{background:var(--teal2)!important;color:white!important;border-color:var(--teal2)!important}
 .toolList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
@@ -230,8 +230,9 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     inputField("pad_a1c","HbA1c if available","e.g. 8.7%, unknown")+
     selectField("pad_smoke","Smoking status",["Never smoker","Active smoker","Recent quitter","Prior smoker","Unknown"],"Active smoking changes urgency of counseling.")+
     inputField("pad_pack","Pack-years / shisha / vaping note","optional")+
-    inputField("pad_ldl","LDL","e.g. 1.6 mmol/L, unknown")+
-    inputField("pad_lpa","Lp(a) if available","e.g. 150 nmol/L or mg/dL, unknown")+
+    '<div class="field"><label>LDL-C</label><div class="unitrow"><input id="pad_ldl" placeholder="e.g. 1.6 or 62"><select id="pad_ldl_unit"><option>mmol/L</option><option>mg/dL</option></select></div></div>'+
+    '<div class="field"><label>Non-HDL-C</label><div class="unitrow"><input id="pad_nonhdl" placeholder="e.g. 2.4 or 93"><select id="pad_nonhdl_unit"><option>mmol/L</option><option>mg/dL</option></select></div><span class="hint">Useful when triglycerides are elevated or LDL alone underestimates atherogenic particle burden.</span></div>'+
+    '<div class="field"><label>Lp(a) if available</label><div class="unitrow"><input id="pad_lpa" placeholder="e.g. 150 or 60"><select id="pad_lpa_unit"><option>nmol/L</option><option>mg/dL</option></select></div><span class="hint">Units are not directly interchangeable by a fixed conversion; document the unit used by your lab.</span></div>'+
     inputField("pad_egfr","eGFR / CKD","e.g. eGFR 45, CKD3")+
     inputField("pad_bp","BP / hypertension control","e.g. 145/82, controlled/unknown")+
     selectField("pad_statin","Current lipid therapy",["None/unknown","Moderate-intensity statin","High-intensity statin","Statin intolerant"],"")+
@@ -319,7 +320,8 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(val("pad_statin")!=="High-intensity statin") gdmt.push("optimize lipid therapy, usually high-intensity statin if tolerated");
     if(val("pad_antith")==="None/unknown" && (classic || abnormalAbi || clti)) gdmt.push("review antiplatelet indication if symptomatic PAD and no contraindication");
     if(sev.indexOf("Lifestyle")>=0 || sev.indexOf("Limits")>=0) gdmt.push("structured/supervised exercise therapy if no limb-threat");
-    if(val("pad_lpa") && val("pad_lpa").toLowerCase().indexOf("unknown")<0) gdmt.push("document Lp(a); elevated Lp(a) supports aggressive ASCVD risk modification and family-risk awareness");
+    if(val("pad_nonhdl") && val("pad_nonhdl").toLowerCase().indexOf("unknown")<0) gdmt.push("document non-HDL-C " + val("pad_nonhdl") + " " + val("pad_nonhdl_unit") + "; useful for residual atherogenic risk beyond LDL-C");
+    if(val("pad_lpa") && val("pad_lpa").toLowerCase().indexOf("unknown")<0) gdmt.push("document Lp(a) " + val("pad_lpa") + " " + val("pad_lpa_unit") + "; elevated Lp(a) supports aggressive ASCVD risk modification and family-risk awareness");
     if(val("pad_hf")==="Yes") gdmt.push("avoid cilostazol if heart failure");
 
     var referral = "Routine vascular medicine / vascular lab pathway.";
@@ -353,8 +355,9 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 "Risk-factor optimization:\n" +
 "- Diabetes: " + val("pad_dm") + " ; HbA1c: " + (val("pad_a1c") || "not entered") + "\n" +
 "- Smoking: " + val("pad_smoke") + " ; pack-year/shisha/vaping note: " + (val("pad_pack") || "not entered") + "\n" +
-"- LDL: " + (val("pad_ldl") || "not entered") + "\n" +
-"- Lp(a): " + (val("pad_lpa") || "not entered") + "\n" +
+"- LDL-C: " + (val("pad_ldl") ? val("pad_ldl") + " " + val("pad_ldl_unit") : "not entered") + "\n" +
+"- Non-HDL-C: " + (val("pad_nonhdl") ? val("pad_nonhdl") + " " + val("pad_nonhdl_unit") : "not entered") + "\n" +
+"- Lp(a): " + (val("pad_lpa") ? val("pad_lpa") + " " + val("pad_lpa_unit") : "not entered") + "\n" +
 "- eGFR/CKD: " + (val("pad_egfr") || "not entered") + "\n" +
 "- BP: " + (val("pad_bp") || "not entered") + "\n" +
 "- Statin: " + val("pad_statin") + "\n" +

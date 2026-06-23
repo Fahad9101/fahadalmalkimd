@@ -1,1 +1,1 @@
-Button-fix stable single-file static website. Includes deep Suspected PAD Clinic Pathway with structured exam and working buttons.
+Adds Non-HDL-C and unit selectors for LDL-C, Non-HDL-C, and Lp(a) to the deep Suspected PAD Clinic Pathway. Stable single-file static website.
