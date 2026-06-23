@@ -1,1 +1,1 @@
-PAD pathway lipid input refinement: LDL-C, Non-HDL-C, and Lp(a) are entered as number-only fields with separate manual unit dropdowns.
+Deep Confirmed PAD Clinic Pathway update with phenotype, GDMT, lipids, antithrombotic strategy, exercise/cilostazol, revascularization triggers, follow-up, and copy-ready note.
