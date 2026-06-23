@@ -131,66 +131,197 @@ Minimum standard:
 Teaching pearl:
 Before calling it anticoagulant failure, prove it is a new clot and that the patient had effective anticoagulant exposure.`; const out=document.getElementById("sout");out.className="output "+(red.length?"red":bio.length?"amber":"green");out.textContent=text;out.classList.remove("hidden")}
 
+
 function renderSuspectedPAD(){
-  shell("Suspected PAD Clinic Pathway","Guided clinic pathway for suspected peripheral artery disease: danger-first triage, symptom phenotype, ABI/TBI logic, mimics, minimum workup, initial management, referral urgency, and copy-ready note.",`
+  shell("Suspected PAD Clinic Pathway","A structured vascular clinic pathway for suspected PAD: reason for referral, limb-danger triage, detailed pulse/limb exam, ABI/TBI logic, mimics, risk-factor optimization, referral urgency, and copy-ready clinic note.",`
   <section class="card">
+    <h4>Why is the patient here? <span class="hint">Select all that apply — PAD referrals often have more than one reason.</span></h4>
+    ${checks("pad_reason",[
+      "Exertional calf pain",
+      "Exertional thigh/buttock pain",
+      "Reduced walking distance",
+      "Atypical leg pain",
+      "Rest pain / nocturnal foot pain",
+      "Foot ulcer or non-healing wound",
+      "Gangrene / tissue loss",
+      "Abnormal or absent pulses",
+      "Abnormal ABI/TBI or vascular lab",
+      "Diabetic foot risk / poor healing",
+      "Pre-op vascular assessment",
+      "Cardiovascular risk optimization",
+      "Unclear diagnosis / second opinion"
+    ])}
+
     <div class="grid2">
-      <div class="field"><label>Why is the patient here?</label><select id="pad_reason"><option>Exertional leg symptoms / possible claudication</option><option>Rest pain</option><option>Foot wound / ulcer / gangrene</option><option>Abnormal pulses / incidental vascular concern</option><option>Diabetic foot risk / poor healing</option><option>Leg pain but diagnosis unclear</option><option>Abnormal ABI / vascular lab result</option></select><span class="hint">Start with the presenting phenotype. PAD is not one disease state: claudication, CLTI, acute limb ischemia, and mimics behave differently.</span></div>
-      <div class="field"><label>Symptom pattern</label><select id="pad_pattern"><option>Classic calf/thigh/buttock exertional pain relieved by rest</option><option>Atypical exertional leg symptoms</option><option>Pain at rest, worse lying flat, improved by dependency</option><option>Wound/tissue loss</option><option>Sudden severe limb symptoms</option><option>Neuropathic/burning symptoms</option><option>Back/radicular or joint-type pain</option><option>No symptoms</option></select><span class="hint">Classic claudication is reproducible exertional muscle discomfort relieved by rest. Rest pain/tissue loss moves you toward limb-threat logic.</span></div>
-      <div class="field"><label>Known vascular test</label><select id="pad_test"><option>No ABI/TBI yet</option><option>ABI abnormal ≤0.90</option><option>ABI borderline 0.91–0.99</option><option>ABI normal 1.00–1.40</option><option>ABI noncompressible >1.40</option><option>TBI abnormal</option><option>Exercise ABI abnormal</option></select><span class="hint">ABI can be falsely high in diabetes/CKD/calcified vessels. TBI helps when ABI is noncompressible.</span></div>
-      <div class="field"><label>Functional severity</label><select id="pad_sev"><option>Mild symptoms, not limiting</option><option>Lifestyle-limiting exertional symptoms</option><option>Symptoms impair work/exercise/basic activity</option><option>Rest pain or tissue loss</option><option>Unclear</option></select></div>
+      <div class="field"><label>Main symptom phenotype</label><select id="pad_pattern"><option>Classic claudication: reproducible exertional muscle pain relieved by rest</option><option>Atypical exertional leg symptoms</option><option>Rest pain: forefoot pain worse lying flat, improved by dependency</option><option>Wound/tissue loss phenotype</option><option>Sudden severe limb symptoms</option><option>Neuropathic/burning symptoms</option><option>Back/radicular or joint-type pain</option><option>Asymptomatic abnormal test/pulses</option></select><span class="hint">The first split is claudication vs limb threat vs mimic.</span></div>
+      <div class="field"><label>Functional severity</label><select id="pad_sev"><option>Asymptomatic</option><option>Mild symptoms, not limiting</option><option>Lifestyle-limiting exertional symptoms</option><option>Limits work/exercise/basic activities</option><option>Rest pain or tissue loss</option><option>Unclear</option></select></div>
+      <div class="field"><label>Pain-free walking distance</label><input id="pad_pfd" placeholder="e.g. 100 meters, 1 block, unknown"></div>
+      <div class="field"><label>Maximum walking distance</label><input id="pad_mwd" placeholder="e.g. 300 meters, unknown"></div>
+      <div class="field"><label>Relieved by rest within ~10 minutes?</label><select id="pad_rest"><option>Unknown</option><option>Yes</option><option>No</option></select></div>
+      <div class="field"><label>Worse with stairs/incline?</label><select id="pad_incline"><option>Unknown</option><option>Yes</option><option>No</option></select></div>
     </div>
+
     <h4>Danger-first limb screen</h4>
-    ${checks("pad_red",["Acute limb ischemia clue: sudden pain, pallor, pulselessness, paresthesia, paralysis, poikilothermia","Rest pain, especially forefoot pain worse at night/lying flat","Non-healing wound, ulcer, gangrene, tissue loss","Infected ischemic foot: spreading cellulitis, pus, systemic signs, wet gangrene","New blue/purple toe or embolic-appearing lesion","Rapidly worsening symptoms or new neurologic deficit","Absent Doppler signals if checked"])}
-    <h4>Vascular exam checklist</h4>
-    ${checks("pad_exam",["Femoral pulses assessed","Popliteal pulses assessed","Dorsalis pedis/posterior tibial pulses assessed","Capillary refill / temperature / color checked","Bruits checked when relevant","Foot inspection including between toes","Wound documented with location/size/depth/infection signs","Neuropathy/monofilament or sensory screen considered"])}
-    <h4>PAD risk and treatment baseline</h4>
-    ${checks("pad_risk",["Smoking/current or prior","Diabetes","CKD","Known CAD/stroke/carotid disease","Hypertension","Dyslipidemia","Not on high-intensity statin or LDL not at goal","Not on antiplatelet when symptomatic PAD likely","Exercise therapy not yet addressed","Foot care education needed"])}
-    <h4>Mimics to consider before labeling PAD</h4>
-    ${checks("pad_mimic",["Spinal stenosis / neurogenic claudication: posture-related, relieved by sitting/flexion","Radiculopathy: dermatomal pain, back symptoms, neurologic signs","Hip/knee osteoarthritis: joint-localized pain, mechanical pattern","Venous claudication / severe venous disease","Peripheral neuropathy: burning, stocking distribution, not exertional","Chronic exertional compartment syndrome in younger patient","Anemia, HF, lung disease, or deconditioning limiting walking"])}
-    <div class="toolbar"><button class="btn primary" onclick="calcPAD()">Generate pathway</button><button class="btn" onclick="copyOut('pad_out')">Copy note</button></div>
+    ${checks("pad_red",[
+      "Acute limb ischemia clue: sudden pain, pallor, pulselessness, paresthesia, paralysis, poikilothermia",
+      "New motor or sensory deficit",
+      "Rest pain, especially forefoot pain worse at night/lying flat",
+      "Non-healing wound, ulcer, gangrene, or tissue loss",
+      "Infected ischemic foot: spreading cellulitis, purulence, wet gangrene, systemic signs",
+      "New blue/purple toe or embolic-appearing lesion",
+      "Rapidly worsening symptoms",
+      "Absent Doppler signals if checked"
+    ])}
+
+    <h4>Pulse exam by side</h4>
+    <div class="grid2">
+      ${["Right femoral","Left femoral","Right popliteal","Left popliteal","Right dorsalis pedis","Left dorsalis pedis","Right posterior tibial","Left posterior tibial"].map((x,i)=>`<div class="field"><label>${x}</label><select id="pulse_${i}"><option>Not assessed</option><option>Present</option><option>Weak</option><option>Absent</option><option>Doppler only</option></select></div>`).join("")}
+    </div>
+
+    <h4>Limb and foot exam</h4>
+    <div class="grid2">
+      <div class="field"><label>Temperature</label><select id="pad_temp"><option>Not assessed</option><option>Warm bilaterally</option><option>Cool unilateral</option><option>Cool bilateral</option><option>Cold limb</option></select></div>
+      <div class="field"><label>Color</label><select id="pad_color"><option>Not assessed</option><option>Normal</option><option>Pale</option><option>Dependent rubor</option><option>Cyanotic/blue</option><option>Mottled</option></select></div>
+      <div class="field"><label>Capillary refill</label><select id="pad_cap"><option>Not assessed</option><option>Normal</option><option>Delayed</option><option>Absent/very poor</option></select></div>
+      <div class="field"><label>Hair loss</label><select id="pad_hair"><option>Not assessed</option><option>No significant hair loss</option><option>Mild hair loss</option><option>Marked hair loss</option></select></div>
+      <div class="field"><label>Skin/nails</label><select id="pad_skin"><option>Not assessed</option><option>Normal</option><option>Shiny/atrophic skin</option><option>Dry/cracked skin</option><option>Thickened/dystrophic nails</option></select></div>
+      <div class="field"><label>Edema</label><select id="pad_edema"><option>Not assessed</option><option>None</option><option>Unilateral</option><option>Bilateral</option></select></div>
+      <div class="field"><label>Wound location</label><select id="pad_wound"><option>No wound</option><option>Toe</option><option>Forefoot</option><option>Heel</option><option>Ankle/leg</option><option>Multiple</option></select></div>
+      <div class="field"><label>Wound infection</label><select id="pad_inf"><option>No infection signs</option><option>Cellulitis</option><option>Purulence</option><option>Wet gangrene</option><option>Systemic signs</option><option>Not applicable</option></select></div>
+      <div class="field"><label>Neuropathy/sensory loss</label><select id="pad_neuro"><option>Unknown</option><option>No</option><option>Yes</option></select></div>
+      <div class="field"><label>Motor deficit</label><select id="pad_motor"><option>No</option><option>Yes</option><option>Not assessed</option></select></div>
+    </div>
+
+    <h4>ABI / TBI / vascular testing</h4>
+    <div class="grid2">
+      <div class="field"><label>Right ABI</label><input id="pad_rabi" type="number" step="0.01" placeholder="e.g. 0.72"></div>
+      <div class="field"><label>Left ABI</label><input id="pad_labi" type="number" step="0.01" placeholder="e.g. 1.22"></div>
+      <div class="field"><label>Right TBI</label><input id="pad_rtbi" type="number" step="0.01" placeholder="optional"></div>
+      <div class="field"><label>Left TBI</label><input id="pad_ltbi" type="number" step="0.01" placeholder="optional"></div>
+      <div class="field"><label>Waveforms</label><select id="pad_wave"><option>Unknown/not done</option><option>Triphasic</option><option>Biphasic</option><option>Monophasic</option><option>Absent</option><option>Mixed/asymmetric</option></select></div>
+      <div class="field"><label>Exercise ABI</label><select id="pad_exabi"><option>Not done</option><option>Normal</option><option>Abnormal post-exercise drop</option></select></div>
+      <div class="field"><label>Duplex/CTA/MRA</label><select id="pad_img"><option>Not done</option><option>Duplex done</option><option>CTA/MRA done</option><option>Planned/pending</option></select></div>
+      <div class="field"><label>Calcified/noncompressible vessels suspected?</label><select id="pad_calc"><option>Unknown</option><option>No</option><option>Yes: diabetes/CKD/noncompressible ABI</option></select></div>
+    </div>
+
+    <h4>Risk factors and optimization</h4>
+    <div class="grid2">
+      <div class="field"><label>Diabetes status</label><select id="pad_dm"><option>No diabetes</option><option>Diabetes controlled</option><option>Diabetes uncontrolled</option><option>Diabetes control unknown</option></select></div>
+      <div class="field"><label>HbA1c if available</label><input id="pad_a1c" placeholder="e.g. 8.7%, unknown"></div>
+      <div class="field"><label>Smoking status</label><select id="pad_smoke"><option>Never smoker</option><option>Active smoker</option><option>Recent quitter</option><option>Prior smoker</option><option>Unknown</option></select></div>
+      <div class="field"><label>Pack-years / shisha / vaping note</label><input id="pad_pack" placeholder="optional"></div>
+      <div class="field"><label>LDL</label><input id="pad_ldl" placeholder="e.g. 1.6 mmol/L, unknown"></div>
+      <div class="field"><label>Lp(a) if available</label><input id="pad_lpa" placeholder="e.g. 150 nmol/L or mg/dL, unknown"></div>
+      <div class="field"><label>eGFR / CKD</label><input id="pad_egfr" placeholder="e.g. eGFR 45, CKD3"></div>
+      <div class="field"><label>BP / hypertension control</label><input id="pad_bp" placeholder="e.g. 145/82, controlled/unknown"></div>
+      <div class="field"><label>Current lipid therapy</label><select id="pad_statin"><option>None/unknown</option><option>Moderate-intensity statin</option><option>High-intensity statin</option><option>Statin intolerant</option></select></div>
+      <div class="field"><label>Current antithrombotic</label><select id="pad_antith"><option>None/unknown</option><option>Aspirin</option><option>Clopidogrel</option><option>DAPT</option><option>Therapeutic anticoagulation</option><option>Vascular-dose rivaroxaban + aspirin</option></select></div>
+      <div class="field"><label>Exercise therapy tried?</label><select id="pad_exercise"><option>No/unknown</option><option>Advised only</option><option>Structured/supervised program</option><option>Unable due to limitation</option></select></div>
+      <div class="field"><label>Heart failure? <span class="hint">Important if considering cilostazol.</span></label><select id="pad_hf"><option>No/unknown</option><option>Yes</option></select></div>
+    </div>
+
+    <h4>Mimics and mixed diagnoses</h4>
+    ${checks("pad_mimic",[
+      "Spinal stenosis: better leaning forward/sitting, worse standing",
+      "Radiculopathy: back pain, dermatomal radiation, neurologic signs",
+      "Hip/knee osteoarthritis: joint-localized mechanical pain",
+      "Venous claudication/severe venous disease: swelling, bursting pain",
+      "Peripheral neuropathy: burning, stocking distribution, not exertional",
+      "Chronic exertional compartment syndrome: younger patient, tightness with exercise",
+      "Anemia/HF/lung disease/deconditioning: global exercise intolerance"
+    ])}
+
+    <div class="toolbar"><button class="btn primary" onclick="calcPAD()">Generate detailed PAD pathway</button><button class="btn" onclick="copyOut('pad_out')">Copy note</button></div>
     <div id="pad_out" class="output hidden"></div>
   </section>`);
 }
+function abiInterpret(x){if(!x&&x!==0)return "not entered";const n=Number(x);if(isNaN(n))return "not interpretable";if(n<=0.90)return n.toFixed(2)+" abnormal, supports PAD";if(n<=0.99)return n.toFixed(2)+" borderline";if(n<=1.40)return n.toFixed(2)+" normal range, but exercise ABI may be needed if symptoms persist";return n.toFixed(2)+" noncompressible; use TBI/toe pressure/waveforms";}
 function calcPAD(){
-  const reason=val("pad_reason"), pattern=val("pad_pattern"), test=val("pad_test"), sev=val("pad_sev");
-  const red=checked("pad_red"), exam=checked("pad_exam"), risk=checked("pad_risk"), mimic=checked("pad_mimic");
-  const acute=red.some(x=>x.includes("Acute limb ischemia")||x.includes("new neurologic")||x.includes("Absent Doppler"));
-  const infected=red.some(x=>x.includes("Infected ischemic"));
-  const clti=red.some(x=>x.includes("Rest pain")||x.includes("wound")||x.includes("gangrene")||x.includes("tissue loss"))||sev.includes("Rest pain");
-  const classic=pattern.includes("Classic");
-  const abnormalTest=test.includes("abnormal")||test.includes("≤0.90")||test.includes("Exercise ABI abnormal");
-  const noncompress=test.includes(">1.40");
-  let level=(acute||infected)?"red":(clti||abnormalTest||noncompress?"amber":"green");
-  let phenotype="PAD not yet confirmed.";
-  if(acute) phenotype="Possible acute limb ischemia / urgent limb emergency phenotype.";
-  else if(clti) phenotype="Possible chronic limb-threatening ischemia phenotype.";
-  else if(classic&&(abnormalTest||test==="No ABI/TBI yet")) phenotype="Suspected claudication phenotype.";
-  else if(abnormalTest) phenotype="Objective PAD likely based on vascular testing.";
-  else if(noncompress) phenotype="PAD cannot be excluded because ABI is noncompressible; TBI/toe pressures are needed.";
-  else if(mimic.length&&!classic) phenotype="PAD mimic or mixed vascular/nonvascular leg pain is possible.";
-  let testPlan=[];
-  if(test==="No ABI/TBI yet") testPlan.push("Order resting ABI with Doppler waveforms. If diabetes/CKD/calcification suspected, add TBI/toe pressures.");
-  if(test.includes("borderline")||test.includes("normal")) testPlan.push("If exertional symptoms persist with normal/borderline resting ABI, consider exercise ABI.");
-  if(noncompress) testPlan.push("ABI >1.40 is noncompressible; use TBI/toe pressures and waveform interpretation.");
-  if(clti) testPlan.push("For rest pain/tissue loss, obtain urgent vascular lab assessment and vascular surgery/wound pathway rather than routine claudication workup.");
-  if(!testPlan.length) testPlan.push("Review ABI/TBI/waveforms and correlate with symptoms; do not rely on a number alone.");
-  const missing=["Femoral pulses assessed","Popliteal pulses assessed","Dorsalis pedis/posterior tibial pulses assessed","Foot inspection including between toes"].filter(x=>!exam.includes(x));
-  let gdmt=[];
-  if(risk.some(x=>x.includes("Smoking"))) gdmt.push("smoking cessation");
-  if(risk.some(x=>x.includes("high-intensity statin")||x.includes("LDL"))) gdmt.push("high-intensity statin / LDL optimization");
-  if(risk.some(x=>x.includes("antiplatelet"))) gdmt.push("antiplatelet if symptomatic PAD and no contraindication");
-  if(risk.some(x=>x.includes("Exercise"))) gdmt.push("structured/supervised exercise therapy if claudication and no limb-threat");
-  if(risk.some(x=>x.includes("Foot care"))) gdmt.push("foot care education and daily inspection");
-  if(risk.some(x=>x.includes("Diabetes"))) gdmt.push("diabetes and foot-risk optimization");
-  if(risk.some(x=>x.includes("Hypertension"))) gdmt.push("BP optimization");
-  let referral="Routine vascular medicine/vascular lab pathway.";
-  if(acute) referral="Same-day emergency vascular surgery / ED pathway. Do not delay for outpatient ABI.";
-  else if(infected) referral="Urgent same-day assessment for infected ischemic foot; coordinate vascular surgery/wound/ID/ED depending severity.";
-  else if(clti) referral="Urgent vascular surgery/wound pathway for CLTI evaluation.";
-  else if(sev.includes("Lifestyle")||sev.includes("work/exercise")) referral="Vascular referral if lifestyle-limiting symptoms persist despite GDMT/exercise or if anatomy/revascularization assessment is needed.";
-  let text=`Patient phenotype:\n- Reason: ${reason}\n- Symptom pattern: ${pattern}\n- Test status: ${test}\n- Severity: ${sev}\n- Working phenotype: ${phenotype}\n\nWhat must not be missed today:\n${red.length?red.map(x=>"- "+x).join("\n"):"- No limb-danger features selected."}\n\nMinimum standard clinic assessment:\n- Pulse and foot exam items completed: ${exam.length?exam.join("; "):"none selected"}.\n${missing.length?"- Missing key exam items: "+missing.join("; ")+".":"- Key pulse/foot exam items appear covered."}\n- Mimics considered: ${mimic.length?mimic.join("; "):"none selected"}.\n\nTesting logic:\n${testPlan.map(x=>"- "+x).join("\n")}\n\nInitial management / GDMT logic:\n${gdmt.length?gdmt.map(x=>"- "+x).join("\n"):"- Review statin, antiplatelet indication, smoking, BP/diabetes, exercise therapy, and foot care."}\n\nReferral urgency:\n- ${referral}\n\nTeaching pearl:\nPAD is a phenotype diagnosis, not just an ABI number. Claudication is stable exertional muscle ischemia; rest pain or tissue loss is limb-threat; sudden pain with neurologic change is acute limb ischemia until proven otherwise.\n\nCopy-ready note:\nSuspected PAD pathway reviewed. Presentation: ${reason}; symptom pattern: ${pattern}; ABI/TBI status: ${test}; severity: ${sev}. Limb-danger features: ${red.length?red.join(", "):"none selected"}. Vascular exam completed: ${exam.length?exam.join(", "):"not fully documented"}. Mimics considered: ${mimic.length?mimic.join(", "):"none selected"}. Plan: ${testPlan.join(" ")} GDMT: ${gdmt.length?gdmt.join(", "):"review statin/antiplatelet/smoking/exercise/foot care"}. Referral: ${referral}`;
-  const out=document.getElementById("pad_out"); out.className="output "+level; out.textContent=text; out.classList.remove("hidden");
+ const reasons=checked("pad_reason"), red=checked("pad_red"), mimic=checked("pad_mimic"), pattern=val("pad_pattern"), sev=val("pad_sev");
+ const pulseNames=["Right femoral","Left femoral","Right popliteal","Left popliteal","Right dorsalis pedis","Left dorsalis pedis","Right posterior tibial","Left posterior tibial"];
+ const pulses=pulseNames.map((name,i)=>name+": "+val("pulse_"+i));
+ const rabi=val("pad_rabi"),labi=val("pad_labi"),rtbi=val("pad_rtbi"),ltbi=val("pad_ltbi");
+ const rabiText=abiInterpret(rabi),labiText=abiInterpret(labi),wave=val("pad_wave"),exabi=val("pad_exabi"),calc=val("pad_calc");
+ const examSummary=["Temperature: "+val("pad_temp"),"Color: "+val("pad_color"),"Cap refill: "+val("pad_cap"),"Hair loss: "+val("pad_hair"),"Skin/nails: "+val("pad_skin"),"Edema: "+val("pad_edema"),"Wound: "+val("pad_wound"),"Infection: "+val("pad_inf"),"Neuropathy: "+val("pad_neuro"),"Motor deficit: "+val("pad_motor")];
+ const acute=red.some(x=>x.includes("Acute limb ischemia")||x.includes("motor")||x.includes("Absent Doppler"))||pattern.includes("Sudden");
+ const infection=red.some(x=>x.includes("Infected ischemic"))||["Purulence","Wet gangrene","Systemic signs"].includes(val("pad_inf"));
+ const clti=red.some(x=>x.includes("Rest pain")||x.includes("wound")||x.includes("gangrene")||x.includes("tissue"))||pattern.includes("Rest pain")||pattern.includes("Wound")||sev.includes("Rest pain");
+ const abnormalAbi=rabiText.includes("abnormal")||labiText.includes("abnormal")||exabi.includes("Abnormal")||wave.includes("Monophasic")||wave.includes("Absent");
+ const noncompress=rabiText.includes("noncompressible")||labiText.includes("noncompressible")||calc.includes("Yes");
+ const classic=pattern.includes("Classic");
+ let phenotype="PAD not yet confirmed."; if(acute)phenotype="Possible acute limb ischemia / limb emergency."; else if(infection&&clti)phenotype="Possible infected ischemic foot / CLTI emergency."; else if(clti)phenotype="Possible chronic limb-threatening ischemia."; else if(classic&&abnormalAbi)phenotype="Likely symptomatic PAD with claudication."; else if(classic)phenotype="Suspected claudication; vascular testing needed or review ABI/TBI/waveforms."; else if(abnormalAbi)phenotype="Objective PAD likely, but correlate with symptom phenotype."; else if(noncompress)phenotype="PAD cannot be excluded because vessels may be noncompressible."; else if(mimic.length)phenotype="Mixed PAD vs nonvascular mimic; classify with ABI/TBI/exercise ABI and targeted mimic evaluation.";
+ const level=acute||infection?"red":(clti||abnormalAbi||noncompress||val("pad_smoke")==="Active smoker"||val("pad_dm")==="Diabetes uncontrolled"?"amber":"green");
+ const testing=[]; if(!rabi&&!labi)testing.push("Order resting ABI with Doppler waveforms."); if(noncompress)testing.push("If ABI >1.40 or diabetes/CKD/calcification suspected, order TBI/toe pressures and rely on waveforms."); if((rabiText.includes("normal range")||labiText.includes("normal range")||rabiText.includes("borderline")||labiText.includes("borderline"))&&(classic||pattern.includes("Atypical")))testing.push("If exertional symptoms persist with normal/borderline ABI, order exercise ABI."); if(clti)testing.push("For rest pain/tissue loss, obtain urgent vascular lab assessment and vascular surgery/wound pathway."); if(!testing.length)testing.push("Review ABI/TBI/waveforms with symptoms; do not rely on a single number alone.");
+ const gdmt=[]; if(val("pad_smoke")==="Active smoker")gdmt.push("active smoking cessation intervention"); if(val("pad_smoke")==="Recent quitter"||val("pad_smoke")==="Prior smoker")gdmt.push("reinforce smoking abstinence"); if(val("pad_dm").includes("uncontrolled"))gdmt.push("diabetes optimization; foot-risk education"); if(val("pad_statin")!=="High-intensity statin")gdmt.push("optimize lipid therapy, usually high-intensity statin if tolerated"); if(val("pad_antith")==="None/unknown"&&(classic||abnormalAbi||clti))gdmt.push("review antiplatelet indication if symptomatic PAD and no contraindication"); if(sev.includes("Lifestyle")||sev.includes("Limits"))gdmt.push("structured/supervised exercise therapy if no limb-threat"); if(val("pad_lpa")&&!val("pad_lpa").toLowerCase().includes("unknown"))gdmt.push("document Lp(a); elevated Lp(a) supports aggressive ASCVD risk modification and family-risk awareness"); if(val("pad_hf")==="Yes")gdmt.push("avoid cilostazol if heart failure");
+ let referral="Routine vascular medicine / vascular lab pathway."; if(acute)referral="Same-day ED/vascular surgery assessment for possible acute limb ischemia; do not delay for outpatient ABI."; else if(infection)referral="Same-day/urgent infected ischemic foot pathway with vascular surgery/wound/ID/ED depending severity."; else if(clti)referral="Urgent vascular surgery / wound pathway for possible CLTI."; else if(sev.includes("Lifestyle")||sev.includes("Limits"))referral="Vascular referral if symptoms remain lifestyle-limiting despite GDMT/exercise or anatomy assessment is needed.";
+ const text=`Patient phenotype:
+- Reasons for visit: ${reasons.length?reasons.join("; "):"none selected"}
+- Symptom phenotype: ${pattern}
+- Functional severity: ${sev}
+- Pain-free walking distance: ${val("pad_pfd")||"not entered"}
+- Maximum walking distance: ${val("pad_mwd")||"not entered"}
+- Relief with rest: ${val("pad_rest")}
+- Worse with stairs/incline: ${val("pad_incline")}
+- Working phenotype: ${phenotype}
+
+Danger-first limb screen:
+${red.length?red.map(x=>"- "+x).join("
+"):"- No limb-danger features selected."}
+
+Pulse exam:
+${pulses.map(x=>"- "+x).join("
+")}
+
+Limb/foot exam:
+${examSummary.map(x=>"- "+x).join("
+")}
+
+Vascular testing interpretation:
+- Right ABI: ${rabiText}
+- Left ABI: ${labiText}
+- Right TBI: ${rtbi||"not entered"}
+- Left TBI: ${ltbi||"not entered"}
+- Waveforms: ${wave}
+- Exercise ABI: ${exabi}
+- Calcified/noncompressible suspicion: ${calc}
+
+Testing plan:
+${testing.map(x=>"- "+x).join("
+")}
+
+Risk-factor optimization:
+- Diabetes: ${val("pad_dm")} ; HbA1c: ${val("pad_a1c")||"not entered"}
+- Smoking: ${val("pad_smoke")} ; pack-year/shisha/vaping note: ${val("pad_pack")||"not entered"}
+- LDL: ${val("pad_ldl")||"not entered"}
+- Lp(a): ${val("pad_lpa")||"not entered"}
+- eGFR/CKD: ${val("pad_egfr")||"not entered"}
+- BP: ${val("pad_bp")||"not entered"}
+- Statin: ${val("pad_statin")}
+- Antithrombotic: ${val("pad_antith")}
+- Exercise therapy: ${val("pad_exercise")}
+${gdmt.length?gdmt.map(x=>"- "+x).join("
+"):"- Review statin, antiplatelet indication, smoking, BP/diabetes, exercise therapy, and foot care."}
+
+Mimics / mixed diagnoses:
+${mimic.length?mimic.map(x=>"- "+x).join("
+"):"- No mimic clues selected."}
+
+Referral urgency:
+- ${referral}
+
+Minimum standard before leaving clinic:
+1. Document pulses by side and foot exam.
+2. Decide whether ABI/TBI/waveforms/exercise ABI are needed.
+3. Separate claudication from CLTI and acute limb ischemia.
+4. Address smoking, diabetes, LDL/statin, BP, antithrombotic indication, exercise, and foot care.
+5. Document referral urgency.
+
+Teaching pearl:
+PAD clinic reasoning starts with the limb phenotype. Sudden neurologic/cold limb is acute limb ischemia. Rest pain or tissue loss is CLTI. Exertional reproducible muscle pain is claudication. ABI supports the diagnosis, but diabetes/CKD can make ABI falsely reassuring or noncompressible.
+
+Copy-ready note:
+Suspected PAD pathway reviewed. Reasons: ${reasons.length?reasons.join(", "):"not specified"}. Symptoms: ${pattern}; severity: ${sev}. PFD ${val("pad_pfd")||"not entered"}, MWD ${val("pad_mwd")||"not entered"}. Limb danger features: ${red.length?red.join(", "):"none selected"}. Pulses: ${pulses.join("; ")}. Limb exam: ${examSummary.join("; ")}. ABI/TBI: R ABI ${rabi||"NA"}, L ABI ${labi||"NA"}, R TBI ${rtbi||"NA"}, L TBI ${ltbi||"NA"}, waveforms ${wave}. Risk factors: DM ${val("pad_dm")}, smoking ${val("pad_smoke")}, LDL ${val("pad_ldl")||"NA"}, Lp(a) ${val("pad_lpa")||"NA"}, eGFR ${val("pad_egfr")||"NA"}. Plan: ${testing.join(" ")} GDMT: ${gdmt.length?gdmt.join(", "):"review statin/antiplatelet/smoking/diabetes/BP/exercise/foot care"}. Referral: ${referral}`;
+ const out=document.getElementById("pad_out"); out.className="output "+level; out.textContent=text; out.classList.remove("hidden");
 }
 
 render();

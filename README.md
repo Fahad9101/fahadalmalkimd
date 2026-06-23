@@ -1,1 +1,1 @@
-Fahad Almalki, MD clinical pathway system. Adds a fully guided Suspected PAD Clinic Pathway to the stable single-file static site.
+Deep Suspected PAD Clinic Pathway update: multi-select referral reasons, structured pulse/limb exam, ABI/TBI/exercise ABI interpretation, diabetes/smoking/Lp(a), GDMT, mimics, referral urgency, and copy-ready note.
