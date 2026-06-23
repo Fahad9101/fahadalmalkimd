@@ -1,1 +1,1 @@
-Deep Confirmed PAD Clinic Pathway update with phenotype, GDMT, lipids, antithrombotic strategy, exercise/cilostazol, revascularization triggers, follow-up, and copy-ready note.
+Confirmed PAD pathway upgraded with claudication treatment ladder, CLTI/wound-risk module, and post-revascularization follow-up module.
