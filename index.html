@@ -5,325 +5,389 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fahad Almalki, MD</title>
 <style>
-:root{--ink:#0b2230;--muted:#5b6b78;--line:#d9e5ea;--bg:#f8fbfc;--teal:#0b5964;--teal2:#0d7888;--card:#fff;--red:#b42318;--amber:#a15c07;--green:#067647}
-*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
-.nav{max-width:1240px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;gap:18px}
-.brand{display:flex;align-items:center;gap:12px;font-weight:800}.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#073c47,#0b7888);display:grid;place-items:center;color:white;font-weight:900}
-.links{display:flex;gap:10px;flex-wrap:wrap}.links button,.btn{border:1px solid transparent;background:transparent;color:#223746;font-weight:750;padding:9px 13px;border-radius:999px;cursor:pointer;text-decoration:none}.links button:hover,.btn:hover{background:#edf6f8}.contact{border-color:var(--line)!important;background:#fff!important}
-.hero{max-width:1240px;margin:0 auto;padding:0 18px 28px}.heroPanel{background:linear-gradient(130deg,#073642,#0a5662 70%,#0d7484);min-height:180px;display:grid;place-items:center;text-align:center;color:#fff;padding:38px 18px;box-shadow:0 18px 45px rgba(6,45,55,.14)}.heroLine{font-weight:850;font-size:clamp(18px,2vw,26px)}
-main{max-width:1240px;margin:auto;padding:28px 18px 70px} h2{font-size:clamp(28px,3vw,40px);margin:0 0 12px} h3{margin:0 0 10px;font-size:22px} h4{text-transform:uppercase;letter-spacing:.08em;color:#086274;margin:22px 0 10px;font-size:14px}
-p{color:#425563}.lead{font-size:18px;max-width:900px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 16px 32px rgba(4,42,52,.06)}.eyebrow,.card small{display:block;color:#006778;text-transform:uppercase;font-weight:900;letter-spacing:.18em;font-size:12px;margin-bottom:10px}.primary{background:var(--teal2)!important;color:white!important;border-color:var(--teal2)!important}
-.section{margin:36px 0}.toolList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.toolItem{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:left;cursor:pointer}.toolItem:hover{box-shadow:0 16px 32px rgba(4,42,52,.08);border-color:#b8d4dc}.toolItem b{display:block;font-size:18px;margin-bottom:6px}.toolItem span{display:block;color:var(--muted);font-size:14px}
-input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font:inherit;background:#fff}label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{margin-bottom:14px}.checkgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}.check{display:flex;gap:9px;align-items:flex-start;font-weight:650;color:#213746}.check input{width:auto;margin-top:5px}.hint{display:block;font-size:12px;color:#71808a;font-weight:500;margin-top:3px}
-.output{border-left:5px solid var(--teal2);background:#f2fbfd;padding:18px;border-radius:14px;margin-top:18px;white-space:pre-wrap}.output.red{border-color:var(--red);background:#fff5f5}.output.amber{border-color:var(--amber);background:#fff8ed}.output.green{border-color:var(--green);background:#f0fff8}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.breadcrumb{font-size:14px;color:var(--muted);margin-bottom:18px}.lock{max-width:520px;margin:38px auto}.hidden{display:none!important}footer{border-top:1px solid var(--line);padding:28px 18px;text-align:center;color:#657786}
+:root{--ink:#0b2230;--muted:#5b6b78;--line:#d9e5ea;--bg:#f8fbfc;--teal:#0b5964;--teal2:#0d7888;--red:#b42318;--amber:#a15c07;--green:#067647;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+.topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.nav{max-width:1240px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#073c47,#0b7888);display:grid;place-items:center;color:white;font-weight:900}
+.navlinks{display:flex;gap:9px;flex-wrap:wrap}
+button,.btn{font:inherit;font-weight:800;border:1px solid transparent;background:transparent;color:#203746;padding:9px 13px;border-radius:999px;cursor:pointer;text-decoration:none}
+button:hover,.btn:hover{background:#edf6f8}
+.contact{border-color:var(--line);background:#fff}
+.hero{max-width:1240px;margin:auto;padding:0 18px 28px}
+.heroPanel{min-height:180px;background:linear-gradient(130deg,#073642,#0a5662 70%,#0d7484);display:grid;place-items:center;text-align:center;color:white;padding:38px 18px;box-shadow:0 18px 45px rgba(6,45,55,.14)}
+.heroLine{font-size:clamp(18px,2vw,26px);font-weight:850}
+main{max-width:1240px;margin:auto;padding:28px 18px 70px}
+h2{font-size:clamp(28px,3vw,40px);margin:0 0 12px}
+h3{font-size:22px;margin:0 0 10px}
+h4{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#086274;margin:22px 0 10px}
+p{color:#425563}.lead{font-size:18px;max-width:900px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 16px 32px rgba(4,42,52,.06)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.section{margin:36px 0}
+small,.eyebrow{display:block;color:#006778;text-transform:uppercase;font-weight:900;letter-spacing:.18em;font-size:12px;margin-bottom:10px}
+.primary{background:var(--teal2)!important;color:white!important;border-color:var(--teal2)!important}
+.toolList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.toolItem{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:left;cursor:pointer}
+.toolItem:hover{box-shadow:0 16px 32px rgba(4,42,52,.08);border-color:#b8d4dc}
+.toolItem b{display:block;font-size:18px;margin-bottom:6px}.toolItem span{display:block;color:var(--muted);font-size:14px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font:inherit;background:white}
+label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{margin-bottom:14px}
+.hint{display:block;font-size:12px;color:#71808a;font-weight:500;margin-top:3px}
+.checkgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}
+.check{display:flex;gap:9px;align-items:flex-start;font-weight:650;color:#213746}.check input{width:auto;margin-top:5px}
+.output{border-left:5px solid var(--teal2);background:#f2fbfd;padding:18px;border-radius:14px;margin-top:18px;white-space:pre-wrap}
+.output.red{border-color:var(--red);background:#fff5f5}.output.amber{border-color:var(--amber);background:#fff8ed}.output.green{border-color:var(--green);background:#f0fff8}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.breadcrumb{font-size:14px;color:var(--muted);margin-bottom:18px}.lock{max-width:520px;margin:38px auto}
+.hidden{display:none!important}footer{border-top:1px solid var(--line);padding:28px 18px;text-align:center;color:#657786}
 @media(max-width:850px){.grid,.grid2,.toolList,.checkgrid{grid-template-columns:1fr}.heroPanel{min-height:140px}}
 </style>
 </head>
 <body>
-<header class="topbar"><div class="nav"><div class="brand"><div class="logo">FA</div><span>Fahad Almalki, MD</span></div><nav class="links"><button onclick="go('home')">Home</button><button onclick="go('pathways')">Clinical Pathways</button><button onclick="go('crft')">CRFT</button><button class="contact" onclick="go('contact')">Contact</button></nav></div></header>
-<div class="hero" id="hero"><div class="heroPanel"><div class="heroLine">General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</div></div></div>
-<main id="app"></main><footer>Fahad Almalki, MD · General Internal Medicine · Vascular Medicine</footer>
+<header class="topbar">
+  <div class="nav">
+    <div class="brand"><div class="logo">FA</div><span>Fahad Almalki, MD</span></div>
+    <nav class="navlinks">
+      <button data-page="home">Home</button>
+      <button data-page="pathways">Clinical Pathways</button>
+      <button data-page="crft">CRFT</button>
+      <button class="contact" data-page="contact">Contact</button>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="hero">
+  <div class="heroPanel">
+    <div class="heroLine">General Internal Medicine · Vascular Medicine · Clinical Reasoning · Quality Improvement</div>
+  </div>
+</div>
+
+<main id="app"></main>
+<footer>Fahad Almalki, MD · General Internal Medicine · Vascular Medicine</footer>
+
 <script>
-const USERNAME="fahad", PASSWORD="ChangeThisPassword2026!"; let authed=sessionStorage.getItem("fa_auth")==="yes";
-const tools=[
-{id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Post-op Troponin Pathway",desc:"Guided MINS pathway: screening, elevated troponin interpretation, RCRI, BNP/NT-proBNP, ECG, symptoms, competing triggers, and follow-up."},
-{id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Diarrhea Diagnostic Pathway",desc:"Danger-first acute/chronic diarrhea approach: watery vs inflammatory vs fatty, osmotic vs secretory, medications, bile acid, pancreatic, microscopic colitis."},
-{id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Tonicity-first pathway, ADH-on/off reasoning, urine osm/sodium, SIADH mimics, ODS risk, and correction guardrails."},
-{id:"hypokalemia",cat:"GIM Diagnostic Reasoning",title:"Hypokalemia + Acid–Base Engine",desc:"GI vs renal potassium loss, metabolic acidosis/alkalosis, urine potassium/chloride, RTA, diuretics, mineralocorticoid clues."},
-{id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
-{id:"proteinuria",cat:"GIM Diagnostic Reasoning",title:"Proteinuria Interpreter",desc:"Proteinuria phenotype, albumin context, active sediment, nephrotic range, systemic disease clues, and nephrology triggers."},
-{id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
-{id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
-{id:"periop-doac",cat:"Thrombosis / Antithrombotic Safety",title:"Perioperative DOAC Interruption Planner",desc:"PAUSE-style logic by drug, renal function, procedure bleeding risk, neuraxial risk, restart timing, and bridging cautions."},
-{id:"vte-prophy",cat:"Thrombosis / Antithrombotic Safety",title:"Medical Inpatient VTE Prophylaxis Standard",desc:"Risk/bleeding/procedure/platelet/renal logic to standardize prophylaxis orders or documented holds."},
-{id:"postop-vte",cat:"Thrombosis / Antithrombotic Safety",title:"Post-op DVT/VTE Prophylaxis Assistant",desc:"Orthopedic and non-orthopedic surgical prophylaxis, bleeding risk, neuraxial warning, renal/platelet checks, duration prompts."},
-{id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Symptoms, pulse exam, ABI/TBI/exercise ABI logic, mimics, limb-threat screen, and initial management."},
-{id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, antiplatelet/statin/exercise/foot care, vascular-dose rivaroxaban consideration, and revascularization triggers."},
-{id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"New/chronic VTE, arterial thrombosis, duration, anticoagulant safety, APS/MPN/PNH/Lp(a), CTEPH and post-thrombotic syndrome prompts."},
-{id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
-{id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review Checklist",desc:"Diagnostic clarity, danger overnight, VTE prophylaxis, meds, mobility, pending tests, discharge barriers, and communication."},
-{id:"uncertainty",cat:"CTU / Rounding Standard",title:"Diagnostic Uncertainty Pathway",desc:"Syndrome-first reasoning, dangerous alternatives, disconfirming evidence, what would change my mind, and next test/action."},
-{id:"discharge",cat:"CTU / Rounding Standard",title:"Discharge Readiness + Readmission Risk",desc:"Safe discharge, pending critical items, medication risk, follow-up gaps, diagnostic uncertainty, and early clinic needs."}
-];
-function E(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
-function app(){return document.getElementById("app")} function hero(show){document.getElementById("hero").style.display=show?"block":"none"}
-function go(page,param){location.hash=param?`${page}:${param}`:page;render()} window.addEventListener("hashchange",render);
-function checks(name,arr){return `<div class="checkgrid">${arr.map(x=>`<label class="check"><input type="checkbox" name="${name}" value="${E(x)}"><span>${E(x)}</span></label>`).join("")}</div>`}
-function val(id){return (document.getElementById(id)?.value||"").trim()} function checked(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value)}
-function render(){const raw=location.hash.replace("#","")||"home";const [page,param]=raw.split(":"); if(page==="home")return renderHome(); if(page==="contact")return renderContact(); if(page==="crft")return renderCrft(); if(page==="pathways")return authed?renderPathways():renderLogin("pathways"); if(page==="tool")return authed?renderTool(param):renderLogin("tool:"+param); renderHome();}
-function renderHome(){hero(true);app().innerHTML=`<section><h2>Clinical pathway system</h2><p class="lead">A structured bedside library designed to standardize safe clinical reasoning, vascular medicine assessment, antithrombotic decisions, and General Internal Medicine diagnostic pathways.</p><div class="grid section"><div class="card"><small>Protected library</small><h3>Clinical Pathways</h3><p>Guided bedside workflows: danger first, phenotype, minimum standard assessment, action plan, and copy-ready notes.</p><button class="btn primary" onclick="go('pathways')">Open pathways</button></div><div class="card"><small>Education</small><h3>CRFT</h3><p>Clinical reasoning education focused on problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><button class="btn" onclick="go('crft')">View CRFT</button></div><div class="card"><small>Contact</small><h3>Professional inquiries</h3><p>For academic, educational, clinical pathway, and QI communication.</p><button class="btn" onclick="go('contact')">Contact</button></div></div></section>`}
-function renderContact(){hero(false);app().innerHTML=`<div class="breadcrumb"><button class="btn" onclick="go('home')">← Home</button></div><section class="card"><small>Contact</small><h2>Professional inquiries</h2><p><b><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></b></p><p>Direct professional correspondence: <b><a href="mailto:fahad@fahadalmalkimd.com">fahad@fahadalmalkimd.com</a></b></p></section>`}
-function renderCrft(){hero(false);app().innerHTML=`<div class="breadcrumb"><button class="btn" onclick="go('home')">← Home</button></div><section class="card"><small>Clinical reasoning education</small><h2>CRFT</h2><p>Structured framework to make reasoning observable, teachable, and improvable across repeated cases.</p><div class="grid2"><div><h4>Core domains</h4><ul><li>Problem framing</li><li>Hypothesis generation</li><li>Data interpretation</li><li>Management planning</li><li>Anticipation</li><li>Metacognition</li></ul></div><div><h4>Purpose</h4><p>Move bedside teaching from informal impression to explicit reasoning behaviors that can be coached, scored, and improved.</p></div></div></section>`}
-function renderLogin(target){hero(false);app().innerHTML=`<section class="lock card"><small>Protected library</small><h2>Clinical Pathways Login</h2><div class="field"><label>Username</label><input id="u"></div><div class="field"><label>Password</label><input id="p" type="password"></div><button class="btn primary" onclick="login('${target}')">Enter</button><p class="hint">Soft access gate only. Real privacy later needs Cloudflare Access or similar.</p></section>`}
-function login(target){if(val("u")===USERNAME && val("p")===PASSWORD){sessionStorage.setItem("fa_auth","yes");authed=true;go(...target.split(":"))}else alert("Incorrect username or password")}
-function renderPathways(){hero(false);const cats=[...new Set(tools.map(t=>t.cat))];app().innerHTML=`<div class="breadcrumb"><button class="btn" onclick="go('home')">← Home</button></div><section><h2>Clinical Pathway Library</h2><p class="lead">Choose a pathway. Each tool starts with safety, classifies the phenotype, defines minimum assessment, and produces a copy-ready note.</p>${cats.map(cat=>`<div class="section"><h4>${cat}</h4><div class="toolList">${tools.filter(t=>t.cat===cat).map(t=>`<button class="toolItem" onclick="go('tool','${t.id}')"><b>${t.title}</b><span>${t.desc}</span></button>`).join("")}</div></div>`).join("")}</section>`}
-function shell(title,subtitle,body){hero(false);app().innerHTML=`<div class="breadcrumb"><button class="btn" onclick="go('pathways')">← Back to Pathways</button> <button class="btn" onclick="go('home')">Home</button></div><section><small class="eyebrow">Guided pathway</small><h2>${title}</h2><p class="lead">${subtitle}</p></section>${body}`}
-function renderTool(id){const t=tools.find(x=>x.id===id); if(!t)return renderPathways(); if(id==="postop-troponin")return renderMins(); if(id==="diarrhea")return renderDiarrhea(); if(id==="af")return renderAF(); if(id==="antithrombotic")return renderATS(); if(id==="pad-suspected")return renderSuspectedPAD(); return shell(t.title,t.desc,`<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is restored in the library and ready for deeper expansion while preserving the stable single-file setup.</p></section>`)}
-function copyOut(id){const el=document.getElementById(id); if(!el||el.classList.contains("hidden"))return alert("Generate the output first."); navigator.clipboard.writeText(el.textContent).then(()=>alert("Copied"))}
-function renderMins(){shell("Post-op Troponin Pathway","Guided MINS pathway for surveillance, elevated troponin interpretation, competing triggers, and follow-up.",`<section class="card"><div class="grid2"><div class="field"><label>Clinical question</label><select id="mq"><option>Should I order post-op troponin surveillance?</option><option>Troponin is already elevated after surgery</option><option>Patient has ischemic symptoms / ECG change / instability</option><option>Discharge or follow-up plan after post-op troponin</option></select></div><div class="field"><label>Procedure phenotype</label><select id="mp"><option>Low-risk/minor procedure</option><option>Major orthopedic</option><option>Hip fracture / urgent orthopedic trauma</option><option>Major abdominal / intraperitoneal</option><option>Intrathoracic</option><option>Major vascular / suprainguinal vascular</option><option>Neurosurgery/spine</option><option>Transplant / high-stress surgery</option></select><span class="hint">RCRI high-risk surgery specifically includes intraperitoneal, intrathoracic, or suprainguinal vascular surgery.</span></div><div class="field"><label>Urgency</label><select id="mu"><option>Elective</option><option>Urgent</option><option>Emergency</option></select></div><div class="field"><label>Functional capacity</label><select id="mm"><option>Good ≥4 METs</option><option>Poor <4 METs</option><option>Unknown</option></select></div><div class="field"><label>Biomarker type</label><select id="mbt"><option>Not available</option><option>NT-proBNP</option><option>BNP</option></select></div><div class="field"><label>BNP/NT-proBNP value</label><input id="mb" type="number"></div><div class="field"><label>Troponin value</label><input id="mt" type="number"></div><div class="field"><label>Troponin ULN / 99th percentile</label><input id="muln" type="number"></div></div><h4>RCRI components</h4>${checks("rcri",["High-risk surgery by RCRI definition","Ischemic heart disease","Heart failure","Stroke/TIA","Insulin-treated diabetes","Creatinine >177 µmol/L / >2 mg/dL"])}<h4>Red flags</h4>${checks("mred",["Ischemic chest pain/equivalent","Dynamic ischemic ECG changes","Hemodynamic instability","Acute heart failure/pulmonary edema","Malignant arrhythmia"])}<h4>Competing triggers</h4>${checks("mtrig",["Hypotension","Tachycardia/AF","Hypoxia","Anemia/bleeding","Sepsis/infection","PE concern","AKI/CKD","Major pain/stress"])}<div class="toolbar"><button class="btn primary" onclick="calcMins()">Generate pathway</button><button class="btn" onclick="copyOut('mout')">Copy note</button></div><div id="mout" class="output hidden"></div></section>`)}
-function calcMins(){const r=checked("rcri"), red=checked("mred"), trig=checked("mtrig"); const score=r.length, btype=val("mbt"), b=Number(val("mb")||0), t=Number(val("mt")||0), u=Number(val("muln")||0); let bio="No BNP/NT-proBNP entered."; if(btype==="NT-proBNP")bio=b>=300?"NT-proBNP ≥300: biomarker-positive.":"NT-proBNP <300: lower biomarker signal."; if(btype==="BNP")bio=b>=92?"BNP ≥92: biomarker-positive.":"BNP <92: lower biomarker signal."; let trop=(t&&u)?(t>u?`Troponin above ULN (${t} > ${u}).`:`Troponin not above ULN (${t} ≤ ${u}).`):"Troponin/ULN not fully entered."; let level=red.length?"red":(score>=2||t>u||bio.includes("positive")?"amber":"green"); let text=`Clinical question: ${val("mq")}
-Procedure: ${val("mp")}
-RCRI score: ${score}/6 (${r.length?r.join("; "):"none selected"}).
-Biomarker: ${bio}
-Troponin: ${trop}
-Red flags: ${red.length?red.join("; "):"none selected"}.
-Competing triggers: ${trig.length?trig.join("; "):"none selected"}.
+(function(){
+  var USERNAME = "fahad";
+  var PASSWORD = "ChangeThisPassword2026!";
+  var authed = sessionStorage.getItem("fa_auth") === "yes";
 
-Recommended pathway:
-${red.length?"RED: possible perioperative MI/unstable cardiac injury. Repeat ECG/troponin, assess hemodynamics, treat triggers, and consider cardiology/ICU-level review.":(t>u?"AMBER: myocardial injury/MINS possible. Repeat troponin, obtain ECG, search for triggers, optimize oxygen supply-demand and arrange follow-up.":(score>=2||bio.includes("positive")?"AMBER: higher-risk perioperative profile; post-op troponin surveillance is reasonable if not already done.":"GREEN: lower-risk profile; routine surveillance may not be required unless symptoms, ECG changes, instability, or local criteria."))}
+  var tools = [
+    {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
+    {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"New/chronic VTE, arterial thrombosis, duration, anticoagulant safety, APS/MPN/PNH/Lp(a), CTEPH and PTS prompts."},
+    {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
+    {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
+    {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
+    {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Post-op Troponin Pathway",desc:"Guided MINS pathway: screening, elevated troponin interpretation, RCRI, BNP/NT-proBNP, ECG, symptoms, competing triggers, and follow-up."},
+    {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Diarrhea Diagnostic Pathway",desc:"Danger-first diarrhea approach: watery vs inflammatory vs fatty, osmotic vs secretory, medications, bile acid, pancreatic, microscopic colitis."},
+    {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Tonicity-first pathway, ADH-on/off reasoning, urine osm/sodium, SIADH mimics, ODS risk, and correction guardrails."},
+    {id:"hypokalemia",cat:"GIM Diagnostic Reasoning",title:"Hypokalemia + Acid–Base Engine",desc:"GI vs renal potassium loss, metabolic acidosis/alkalosis, urine potassium/chloride, RTA, diuretics, mineralocorticoid clues."},
+    {id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
+    {id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review Checklist",desc:"Diagnostic clarity, danger overnight, VTE prophylaxis, meds, mobility, pending tests, discharge barriers, and communication."}
+  ];
 
-Minimum standard:
-1. Do not interpret troponin without ECG, symptoms, hemodynamics, renal function, and perioperative triggers.
-2. Repeat troponin if elevated to determine rise/fall.
-3. Look for supply-demand triggers before labeling type 1 MI.
-4. Arrange follow-up if myocardial injury/MINS is suspected.
+  function app(){ return document.getElementById("app"); }
+  function showHero(x){ document.getElementById("hero").style.display = x ? "block" : "none"; }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(m){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]; }); }
+  function val(id){ var el=document.getElementById(id); return el ? el.value.trim() : ""; }
+  function checked(name){ return Array.prototype.slice.call(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(x){return x.value;}); }
+  function checks(name, arr){
+    return '<div class="checkgrid">' + arr.map(function(x){
+      return '<label class="check"><input type="checkbox" name="'+name+'" value="'+esc(x)+'"><span>'+esc(x)+'</span></label>';
+    }).join("") + '</div>';
+  }
+  function setHash(page,param){ location.hash = param ? page + ":" + param : page; render(); }
+  window.setHash = setHash;
 
-Teaching pearl:
-Start with patient + operation risk, then biomarkers, then troponin. The number alone is not the diagnosis.
+  document.addEventListener("click", function(e){
+    var p = e.target.closest("[data-page]");
+    if(p){ setHash(p.getAttribute("data-page")); }
+    var t = e.target.closest("[data-tool]");
+    if(t){ setHash("tool", t.getAttribute("data-tool")); }
+  });
+  window.addEventListener("hashchange", render);
 
-Copy-ready note:
-Post-op troponin pathway reviewed. RCRI ${score}/6. Biomarker ${btype} ${b||"not available"}. Troponin ${t||"not available"} with ULN ${u||"not available"}. Red flags ${red.length?red.join(", "):"none"}. Triggers ${trig.length?trig.join(", "):"none"}. Plan as above.`; const out=document.getElementById("mout"); out.className="output "+level; out.textContent=text; out.classList.remove("hidden")}
-function renderDiarrhea(){shell("Diarrhea Diagnostic Pathway","Danger-first GIM approach to acute/chronic diarrhea, phenotype, minimum workup, and guardrails.",`<section class="card"><div class="grid2"><div class="field"><label>Duration</label><select id="ddur"><option>Acute <14 days</option><option>Persistent 14–30 days</option><option>Chronic >4 weeks</option><option>Recurrent episodic</option></select></div><div class="field"><label>Main phenotype</label><select id="dtype"><option>Watery</option><option>Bloody/inflammatory</option><option>Greasy/floating/fatty</option><option>Mixed/unclear</option></select></div><div class="field"><label>Fasting effect</label><select id="dfast"><option>Unknown</option><option>Improves with fasting</option><option>Persists despite fasting/nocturnal</option></select></div><div class="field"><label>Post-prandial urgency</label><select id="dpost"><option>No/unknown</option><option>Yes</option></select></div><div class="field"><label>Optional stool sodium</label><input id="dna" type="number"></div><div class="field"><label>Optional stool potassium</label><input id="dk" type="number"></div></div><h4>Danger features</h4>${checks("dred",["Shock/severe dehydration","AKI or severe electrolyte disturbance","Fever/sepsis","Bloody diarrhea","Severe abdominal pain/peritonitis","Immunocompromised","Recent antibiotics/hospitalization","Weight loss/anemia/nocturnal symptoms"])}<h4>Medication/exposure clues</h4>${checks("dmed",["Metformin","Magnesium/laxatives","Antibiotics","PPI","NSAID","SSRI/SNRI","Colchicine","Mycophenolate","GLP-1 agonist","Olmesartan/ARB enteropathy clue","Travel/camping/untreated water","Sick contacts/outbreak"])}<h4>Niche clues</h4>${checks("dniche",["Bile acid: cholecystectomy, ileal disease/resection, post-prandial watery urgency","Pancreatic insufficiency: greasy stool, weight loss, chronic pancreatitis, diabetes","Microscopic colitis: chronic watery non-bloody, nocturnal, PPI/NSAID/SSRI, normal colonoscopy","Celiac/inflammatory: iron deficiency, weight loss, high CRP/calprotectin, autoimmune/family history"])}<div class="toolbar"><button class="btn primary" onclick="calcD()">Generate pathway</button><button class="btn" onclick="copyOut('dout')">Copy note</button></div><div id="dout" class="output hidden"></div></section>`)}
-function calcD(){const red=checked("dred"), med=checked("dmed"), niche=checked("dniche"); const dur=val("ddur"), type=val("dtype"), fast=val("dfast"), na=Number(val("dna")||0), k=Number(val("dk")||0); let gap=(na||k)?290-2*(na+k):null; let level=red.length?"red":(dur.includes("Chronic")||type!=="Watery"||niche.length?"amber":"green"); let text=`Phenotype: ${type}; duration: ${dur}; fasting effect: ${fast}.
-Red flags: ${red.length?red.join("; "):"none selected"}.
-Medication/exposure clues: ${med.length?med.join("; "):"none selected"}.
-Niche clues: ${niche.length?niche.join("; "):"none selected"}.
-${gap!==null?`Stool osmotic gap: ${gap.toFixed(0)}. High gap suggests osmotic; low gap suggests secretory.`:"Stool osmotic gap not calculated."}
+  function render(){
+    var raw = location.hash.replace("#","") || "home";
+    var parts = raw.split(":");
+    var page = parts[0], param = parts[1];
+    if(page === "home") return renderHome();
+    if(page === "contact") return renderContact();
+    if(page === "crft") return renderCrft();
+    if(page === "pathways") return authed ? renderPathways() : renderLogin("pathways");
+    if(page === "tool") return authed ? renderTool(param) : renderLogin("tool:" + param);
+    renderHome();
+  }
 
-Recommended pathway:
-${red.length?"RED: urgent assessment. Prioritize hydration, vitals, AKI/electrolytes, sepsis, severe abdominal pathology, and C. difficile if compatible.":(dur.includes("Chronic")?"AMBER: chronic diarrhea requires phenotype-directed workup. Do not label IBS-D until alarm features, inflammatory disease, celiac disease, microscopic colitis, bile acid diarrhea, medication causes, and malabsorption are considered.":"Stable short-duration watery diarrhea is often supportive-care first; test if severe, inflammatory, persistent, immunocompromised, outbreak/travel, or C. difficile risk.")}
+  function renderHome(){
+    showHero(true);
+    app().innerHTML = '<section><h2>Clinical pathway system</h2><p class="lead">A structured bedside library designed to standardize safe clinical reasoning, vascular medicine assessment, antithrombotic decisions, and General Internal Medicine diagnostic pathways.</p><div class="grid section"><div class="card"><small>Protected library</small><h3>Clinical Pathways</h3><p>Guided bedside workflows: danger first, phenotype, minimum standard assessment, action plan, and copy-ready notes.</p><button class="primary" data-page="pathways">Open pathways</button></div><div class="card"><small>Education</small><h3>CRFT</h3><p>Clinical reasoning education focused on problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><button data-page="crft">View CRFT</button></div><div class="card"><small>Contact</small><h3>Professional inquiries</h3><p>For academic, educational, clinical pathway, and quality-improvement communication.</p><button data-page="contact">Contact</button></div></div></section>';
+  }
 
-Minimum tests:
-Acute severe/high-risk: CBC, electrolytes/Cr, stool testing/C. difficile as indicated.
-Chronic: CBC, electrolytes/Cr, CRP or calprotectin, celiac serology, TSH when appropriate, fecal elastase if fatty, colonoscopy with biopsies when alarm/microscopic colitis concern.
+  function renderContact(){
+    showHero(false);
+    app().innerHTML = '<div class="breadcrumb"><button data-page="home">← Home</button></div><section class="card"><small>Contact</small><h2>Professional inquiries</h2><p><b><a href="mailto:contact@fahadalmalkimd.com">contact@fahadalmalkimd.com</a></b></p><p>Direct professional correspondence: <b><a href="mailto:fahad@fahadalmalkimd.com">fahad@fahadalmalkimd.com</a></b></p></section>';
+  }
 
-Teaching pearl:
-Improves with fasting = osmotic. Persists overnight/fasting = secretory or inflammatory. Greasy/floating + weight loss = malabsorption.`; const out=document.getElementById("dout"); out.className="output "+level; out.textContent=text; out.classList.remove("hidden")}
-function renderAF(){shell("AF Anticoagulation Decision Aid","Bedside anticoagulation reasoning with stroke risk, bleeding-risk frame, and DOAC/warfarin danger zones.",`<section class="card"><div class="grid2"><div class="field"><label>Sex</label><select id="asex"><option>Male</option><option>Female</option></select></div><div class="field"><label>Age</label><select id="aage"><option>&lt;65</option><option>65–74</option><option>≥75</option></select></div></div><h4>CHA2DS2-VASc</h4>${checks("achads",["Heart failure","Hypertension","Diabetes","Prior stroke/TIA/systemic embolism","Vascular disease"])}<h4>Bleeding modifiers</h4>${checks("ableed",["Uncontrolled hypertension","Abnormal renal/liver function","Prior major bleeding","Labile INR","Elderly/frailty/falls concern","Drugs/alcohol increasing bleeding"])}<h4>Warfarin preferred / DOAC danger zones</h4>${checks("adanger",["Mechanical valve","Moderate-to-severe mitral stenosis","Rheumatic AF","Triple-positive/high-risk APS","Severe renal/liver disease","Pregnancy/breastfeeding context","Major drug interaction/malabsorption"])}<div class="toolbar"><button class="btn primary" onclick="calcAF()">Generate pathway</button><button class="btn" onclick="copyOut('aout')">Copy note</button></div><div id="aout" class="output hidden"></div></section>`)}
-function calcAF(){const sex=val("asex"),age=val("aage"),c=checked("achads"),b=checked("ableed"),d=checked("adanger");let score=0;if(sex==="Female")score++;if(age==="65–74")score++;if(age==="≥75")score+=2;c.forEach(x=>score+=x.startsWith("Prior")?2:1);const risks=[0.2,0.6,2.2,3.2,4.8,7.2,9.7,11.2,10.8,12.2],r=risks[Math.min(score,9)],five=100*(1-Math.pow(1-r/100,5)),ten=100*(1-Math.pow(1-r/100,10));let text=`CHA2DS2-VASc: ${score}
-Estimated untreated stroke risk: ~${r.toFixed(1)}%/yr; ~${five.toFixed(1)}% over 5 years; ~${ten.toFixed(1)}% over 10 years.
-Bleeding modifiers: ${b.length?b.join("; "):"none selected"}.
-DOAC danger zones: ${d.length?d.join("; "):"none selected"}.
+  function renderCrft(){
+    showHero(false);
+    app().innerHTML = '<div class="breadcrumb"><button data-page="home">← Home</button></div><section class="card"><small>Clinical reasoning education</small><h2>CRFT</h2><p>Structured framework to make reasoning observable, teachable, and improvable across repeated cases.</p><div class="grid2"><div><h4>Core domains</h4><ul><li>Problem framing</li><li>Hypothesis generation</li><li>Data interpretation</li><li>Management planning</li><li>Anticipation</li><li>Metacognition</li></ul></div><div><h4>Purpose</h4><p>Move bedside teaching from informal impression to explicit reasoning behaviors that can be coached, scored, and improved.</p></div></div></section>';
+  }
 
-Decision frame:
-${d.length?"Warfarin/specialist pathway may be preferred because a DOAC danger zone is present.":(score>=2?"Oral anticoagulation is generally favored if no contraindication; DOAC usually preferred in typical non-valvular AF.":score===1?"Intermediate/shared decision zone.":"Low-risk zone; routine anticoagulation usually not indicated solely for AF.")}
+  function renderLogin(target){
+    showHero(false);
+    app().innerHTML = '<section class="lock card"><small>Protected library</small><h2>Clinical Pathways Login</h2><div class="field"><label>Username</label><input id="u"></div><div class="field"><label>Password</label><input id="p" type="password"></div><button class="primary" id="loginBtn">Enter</button><p class="hint">Soft access gate only. Real privacy later needs Cloudflare Access or similar.</p></section>';
+    document.getElementById("loginBtn").addEventListener("click", function(){
+      if(val("u") === USERNAME && val("p") === PASSWORD){
+        sessionStorage.setItem("fa_auth","yes");
+        authed = true;
+        var parts = target.split(":");
+        setHash(parts[0], parts[1]);
+      } else {
+        alert("Incorrect username or password");
+      }
+    });
+  }
 
-Teaching pearl:
-Stroke risk accumulates over time; bleeding-risk review should identify modifiable risks, not automatically deny anticoagulation.`; const out=document.getElementById("aout");out.className="output "+(d.length?"amber":score>=2?"green":"amber");out.textContent=text;out.classList.remove("hidden")}
-function renderATS(){shell("Antithrombotic Safety Assistant","Guided checklist for thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags.",`<section class="card"><div class="grid2"><div class="field"><label>Scenario</label><select id="ss"><option>Thrombosis while anticoagulated</option><option>Thrombocytopenia + thrombosis</option><option>Anti-Xa result confusion</option><option>DOAC safety check</option></select></div><div class="field"><label>Current anticoagulant</label><select id="sd"><option>DOAC</option><option>UFH</option><option>LMWH</option><option>Fondaparinux</option><option>Warfarin</option><option>None/unknown</option></select></div></div><h4>Danger flags</h4>${checks("sred",["Severe/life-threatening thrombosis","Major bleeding","Suspected HIT/PF4 syndrome","Suspected VITT","Arterial thrombosis young/unexplained","Unusual-site thrombosis","Recurrent thrombosis on adequate therapy"])}<h4>Pseudo-failure checks</h4>${checks("spseudo",["Missed doses/nonadherence","Wrong dose","Wrong renal adjustment","Drug interaction","Malabsorption/bariatric surgery","Extreme weight/pregnancy context","Imaging may show chronic clot not new thrombosis"])}<h4>Biology clues</h4>${checks("sbio",["APS clue","MPN clue: erythrocytosis/thrombocytosis/splanchnic clot","PNH clue: hemolysis/cytopenia/unusual clot","Cancer clue","Nephrotic syndrome/low albumin","AT deficiency/heparin resistance clue"])}<div class="toolbar"><button class="btn primary" onclick="calcATS()">Generate pathway</button><button class="btn" onclick="copyOut('sout')">Copy note</button></div><div id="sout" class="output hidden"></div></section>`)}
-function calcATS(){const red=checked("sred"),pseudo=checked("spseudo"),bio=checked("sbio"); let text=`Scenario: ${val("ss")}
-Anticoagulant: ${val("sd")}
-Danger flags: ${red.length?red.join("; "):"none selected"}
-Pseudo-failure checks: ${pseudo.length?pseudo.join("; "):"none selected"}
-Biology clues: ${bio.length?bio.join("; "):"none selected"}
+  function renderPathways(){
+    showHero(false);
+    var cats = [];
+    tools.forEach(function(t){ if(cats.indexOf(t.cat) < 0) cats.push(t.cat); });
+    var html = '<div class="breadcrumb"><button data-page="home">← Home</button></div><section><h2>Clinical Pathway Library</h2><p class="lead">Choose a pathway. Each tool starts with safety, classifies the phenotype, defines minimum assessment, and produces a copy-ready note.</p>';
+    cats.forEach(function(cat){
+      html += '<div class="section"><h4>'+esc(cat)+'</h4><div class="toolList">';
+      tools.filter(function(t){return t.cat===cat;}).forEach(function(t){
+        html += '<button class="toolItem" data-tool="'+t.id+'"><b>'+esc(t.title)+'</b><span>'+esc(t.desc)+'</span></button>';
+      });
+      html += '</div></div>';
+    });
+    html += '</section>';
+    app().innerHTML = html;
+  }
 
-Recommended pathway:
-${red.length?"RED/urgent: do not treat as routine recurrence. Confirm acuity, assess bleeding/clot burden, avoid heparin if HIT/VITT plausible, and escalate as needed.":"Start by excluding pseudo-failure before declaring anticoagulant failure. Confirm dose, adherence, renal/liver function, interactions, and imaging acuity."}
+  function shell(title, subtitle, body){
+    showHero(false);
+    app().innerHTML = '<div class="breadcrumb"><button data-page="pathways">← Back to Pathways</button> <button data-page="home">Home</button></div><section><small class="eyebrow">Guided pathway</small><h2>'+esc(title)+'</h2><p class="lead">'+esc(subtitle)+'</p></section>' + body;
+  }
 
-Minimum standard:
-1. Confirm clot is new/progressive.
-2. Confirm drug, dose, timing, renal/liver function, adherence, interactions.
-3. If thrombocytopenia + thrombosis: use 4Ts/PF4 pathway and avoid heparin if intermediate/high probability.
-4. If unusual arterial/splanchnic/CVST/recurrent clot: consider APS, MPN/JAK2, PNH, cancer, nephrotic syndrome, anatomy.
-5. Anti-Xa is only useful if timed correctly and calibrated to the drug.
+  function renderTool(id){
+    var t = tools.find(function(x){return x.id===id;});
+    if(!t) return renderPathways();
+    if(id === "pad-suspected") return renderPAD();
+    return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
+  }
 
-Teaching pearl:
-Before calling it anticoagulant failure, prove it is a new clot and that the patient had effective anticoagulant exposure.`; const out=document.getElementById("sout");out.className="output "+(red.length?"red":bio.length?"amber":"green");out.textContent=text;out.classList.remove("hidden")}
+  function selectField(id,label,options,hint){
+    return '<div class="field"><label>'+esc(label)+'</label><select id="'+id+'">'+options.map(function(x){return '<option>'+esc(x)+'</option>';}).join("")+'</select>'+(hint?'<span class="hint">'+esc(hint)+'</span>':'')+'</div>';
+  }
+  function inputField(id,label,placeholder){
+    return '<div class="field"><label>'+esc(label)+'</label><input id="'+id+'" placeholder="'+esc(placeholder||"")+'"></div>';
+  }
 
+  function renderPAD(){
+    var pulseNames = ["Right femoral","Left femoral","Right popliteal","Left popliteal","Right dorsalis pedis","Left dorsalis pedis","Right posterior tibial","Left posterior tibial"];
+    var pulseHtml = pulseNames.map(function(x,i){return selectField("pulse_"+i,x,["Not assessed","Present","Weak","Absent","Doppler only"],"");}).join("");
+    shell("Suspected PAD Clinic Pathway","Deep clinic-grade PAD assessment: referral reason, limb-danger triage, structured pulse and limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, urgency, and copy-ready note.",
+    '<section class="card">'+
+    '<h4>Why is the patient here? <span class="hint">Select all that apply.</span></h4>'+
+    checks("pad_reason",["Exertional calf pain","Exertional thigh/buttock pain","Reduced walking distance","Atypical leg pain","Rest pain / nocturnal foot pain","Foot ulcer or non-healing wound","Gangrene / tissue loss","Abnormal or absent pulses","Abnormal ABI/TBI or vascular lab","Diabetic foot risk / poor healing","Pre-op vascular assessment","Cardiovascular risk optimization","Unclear diagnosis / second opinion"])+
+    '<div class="grid2">'+
+    selectField("pad_pattern","Main symptom phenotype",["Classic claudication: reproducible exertional muscle pain relieved by rest","Atypical exertional leg symptoms","Rest pain: forefoot pain worse lying flat, improved by dependency","Wound/tissue loss phenotype","Sudden severe limb symptoms","Neuropathic/burning symptoms","Back/radicular or joint-type pain","Asymptomatic abnormal test/pulses"],"First split: claudication vs limb threat vs mimic.")+
+    selectField("pad_sev","Functional severity",["Asymptomatic","Mild symptoms, not limiting","Lifestyle-limiting exertional symptoms","Limits work/exercise/basic activities","Rest pain or tissue loss","Unclear"],"")+
+    inputField("pad_pfd","Pain-free walking distance","e.g. 100 meters, 1 block, unknown")+
+    inputField("pad_mwd","Maximum walking distance","e.g. 300 meters, unknown")+
+    selectField("pad_rest","Relieved by rest within ~10 minutes?",["Unknown","Yes","No"],"")+
+    selectField("pad_incline","Worse with stairs/incline?",["Unknown","Yes","No"],"")+
+    '</div>'+
+    '<h4>Danger-first limb screen</h4>'+
+    checks("pad_red",["Acute limb ischemia clue: sudden pain, pallor, pulselessness, paresthesia, paralysis, poikilothermia","New motor or sensory deficit","Rest pain, especially forefoot pain worse at night/lying flat","Non-healing wound, ulcer, gangrene, or tissue loss","Infected ischemic foot: spreading cellulitis, purulence, wet gangrene, systemic signs","New blue/purple toe or embolic-appearing lesion","Rapidly worsening symptoms","Absent Doppler signals if checked"])+
+    '<h4>Pulse exam by side</h4><div class="grid2">'+pulseHtml+'</div>'+
+    '<h4>Limb and foot exam</h4><div class="grid2">'+
+    selectField("pad_temp","Temperature",["Not assessed","Warm bilaterally","Cool unilateral","Cool bilateral","Cold limb"],"")+
+    selectField("pad_color","Color",["Not assessed","Normal","Pale","Dependent rubor","Cyanotic/blue","Mottled"],"")+
+    selectField("pad_cap","Capillary refill",["Not assessed","Normal","Delayed","Absent/very poor"],"")+
+    selectField("pad_hair","Hair loss",["Not assessed","No significant hair loss","Mild hair loss","Marked hair loss"],"")+
+    selectField("pad_skin","Skin/nails",["Not assessed","Normal","Shiny/atrophic skin","Dry/cracked skin","Thickened/dystrophic nails"],"")+
+    selectField("pad_edema","Edema",["Not assessed","None","Unilateral","Bilateral"],"")+
+    selectField("pad_wound","Wound location",["No wound","Toe","Forefoot","Heel","Ankle/leg","Multiple"],"")+
+    selectField("pad_inf","Wound infection",["No infection signs","Cellulitis","Purulence","Wet gangrene","Systemic signs","Not applicable"],"")+
+    selectField("pad_neuro","Neuropathy/sensory loss",["Unknown","No","Yes"],"")+
+    selectField("pad_motor","Motor deficit",["No","Yes","Not assessed"],"")+
+    '</div>'+
+    '<h4>ABI / TBI / vascular testing</h4><div class="grid2">'+
+    inputField("pad_rabi","Right ABI","e.g. 0.72")+
+    inputField("pad_labi","Left ABI","e.g. 1.22")+
+    inputField("pad_rtbi","Right TBI","optional")+
+    inputField("pad_ltbi","Left TBI","optional")+
+    selectField("pad_wave","Waveforms",["Unknown/not done","Triphasic","Biphasic","Monophasic","Absent","Mixed/asymmetric"],"")+
+    selectField("pad_exabi","Exercise ABI",["Not done","Normal","Abnormal post-exercise drop"],"")+
+    selectField("pad_img","Duplex/CTA/MRA",["Not done","Duplex done","CTA/MRA done","Planned/pending"],"")+
+    selectField("pad_calc","Calcified/noncompressible vessels suspected?",["Unknown","No","Yes: diabetes/CKD/noncompressible ABI"],"ABI can be misleading in diabetes/CKD.")+
+    '</div>'+
+    '<h4>Risk factors and optimization</h4><div class="grid2">'+
+    selectField("pad_dm","Diabetes status",["No diabetes","Diabetes controlled","Diabetes uncontrolled","Diabetes control unknown"],"")+
+    inputField("pad_a1c","HbA1c if available","e.g. 8.7%, unknown")+
+    selectField("pad_smoke","Smoking status",["Never smoker","Active smoker","Recent quitter","Prior smoker","Unknown"],"Active smoking changes urgency of counseling.")+
+    inputField("pad_pack","Pack-years / shisha / vaping note","optional")+
+    inputField("pad_ldl","LDL","e.g. 1.6 mmol/L, unknown")+
+    inputField("pad_lpa","Lp(a) if available","e.g. 150 nmol/L or mg/dL, unknown")+
+    inputField("pad_egfr","eGFR / CKD","e.g. eGFR 45, CKD3")+
+    inputField("pad_bp","BP / hypertension control","e.g. 145/82, controlled/unknown")+
+    selectField("pad_statin","Current lipid therapy",["None/unknown","Moderate-intensity statin","High-intensity statin","Statin intolerant"],"")+
+    selectField("pad_antith","Current antithrombotic",["None/unknown","Aspirin","Clopidogrel","DAPT","Therapeutic anticoagulation","Vascular-dose rivaroxaban + aspirin"],"")+
+    selectField("pad_exercise","Exercise therapy tried?",["No/unknown","Advised only","Structured/supervised program","Unable due to limitation"],"")+
+    selectField("pad_hf","Heart failure? Important if considering cilostazol.",["No/unknown","Yes"],"")+
+    '</div>'+
+    '<h4>Mimics and mixed diagnoses</h4>'+
+    checks("pad_mimic",["Spinal stenosis: better leaning forward/sitting, worse standing","Radiculopathy: back pain, dermatomal radiation, neurologic signs","Hip/knee osteoarthritis: joint-localized mechanical pain","Venous claudication/severe venous disease: swelling, bursting pain","Peripheral neuropathy: burning, stocking distribution, not exertional","Chronic exertional compartment syndrome: younger patient, tightness with exercise","Anemia/HF/lung disease/deconditioning: global exercise intolerance"])+
+    '<div class="toolbar"><button class="primary" id="padGenerate">Generate detailed PAD pathway</button><button id="padCopy">Copy note</button></div><div id="pad_out" class="output hidden"></div>'+
+    '</section>');
+    document.getElementById("padGenerate").addEventListener("click", calcPAD);
+    document.getElementById("padCopy").addEventListener("click", function(){ copyOut("pad_out"); });
+  }
 
-function renderSuspectedPAD(){
-  shell("Suspected PAD Clinic Pathway","A structured vascular clinic pathway for suspected PAD: reason for referral, limb-danger triage, detailed pulse/limb exam, ABI/TBI logic, mimics, risk-factor optimization, referral urgency, and copy-ready clinic note.",`
-  <section class="card">
-    <h4>Why is the patient here? <span class="hint">Select all that apply — PAD referrals often have more than one reason.</span></h4>
-    ${checks("pad_reason",[
-      "Exertional calf pain",
-      "Exertional thigh/buttock pain",
-      "Reduced walking distance",
-      "Atypical leg pain",
-      "Rest pain / nocturnal foot pain",
-      "Foot ulcer or non-healing wound",
-      "Gangrene / tissue loss",
-      "Abnormal or absent pulses",
-      "Abnormal ABI/TBI or vascular lab",
-      "Diabetic foot risk / poor healing",
-      "Pre-op vascular assessment",
-      "Cardiovascular risk optimization",
-      "Unclear diagnosis / second opinion"
-    ])}
+  function abiInterpret(raw){
+    if(!raw) return "not entered";
+    var n = Number(raw);
+    if(isNaN(n)) return "not interpretable";
+    if(n <= 0.90) return n.toFixed(2) + " abnormal, supports PAD";
+    if(n <= 0.99) return n.toFixed(2) + " borderline";
+    if(n <= 1.40) return n.toFixed(2) + " normal range, but exercise ABI may be needed if symptoms persist";
+    return n.toFixed(2) + " noncompressible; use TBI/toe pressure/waveforms";
+  }
 
-    <div class="grid2">
-      <div class="field"><label>Main symptom phenotype</label><select id="pad_pattern"><option>Classic claudication: reproducible exertional muscle pain relieved by rest</option><option>Atypical exertional leg symptoms</option><option>Rest pain: forefoot pain worse lying flat, improved by dependency</option><option>Wound/tissue loss phenotype</option><option>Sudden severe limb symptoms</option><option>Neuropathic/burning symptoms</option><option>Back/radicular or joint-type pain</option><option>Asymptomatic abnormal test/pulses</option></select><span class="hint">The first split is claudication vs limb threat vs mimic.</span></div>
-      <div class="field"><label>Functional severity</label><select id="pad_sev"><option>Asymptomatic</option><option>Mild symptoms, not limiting</option><option>Lifestyle-limiting exertional symptoms</option><option>Limits work/exercise/basic activities</option><option>Rest pain or tissue loss</option><option>Unclear</option></select></div>
-      <div class="field"><label>Pain-free walking distance</label><input id="pad_pfd" placeholder="e.g. 100 meters, 1 block, unknown"></div>
-      <div class="field"><label>Maximum walking distance</label><input id="pad_mwd" placeholder="e.g. 300 meters, unknown"></div>
-      <div class="field"><label>Relieved by rest within ~10 minutes?</label><select id="pad_rest"><option>Unknown</option><option>Yes</option><option>No</option></select></div>
-      <div class="field"><label>Worse with stairs/incline?</label><select id="pad_incline"><option>Unknown</option><option>Yes</option><option>No</option></select></div>
-    </div>
+  function calcPAD(){
+    var reasons = checked("pad_reason");
+    var red = checked("pad_red");
+    var mimic = checked("pad_mimic");
+    var pattern = val("pad_pattern");
+    var sev = val("pad_sev");
 
-    <h4>Danger-first limb screen</h4>
-    ${checks("pad_red",[
-      "Acute limb ischemia clue: sudden pain, pallor, pulselessness, paresthesia, paralysis, poikilothermia",
-      "New motor or sensory deficit",
-      "Rest pain, especially forefoot pain worse at night/lying flat",
-      "Non-healing wound, ulcer, gangrene, or tissue loss",
-      "Infected ischemic foot: spreading cellulitis, purulence, wet gangrene, systemic signs",
-      "New blue/purple toe or embolic-appearing lesion",
-      "Rapidly worsening symptoms",
-      "Absent Doppler signals if checked"
-    ])}
+    var pulseNames = ["Right femoral","Left femoral","Right popliteal","Left popliteal","Right dorsalis pedis","Left dorsalis pedis","Right posterior tibial","Left posterior tibial"];
+    var pulses = pulseNames.map(function(name,i){ return name + ": " + val("pulse_"+i); });
 
-    <h4>Pulse exam by side</h4>
-    <div class="grid2">
-      ${["Right femoral","Left femoral","Right popliteal","Left popliteal","Right dorsalis pedis","Left dorsalis pedis","Right posterior tibial","Left posterior tibial"].map((x,i)=>`<div class="field"><label>${x}</label><select id="pulse_${i}"><option>Not assessed</option><option>Present</option><option>Weak</option><option>Absent</option><option>Doppler only</option></select></div>`).join("")}
-    </div>
+    var rabiText = abiInterpret(val("pad_rabi"));
+    var labiText = abiInterpret(val("pad_labi"));
+    var wave = val("pad_wave");
+    var exabi = val("pad_exabi");
+    var calc = val("pad_calc");
 
-    <h4>Limb and foot exam</h4>
-    <div class="grid2">
-      <div class="field"><label>Temperature</label><select id="pad_temp"><option>Not assessed</option><option>Warm bilaterally</option><option>Cool unilateral</option><option>Cool bilateral</option><option>Cold limb</option></select></div>
-      <div class="field"><label>Color</label><select id="pad_color"><option>Not assessed</option><option>Normal</option><option>Pale</option><option>Dependent rubor</option><option>Cyanotic/blue</option><option>Mottled</option></select></div>
-      <div class="field"><label>Capillary refill</label><select id="pad_cap"><option>Not assessed</option><option>Normal</option><option>Delayed</option><option>Absent/very poor</option></select></div>
-      <div class="field"><label>Hair loss</label><select id="pad_hair"><option>Not assessed</option><option>No significant hair loss</option><option>Mild hair loss</option><option>Marked hair loss</option></select></div>
-      <div class="field"><label>Skin/nails</label><select id="pad_skin"><option>Not assessed</option><option>Normal</option><option>Shiny/atrophic skin</option><option>Dry/cracked skin</option><option>Thickened/dystrophic nails</option></select></div>
-      <div class="field"><label>Edema</label><select id="pad_edema"><option>Not assessed</option><option>None</option><option>Unilateral</option><option>Bilateral</option></select></div>
-      <div class="field"><label>Wound location</label><select id="pad_wound"><option>No wound</option><option>Toe</option><option>Forefoot</option><option>Heel</option><option>Ankle/leg</option><option>Multiple</option></select></div>
-      <div class="field"><label>Wound infection</label><select id="pad_inf"><option>No infection signs</option><option>Cellulitis</option><option>Purulence</option><option>Wet gangrene</option><option>Systemic signs</option><option>Not applicable</option></select></div>
-      <div class="field"><label>Neuropathy/sensory loss</label><select id="pad_neuro"><option>Unknown</option><option>No</option><option>Yes</option></select></div>
-      <div class="field"><label>Motor deficit</label><select id="pad_motor"><option>No</option><option>Yes</option><option>Not assessed</option></select></div>
-    </div>
+    var examSummary = [
+      "Temperature: " + val("pad_temp"),
+      "Color: " + val("pad_color"),
+      "Cap refill: " + val("pad_cap"),
+      "Hair loss: " + val("pad_hair"),
+      "Skin/nails: " + val("pad_skin"),
+      "Edema: " + val("pad_edema"),
+      "Wound: " + val("pad_wound"),
+      "Infection: " + val("pad_inf"),
+      "Neuropathy: " + val("pad_neuro"),
+      "Motor deficit: " + val("pad_motor")
+    ];
 
-    <h4>ABI / TBI / vascular testing</h4>
-    <div class="grid2">
-      <div class="field"><label>Right ABI</label><input id="pad_rabi" type="number" step="0.01" placeholder="e.g. 0.72"></div>
-      <div class="field"><label>Left ABI</label><input id="pad_labi" type="number" step="0.01" placeholder="e.g. 1.22"></div>
-      <div class="field"><label>Right TBI</label><input id="pad_rtbi" type="number" step="0.01" placeholder="optional"></div>
-      <div class="field"><label>Left TBI</label><input id="pad_ltbi" type="number" step="0.01" placeholder="optional"></div>
-      <div class="field"><label>Waveforms</label><select id="pad_wave"><option>Unknown/not done</option><option>Triphasic</option><option>Biphasic</option><option>Monophasic</option><option>Absent</option><option>Mixed/asymmetric</option></select></div>
-      <div class="field"><label>Exercise ABI</label><select id="pad_exabi"><option>Not done</option><option>Normal</option><option>Abnormal post-exercise drop</option></select></div>
-      <div class="field"><label>Duplex/CTA/MRA</label><select id="pad_img"><option>Not done</option><option>Duplex done</option><option>CTA/MRA done</option><option>Planned/pending</option></select></div>
-      <div class="field"><label>Calcified/noncompressible vessels suspected?</label><select id="pad_calc"><option>Unknown</option><option>No</option><option>Yes: diabetes/CKD/noncompressible ABI</option></select></div>
-    </div>
+    var acute = red.some(function(x){return x.indexOf("Acute limb ischemia")>=0 || x.indexOf("motor")>=0 || x.indexOf("Absent Doppler")>=0;}) || pattern.indexOf("Sudden")>=0;
+    var infection = red.some(function(x){return x.indexOf("Infected ischemic")>=0;}) || ["Purulence","Wet gangrene","Systemic signs"].indexOf(val("pad_inf"))>=0;
+    var clti = red.some(function(x){return x.indexOf("Rest pain")>=0 || x.indexOf("wound")>=0 || x.indexOf("gangrene")>=0 || x.indexOf("tissue")>=0;}) || pattern.indexOf("Rest pain")>=0 || pattern.indexOf("Wound")>=0 || sev.indexOf("Rest pain")>=0;
+    var abnormalAbi = rabiText.indexOf("abnormal")>=0 || labiText.indexOf("abnormal")>=0 || exabi.indexOf("Abnormal")>=0 || wave.indexOf("Monophasic")>=0 || wave.indexOf("Absent")>=0;
+    var noncompress = rabiText.indexOf("noncompressible")>=0 || labiText.indexOf("noncompressible")>=0 || calc.indexOf("Yes")>=0;
+    var classic = pattern.indexOf("Classic")>=0;
 
-    <h4>Risk factors and optimization</h4>
-    <div class="grid2">
-      <div class="field"><label>Diabetes status</label><select id="pad_dm"><option>No diabetes</option><option>Diabetes controlled</option><option>Diabetes uncontrolled</option><option>Diabetes control unknown</option></select></div>
-      <div class="field"><label>HbA1c if available</label><input id="pad_a1c" placeholder="e.g. 8.7%, unknown"></div>
-      <div class="field"><label>Smoking status</label><select id="pad_smoke"><option>Never smoker</option><option>Active smoker</option><option>Recent quitter</option><option>Prior smoker</option><option>Unknown</option></select></div>
-      <div class="field"><label>Pack-years / shisha / vaping note</label><input id="pad_pack" placeholder="optional"></div>
-      <div class="field"><label>LDL</label><input id="pad_ldl" placeholder="e.g. 1.6 mmol/L, unknown"></div>
-      <div class="field"><label>Lp(a) if available</label><input id="pad_lpa" placeholder="e.g. 150 nmol/L or mg/dL, unknown"></div>
-      <div class="field"><label>eGFR / CKD</label><input id="pad_egfr" placeholder="e.g. eGFR 45, CKD3"></div>
-      <div class="field"><label>BP / hypertension control</label><input id="pad_bp" placeholder="e.g. 145/82, controlled/unknown"></div>
-      <div class="field"><label>Current lipid therapy</label><select id="pad_statin"><option>None/unknown</option><option>Moderate-intensity statin</option><option>High-intensity statin</option><option>Statin intolerant</option></select></div>
-      <div class="field"><label>Current antithrombotic</label><select id="pad_antith"><option>None/unknown</option><option>Aspirin</option><option>Clopidogrel</option><option>DAPT</option><option>Therapeutic anticoagulation</option><option>Vascular-dose rivaroxaban + aspirin</option></select></div>
-      <div class="field"><label>Exercise therapy tried?</label><select id="pad_exercise"><option>No/unknown</option><option>Advised only</option><option>Structured/supervised program</option><option>Unable due to limitation</option></select></div>
-      <div class="field"><label>Heart failure? <span class="hint">Important if considering cilostazol.</span></label><select id="pad_hf"><option>No/unknown</option><option>Yes</option></select></div>
-    </div>
+    var phenotype = "PAD not yet confirmed.";
+    if(acute) phenotype = "Possible acute limb ischemia / limb emergency.";
+    else if(infection && clti) phenotype = "Possible infected ischemic foot / CLTI emergency.";
+    else if(clti) phenotype = "Possible chronic limb-threatening ischemia.";
+    else if(classic && abnormalAbi) phenotype = "Likely symptomatic PAD with claudication.";
+    else if(classic) phenotype = "Suspected claudication; vascular testing needed or review ABI/TBI/waveforms.";
+    else if(abnormalAbi) phenotype = "Objective PAD likely, but correlate with symptom phenotype.";
+    else if(noncompress) phenotype = "PAD cannot be excluded because vessels may be noncompressible.";
+    else if(mimic.length) phenotype = "Mixed PAD vs nonvascular mimic; classify with ABI/TBI/exercise ABI and targeted mimic evaluation.";
 
-    <h4>Mimics and mixed diagnoses</h4>
-    ${checks("pad_mimic",[
-      "Spinal stenosis: better leaning forward/sitting, worse standing",
-      "Radiculopathy: back pain, dermatomal radiation, neurologic signs",
-      "Hip/knee osteoarthritis: joint-localized mechanical pain",
-      "Venous claudication/severe venous disease: swelling, bursting pain",
-      "Peripheral neuropathy: burning, stocking distribution, not exertional",
-      "Chronic exertional compartment syndrome: younger patient, tightness with exercise",
-      "Anemia/HF/lung disease/deconditioning: global exercise intolerance"
-    ])}
+    var level = acute || infection ? "red" : (clti || abnormalAbi || noncompress || val("pad_smoke")==="Active smoker" || val("pad_dm")==="Diabetes uncontrolled" ? "amber" : "green");
 
-    <div class="toolbar"><button class="btn primary" onclick="calcPAD()">Generate detailed PAD pathway</button><button class="btn" onclick="copyOut('pad_out')">Copy note</button></div>
-    <div id="pad_out" class="output hidden"></div>
-  </section>`);
-}
-function abiInterpret(x){if(!x&&x!==0)return "not entered";const n=Number(x);if(isNaN(n))return "not interpretable";if(n<=0.90)return n.toFixed(2)+" abnormal, supports PAD";if(n<=0.99)return n.toFixed(2)+" borderline";if(n<=1.40)return n.toFixed(2)+" normal range, but exercise ABI may be needed if symptoms persist";return n.toFixed(2)+" noncompressible; use TBI/toe pressure/waveforms";}
-function calcPAD(){
- const reasons=checked("pad_reason"), red=checked("pad_red"), mimic=checked("pad_mimic"), pattern=val("pad_pattern"), sev=val("pad_sev");
- const pulseNames=["Right femoral","Left femoral","Right popliteal","Left popliteal","Right dorsalis pedis","Left dorsalis pedis","Right posterior tibial","Left posterior tibial"];
- const pulses=pulseNames.map((name,i)=>name+": "+val("pulse_"+i));
- const rabi=val("pad_rabi"),labi=val("pad_labi"),rtbi=val("pad_rtbi"),ltbi=val("pad_ltbi");
- const rabiText=abiInterpret(rabi),labiText=abiInterpret(labi),wave=val("pad_wave"),exabi=val("pad_exabi"),calc=val("pad_calc");
- const examSummary=["Temperature: "+val("pad_temp"),"Color: "+val("pad_color"),"Cap refill: "+val("pad_cap"),"Hair loss: "+val("pad_hair"),"Skin/nails: "+val("pad_skin"),"Edema: "+val("pad_edema"),"Wound: "+val("pad_wound"),"Infection: "+val("pad_inf"),"Neuropathy: "+val("pad_neuro"),"Motor deficit: "+val("pad_motor")];
- const acute=red.some(x=>x.includes("Acute limb ischemia")||x.includes("motor")||x.includes("Absent Doppler"))||pattern.includes("Sudden");
- const infection=red.some(x=>x.includes("Infected ischemic"))||["Purulence","Wet gangrene","Systemic signs"].includes(val("pad_inf"));
- const clti=red.some(x=>x.includes("Rest pain")||x.includes("wound")||x.includes("gangrene")||x.includes("tissue"))||pattern.includes("Rest pain")||pattern.includes("Wound")||sev.includes("Rest pain");
- const abnormalAbi=rabiText.includes("abnormal")||labiText.includes("abnormal")||exabi.includes("Abnormal")||wave.includes("Monophasic")||wave.includes("Absent");
- const noncompress=rabiText.includes("noncompressible")||labiText.includes("noncompressible")||calc.includes("Yes");
- const classic=pattern.includes("Classic");
- let phenotype="PAD not yet confirmed."; if(acute)phenotype="Possible acute limb ischemia / limb emergency."; else if(infection&&clti)phenotype="Possible infected ischemic foot / CLTI emergency."; else if(clti)phenotype="Possible chronic limb-threatening ischemia."; else if(classic&&abnormalAbi)phenotype="Likely symptomatic PAD with claudication."; else if(classic)phenotype="Suspected claudication; vascular testing needed or review ABI/TBI/waveforms."; else if(abnormalAbi)phenotype="Objective PAD likely, but correlate with symptom phenotype."; else if(noncompress)phenotype="PAD cannot be excluded because vessels may be noncompressible."; else if(mimic.length)phenotype="Mixed PAD vs nonvascular mimic; classify with ABI/TBI/exercise ABI and targeted mimic evaluation.";
- const level=acute||infection?"red":(clti||abnormalAbi||noncompress||val("pad_smoke")==="Active smoker"||val("pad_dm")==="Diabetes uncontrolled"?"amber":"green");
- const testing=[]; if(!rabi&&!labi)testing.push("Order resting ABI with Doppler waveforms."); if(noncompress)testing.push("If ABI >1.40 or diabetes/CKD/calcification suspected, order TBI/toe pressures and rely on waveforms."); if((rabiText.includes("normal range")||labiText.includes("normal range")||rabiText.includes("borderline")||labiText.includes("borderline"))&&(classic||pattern.includes("Atypical")))testing.push("If exertional symptoms persist with normal/borderline ABI, order exercise ABI."); if(clti)testing.push("For rest pain/tissue loss, obtain urgent vascular lab assessment and vascular surgery/wound pathway."); if(!testing.length)testing.push("Review ABI/TBI/waveforms with symptoms; do not rely on a single number alone.");
- const gdmt=[]; if(val("pad_smoke")==="Active smoker")gdmt.push("active smoking cessation intervention"); if(val("pad_smoke")==="Recent quitter"||val("pad_smoke")==="Prior smoker")gdmt.push("reinforce smoking abstinence"); if(val("pad_dm").includes("uncontrolled"))gdmt.push("diabetes optimization; foot-risk education"); if(val("pad_statin")!=="High-intensity statin")gdmt.push("optimize lipid therapy, usually high-intensity statin if tolerated"); if(val("pad_antith")==="None/unknown"&&(classic||abnormalAbi||clti))gdmt.push("review antiplatelet indication if symptomatic PAD and no contraindication"); if(sev.includes("Lifestyle")||sev.includes("Limits"))gdmt.push("structured/supervised exercise therapy if no limb-threat"); if(val("pad_lpa")&&!val("pad_lpa").toLowerCase().includes("unknown"))gdmt.push("document Lp(a); elevated Lp(a) supports aggressive ASCVD risk modification and family-risk awareness"); if(val("pad_hf")==="Yes")gdmt.push("avoid cilostazol if heart failure");
- let referral="Routine vascular medicine / vascular lab pathway."; if(acute)referral="Same-day ED/vascular surgery assessment for possible acute limb ischemia; do not delay for outpatient ABI."; else if(infection)referral="Same-day/urgent infected ischemic foot pathway with vascular surgery/wound/ID/ED depending severity."; else if(clti)referral="Urgent vascular surgery / wound pathway for possible CLTI."; else if(sev.includes("Lifestyle")||sev.includes("Limits"))referral="Vascular referral if symptoms remain lifestyle-limiting despite GDMT/exercise or anatomy assessment is needed.";
- const text=`Patient phenotype:
-- Reasons for visit: ${reasons.length?reasons.join("; "):"none selected"}
-- Symptom phenotype: ${pattern}
-- Functional severity: ${sev}
-- Pain-free walking distance: ${val("pad_pfd")||"not entered"}
-- Maximum walking distance: ${val("pad_mwd")||"not entered"}
-- Relief with rest: ${val("pad_rest")}
-- Worse with stairs/incline: ${val("pad_incline")}
-- Working phenotype: ${phenotype}
+    var testing = [];
+    if(!val("pad_rabi") && !val("pad_labi")) testing.push("Order resting ABI with Doppler waveforms.");
+    if(noncompress) testing.push("If ABI >1.40 or diabetes/CKD/calcification suspected, order TBI/toe pressures and rely on waveforms.");
+    if((rabiText.indexOf("normal range")>=0 || labiText.indexOf("normal range")>=0 || rabiText.indexOf("borderline")>=0 || labiText.indexOf("borderline")>=0) && (classic || pattern.indexOf("Atypical")>=0)) testing.push("If exertional symptoms persist with normal/borderline ABI, order exercise ABI.");
+    if(clti) testing.push("For rest pain/tissue loss, obtain urgent vascular lab assessment and vascular surgery/wound pathway.");
+    if(!testing.length) testing.push("Review ABI/TBI/waveforms with symptoms; do not rely on a single number alone.");
 
-Danger-first limb screen:
-${red.length?red.map(x=>"- "+x).join("
-"):"- No limb-danger features selected."}
+    var gdmt = [];
+    if(val("pad_smoke")==="Active smoker") gdmt.push("active smoking cessation intervention");
+    if(val("pad_smoke")==="Recent quitter" || val("pad_smoke")==="Prior smoker") gdmt.push("reinforce smoking abstinence");
+    if(val("pad_dm").indexOf("uncontrolled")>=0) gdmt.push("diabetes optimization and foot-risk education");
+    if(val("pad_statin")!=="High-intensity statin") gdmt.push("optimize lipid therapy, usually high-intensity statin if tolerated");
+    if(val("pad_antith")==="None/unknown" && (classic || abnormalAbi || clti)) gdmt.push("review antiplatelet indication if symptomatic PAD and no contraindication");
+    if(sev.indexOf("Lifestyle")>=0 || sev.indexOf("Limits")>=0) gdmt.push("structured/supervised exercise therapy if no limb-threat");
+    if(val("pad_lpa") && val("pad_lpa").toLowerCase().indexOf("unknown")<0) gdmt.push("document Lp(a); elevated Lp(a) supports aggressive ASCVD risk modification and family-risk awareness");
+    if(val("pad_hf")==="Yes") gdmt.push("avoid cilostazol if heart failure");
 
-Pulse exam:
-${pulses.map(x=>"- "+x).join("
-")}
+    var referral = "Routine vascular medicine / vascular lab pathway.";
+    if(acute) referral = "Same-day ED/vascular surgery assessment for possible acute limb ischemia; do not delay for outpatient ABI.";
+    else if(infection) referral = "Same-day/urgent infected ischemic foot pathway with vascular surgery/wound/ID/ED depending severity.";
+    else if(clti) referral = "Urgent vascular surgery / wound pathway for possible CLTI.";
+    else if(sev.indexOf("Lifestyle")>=0 || sev.indexOf("Limits")>=0) referral = "Vascular referral if symptoms remain lifestyle-limiting despite GDMT/exercise or anatomy assessment is needed.";
 
-Limb/foot exam:
-${examSummary.map(x=>"- "+x).join("
-")}
+    var text =
+"Patient phenotype:\n" +
+"- Reasons for visit: " + (reasons.length ? reasons.join("; ") : "none selected") + "\n" +
+"- Symptom phenotype: " + pattern + "\n" +
+"- Functional severity: " + sev + "\n" +
+"- Pain-free walking distance: " + (val("pad_pfd") || "not entered") + "\n" +
+"- Maximum walking distance: " + (val("pad_mwd") || "not entered") + "\n" +
+"- Relief with rest: " + val("pad_rest") + "\n" +
+"- Worse with stairs/incline: " + val("pad_incline") + "\n" +
+"- Working phenotype: " + phenotype + "\n\n" +
+"Danger-first limb screen:\n" + (red.length ? red.map(function(x){return "- "+x;}).join("\n") : "- No limb-danger features selected.") + "\n\n" +
+"Pulse exam:\n" + pulses.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
+"Limb/foot exam:\n" + examSummary.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
+"Vascular testing interpretation:\n" +
+"- Right ABI: " + rabiText + "\n" +
+"- Left ABI: " + labiText + "\n" +
+"- Right TBI: " + (val("pad_rtbi") || "not entered") + "\n" +
+"- Left TBI: " + (val("pad_ltbi") || "not entered") + "\n" +
+"- Waveforms: " + wave + "\n" +
+"- Exercise ABI: " + exabi + "\n" +
+"- Calcified/noncompressible suspicion: " + calc + "\n\n" +
+"Testing plan:\n" + testing.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
+"Risk-factor optimization:\n" +
+"- Diabetes: " + val("pad_dm") + " ; HbA1c: " + (val("pad_a1c") || "not entered") + "\n" +
+"- Smoking: " + val("pad_smoke") + " ; pack-year/shisha/vaping note: " + (val("pad_pack") || "not entered") + "\n" +
+"- LDL: " + (val("pad_ldl") || "not entered") + "\n" +
+"- Lp(a): " + (val("pad_lpa") || "not entered") + "\n" +
+"- eGFR/CKD: " + (val("pad_egfr") || "not entered") + "\n" +
+"- BP: " + (val("pad_bp") || "not entered") + "\n" +
+"- Statin: " + val("pad_statin") + "\n" +
+"- Antithrombotic: " + val("pad_antith") + "\n" +
+"- Exercise therapy: " + val("pad_exercise") + "\n" +
+(gdmt.length ? gdmt.map(function(x){return "- "+x;}).join("\n") : "- Review statin, antiplatelet indication, smoking, BP/diabetes, exercise therapy, and foot care.") + "\n\n" +
+"Mimics / mixed diagnoses:\n" + (mimic.length ? mimic.map(function(x){return "- "+x;}).join("\n") : "- No mimic clues selected.") + "\n\n" +
+"Referral urgency:\n- " + referral + "\n\n" +
+"Minimum standard before leaving clinic:\n" +
+"1. Document pulses by side and foot exam.\n" +
+"2. Decide whether ABI/TBI/waveforms/exercise ABI are needed.\n" +
+"3. Separate claudication from CLTI and acute limb ischemia.\n" +
+"4. Address smoking, diabetes, LDL/statin, BP, antithrombotic indication, exercise, and foot care.\n" +
+"5. Document referral urgency.\n\n" +
+"Teaching pearl:\n" +
+"PAD clinic reasoning starts with the limb phenotype. Sudden neurologic/cold limb is acute limb ischemia. Rest pain or tissue loss is CLTI. Exertional reproducible muscle pain is claudication. ABI supports the diagnosis, but diabetes/CKD can make ABI falsely reassuring or noncompressible.\n\n" +
+"Copy-ready note:\n" +
+"Suspected PAD pathway reviewed. Reasons: " + (reasons.length ? reasons.join(", ") : "not specified") + ". Symptoms: " + pattern + "; severity: " + sev + ". PFD " + (val("pad_pfd") || "not entered") + ", MWD " + (val("pad_mwd") || "not entered") + ". Limb danger features: " + (red.length ? red.join(", ") : "none selected") + ". Pulses: " + pulses.join("; ") + ". Limb exam: " + examSummary.join("; ") + ". ABI/TBI: R ABI " + (val("pad_rabi") || "NA") + ", L ABI " + (val("pad_labi") || "NA") + ", R TBI " + (val("pad_rtbi") || "NA") + ", L TBI " + (val("pad_ltbi") || "NA") + ", waveforms " + wave + ". Risk factors: DM " + val("pad_dm") + ", smoking " + val("pad_smoke") + ", LDL " + (val("pad_ldl") || "NA") + ", Lp(a) " + (val("pad_lpa") || "NA") + ", eGFR " + (val("pad_egfr") || "NA") + ". Plan: " + testing.join(" ") + " GDMT: " + (gdmt.length ? gdmt.join(", ") : "review statin/antiplatelet/smoking/diabetes/BP/exercise/foot care") + ". Referral: " + referral;
 
-Vascular testing interpretation:
-- Right ABI: ${rabiText}
-- Left ABI: ${labiText}
-- Right TBI: ${rtbi||"not entered"}
-- Left TBI: ${ltbi||"not entered"}
-- Waveforms: ${wave}
-- Exercise ABI: ${exabi}
-- Calcified/noncompressible suspicion: ${calc}
+    var out = document.getElementById("pad_out");
+    out.className = "output " + level;
+    out.textContent = text;
+    out.classList.remove("hidden");
+  }
 
-Testing plan:
-${testing.map(x=>"- "+x).join("
-")}
+  function copyOut(id){
+    var el = document.getElementById(id);
+    if(!el || el.classList.contains("hidden")){ alert("Generate the output first."); return; }
+    navigator.clipboard.writeText(el.textContent).then(function(){ alert("Copied"); });
+  }
 
-Risk-factor optimization:
-- Diabetes: ${val("pad_dm")} ; HbA1c: ${val("pad_a1c")||"not entered"}
-- Smoking: ${val("pad_smoke")} ; pack-year/shisha/vaping note: ${val("pad_pack")||"not entered"}
-- LDL: ${val("pad_ldl")||"not entered"}
-- Lp(a): ${val("pad_lpa")||"not entered"}
-- eGFR/CKD: ${val("pad_egfr")||"not entered"}
-- BP: ${val("pad_bp")||"not entered"}
-- Statin: ${val("pad_statin")}
-- Antithrombotic: ${val("pad_antith")}
-- Exercise therapy: ${val("pad_exercise")}
-${gdmt.length?gdmt.map(x=>"- "+x).join("
-"):"- Review statin, antiplatelet indication, smoking, BP/diabetes, exercise therapy, and foot care."}
-
-Mimics / mixed diagnoses:
-${mimic.length?mimic.map(x=>"- "+x).join("
-"):"- No mimic clues selected."}
-
-Referral urgency:
-- ${referral}
-
-Minimum standard before leaving clinic:
-1. Document pulses by side and foot exam.
-2. Decide whether ABI/TBI/waveforms/exercise ABI are needed.
-3. Separate claudication from CLTI and acute limb ischemia.
-4. Address smoking, diabetes, LDL/statin, BP, antithrombotic indication, exercise, and foot care.
-5. Document referral urgency.
-
-Teaching pearl:
-PAD clinic reasoning starts with the limb phenotype. Sudden neurologic/cold limb is acute limb ischemia. Rest pain or tissue loss is CLTI. Exertional reproducible muscle pain is claudication. ABI supports the diagnosis, but diabetes/CKD can make ABI falsely reassuring or noncompressible.
-
-Copy-ready note:
-Suspected PAD pathway reviewed. Reasons: ${reasons.length?reasons.join(", "):"not specified"}. Symptoms: ${pattern}; severity: ${sev}. PFD ${val("pad_pfd")||"not entered"}, MWD ${val("pad_mwd")||"not entered"}. Limb danger features: ${red.length?red.join(", "):"none selected"}. Pulses: ${pulses.join("; ")}. Limb exam: ${examSummary.join("; ")}. ABI/TBI: R ABI ${rabi||"NA"}, L ABI ${labi||"NA"}, R TBI ${rtbi||"NA"}, L TBI ${ltbi||"NA"}, waveforms ${wave}. Risk factors: DM ${val("pad_dm")}, smoking ${val("pad_smoke")}, LDL ${val("pad_ldl")||"NA"}, Lp(a) ${val("pad_lpa")||"NA"}, eGFR ${val("pad_egfr")||"NA"}. Plan: ${testing.join(" ")} GDMT: ${gdmt.length?gdmt.join(", "):"review statin/antiplatelet/smoking/diabetes/BP/exercise/foot care"}. Referral: ${referral}`;
- const out=document.getElementById("pad_out"); out.className="output "+level; out.textContent=text; out.classList.remove("hidden");
-}
-
-render();
+  render();
+})();
 </script>
-</body></html>
+</body>
+</html>

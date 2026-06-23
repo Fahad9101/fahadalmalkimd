@@ -1,1 +1,1 @@
-Deep Suspected PAD Clinic Pathway update: multi-select referral reasons, structured pulse/limb exam, ABI/TBI/exercise ABI interpretation, diabetes/smoking/Lp(a), GDMT, mimics, referral urgency, and copy-ready note.
+Button-fix stable single-file static website. Includes deep Suspected PAD Clinic Pathway with structured exam and working buttons.
