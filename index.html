@@ -331,6 +331,48 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     else if(clti) referral = "Urgent vascular surgery / wound pathway for possible CLTI.";
     else if(sev.indexOf("Lifestyle")>=0 || sev.indexOf("Limits")>=0) referral = "Vascular referral if symptoms remain lifestyle-limiting despite GDMT/exercise or anatomy assessment is needed.";
 
+
+    var management = [];
+
+    var antithChoice = val("cpad_m_antith");
+    var antithPlan = [];
+    if(antithChoice.indexOf("Full-dose anticoagulation")>=0){
+      antithPlan.push("Full-dose anticoagulation is being used for another indication: " + (val("cpad_fullac_reason") || "indication not entered") + ".");
+      antithPlan.push("Avoid automatically adding antiplatelet or COMPASS/VOYAGER regimen on top of full-dose anticoagulation unless there is a clear vascular/cardiac indication and bleeding risk is acceptable.");
+    } else if(antithChoice.indexOf("COMPASS")>=0){
+      antithPlan.push("COMPASS regimen selected: rivaroxaban 2.5 mg BID + aspirin for stable symptomatic PAD/polyvascular risk when bleeding risk is acceptable.");
+      antithPlan.push("COMPASS one-liner: reduced major cardiovascular and limb events compared with aspirin alone, with increased major bleeding risk; avoid if high bleeding risk or need for full-dose anticoagulation.");
+    } else if(antithChoice.indexOf("VOYAGER")>=0){
+      antithPlan.push("VOYAGER-PAD regimen selected: rivaroxaban 2.5 mg BID + aspirin after lower-extremity revascularization when bleeding risk is acceptable.");
+      antithPlan.push("VOYAGER one-liner: after revascularization, reduced acute limb ischemia, major amputation, MI, stroke, or cardiovascular death; bleeding risk increases and must be individualized.");
+    } else if(antithChoice.indexOf("Single antiplatelet")>=0){
+      antithPlan.push("Single antiplatelet therapy selected: " + val("cpad_sapt") + ".");
+      antithPlan.push("SAPT is reasonable when symptomatic PAD needs antiplatelet therapy but dual-pathway inhibition is not chosen or bleeding risk/clinical context favors simpler therapy.");
+    } else if(antithChoice.indexOf("Deferred")>=0){
+      antithPlan.push("Antithrombotic therapy deferred/needs review. Reason: " + (val("cpad_defer_reason") || "not entered") + ".");
+    } else {
+      antithPlan.push("Antithrombotic strategy not fully selected; review full anticoagulation indications, SAPT, COMPASS/VOYAGER eligibility, bleeding risk, and patient preference.");
+    }
+    antithPlan.push("COMPASS/VOYAGER suitability: " + val("cpad_compass_fit") + ".");
+
+    var htnPlan = [];
+    htnPlan.push(val("cpad_m_htn") + ". " + (val("cpad_htn_plan") || "No HTN details entered."));
+    if(val("cpad_m_htn").indexOf("Uncontrolled")>=0) htnPlan.push("PAD management should include BP optimization as part of systemic ASCVD risk reduction.");
+
+    var dmPlan = [];
+    dmPlan.push(val("cpad_m_dm") + ". " + (val("cpad_dm_plan") || "No DM details entered."));
+    if(val("cpad_m_dm").indexOf("Uncontrolled")>=0 || val("cpad_dm")==="Diabetes uncontrolled") dmPlan.push("Uncontrolled diabetes increases foot-risk and wound-risk; coordinate glycemic control and foot protection.");
+
+    var lipidPlan = [];
+    lipidPlan.push(val("cpad_m_lipid") + ". " + (val("cpad_lipid_plan") || "No lipid-management details entered."));
+    lipidPlan.push("Lipid values: LDL-C " + (val("cpad_ldl") ? val("cpad_ldl")+" "+val("cpad_ldl_unit") : "NA") + "; Non-HDL-C " + (val("cpad_nonhdl") ? val("cpad_nonhdl")+" "+val("cpad_nonhdl_unit") : "NA") + "; Lp(a) " + (val("cpad_lpa") ? val("cpad_lpa")+" "+val("cpad_lpa_unit") : "NA") + ".");
+
+    var lifestylePlan = [];
+    lifestylePlan.push("Smoking: " + val("cpad_m_smoking") + ". " + (val("cpad_smoking_plan") || "No smoking plan details entered."));
+    lifestylePlan.push("Exercise: " + val("cpad_m_exercise") + ". " + (val("cpad_exercise_plan") || "No exercise plan details entered."));
+    if(val("cpad_m_exercise").indexOf("Start")>=0 || val("cpad_m_exercise").indexOf("Refer")>=0) lifestylePlan.push("For claudication, walking therapy is treatment: walk to moderate symptoms, rest, repeat, and track distance unless limb-threat is present.");
+
+
     var text =
 "Patient phenotype:\n" +
 "- Reasons for visit: " + (reasons.length ? reasons.join("; ") : "none selected") + "\n" +
@@ -485,6 +527,26 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     selectField("cpad_vacc","Preventive/cardiometabolic care",["Not reviewed","Reviewed today","Needs PCP/cardiology coordination","Unclear"],"")+
     '</div>'+
 
+
+    '<h4>Management plan builder</h4>'+
+    '<div class="grid2">'+
+    selectField("cpad_m_antith","1. Antithrombotic strategy",["Full-dose anticoagulation for another indication","COMPASS regimen: rivaroxaban 2.5 mg BID + aspirin","VOYAGER-PAD regimen after lower-extremity revascularization: rivaroxaban 2.5 mg BID + aspirin","Single antiplatelet therapy","Deferred / contraindicated / needs review"],"")+
+    inputField("cpad_fullac_reason","If full anticoagulation: indication","e.g. AF, VTE, mechanical valve, LV thrombus")+
+    selectField("cpad_sapt","If SAPT: agent/reason",["Not applicable","Aspirin","Clopidogrel","SAPT because symptomatic PAD","SAPT because bleeding risk favors avoiding dual-pathway inhibition","SAPT because already on anticoagulation / individualized"],"")+
+    inputField("cpad_defer_reason","If deferred: reason","e.g. active bleeding, severe thrombocytopenia, procedure, patient preference")+
+    selectField("cpad_compass_fit","COMPASS/VOYAGER suitability",["Not assessed","Good candidate if bleeding risk acceptable","High bleeding risk / avoid","Already on full anticoagulation","Needs specialist review"],"COMPASS = stable CAD/PAD dual-pathway inhibition; VOYAGER-PAD = after lower-extremity revascularization.")+
+    selectField("cpad_m_htn","2. Hypertension management",["No HTN / not applicable","Controlled - continue current therapy","Uncontrolled - optimize BP therapy","Check home/ambulatory BP before intensifying","Needs PCP/cardiology coordination"],"")+
+    inputField("cpad_htn_plan","HTN details / plan","e.g. BP 150/85, optimize ACEi/ARB/CCB/thiazide as appropriate")+
+    selectField("cpad_m_dm","3. Diabetes management",["No diabetes","Controlled - continue current plan","Uncontrolled - optimize diabetes therapy","Consider ASCVD-benefit diabetes therapy if appropriate","Needs endocrinology/PCP coordination"],"")+
+    inputField("cpad_dm_plan","DM details / plan","e.g. A1c 8.7, foot risk, consider SGLT2/GLP-1 RA if suitable")+
+    selectField("cpad_m_lipid","4. Lipid management",["Already optimized","Needs high-intensity statin","Add/consider ezetimibe","Add/consider PCSK9 inhibitor/inclisiran","Statin intolerance pathway","Needs repeat lipid panel"],"")+
+    inputField("cpad_lipid_plan","Lipid details / plan","e.g. LDL above target despite statin; add ezetimibe")+
+    selectField("cpad_m_smoking","5a. Smoking management",["Never smoker","Active smoker - cessation intervention today","Recent quitter - reinforce abstinence","Prior smoker - reinforce abstinence","Unknown - clarify"],"")+
+    inputField("cpad_smoking_plan","Smoking plan","e.g. counseling, NRT/varenicline referral as locally appropriate")+
+    selectField("cpad_m_exercise","5b. Exercise / walking therapy",["Not applicable due to limb threat","Start structured walking program","Refer supervised exercise therapy","Continue current exercise program","Escalate because inadequate response"],"")+
+    inputField("cpad_exercise_plan","Exercise details / plan","e.g. walk to moderate pain, rest, repeat; track distance")+
+    '</div>'+
+
     '<h4>Practice-standard checklist before leaving clinic</h4>'+
     checks("cpad_standard",["PAD phenotype and Rutherford-style severity documented","Pulse and foot exam documented","ABI/TBI/waveforms reviewed or ordered","Smoking status and intervention documented","LDL-C / Non-HDL-C / lipid therapy reviewed","Diabetes and foot-risk status reviewed","Antithrombotic strategy reviewed","Structured exercise plan documented if claudication","Cilostazol considered if appropriate and no HF","CLTI/wound/infection risk assessed","Post-revascularization surveillance assessed if applicable","Revascularization trigger assessed","Follow-up interval documented","Patient counseling documented"])+
 
@@ -596,6 +658,48 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
       "Infection: "+val("cpad_inf"), "Neuropathy: "+val("cpad_neuro")
     ];
 
+
+    var management = [];
+
+    var antithChoice = val("cpad_m_antith");
+    var antithPlan = [];
+    if(antithChoice.indexOf("Full-dose anticoagulation")>=0){
+      antithPlan.push("Full-dose anticoagulation is being used for another indication: " + (val("cpad_fullac_reason") || "indication not entered") + ".");
+      antithPlan.push("Avoid automatically adding antiplatelet or COMPASS/VOYAGER regimen on top of full-dose anticoagulation unless there is a clear vascular/cardiac indication and bleeding risk is acceptable.");
+    } else if(antithChoice.indexOf("COMPASS")>=0){
+      antithPlan.push("COMPASS regimen selected: rivaroxaban 2.5 mg BID + aspirin for stable symptomatic PAD/polyvascular risk when bleeding risk is acceptable.");
+      antithPlan.push("COMPASS one-liner: reduced major cardiovascular and limb events compared with aspirin alone, with increased major bleeding risk; avoid if high bleeding risk or need for full-dose anticoagulation.");
+    } else if(antithChoice.indexOf("VOYAGER")>=0){
+      antithPlan.push("VOYAGER-PAD regimen selected: rivaroxaban 2.5 mg BID + aspirin after lower-extremity revascularization when bleeding risk is acceptable.");
+      antithPlan.push("VOYAGER one-liner: after revascularization, reduced acute limb ischemia, major amputation, MI, stroke, or cardiovascular death; bleeding risk increases and must be individualized.");
+    } else if(antithChoice.indexOf("Single antiplatelet")>=0){
+      antithPlan.push("Single antiplatelet therapy selected: " + val("cpad_sapt") + ".");
+      antithPlan.push("SAPT is reasonable when symptomatic PAD needs antiplatelet therapy but dual-pathway inhibition is not chosen or bleeding risk/clinical context favors simpler therapy.");
+    } else if(antithChoice.indexOf("Deferred")>=0){
+      antithPlan.push("Antithrombotic therapy deferred/needs review. Reason: " + (val("cpad_defer_reason") || "not entered") + ".");
+    } else {
+      antithPlan.push("Antithrombotic strategy not fully selected; review full anticoagulation indications, SAPT, COMPASS/VOYAGER eligibility, bleeding risk, and patient preference.");
+    }
+    antithPlan.push("COMPASS/VOYAGER suitability: " + val("cpad_compass_fit") + ".");
+
+    var htnPlan = [];
+    htnPlan.push(val("cpad_m_htn") + ". " + (val("cpad_htn_plan") || "No HTN details entered."));
+    if(val("cpad_m_htn").indexOf("Uncontrolled")>=0) htnPlan.push("PAD management should include BP optimization as part of systemic ASCVD risk reduction.");
+
+    var dmPlan = [];
+    dmPlan.push(val("cpad_m_dm") + ". " + (val("cpad_dm_plan") || "No DM details entered."));
+    if(val("cpad_m_dm").indexOf("Uncontrolled")>=0 || val("cpad_dm")==="Diabetes uncontrolled") dmPlan.push("Uncontrolled diabetes increases foot-risk and wound-risk; coordinate glycemic control and foot protection.");
+
+    var lipidPlan = [];
+    lipidPlan.push(val("cpad_m_lipid") + ". " + (val("cpad_lipid_plan") || "No lipid-management details entered."));
+    lipidPlan.push("Lipid values: LDL-C " + (val("cpad_ldl") ? val("cpad_ldl")+" "+val("cpad_ldl_unit") : "NA") + "; Non-HDL-C " + (val("cpad_nonhdl") ? val("cpad_nonhdl")+" "+val("cpad_nonhdl_unit") : "NA") + "; Lp(a) " + (val("cpad_lpa") ? val("cpad_lpa")+" "+val("cpad_lpa_unit") : "NA") + ".");
+
+    var lifestylePlan = [];
+    lifestylePlan.push("Smoking: " + val("cpad_m_smoking") + ". " + (val("cpad_smoking_plan") || "No smoking plan details entered."));
+    lifestylePlan.push("Exercise: " + val("cpad_m_exercise") + ". " + (val("cpad_exercise_plan") || "No exercise plan details entered."));
+    if(val("cpad_m_exercise").indexOf("Start")>=0 || val("cpad_m_exercise").indexOf("Refer")>=0) lifestylePlan.push("For claudication, walking therapy is treatment: walk to moderate symptoms, rest, repeat, and track distance unless limb-threat is present.");
+
+
     var text =
 "Confirmed PAD phenotype:\n" +
 "- Phenotype(s): " + (pheno.length ? pheno.join("; ") : "none selected") + "\n" +
@@ -625,18 +729,17 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 "- Offloading/wound care: " + val("cpad_offload") + "\n" +
 clti.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
 "Post-revascularization module:\n" + post.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
-"Guideline-directed medical therapy / practice-standard plan:\n" +
-"1. Antithrombotic strategy:\n" + antith.map(function(x){return "   - "+x;}).join("\n") + "\n" +
-"2. Lipid / atherogenic risk:\n" + lipid.map(function(x){return "   - "+x;}).join("\n") + "\n" +
-"3. Smoking / diabetes / BP:\n" +
-"   - Smoking: " + val("cpad_smoke") + " (" + (val("cpad_pack") || "no pack-year/shisha note") + ")\n" +
-"   - Diabetes: " + val("cpad_dm") + "; HbA1c: " + (val("cpad_a1c") || "not entered") + "\n" +
-"   - BP: " + (val("cpad_bp") || "not entered") + "; eGFR/CKD: " + (val("cpad_egfr") || "not entered") + "\n" +
-"4. Claudication treatment ladder:\n" + claudication.map(function(x){return "   - "+x;}).join("\n") + "\n" +
-"5. Foot care:\n" +
+"Management plan:\n" +
+"1. Antithrombotic strategy:\n" + antithPlan.map(function(x){return "   - "+x;}).join("\n") + "\n" +
+"2. Hypertension management:\n" + htnPlan.map(function(x){return "   - "+x;}).join("\n") + "\n" +
+"3. Diabetes management:\n" + dmPlan.map(function(x){return "   - "+x;}).join("\n") + "\n" +
+"4. Lipid management:\n" + lipidPlan.map(function(x){return "   - "+x;}).join("\n") + "\n" +
+"5. Lifestyle: smoking and exercise:\n" + lifestylePlan.map(function(x){return "   - "+x;}).join("\n") + "\n\n" +
+"Claudication treatment ladder:\n" + claudication.map(function(x){return "   - "+x;}).join("\n") + "\n\n" +
+"Foot care:\n" +
 "   - " + val("cpad_foot") + "\n" +
-"6. Revascularization decision:\n" + revasc.map(function(x){return "   - "+x;}).join("\n") + "\n" +
-"7. Follow-up:\n" +
+"Revascularization decision:\n" + revasc.map(function(x){return "   - "+x;}).join("\n") + "\n" +
+"Follow-up:\n" +
 "   - " + follow + "\n\n" +
 "Practice-standard checklist completed:\n" + (standard.length ? standard.map(function(x){return "- "+x;}).join("\n") : "- No checklist items selected.") + "\n\n" +
 "Patient counseling points:\n" +
@@ -644,7 +747,7 @@ clti.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
 "- Seek urgent care for sudden cold/painful/numb/weak limb, new rest pain, spreading foot infection, or new black/blue toes.\n" +
 "- Walking therapy is treatment for claudication; foot inspection is treatment for limb preservation.\n\n" +
 "Copy-ready note:\n" +
-"Confirmed PAD follow-up reviewed. Phenotype: " + (pheno.length ? pheno.join(", ") : "not specified") + ". Rutherford-style: " + rutherford + ". Trend: " + val("cpad_trend") + ". PFD " + (val("cpad_pfd") || "NA") + ", MWD " + (val("cpad_mwd") || "NA") + ". Limb-danger features: " + (red.length ? red.join(", ") : "none selected") + ". Pulses: " + pulses.join("; ") + ". Limb status: " + limb.join("; ") + ". ABI/TBI: R ABI " + (val("cpad_rabi") || "NA") + ", L ABI " + (val("cpad_labi") || "NA") + ", R TBI " + (val("cpad_rtbi") || "NA") + ", L TBI " + (val("cpad_ltbi") || "NA") + ", waveforms " + val("cpad_wave") + ". Wound/perfusion: " + val("cpad_wound_size") + ", " + val("cpad_perf") + ". Post-revascularization: " + val("cpad_proc_type") + ", response " + val("cpad_post_symptom") + ". Risk therapy: statin " + val("cpad_statin") + ", antithrombotic " + val("cpad_antith") + ", LDL-C " + (val("cpad_ldl") ? val("cpad_ldl")+" "+val("cpad_ldl_unit") : "NA") + ", Non-HDL-C " + (val("cpad_nonhdl") ? val("cpad_nonhdl")+" "+val("cpad_nonhdl_unit") : "NA") + ", Lp(a) " + (val("cpad_lpa") ? val("cpad_lpa")+" "+val("cpad_lpa_unit") : "NA") + ". Plan: GDMT, claudication/CLTI/post-revascularization pathway as above. Referral/follow-up: " + follow;
+"Confirmed PAD follow-up reviewed. Phenotype: " + (pheno.length ? pheno.join(", ") : "not specified") + ". Rutherford-style: " + rutherford + ". Trend: " + val("cpad_trend") + ". PFD " + (val("cpad_pfd") || "NA") + ", MWD " + (val("cpad_mwd") || "NA") + ". Limb-danger features: " + (red.length ? red.join(", ") : "none selected") + ". Pulses: " + pulses.join("; ") + ". Limb status: " + limb.join("; ") + ". ABI/TBI: R ABI " + (val("cpad_rabi") || "NA") + ", L ABI " + (val("cpad_labi") || "NA") + ", R TBI " + (val("cpad_rtbi") || "NA") + ", L TBI " + (val("cpad_ltbi") || "NA") + ", waveforms " + val("cpad_wave") + ". Wound/perfusion: " + val("cpad_wound_size") + ", " + val("cpad_perf") + ". Post-revascularization: " + val("cpad_proc_type") + ", response " + val("cpad_post_symptom") + ". Risk therapy: statin " + val("cpad_statin") + ", antithrombotic " + val("cpad_antith") + ", LDL-C " + (val("cpad_ldl") ? val("cpad_ldl")+" "+val("cpad_ldl_unit") : "NA") + ", Non-HDL-C " + (val("cpad_nonhdl") ? val("cpad_nonhdl")+" "+val("cpad_nonhdl_unit") : "NA") + ", Lp(a) " + (val("cpad_lpa") ? val("cpad_lpa")+" "+val("cpad_lpa_unit") : "NA") + ". Management: antithrombotic strategy = " + val("cpad_m_antith") + "; HTN = " + val("cpad_m_htn") + "; DM = " + val("cpad_m_dm") + "; lipid = " + val("cpad_m_lipid") + "; smoking = " + val("cpad_m_smoking") + "; exercise = " + val("cpad_m_exercise") + ". Plan: GDMT, claudication/CLTI/post-revascularization pathway as above. Referral/follow-up: " + follow;
 
     var out = document.getElementById("cpad_out");
     out.className = "output " + riskLevel;
