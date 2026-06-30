@@ -42,6 +42,14 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.breadcrumb{font-size:14px;color:var(--muted);margin-bottom:18px}.lock{max-width:520px;margin:38px auto}
 .subtlebox{background:#f6fafb;border:1px dashed var(--line);border-radius:14px;padding:14px;margin-top:10px}.hidden{display:none!important}footer{border-top:1px solid var(--line);padding:28px 18px;text-align:center;color:#657786}
 @media(max-width:850px){.grid,.grid2,.toolList,.checkgrid{grid-template-columns:1fr}.heroPanel{min-height:140px}}
+
+.followedbox{border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:#fff}
+.followedbox label{font-weight:800;color:#042f3b;margin-bottom:8px;display:block}
+.followedbox .hint{font-weight:500;color:#5f7480}
+.followedchecks{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.followedchecks .check{display:flex;align-items:flex-start;gap:10px;font-weight:700;color:#0b2f3a}
+.followedchecks input{margin-top:3px}
+
 </style>
 </head>
 <body>
@@ -444,8 +452,15 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     '<h4>0. Visit type</h4>'+
     '<div class="grid2">'+
     selectField("cpad_visit","Visit type",["Routine follow-up","New/worsening claudication","CLTI / wound visit","Post-revascularization follow-up","Medication optimization only","Second opinion / unclear plan"],"This keeps the pathway focused and avoids over-documenting irrelevant areas.")+
-    '<div class="field"><label>Already followed by <span class="hint">Select all that apply.</span></label></div>'+
-    checks("cpad_followed",["No one / needs coordination","Vascular surgery following","Cardiology following","Wound care/podiatry following","PCP/endocrine following","Other specialty following"])+
+    '<div class="followedbox"><label>Already followed by <span class="hint">Select all that apply.</span></label>'+
+    '<div class="followedchecks">'+
+    '<label class="check"><input type="checkbox" name="cpad_followed" value="No one / needs coordination">No one / needs coordination</label>'+
+    '<label class="check"><input type="checkbox" name="cpad_followed" value="Vascular surgery following">Vascular surgery following</label>'+
+    '<label class="check"><input type="checkbox" name="cpad_followed" value="Cardiology following">Cardiology following</label>'+
+    '<label class="check"><input type="checkbox" name="cpad_followed" value="Wound care/podiatry following">Wound care/podiatry following</label>'+
+    '<label class="check"><input type="checkbox" name="cpad_followed" value="PCP/endocrine following">PCP/endocrine following</label>'+
+    '<label class="check"><input type="checkbox" name="cpad_followed" value="Other specialty following">Other specialty following</label>'+
+    '</div></div>'+
     '</div>'+
 
     '<h4>1. Phenotype</h4>'+

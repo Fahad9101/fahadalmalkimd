@@ -1,1 +1,1 @@
-Confirmed PAD update: adds Reset pathway button and tightens Concise clinic plan output into phenotype, limb safety, polyvascular screen, management, follow-up, missing items, and copy-ready note.
+Confirmed PAD layout fix: Already followed by multi-select is contained in a right-side panel beside Visit type.
