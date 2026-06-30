@@ -1,1 +1,1 @@
-Confirmed PAD pathway update: adds polyvascular/cardiovascular screen for cardiac ischemia, HF/cardiopulmonary symptoms, stroke/TIA/carotid disease, aortic/AAA, mesenteric and renovascular clues.
+Confirmed PAD product/usability tweaks: visit type, quick negative polyvascular screen, followed-by coordination, rivaroxaban 2.5 formulary field, bleeding-risk shortcut, why-not revascularization/exercise, urgent banner, PAD Care Standard Completion score, extra output modes.
