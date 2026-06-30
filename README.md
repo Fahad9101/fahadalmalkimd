@@ -1,1 +1,1 @@
-Confirmed PAD layout fix: Already followed by multi-select is contained in a right-side panel beside Visit type.
+Suspected PAD Clinic Pathway rebuilt in clean product style: visit type, symptom phenotype, limb danger, PAD vs mimic, ABI/TBI testing, polyvascular screen, initial management/referral, care-standard score, output modes, reset.
