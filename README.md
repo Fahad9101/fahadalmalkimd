@@ -1,1 +1,1 @@
-Confirmed PAD product/usability tweaks: visit type, quick negative polyvascular screen, followed-by coordination, rivaroxaban 2.5 formulary field, bleeding-risk shortcut, why-not revascularization/exercise, urgent banner, PAD Care Standard Completion score, extra output modes.
+Confirmed PAD update: adds Reset pathway button and tightens Concise clinic plan output into phenotype, limb safety, polyvascular screen, management, follow-up, missing items, and copy-ready note.

@@ -444,7 +444,8 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     '<h4>0. Visit type</h4>'+
     '<div class="grid2">'+
     selectField("cpad_visit","Visit type",["Routine follow-up","New/worsening claudication","CLTI / wound visit","Post-revascularization follow-up","Medication optimization only","Second opinion / unclear plan"],"This keeps the pathway focused and avoids over-documenting irrelevant areas.")+
-    selectField("cpad_followed","Already followed by",["No one / needs coordination","Vascular surgery following","Cardiology following","Wound care/podiatry following","PCP/endocrine following","Multiple services following"],"Changes recommendation from referral to coordination.")+
+    '<div class="field"><label>Already followed by <span class="hint">Select all that apply.</span></label></div>'+
+    checks("cpad_followed",["No one / needs coordination","Vascular surgery following","Cardiology following","Wound care/podiatry following","PCP/endocrine following","Other specialty following"])+
     '</div>'+
 
     '<h4>1. Phenotype</h4>'+
@@ -624,10 +625,11 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     selectField("cpad_output_mode","Output mode",["Concise clinic plan","Full detailed note","Patient counseling paragraph","QI checklist only","Medication optimization note","Referral letter"],"")+
     '</div>'+
 
-    '<div class="toolbar"><button class="primary" id="cpadGenerate">Generate confirmed PAD pathway</button><button id="cpadCopy">Copy output</button></div><div id="cpad_out" class="output hidden"></div>'+
+    '<div class="toolbar"><button class="primary" id="cpadGenerate">Generate confirmed PAD pathway</button><button id="cpadCopy">Copy output</button><button id="cpadReset">Reset pathway</button></div><div id="cpad_out" class="output hidden"></div>'+
     '</section>');
     document.getElementById("cpadGenerate").addEventListener("click", calcConfirmedPAD);
     document.getElementById("cpadCopy").addEventListener("click", function(){ copyOut("cpad_out"); });
+    document.getElementById("cpadReset").addEventListener("click", resetConfirmedPAD);
   }
 
   function yesAddress(v, bad){
@@ -642,9 +644,29 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     return checked(name);
   }
 
+
+  function resetConfirmedPAD(){
+    var out = document.getElementById("cpad_out");
+    var card = out ? out.closest("section.card") : document;
+    if(!card) card = document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){
+      el.selectedIndex = 0;
+    });
+    if(out){
+      out.textContent = "";
+      out.className = "output hidden";
+    }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
   function calcConfirmedPAD(){
     var visit = val("cpad_visit");
-    var followed = val("cpad_followed");
+    var followedArr = checked("cpad_followed");
+    var followed = followedArr.length ? followedArr.join("; ") : "not specified";
     var pheno = checked("cpad_pheno");
     var limb = checked("cpad_limb");
     var card = cpadList("cpad_card");
@@ -703,7 +725,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     else if(post && (val("cpad_post_module").indexOf("Recurrent")>=0 || val("cpad_post_module").indexOf("Abnormal")>=0 || val("cpad_post_module").indexOf("not healing")>=0)) escalation = "Vascular lab/surgeon review for restenosis, graft failure, or progression concern.";
     else if(post) escalation = "Continue post-revascularization surveillance per vascular lab/surgeon protocol.";
 
-    if(followed.indexOf("following")>=0 || followed.indexOf("Multiple")>=0){
+    if(followed.indexOf("following")>=0){
       escalation += " Since patient is already followed by " + followed + ", coordinate/confirm follow-up rather than duplicating referral.";
     }
 
@@ -779,6 +801,33 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(lifestyleLimiting && val("cpad_exercise").indexOf("Inadequate")>=0) revasc.push("Persistent lifestyle-limiting claudication despite GDMT/exercise supports anatomic imaging and revascularization assessment.");
     if(clti) revasc.push("CLTI/rest pain/wound phenotype: revascularization feasibility should be assessed urgently when limb salvage is relevant.");
 
+
+    var preset = [];
+    if(visit.indexOf("Medication optimization")>=0){
+      preset.push("Preset focus: medication optimization — prioritize antithrombotic choice, BP, diabetes, lipid therapy, smoking/exercise, bleeding risk, and quick polyvascular screen.");
+    } else if(visit.indexOf("CLTI")>=0){
+      preset.push("Preset focus: CLTI/wound visit — prioritize limb threat, wound/infection status, perfusion data, offloading/wound care, and urgent vascular/wound coordination.");
+    } else if(visit.indexOf("Post-revascularization")>=0){
+      preset.push("Preset focus: post-revascularization follow-up — prioritize recurrent symptoms, wound healing, surveillance status, VOYAGER-PAD eligibility, bleeding risk, and vascular lab/surgeon coordination.");
+    } else if(visit.indexOf("New/worsening claudication")>=0){
+      preset.push("Preset focus: worsening claudication — confirm no limb threat, distinguish cardiac/pulmonary limitation, optimize GDMT/exercise, and decide whether imaging/revascularization assessment is needed.");
+    } else if(visit.indexOf("Second opinion")>=0){
+      preset.push("Preset focus: second opinion/unclear plan — explicitly document phenotype, limb safety, current GDMT gaps, reason for or against revascularization, and follow-up responsibility.");
+    } else {
+      preset.push("Preset focus: routine follow-up — confirm limb safety, systemic ASCVD-risk optimization, function/wound trajectory, and follow-up interval.");
+    }
+
+    var evidenceAnchor =
+"Evidence anchors:\n" +
+"- 2024 ACC/AHA PAD guideline: confirmed PAD care should address limb risk and systemic ASCVD risk using GDMT, including antithrombotic therapy, lipid lowering, BP/diabetes/smoking management, exercise therapy, and selective revascularization.\n" +
+"- COMPASS: in stable CAD/PAD, rivaroxaban 2.5 mg BID plus aspirin reduced major cardiovascular and limb events compared with aspirin alone, but increased major bleeding.\n" +
+"- VOYAGER-PAD: after lower-extremity revascularization, rivaroxaban 2.5 mg BID plus aspirin reduced acute limb ischemia/major adverse limb and cardiovascular events, with increased bleeding risk.\n" +
+"- ESC peripheral arterial and aortic disease framing supports screening PAD patients for polyvascular/aortic disease when symptoms or history suggest it.";
+
+    var teachingPearl =
+"Teaching pearl:\n" +
+"In confirmed PAD, every visit should answer three questions: 1) Is the limb safe? 2) Is systemic ASCVD risk optimized? 3) Is function, wound status, or post-revascularization trajectory improving?";
+
     var follow = "Routine follow-up based on local clinic standard.";
     var fp = val("cpad_follow_pref");
     if(fp.indexOf("Acute")>=0 || acute) follow = "Same-day ED/vascular surgery.";
@@ -789,7 +838,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     else if(fp.indexOf("Stable claudication")>=0) follow = "Reassess after GDMT/exercise trial, commonly around 3 months or per local clinic standard.";
     else if(fp.indexOf("Stable asymptomatic")>=0) follow = "Stable PAD follow-up 6–12 months or local standard.";
     else if(fp.indexOf("Post-revascularization")>=0 || post) follow = "Post-revascularization surveillance per vascular lab/surgeon protocol.";
-    if(followed.indexOf("following")>=0 || followed.indexOf("Multiple")>=0) follow += " Coordinate with " + followed + ".";
+    if(followed.indexOf("following")>=0) follow += " Coordinate with " + followed + ".";
 
     var completed = [];
     var missing = [];
@@ -814,6 +863,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     var qi =
 "PAD Care Standard Completion:\n" +
 "- Visit type: " + visit + "\n" +
+"- Visit-type preset: " + preset.join(" ") + "\n" +
 "- Phenotype documented: " + (pheno.length ? "yes" : "no") + "\n" +
 "- Limb-threat/escalation addressed: " + (completed.indexOf("Limb escalation addressed")>=0 ? "yes" : "no") + "\n" +
 "- Polyvascular/cardiovascular screen addressed: " + (completed.indexOf("Polyvascular screen addressed")>=0 ? "yes" : "no") + "\n" +
@@ -835,38 +885,62 @@ urgentBanner +
 "- Lifestyle: " + lifestyle.join(" ") + "\n" +
 "- Rivaroxaban 2.5 mg availability: " + val("cpad_riva25") + "\n" +
 "- Bleeding-risk shortcut: " + (bleed.length ? bleed.join("; ") : "none selected") + "\n" +
-"- PAD Care Standard Completion: " + score + " — " + scoreLabel + (missing.length ? " | Missing: " + missing.join(", ") : " | Complete");
+"- PAD Care Standard Completion: " + score + " — " + scoreLabel + (missing.length ? " | Missing: " + missing.join(", ") : " | Complete") + "\n\n" +
+teachingPearl + "\n\n" +
+evidenceAnchor;
 
     var referral =
 urgentBanner +
 "Referral / coordination letter:\n" +
-"Confirmed PAD patient. Visit type: " + visit + ". Working phenotype: " + phenotype + ". Current status: " + val("cpad_status") + "; Rutherford: " + val("cpad_rutherford") + ". Limb escalation concern: " + escalation + ". Polyvascular screen: " + poly.join(" ") + " Current management plan: antithrombotic " + val("cpad_antith") + "; HTN " + val("cpad_htn") + "; DM " + val("cpad_dm") + "; lipids " + val("cpad_lipid") + "; smoking " + val("cpad_smoke") + "; exercise " + val("cpad_exercise") + ". Revascularization context: " + (revasc.length ? revasc.join(" ") : "no revascularization-specific issue documented") + ". Follow-up/coordination: " + follow;
+"Confirmed PAD patient. Visit type: " + visit + ". Working phenotype: " + phenotype + ". Current status: " + val("cpad_status") + "; Rutherford: " + val("cpad_rutherford") + ". Limb escalation concern: " + escalation + ". Polyvascular screen: " + poly.join(" ") + " Current management plan: antithrombotic " + val("cpad_antith") + "; HTN " + val("cpad_htn") + "; DM " + val("cpad_dm") + "; lipids " + val("cpad_lipid") + "; smoking " + val("cpad_smoke") + "; exercise " + val("cpad_exercise") + ". Revascularization context: " + (revasc.length ? revasc.join(" ") : "no revascularization-specific issue documented") + ". Follow-up/coordination: " + follow + "\n\n" + teachingPearl + "\n\n" + evidenceAnchor;
 
     var concise =
 urgentBanner +
-"Confirmed PAD plan:\n" +
-"- Visit type: " + visit + "; already followed by: " + followed + "\n" +
-"- Phenotype: " + phenotype + "\n" +
-"- Status: " + val("cpad_status") + "; Rutherford: " + val("cpad_rutherford") + "; PFD/MWD: " + (val("cpad_pfd") || "NA") + " / " + (val("cpad_mwd") || "NA") + "\n" +
-"- Limb escalation: " + escalation + "\n" +
-"- Polyvascular screen: " + poly.join(" ") + "\n" +
+"Phenotype:\n" +
+"- " + phenotype + "\n" +
+"- Visit: " + visit + "; followed by: " + followed + "\n" +
+"- Rutherford: " + val("cpad_rutherford") + "; PFD/MWD: " + (val("cpad_pfd") || "NA") + " / " + (val("cpad_mwd") || "NA") + "\n" +
+"- " + preset.join(" ") + "\n\n" +
+
+"Limb safety:\n" +
+"- " + escalation + "\n" +
+"- Pulse/foot: " + val("cpad_pulse_status") + "\n" +
+"- Perfusion: " + val("cpad_perf_status") + (val("cpad_perf_note") ? " — " + val("cpad_perf_note") : "") + "\n\n" +
+
+"Polyvascular screen:\n" +
+"- " + poly.join("\n- ") + "\n\n" +
+
+"Management:\n" +
 "- Antithrombotic: " + antith.join(" ") + "\n" +
 "- HTN: " + htn.join(" ") + "\n" +
 "- DM: " + dm.join(" ") + "\n" +
 "- Lipids: " + lipid.join(" ") + "\n" +
 "- Lifestyle: " + lifestyle.join(" ") + "\n" +
-"- Revascularization context: " + (revasc.length ? revasc.join(" ") : "no specific revascularization caveat selected") + "\n" +
-"- Follow-up: " + follow + "\n" +
-"- PAD Care Standard Completion: " + score + " — " + scoreLabel + (missing.length ? " | Missing: " + missing.join(", ") : " | Complete") + "\n\n" +
+"- Revascularization/exercise context: " + (revasc.length ? revasc.join(" ") : "no specific revascularization caveat selected") + "\n\n" +
+
+"Follow-up:\n" +
+"- " + follow + "\n\n" +
+
+"Missing items / care standard:\n" +
+"- PAD Care Standard Completion: " + score + " — " + scoreLabel + (missing.length ? "\n- Missing: " + missing.join(", ") : "\n- Complete") + "\n\n" +
+
+"Teaching pearl:\n" +
+"- In confirmed PAD, every visit should answer: Is the limb safe? Is systemic ASCVD risk optimized? Is function/wound/post-revascularization trajectory improving?\n\n" +
+
+"Evidence anchor:\n" +
+"- COMPASS: stable CAD/PAD dual-pathway inhibition reduced major cardiovascular/limb events vs aspirin alone but increased major bleeding.\n" +
+"- VOYAGER-PAD: after lower-extremity revascularization, rivaroxaban 2.5 mg BID + aspirin reduced limb/CV events with increased bleeding risk.\n\n" +
+
 "Copy-ready note:\n" +
-"Confirmed PAD reviewed. Visit type: " + visit + ". Phenotype: " + phenotype + ". Status: " + val("cpad_status") + "; Rutherford: " + val("cpad_rutherford") + ". Limb-risk/escalation: " + escalation + ". Polyvascular screen: " + poly.join(" ") + " Management: antithrombotic = " + val("cpad_antith") + "; HTN = " + val("cpad_htn") + "; DM = " + val("cpad_dm") + "; lipid = " + val("cpad_lipid") + "; smoking = " + val("cpad_smoke") + "; exercise = " + val("cpad_exercise") + ". Follow-up: " + follow + ".";
+"Confirmed PAD reviewed. Visit type: " + visit + ". Phenotype: " + phenotype + ". Rutherford: " + val("cpad_rutherford") + ". Limb safety: " + escalation + ". Polyvascular screen: " + poly.join(" ") + " Management: antithrombotic = " + val("cpad_antith") + "; HTN = " + val("cpad_htn") + "; DM = " + val("cpad_dm") + "; lipid = " + val("cpad_lipid") + "; smoking = " + val("cpad_smoke") + "; exercise = " + val("cpad_exercise") + ". Follow-up: " + follow + ".";
 
     var full =
 urgentBanner +
 "Confirmed PAD pathway:\n\n" +
 "0. Visit type\n" +
 "- " + visit + "\n" +
-"- Already followed by: " + followed + "\n\n" +
+"- Already followed by: " + followed + "\n" +
+"- " + preset.join(" ") + "\n\n" +
 "1. Phenotype\n" +
 "- Selected phenotype(s): " + (pheno.length ? pheno.join("; ") : "none selected") + "\n" +
 "- Working phenotype: " + phenotype + "\n" +
@@ -896,13 +970,15 @@ poly.map(function(x){return "- "+x;}).join("\n") + "\n\n" +
 "- " + follow + "\n\n" +
 "7. PAD Care Standard Completion\n" +
 "- " + score + " — " + scoreLabel + (missing.length ? " | Missing: " + missing.join(", ") : " | Complete") + "\n\n" +
+teachingPearl + "\n\n" +
+evidenceAnchor + "\n\n" +
 patientCounsel + "\n\n" +
 "Copy-ready note:\n" +
 "Confirmed PAD reviewed. Visit type: " + visit + ". Phenotype: " + phenotype + ". Status: " + val("cpad_status") + "; Rutherford: " + val("cpad_rutherford") + ". Limb-risk/escalation: " + escalation + ". Polyvascular screen: " + poly.join(" ") + " Antithrombotic: " + antith.join(" ") + " HTN: " + htn.join(" ") + " DM: " + dm.join(" ") + " Lipids: " + lipid.join(" ") + " Lifestyle: " + lifestyle.join(" ") + " Follow-up: " + follow + ".";
 
     var finalText = concise;
     if(outputMode === "Full detailed note") finalText = full;
-    if(outputMode === "Patient counseling paragraph") finalText = patientCounsel;
+    if(outputMode === "Patient counseling paragraph") finalText = patientCounsel + "\n\n" + teachingPearl;
     if(outputMode === "QI checklist only") finalText = urgentBanner + qi;
     if(outputMode === "Medication optimization note") finalText = medOpt;
     if(outputMode === "Referral letter") finalText = referral;
