@@ -1,1 +1,1 @@
-Clean management-focused Confirmed PAD Clinic Pathway: phenotype, limb escalation, management plan, completeness score, follow-up engine, output modes.
+Confirmed PAD pathway update: adds polyvascular/cardiovascular screen for cardiac ischemia, HF/cardiopulmonary symptoms, stroke/TIA/carotid disease, aortic/AAA, mesenteric and renovascular clues.
