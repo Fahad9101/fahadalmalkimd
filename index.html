@@ -352,7 +352,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 
     '<h4>7. Output</h4>'+
     '<div class="grid2">'+
-    selectField("spad_output_mode","Output mode",["Concise clinic plan","Full detailed note","Patient counseling paragraph","QI checklist only","Referral letter"],"")+
+    selectField("spad_output_mode","Output mode",["Consultant-style note","Full detailed paragraph note","Concise clinician + patient teaching","Concise clinic plan","Full detailed note","Patient counseling paragraph","QI checklist only","Referral letter"],"")+
     '</div>'+
     '<div class="toolbar"><button class="primary" id="spadGenerate">Generate suspected PAD pathway</button><button id="spadCopy">Copy output</button><button id="spadReset">Reset pathway</button></div><div id="pad_out" class="output hidden"></div>'+
     '</section>');
@@ -613,7 +613,54 @@ urgentBanner +
 "Referral / coordination letter:\n" +
 "Suspected PAD assessment. Visit type: " + visit + ". Working phenotype: " + phenotype + ". Symptoms: " + pattern + "; severity: " + sev + ". Limb safety: " + referral + ". Pulse/foot status: " + val("spad_pulse") + "; " + val("spad_foot") + ". Vascular testing: R ABI " + (val("spad_rabi") || "NA") + ", L ABI " + (val("spad_labi") || "NA") + ", TBI R/L " + (val("spad_rtbi") || "NA") + "/" + (val("spad_ltbi") || "NA") + ", waveforms " + val("spad_wave") + ". PAD-supporting clues: " + (support.length ? support.join("; ") : "none selected") + ". Mimics considered: " + (mimics.length ? mimics.join("; ") : "none selected") + ". Polyvascular screen: " + poly.join(" ") + " Requested plan/coordination: " + testing.join(" ") + " " + referral;
 
+
+    var consultantNote =
+urgentBanner +
+"Assessment:\n" +
+"Patient evaluated for suspected PAD. Visit type is " + visit + ". The working phenotype is " + phenotype + " The main decision today is whether this represents acute limb ischemia, CLTI/wound-risk, claudication, asymptomatic abnormal testing, or a nonvascular mimic.\n\n" +
+"Key supporting features:\n" +
+"Symptoms: " + pattern + "; severity: " + sev + "; pain-free/maximum walking distance " + (val("spad_pfd") || "NA") + " / " + (val("spad_mwd") || "NA") + ".\n" +
+"Limb safety: " + referral + " Pulse/foot status: " + val("spad_pulse") + "; " + val("spad_foot") + "; " + val("spad_temp_color") + ".\n" +
+"Testing: right ABI " + (val("spad_rabi") || "NA") + ", left ABI " + (val("spad_labi") || "NA") + ", waveforms " + val("spad_wave") + ", exercise ABI " + val("spad_exabi") + ".\n" +
+"PAD-supporting clues: " + (support.length ? support.join("; ") : "none selected") + ". Mimic clues: " + (mimics.length ? mimics.join("; ") : "none selected") + ".\n" +
+"Polyvascular screen: " + poly.join(" ") + "\n\n" +
+"Clinical reasoning:\n" +
+"The presentation is best summarized as " + phenotype + " The next diagnostic step is guided by limb safety and test reliability. " + testing.join(" ") + "\n\n" +
+"Plan:\n" +
+"1. Limb safety/escalation: " + referral + "\n" +
+"2. Diagnostic testing: " + testing.join(" ") + "\n" +
+"3. PAD vs mimic: PAD clues include " + (support.length ? support.join("; ") : "none selected") + "; mimics considered include " + (mimics.length ? mimics.join("; ") : "none selected") + ".\n" +
+"4. Risk-factor management: " + management.join(" ") + "\n" +
+"5. Follow-up/coordination: " + referral + " Already followed by: " + followed + ".\n\n" +
+"Patient counseling/safety-net:\n" +
+patientCounsel + "\n\n" +
+"Care standard: " + score + " — " + scoreLabel + (missing.length ? ". Missing: " + missing.join(", ") + "." : ". Complete.");
+
+    var paragraphNote =
+urgentBanner +
+"Patient was assessed for suspected PAD in the context of " + visit + ". The current working phenotype is " + phenotype + " Symptoms were characterized as " + pattern + " with severity " + sev + " and pain-free/maximum walking distance of " + (val("spad_pfd") || "NA") + " / " + (val("spad_mwd") || "NA") + ". Limb safety was reviewed; pulse/foot status was " + val("spad_pulse") + ", foot/wound status was " + val("spad_foot") + ", and temperature/color status was " + val("spad_temp_color") + ". The triage conclusion was: " + referral + "\n\n" +
+"PAD-supporting features included " + (support.length ? support.join("; ") : "none selected") + ". Alternative or mimic features considered included " + (mimics.length ? mimics.join("; ") : "none selected") + ". Vascular testing was reviewed: right ABI " + rabi + ", left ABI " + labi + ", right/left TBI " + (val("spad_rtbi") || "NA") + "/" + (val("spad_ltbi") || "NA") + ", waveforms " + val("spad_wave") + ", and exercise ABI status " + val("spad_exabi") + ". The testing plan is: " + testing.join(" ") + "\n\n" +
+"The polyvascular screen was reviewed. " + poly.join(" ") + " Initial management and referral planning included: " + management.join(" ") + " Follow-up/coordination plan: " + referral + "\n\n" +
+patientCounsel + "\n\n" + teachingPearl + "\n\n" + evidenceAnchor;
+
+    var conciseTeaching =
+urgentBanner +
+"Clinician summary:\n" +
+"- Working phenotype: " + phenotype + "\n" +
+"- Limb safety: " + referral + "\n" +
+"- PAD vs mimic: PAD clues = " + (support.length ? support.join("; ") : "none selected") + "; mimic clues = " + (mimics.length ? mimics.join("; ") : "none selected") + ".\n" +
+"- Testing: " + testing.join(" ") + "\n" +
+"- Follow-up: " + referral + "\n" +
+"- Missing items: " + (missing.length ? missing.join(", ") : "none") + "\n\n" +
+"Teaching for clinician:\n" +
+"- In suspected PAD, first decide: acute limb ischemia, CLTI/wound, claudication, asymptomatic abnormal test, or mimic. ABI/TBI confirms physiology, but limb safety decides urgency.\n\n" +
+"Patient explanation:\n" +
+patientCounsel;
+
     var finalText = concise;
+    if(mode === "Consultant-style note") finalText = consultantNote;
+    if(mode === "Full detailed paragraph note") finalText = paragraphNote;
+    if(mode === "Concise clinician + patient teaching") finalText = conciseTeaching;
     if(mode === "Full detailed note") finalText = full;
     if(mode === "Patient counseling paragraph") finalText = patientCounsel + "\n\n" + teachingPearl;
     if(mode === "QI checklist only") finalText = urgentBanner + qi;
@@ -829,7 +876,7 @@ urgentBanner +
     '<h4>6. Output</h4>'+
     '<div class="grid2">'+
     selectField("cpad_follow_pref","Follow-up context",["Auto-suggest based on risk","Stable asymptomatic PAD","Stable claudication starting/continuing GDMT","Lifestyle-limiting claudication after inadequate therapy","CLTI/rest pain/tissue loss","Infected ischemic foot","Acute limb ischemia concern","Post-revascularization surveillance","Cardiac/neuro/aortic concern needs separate escalation"],"")+
-    selectField("cpad_output_mode","Output mode",["Concise clinic plan","Full detailed note","Patient counseling paragraph","QI checklist only","Medication optimization note","Referral letter"],"")+
+    selectField("cpad_output_mode","Output mode",["Consultant-style note","Full detailed paragraph note","Concise clinician + patient teaching","Concise clinic plan","Full detailed note","Patient counseling paragraph","QI checklist only","Medication optimization note","Referral letter"],"")+
     '</div>'+
 
     '<div class="toolbar"><button class="primary" id="cpadGenerate">Generate confirmed PAD pathway</button><button id="cpadCopy">Copy output</button><button id="cpadReset">Reset pathway</button></div><div id="cpad_out" class="output hidden"></div>'+
@@ -1183,7 +1230,67 @@ patientCounsel + "\n\n" +
 "Copy-ready note:\n" +
 "Confirmed PAD reviewed. Visit type: " + visit + ". Phenotype: " + phenotype + ". Status: " + val("cpad_status") + "; Rutherford: " + val("cpad_rutherford") + ". Limb-risk/escalation: " + escalation + ". Polyvascular screen: " + poly.join(" ") + " Antithrombotic: " + antith.join(" ") + " HTN: " + htn.join(" ") + " DM: " + dm.join(" ") + " Lipids: " + lipid.join(" ") + " Lifestyle: " + lifestyle.join(" ") + " Follow-up: " + follow + ".";
 
+
+    var compassTeaching =
+"Antithrombotic numbers to explain if COMPASS regimen is considered:\n" +
+"- COMPASS regimen = rivaroxaban 2.5 mg twice daily plus aspirin for selected stable symptomatic PAD/polyvascular-risk patients when bleeding risk is acceptable.\n" +
+"- Overall COMPASS trial: CV death/stroke/MI was 4.1% vs 5.4% with aspirin alone over about 23 months. Absolute risk reduction 1.3%; NNT about 77 to prevent one major cardiovascular event.\n" +
+"- Major bleeding was 3.1% vs 1.9%. Absolute risk increase 1.2%; NNH about 83 for one major bleed. Fatal/intracranial bleeding was not the main excess; much bleeding was nonfatal, but it still matters.\n" +
+"- Patient wording: out of about 100 similar patients treated for about 2 years, around 1 to 2 may avoid heart attack, stroke, or cardiovascular death, and around 1 may have a major bleed. The decision depends on limb/CV risk, bleeding risk, kidney/liver status, other anticoagulation, and patient preference.\n\n" +
+"VOYAGER-PAD numbers to explain after lower-extremity revascularization:\n" +
+"- VOYAGER-PAD regimen = rivaroxaban 2.5 mg twice daily plus aspirin after lower-extremity revascularization when bleeding risk is acceptable.\n" +
+"- Primary limb/CV outcome was 17.3% vs 19.9% at 3 years. Absolute risk reduction 2.6%; NNT about 39.\n" +
+"- TIMI major bleeding absolute increase was about 0.8%; NNH about 125. ISTH major bleeding was also higher, 5.94% vs 4.06%, NNH about 53. There was no clear excess in intracranial or fatal bleeding in the main report/slide summary.\n";
+
+    var consultantNote =
+urgentBanner +
+"Assessment:\n" +
+"Known lower-extremity PAD. Current working phenotype is " + phenotype + " Visit type is " + visit + ". The main clinical task today is to confirm limb safety, optimize systemic ASCVD risk, and assess function/wound/post-revascularization trajectory.\n\n" +
+"Key supporting features:\n" +
+"Symptoms/function: Rutherford " + val("cpad_rutherford") + "; pain-free / maximum walking distance " + (val("cpad_pfd") || "NA") + " / " + (val("cpad_mwd") || "NA") + ".\n" +
+"Limb status: " + val("cpad_pulse_status") + "; perfusion data: " + val("cpad_perf_status") + (val("cpad_perf_note") ? " — " + val("cpad_perf_note") : "") + ".\n" +
+"Polyvascular screen: " + poly.join(" ") + "\n\n" +
+"Clinical reasoning:\n" +
+"The PAD phenotype is best classified as " + phenotype + " Limb escalation assessment: " + escalation + " The management priority is to match antithrombotic intensity and risk-factor therapy to limb risk, cardiovascular risk, bleeding risk, formulary/access status, and current follow-up responsibility.\n\n" +
+"Plan:\n" +
+"1. Limb safety/escalation: " + escalation + "\n" +
+"2. Antithrombotic strategy: " + antith.join(" ") + "\n" +
+"3. Lipid/ASCVD risk: " + lipid.join(" ") + "\n" +
+"4. BP and diabetes: " + htn.join(" ") + " " + dm.join(" ") + "\n" +
+"5. Lifestyle/function: " + lifestyle.join(" ") + "\n" +
+"6. Revascularization/exercise context: " + (revasc.length ? revasc.join(" ") : "No specific revascularization caveat selected.") + "\n" +
+"7. Follow-up/coordination: " + follow + "\n\n" +
+"Patient counseling/safety-net:\n" +
+patientCounsel + "\n\n" +
+"Care standard: " + score + " — " + scoreLabel + (missing.length ? ". Missing: " + missing.join(", ") + "." : ". Complete.");
+
+    var paragraphNote =
+urgentBanner +
+"Known lower-extremity PAD was reviewed today. The visit type was " + visit + ", and the current phenotype is best classified as " + phenotype + " Symptoms and function were reviewed, including Rutherford category " + val("cpad_rutherford") + " and pain-free/maximum walking distance of " + (val("cpad_pfd") || "NA") + " / " + (val("cpad_mwd") || "NA") + ". Limb safety was assessed; pulse/foot status was " + val("cpad_pulse_status") + " and perfusion data status was " + val("cpad_perf_status") + (val("cpad_perf_note") ? " (" + val("cpad_perf_note") + ")" : "") + ". The limb escalation conclusion was: " + escalation + "\n\n" +
+"The polyvascular/cardiovascular screen was reviewed. " + poly.join(" ") + " The overall management plan is to optimize limb protection and systemic ASCVD risk. Antithrombotic strategy: " + antith.join(" ") + " Lipid strategy: " + lipid.join(" ") + " Blood pressure and diabetes plan: " + htn.join(" ") + " " + dm.join(" ") + " Lifestyle and functional plan: " + lifestyle.join(" ") + " Revascularization context: " + (revasc.length ? revasc.join(" ") : "no specific revascularization caveat selected") + ". Follow-up/coordination: " + follow + "\n\n" +
+patientCounsel + "\n\n" + teachingPearl + "\n\n" + evidenceAnchor;
+
+    var conciseTeaching =
+urgentBanner +
+"Clinician summary:\n" +
+"- Phenotype: " + phenotype + "\n" +
+"- Limb safety: " + escalation + "\n" +
+"- Polyvascular screen: " + poly.join(" ") + "\n" +
+"- Antithrombotic choice: " + val("cpad_antith") + "\n" +
+"- Management: lipids/BP/diabetes/smoking/exercise reviewed.\n" +
+"- Follow-up: " + follow + "\n" +
+"- Missing items: " + (missing.length ? missing.join(", ") : "none") + "\n\n" +
+"Teaching for clinician:\n" +
+"- In confirmed PAD, every visit should answer: Is the limb safe? Is systemic ASCVD risk optimized? Is function, wound status, or post-revascularization trajectory improving?\n" +
+"- COMPASS/VOYAGER are dual-pathway inhibition strategies: benefit is prevention of cardiovascular/limb events; harm is bleeding. Do not use them automatically in patients already needing full-dose anticoagulation or with high bleeding risk.\n\n" +
+"Patient explanation:\n" +
+patientCounsel + "\n\n" +
+compassTeaching;
+
     var finalText = concise;
+    if(outputMode === "Consultant-style note") finalText = consultantNote;
+    if(outputMode === "Full detailed paragraph note") finalText = paragraphNote;
+    if(outputMode === "Concise clinician + patient teaching") finalText = conciseTeaching;
     if(outputMode === "Full detailed note") finalText = full;
     if(outputMode === "Patient counseling paragraph") finalText = patientCounsel + "\n\n" + teachingPearl;
     if(outputMode === "QI checklist only") finalText = urgentBanner + qi;

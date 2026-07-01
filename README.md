@@ -1,1 +1,1 @@
-Suspected PAD Clinic Pathway rebuilt in clean product style: visit type, symptom phenotype, limb danger, PAD vs mimic, ABI/TBI testing, polyvascular screen, initial management/referral, care-standard score, output modes, reset.
+PAD pathways note mode update: adds consultant-style note, full detailed paragraph note, concise clinician + patient teaching, and COMPASS/VOYAGER NNT/NNH patient teaching statistics.
