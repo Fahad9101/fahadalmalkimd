@@ -1,1 +1,1 @@
-PAD pathways note mode update: adds consultant-style note, full detailed paragraph note, concise clinician + patient teaching, and COMPASS/VOYAGER NNT/NNH patient teaching statistics.
+PAD pathways updated to exactly three note types for both confirmed and suspected PAD: Formal consultant letter, Concise clinic note, and Counseling/teaching note. Confirmed PAD counseling includes COMPASS/VOYAGER NNT/NNH and key statistics.
