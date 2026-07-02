@@ -1,1 +1,1 @@
-PAD pathways updated to exactly three note types for both confirmed and suspected PAD: Formal consultant letter, Concise clinic note, and Counseling/teaching note. Confirmed PAD counseling includes COMPASS/VOYAGER NNT/NNH and key statistics.
+PAD pathways update: removed Referral/follow-up context dropdown from Suspected PAD and Follow-up context dropdown from Confirmed PAD. Follow-up/referral is now auto-suggested internally from risk features.

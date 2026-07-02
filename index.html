@@ -347,7 +347,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     selectField("spad_dm","Diabetes / foot risk",["No diabetes","Diabetes controlled","Diabetes uncontrolled","Diabetic foot risk / needs foot care","Coordinate with PCP/endocrine/podiatry"],"")+
     selectField("spad_smoke","Smoking",["Never smoker","Active smoker - cessation intervention today","Recent quitter - reinforce abstinence","Prior smoker - reinforce abstinence","Unknown - clarify"],"")+
     selectField("spad_exercise","Exercise plan",["Not yet until limb threat excluded","Start structured walking if claudication and no limb threat","Refer supervised exercise therapy","Continue current program","Not appropriate due to CLTI/wound/rest pain","Limited by cardiopulmonary/musculoskeletal condition"],"")+
-    selectField("spad_referral","Referral / follow-up context",["Auto-suggest based on risk","Same-day ED/vascular surgery","Urgent vascular/wound pathway","Vascular lab ABI/TBI/waveforms first","Routine vascular medicine follow-up","Coordinate with existing specialty team","PCP/cardiology risk optimization"],"")+
+    
     '</div>'+
 
     '<h4>7. Output</h4>'+
@@ -473,12 +473,12 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(val("spad_exercise").indexOf("Not appropriate")>=0) management.push("Do not use exercise therapy as the next step when CLTI/rest pain/wound is present.");
 
     var referral = "Routine vascular medicine / vascular lab pathway.";
-    if(val("spad_referral").indexOf("Same-day")>=0 || acute) referral = "Same-day ED/vascular surgery assessment; do not delay for outpatient ABI.";
-    else if(val("spad_referral").indexOf("Urgent")>=0 || infected || clti) referral = "Urgent vascular surgery/wound pathway with perfusion assessment.";
-    else if(val("spad_referral").indexOf("Vascular lab")>=0) referral = "Vascular lab ABI/TBI/waveforms first, then follow-up based on phenotype and results.";
-    else if(val("spad_referral").indexOf("Coordinate")>=0 || followed.indexOf("following")>=0) referral = "Coordinate with existing specialty team: " + followed + ".";
+    if(acute) referral = "Same-day ED/vascular surgery assessment; do not delay for outpatient ABI.";
+    else if(infected || clti) referral = "Urgent vascular surgery/wound pathway with perfusion assessment.";
     else if(cardiacUrgent || neuroUrgent || aorticUrgent) referral = "Separate urgent cardiac/stroke/aortic pathway as clinically indicated.";
+    else if(followed.indexOf("following")>=0) referral = "Coordinate with existing specialty team: " + followed + ".";
     else if(sev.indexOf("Lifestyle")>=0 || sev.indexOf("Limits")>=0) referral = "Vascular referral if symptoms remain lifestyle-limiting after testing/GDMT/exercise or if anatomy assessment is needed.";
+    else if(val("spad_test_status").indexOf("No vascular")>=0 || val("spad_test_status").indexOf("outdated")>=0 || val("spad_test_status").indexOf("pending")>=0) referral = "Vascular lab ABI/TBI/waveforms first, then follow-up based on phenotype and results.";
 
     var preset = [];
     if(visit.indexOf("Acute")>=0) preset.push("Preset focus: acute limb concern — emergency limb safety, Doppler/perfusion, and same-day vascular pathway.");
@@ -496,7 +496,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     scoreItem("ABI/TBI testing plan addressed", testing.length>0 && val("spad_test_status") !== "No vascular testing yet" || val("spad_referral").indexOf("Same-day")>=0 || acute);
     scoreItem("PAD vs mimic assessed", support.length>0 || mimics.length>0);
     scoreItem("Polyvascular screen addressed", quickPoly.length>0 || card.length>0 || vascular.length>0);
-    scoreItem("Risk-factor/referral plan addressed", yesAddress(val("spad_lipid")) && yesAddress(val("spad_smoke")) && yesAddress(val("spad_referral")));
+    scoreItem("Risk-factor/referral plan addressed", yesAddress(val("spad_lipid")) && yesAddress(val("spad_smoke")) && referral.length>0);
     var scoreNum = completed.length;
     var score = scoreNum + "/7";
     var scoreLabel = scoreNum >= 6 ? "Complete" : (scoreNum >= 4 ? "Mostly complete" : "Gaps remain");
@@ -915,7 +915,7 @@ patientCounsel + "\n\n" +
 
     '<h4>6. Output</h4>'+
     '<div class="grid2">'+
-    selectField("cpad_follow_pref","Follow-up context",["Auto-suggest based on risk","Stable asymptomatic PAD","Stable claudication starting/continuing GDMT","Lifestyle-limiting claudication after inadequate therapy","CLTI/rest pain/tissue loss","Infected ischemic foot","Acute limb ischemia concern","Post-revascularization surveillance","Cardiac/neuro/aortic concern needs separate escalation"],"")+
+    
     selectField("cpad_output_mode","Output mode",["Formal consultant letter","Concise clinic note","Counseling / teaching note"],"")+
     '</div>'+
 
@@ -1123,7 +1123,7 @@ patientCounsel + "\n\n" +
 "In confirmed PAD, every visit should answer three questions: 1) Is the limb safe? 2) Is systemic ASCVD risk optimized? 3) Is function, wound status, or post-revascularization trajectory improving?";
 
     var follow = "Routine follow-up based on local clinic standard.";
-    var fp = val("cpad_follow_pref");
+    var fp = "Auto-suggest based on risk";
     if(fp.indexOf("Acute")>=0 || acute) follow = "Same-day ED/vascular surgery.";
     else if(cardiacUrgent || neuroUrgent || aorticUrgent) follow = "Separate same-day/urgent cardiovascular, stroke/TIA, or aortic pathway as clinically indicated.";
     else if(fp.indexOf("Infected")>=0 || infected) follow = "Same-day/urgent infected ischemic foot pathway.";
@@ -1143,7 +1143,7 @@ patientCounsel + "\n\n" +
     scoreItem("Lipids addressed", yesAddress(val("cpad_lipid")) && (val("cpad_ldl") || val("cpad_nonhdl")));
     scoreItem("Smoking addressed", yesAddress(val("cpad_smoke")));
     scoreItem("Exercise/claudication addressed", yesAddress(val("cpad_exercise")));
-    scoreItem("Limb escalation addressed", limb.length>0 && (val("cpad_status") || val("cpad_follow_pref")));
+    scoreItem("Limb escalation addressed", limb.length>0 && val("cpad_status"));
     scoreItem("Polyvascular screen addressed", quickPoly.length>0 || (card.length>0 && hf.length>0 && neuro.length>0 && aorta.length>0));
     var scoreNum = completed.length;
     var score = scoreNum + "/8";
