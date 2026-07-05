@@ -1,1 +1,1 @@
-PAD pathways update: removed Referral/follow-up context dropdown from Suspected PAD and Follow-up context dropdown from Confirmed PAD. Follow-up/referral is now auto-suggested internally from risk features.
+Core VTE Clinic Pathway added: DVT/PE phenotype, danger screen, provoking-factor classification, anticoagulant choice/safety, duration and extended therapy decision, APS/thrombophilia/cancer workup routing, follow-up complications, three note modes, evidence anchors.

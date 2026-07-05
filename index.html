@@ -50,6 +50,9 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 .followedchecks .check{display:flex;align-items:flex-start;gap:10px;font-weight:700;color:#0b2f3a}
 .followedchecks input{margin-top:3px}
 
+
+.badgeNote{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px;color:#0b5964;background:#eef8fa;font-weight:800}
+
 </style>
 </head>
 <body>
@@ -83,7 +86,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"New/chronic VTE, arterial thrombosis, duration, anticoagulant safety, APS/MPN/PNH/Lp(a), CTEPH and PTS prompts."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Core VTE Clinic Pathway",desc:"DVT/PE follow-up, provoked vs unprovoked classification, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
@@ -184,6 +187,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(!t) return renderPathways();
     if(id === "pad-suspected") return renderPAD();
     if(id === "pad-confirmed") return renderConfirmedPAD();
+    if(id === "thrombosis-clinic") return renderCoreVTE();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -712,6 +716,391 @@ patientCounsel + "\n\n" +
     out.textContent = finalText;
     out.classList.remove("hidden");
   }
+
+
+  function renderCoreVTE(){
+    shell("Core VTE Clinic Pathway","Consultant-level routine thrombosis clinic pathway for DVT/PE: phenotype, danger screen, provoking-factor classification, anticoagulant selection, duration, extended therapy, bleeding risk, thrombophilia/APS testing, follow-up, and three note styles.",
+    '<section class="card">'+
+
+    '<h4>0. Visit type</h4>'+
+    '<div class="grid2">'+
+    selectField("vte_visit","Visit type",["New acute VTE follow-up","Anticoagulation duration decision","Extended anticoagulation review","Recurrent VTE","Thrombosis while on anticoagulation","Bleeding or anticoagulant safety issue","APS / thrombophilia question","Cancer-associated VTE screen / route","Pregnancy/postpartum screen / route","Unusual-site thrombosis screen / route","Second opinion / unclear plan"],"Core VTE is for DVT/PE. Unusual-site thrombosis should route to the separate Unusual-Site pathway.")+
+    '<div class="followedbox"><label>Already followed by <span class="hint">Select all that apply.</span></label>'+
+    '<div class="followedchecks">'+
+    '<label class="check"><input type="checkbox" name="vte_followed" value="No one / needs coordination">No one / needs coordination</label>'+
+    '<label class="check"><input type="checkbox" name="vte_followed" value="Hematology/thrombosis following">Hematology/thrombosis following</label>'+
+    '<label class="check"><input type="checkbox" name="vte_followed" value="Oncology following">Oncology following</label>'+
+    '<label class="check"><input type="checkbox" name="vte_followed" value="Vascular medicine following">Vascular medicine following</label>'+
+    '<label class="check"><input type="checkbox" name="vte_followed" value="Pulmonary/cardiology following">Pulmonary/cardiology following</label>'+
+    '<label class="check"><input type="checkbox" name="vte_followed" value="Primary care following">Primary care following</label>'+
+    '</div></div>'+
+    '</div>'+
+
+    '<h4>1. VTE phenotype</h4>'+
+    checks("vte_pheno",[
+      "Proximal lower-extremity DVT",
+      "Isolated distal calf DVT",
+      "Pulmonary embolism",
+      "Subsegmental PE",
+      "Incidental VTE",
+      "Upper-extremity DVT / catheter-related — route if complex",
+      "Superficial vein thrombosis — route if main problem",
+      "Splanchnic/CVT/renal/gonadal/unusual-site thrombosis — use Unusual-Site pathway",
+      "Recurrent VTE",
+      "Thrombosis on anticoagulation",
+      "No objectively confirmed VTE yet"
+    ])+
+    '<div class="grid2">'+
+    inputField("vte_date","Index event date / timing","e.g. 2026-06-10, 6 weeks ago")+
+    selectField("vte_time","Time since index event",["<7 days","1-4 weeks","1-3 months","3-6 months",">6 months","Remote history","Unclear"],"Duration decision depends on acute vs primary treatment vs secondary prevention phase.")+
+    selectField("vte_obj","Objective confirmation",["Confirmed by ultrasound/CTPA/VQ/CT/MRI","Outside report pending","Symptoms only / not confirmed","Residual clot vs new clot unclear","Unclear"],"Avoid treating 'recurrence' without comparing imaging when possible.")+
+    selectField("vte_clotburden","Clinical severity",["Low-risk/stable","Intermediate-risk PE / RV strain concern","High-risk PE / shock","Extensive proximal clot burden","Distal/limited clot burden","Unclear"],"")+
+    inputField("vte_summary","One-line event summary","e.g. first unprovoked proximal DVT; PE after surgery; recurrent VTE on DOAC")+
+    '</div>'+
+
+    '<h4>2. Danger / escalation screen</h4>'+
+    checks("vte_red",[
+      "Hemodynamic instability / shock",
+      "Severe hypoxia, syncope, or high-risk PE concern",
+      "RV failure / significant RV strain concern",
+      "Limb-threatening phlegmasia",
+      "Active major bleeding",
+      "Severe thrombocytopenia",
+      "Suspected HIT",
+      "Recurrent thrombosis while adherent to therapeutic anticoagulation",
+      "Severe headache/seizure/focal neurologic symptoms — use CVT pathway",
+      "Severe abdominal pain/bowel ischemia concern — use splanchnic pathway",
+      "Pregnancy/postpartum high-risk scenario",
+      "No emergency features today"
+    ])+
+
+    '<h4>3. Provoking-factor classification</h4>'+
+    checks("vte_risk",[
+      "Major transient provoking factor: major surgery/major trauma/immobilization",
+      "Minor transient provoking factor: minor injury, short admission, travel, temporary immobility",
+      "Persistent risk factor: chronic inflammatory disease, chronic immobility, active medical condition",
+      "Unprovoked",
+      "Active cancer or cancer treatment",
+      "Estrogen/hormonal-associated",
+      "Pregnancy/postpartum-associated",
+      "Catheter/device-associated",
+      "APS suspected or known",
+      "Strong family history",
+      "Prior VTE",
+      "Unclear / mixed"
+    ])+
+    '<div class="grid2">'+
+    selectField("vte_event_count","Event count",["First VTE","Recurrent VTE","Multiple recurrent VTE","Unclear"],"")+
+    selectField("vte_resolved","Provoking factor resolved?",["Not applicable","Yes, resolved","No, persistent","Unclear"],"")+
+    selectField("vte_bleed_risk","Bleeding-risk estimate",["Low / no major concern","Moderate / caution","High bleeding risk","Active bleeding / anticoagulation unsafe","Unclear"],"")+
+    '</div>'+
+
+    '<h4>4. Anticoagulant selection and safety</h4>'+
+    '<div class="grid2">'+
+    selectField("vte_current_ac","Current anticoagulant",["None","Apixaban","Rivaroxaban","Dabigatran","Edoxaban","LMWH","Warfarin","Fondaparinux","UFH infusion","Other/unclear"],"")+
+    selectField("vte_phase","Treatment phase",["Initial treatment","Primary treatment 3-6 months","Secondary prevention / extended phase","Temporary interruption","Not anticoagulated","Unclear"],"")+
+    selectField("vte_dose_ok","Dose/loading appropriate?",["Yes","No / underdosed","Loading phase missed/incorrect","Dose unclear","Not applicable"],"Apixaban/rivaroxaban have VTE-specific loading regimens; dabigatran/edoxaban require heparin lead-in.")+
+    selectField("vte_adherence","Adherence",["Good","Missed doses","Unclear","Not applicable"],"")+
+    selectField("vte_renal","Renal function",["Adequate/known","CKD significant","AKI or fluctuating","Dialysis/severe renal impairment","Unknown"],"")+
+    selectField("vte_liver","Liver disease",["No major concern","Significant liver disease","Cirrhosis/portal HTN concern","Unknown"],"")+
+    selectField("vte_interactions","Drug interaction / absorption concern",["No major concern","Strong CYP/P-gp interaction concern","Malabsorption/bariatric/poor intake","Chemotherapy/targeted therapy interaction","Unknown"],"")+
+    selectField("vte_antiplatelet","Antiplatelet/NSAID overlap",["None","Aspirin","DAPT","NSAID use","Multiple agents / high bleed concern","Unknown"],"")+
+    '</div>'+
+    checks("vte_bleed_short",[
+      "No major bleeding concern selected",
+      "Prior major bleeding",
+      "Active/recent GI bleed",
+      "Anemia under evaluation",
+      "Severe thrombocytopenia",
+      "Advanced CKD",
+      "Advanced liver disease",
+      "Upcoming procedure",
+      "Frailty/falls concern",
+      "Concomitant antiplatelet/NSAID"
+    ])+
+
+    '<h4>5. Duration and extended-therapy decision</h4>'+
+    '<div class="grid2">'+
+    selectField("vte_duration_intent","Duration intent",["Auto-suggest from risk","Stop after 3 months","Continue 3-6 months then reassess","Extended anticoagulation preferred","Indefinite anticoagulation likely","Specialist individualized decision","Contraindicated / bleeding risk dominates"],"")+
+    selectField("vte_extended_agent","Extended-phase option if continuing",["Not applicable","Continue full-dose DOAC","Reduced-dose apixaban 2.5 mg BID","Reduced-dose rivaroxaban 10 mg daily","Warfarin","LMWH","Aspirin only / not preferred if anticoagulation appropriate","No anticoagulation"],"CHEST favors reduced-dose DOAC over aspirin/no therapy when extended therapy is chosen.")+
+    selectField("vte_patient_pref","Patient preference / values",["Not discussed","Prefers stopping if safe","Prefers continuing to reduce recurrence","Bleeding fear dominates","Medication burden/cost issue","Shared decision completed"],"")+
+    inputField("vte_duration_note","Duration rationale note","brief reason: surgery-provoked, unprovoked PE, recurrent, bleeding risk, etc.")+
+    '</div>'+
+
+    '<h4>6. Workup decision: APS / thrombophilia / cancer</h4>'+
+    checks("vte_workup",[
+      "No workup needed today",
+      "APS testing considered",
+      "Thrombophilia testing considered only if management-changing",
+      "Testing timing inappropriate now / defer",
+      "Young age",
+      "Strong family history",
+      "Recurrent VTE",
+      "Weak provoking factor",
+      "Unusual-site thrombosis — route to separate pathway",
+      "Arterial thrombosis / pregnancy morbidity APS clue",
+      "Cancer screening: age-appropriate only",
+      "Cancer-associated thrombosis — route if active cancer"
+    ])+
+    '<div class="grid2">'+
+    selectField("vte_aps","APS concern",["No major APS concern","Possible APS — test if management-changing","Known APS","Triple-positive or arterial APS concern","Testing confounded by DOAC/acute anticoagulation","Unclear"],"High-risk APS usually favors warfarin over DOAC.")+
+    selectField("vte_thrombo_test","Inherited thrombophilia testing",["Not indicated","Consider if result changes duration/family/pregnancy/estrogen decisions","Already known thrombophilia","Defer because acute event/anticoagulation timing","Unclear"],"")+
+    '</div>'+
+
+    '<h4>7. Follow-up complications and counseling</h4>'+
+    checks("vte_followup",[
+      "Persistent dyspnea/exercise limitation after PE — CTEPH screen if >3 months or concerning",
+      "Persistent leg swelling/pain — PTS prevention/management",
+      "Compression therapy discussion for symptoms",
+      "Bleeding safety counseling needed",
+      "Medication adherence counseling needed",
+      "Peri-procedural interruption question",
+      "Travel/immobility prevention counseling",
+      "Estrogen/pregnancy counseling needed",
+      "No follow-up complication concerns today"
+    ])+
+    '<h4>8. Output</h4>'+
+    '<div class="grid2">'+
+    selectField("vte_output_mode","Output mode",["Formal consultant letter","Concise clinic note","Counseling / teaching note"],"")+
+    '</div>'+
+    '<div class="toolbar"><button class="primary" id="vteGenerate">Generate VTE clinic note</button><button id="vteCopy">Copy output</button><button id="vteReset">Reset pathway</button></div><div id="vte_out" class="output hidden"></div>'+
+    '</section>');
+    document.getElementById("vteGenerate").addEventListener("click", calcCoreVTE);
+    document.getElementById("vteCopy").addEventListener("click", function(){ copyOut("vte_out"); });
+    document.getElementById("vteReset").addEventListener("click", resetCoreVTE);
+  }
+
+  function resetCoreVTE(){
+    var out = document.getElementById("vte_out");
+    var card = out ? out.closest("section.card") : document;
+    if(!card) card = document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function vteHas(arr, text){
+    return arr.some(function(x){return x.indexOf(text)>=0;});
+  }
+
+  function calcCoreVTE(){
+    var visit = val("vte_visit");
+    var followedArr = checked("vte_followed");
+    var followed = followedArr.length ? followedArr.join("; ") : "not specified";
+    var pheno = checked("vte_pheno");
+    var red = checked("vte_red");
+    var risks = checked("vte_risk");
+    var bleedShort = checked("vte_bleed_short");
+    var workup = checked("vte_workup");
+    var followup = checked("vte_followup");
+    var mode = val("vte_output_mode");
+
+    var emergency = vteHas(red,"Hemodynamic") || vteHas(red,"Severe hypoxia") || vteHas(red,"RV failure") || vteHas(red,"phlegmasia") || vteHas(red,"Active major bleeding") || vteHas(red,"Severe thrombocytopenia") || vteHas(red,"Suspected HIT") || vteHas(red,"Recurrent thrombosis while adherent");
+    var routeUnusual = vteHas(pheno,"Splanchnic") || vteHas(pheno,"Superficial") || vteHas(workup,"Unusual-site") || vteHas(red,"Severe headache") || vteHas(red,"Severe abdominal");
+    var cancer = vteHas(risks,"Active cancer") || vteHas(workup,"Cancer-associated") || visit.indexOf("Cancer")>=0;
+    var pregnancy = vteHas(risks,"Pregnancy") || visit.indexOf("Pregnancy")>=0 || vteHas(red,"Pregnancy");
+    var recurrent = vteHas(pheno,"Recurrent") || val("vte_event_count").indexOf("Recurrent")>=0 || val("vte_event_count").indexOf("Multiple")>=0;
+    var onACClot = vteHas(pheno,"Thrombosis on anticoagulation") || visit.indexOf("Thrombosis while")>=0;
+    var unprovoked = vteHas(risks,"Unprovoked");
+    var majorTransient = vteHas(risks,"Major transient");
+    var minorTransient = vteHas(risks,"Minor transient");
+    var persistent = vteHas(risks,"Persistent");
+    var aps = val("vte_aps").indexOf("Known")>=0 || val("vte_aps").indexOf("Triple")>=0 || vteHas(risks,"APS") || vteHas(workup,"APS");
+    var highBleed = val("vte_bleed_risk").indexOf("High")>=0 || val("vte_bleed_risk").indexOf("Active")>=0 || bleedShort.some(function(x){return x.indexOf("No major")<0;});
+
+    var phenotype = "Core VTE clinic assessment.";
+    if(routeUnusual) phenotype = "Possible unusual-site or non-core thrombosis — route to Unusual-Site Thrombosis Pathway.";
+    else if(cancer) phenotype = "Cancer-associated VTE screen — consider Cancer-Associated Thrombosis module if active cancer drives management.";
+    else if(pregnancy) phenotype = "Pregnancy/postpartum-associated VTE screen — route to pregnancy-specific anticoagulation pathway.";
+    else if(onACClot) phenotype = "Possible thrombosis while on anticoagulation.";
+    else if(recurrent) phenotype = "Recurrent VTE.";
+    else if(vteHas(pheno,"Pulmonary embolism")) phenotype = "Pulmonary embolism follow-up.";
+    else if(vteHas(pheno,"Proximal")) phenotype = "Proximal lower-extremity DVT follow-up.";
+    else if(vteHas(pheno,"distal")) phenotype = "Isolated distal DVT follow-up.";
+    else if(vteHas(pheno,"Subsegmental")) phenotype = "Subsegmental PE / limited PE pathway.";
+    else if(vteHas(pheno,"No objectively")) phenotype = "VTE not objectively confirmed yet.";
+    else if(pheno.length) phenotype = pheno.join("; ");
+
+    var eventClass = "Unclear / mixed provoking-factor classification.";
+    if(majorTransient) eventClass = "Major transient provoked VTE.";
+    else if(minorTransient) eventClass = "Minor transient / weakly provoked VTE.";
+    else if(unprovoked) eventClass = "Unprovoked VTE.";
+    else if(persistent) eventClass = "Persistent-risk-factor VTE.";
+    else if(cancer) eventClass = "Cancer-associated VTE.";
+    else if(aps) eventClass = "APS-suspected or APS-associated thrombosis.";
+    else if(risks.length) eventClass = risks.join("; ");
+
+    var escalation = "No emergency features selected today.";
+    var urgentTriggers = [];
+    if(vteHas(red,"Hemodynamic") || vteHas(red,"Severe hypoxia") || vteHas(red,"RV failure")){
+      urgentTriggers.push("possible high-risk/intermediate-high-risk PE");
+      escalation = "Urgent ED/ICU/PERT-type assessment for PE severity and reperfusion/escalation decisions.";
+    }
+    if(vteHas(red,"phlegmasia")){
+      urgentTriggers.push("limb-threatening phlegmasia");
+      escalation = "Urgent vascular/IR/surgical assessment for limb-threatening venous thrombosis.";
+    }
+    if(vteHas(red,"Active major bleeding")){
+      urgentTriggers.push("active major bleeding");
+      escalation = "Urgent bleeding-management pathway; anticoagulation risk/benefit and reversal/holding strategy require immediate review.";
+    }
+    if(vteHas(red,"Suspected HIT")){
+      urgentTriggers.push("suspected HIT");
+      escalation = "Stop heparin exposure and use HIT/non-heparin anticoagulation pathway while confirming probability/testing.";
+    }
+    if(routeUnusual){
+      escalation = "Use the separate Unusual-Site Thrombosis Pathway for site-specific imaging, workup, anticoagulant, and duration logic.";
+    }
+
+    var acPlan = [];
+    var current = val("vte_current_ac");
+    if(current === "Apixaban" || current === "Rivaroxaban"){
+      acPlan.push(current + " selected/current. Check VTE-specific loading/initial dosing, renal/hepatic function, adherence, interactions, and bleeding risk.");
+      if(val("vte_dose_ok").indexOf("No")>=0 || val("vte_dose_ok").indexOf("Loading")>=0) acPlan.push("Dose/loading concern selected: verify acute VTE regimen before labeling treatment failure.");
+    } else if(current === "Dabigatran" || current === "Edoxaban"){
+      acPlan.push(current + " selected/current. Confirm initial 5-10 day parenteral anticoagulant lead-in was completed.");
+    } else if(current === "LMWH"){
+      acPlan.push("LMWH selected/current. Useful in pregnancy, selected cancer-associated thrombosis, absorption concerns, or complex interactions.");
+    } else if(current === "Warfarin"){
+      acPlan.push("Warfarin selected/current. Confirm INR target, time in therapeutic range, interactions, and APS indication if relevant.");
+    } else if(current === "None"){
+      acPlan.push("No anticoagulant selected/current. Confirm whether anticoagulation is indicated, contraindicated, completed, or pending objective confirmation.");
+    } else {
+      acPlan.push("Current anticoagulant: " + current + ". Verify indication, dose, interactions, renal/liver function, and adherence.");
+    }
+    if(aps && (current === "Apixaban" || current === "Rivaroxaban" || current === "Dabigatran" || current === "Edoxaban")) acPlan.push("APS concern selected: high-risk APS generally favors warfarin over DOAC; avoid DOAC in triple-positive/arterial APS unless specialist rationale.");
+    if(onACClot) acPlan.push("Possible recurrence on anticoagulation: first confirm new clot vs residual, then verify adherence, dose/loading, renal/liver function, interactions, absorption, cancer, APS, and HIT before declaring anticoagulant failure.");
+    if(highBleed) acPlan.push("Bleeding risk flags present: anticoagulation intensity/duration must be individualized.");
+
+    var durationAuto = "Specialist individualized decision.";
+    if(val("vte_duration_intent") !== "Auto-suggest from risk"){
+      durationAuto = val("vte_duration_intent");
+    } else if(emergency || routeUnusual || cancer || pregnancy || aps || onACClot){
+      durationAuto = "Specialist individualized decision";
+    } else if(majorTransient && val("vte_resolved").indexOf("Yes")>=0 && !recurrent){
+      durationAuto = "Stop after 3 months is usually reasonable if treatment completed and bleeding/recurrence context fits.";
+    } else if(unprovoked || persistent || recurrent){
+      durationAuto = highBleed ? "Extended/indefinite anticoagulation would usually be considered, but bleeding risk may dominate." : "Extended anticoagulation preferred; indefinite anticoagulation often favored if bleeding risk acceptable.";
+    } else if(minorTransient){
+      durationAuto = "Continue 3-6 months then reassess recurrence risk, bleeding risk, and patient preference.";
+    } else {
+      durationAuto = "At least 3 months for objectively confirmed DVT/PE; then reassess recurrence risk, bleeding risk, and preference.";
+    }
+
+    var extended = [];
+    extended.push("Duration recommendation: " + durationAuto + (val("vte_duration_note") ? " Rationale note: " + val("vte_duration_note") + "." : ""));
+    extended.push("Extended-phase option: " + val("vte_extended_agent") + ".");
+    if(val("vte_extended_agent").indexOf("Reduced-dose apixaban")>=0) extended.push("Reference anchor: AMPLIFY-EXT supports apixaban 2.5 mg BID or 5 mg BID vs placebo for extended prevention.");
+    if(val("vte_extended_agent").indexOf("Reduced-dose rivaroxaban")>=0) extended.push("Reference anchor: EINSTEIN-CHOICE supports rivaroxaban 10 mg or 20 mg vs aspirin for extended prevention.");
+    extended.push("Patient preference: " + val("vte_patient_pref") + ".");
+
+    var workupPlan = [];
+    if(vteHas(workup,"No workup")) workupPlan.push("No additional thrombophilia/APS/cancer workup needed today beyond clinical follow-up.");
+    if(aps) workupPlan.push("APS: consider lupus anticoagulant, anticardiolipin, and anti-beta-2 glycoprotein I testing when timing/anticoagulant interference allows and result would change management.");
+    if(val("vte_thrombo_test").indexOf("Consider")>=0 || vteHas(workup,"Thrombophilia")) workupPlan.push("Inherited thrombophilia testing should be selective and management-changing: duration, family counseling, pregnancy/estrogen decisions, or unusual/recurrent phenotype.");
+    if(vteHas(workup,"Testing timing inappropriate")) workupPlan.push("Testing timing may be inappropriate now; defer until acute event/anticoagulant interference is addressed.");
+    if(vteHas(workup,"Cancer screening")) workupPlan.push("For routine unprovoked VTE, focus on history/exam/basic labs and age-appropriate cancer screening unless symptoms/signs suggest otherwise.");
+    if(!workupPlan.length) workupPlan.push("Workup should be selective; avoid thrombophilia testing that will not change management.");
+
+    var followPlan = [];
+    if(vteHas(followup,"Persistent dyspnea")) followPlan.push("Persistent dyspnea/exercise limitation after PE: consider CTEPH/post-PE syndrome screen if persistent beyond ~3 months or clinically concerning.");
+    if(vteHas(followup,"Persistent leg")) followPlan.push("Persistent leg symptoms: assess post-thrombotic syndrome, compression for symptoms, mobility, and recurrence clues.");
+    if(vteHas(followup,"Bleeding safety")) followPlan.push("Bleeding safety counseling required.");
+    if(vteHas(followup,"Medication adherence")) followPlan.push("Adherence counseling required: missed doses can rapidly reduce protection with DOACs.");
+    if(vteHas(followup,"Peri-procedural")) followPlan.push("Peri-procedural interruption question: use a procedure/renal-function/bleeding-risk specific plan.");
+    if(vteHas(followup,"Estrogen")) followPlan.push("Estrogen/pregnancy counseling: avoid estrogen when appropriate and plan pregnancy anticoagulation separately.");
+    if(!followPlan.length) followPlan.push("Routine follow-up: confirm symptom trajectory, bleeding, adherence, duration plan, and patient understanding.");
+
+    var completed = [];
+    var missing = [];
+    function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("VTE phenotype documented", pheno.length>0 && !vteHas(pheno,"No objectively"));
+    scoreItem("Danger screen addressed", red.length>0);
+    scoreItem("Provoking factor classified", risks.length>0);
+    scoreItem("Anticoagulant safety reviewed", val("vte_current_ac") && val("vte_dose_ok") && val("vte_adherence") && val("vte_renal"));
+    scoreItem("Duration decision addressed", durationAuto.length>0);
+    scoreItem("Bleeding risk addressed", val("vte_bleed_risk") && bleedShort.length>0);
+    scoreItem("Workup decision addressed", workup.length>0 && val("vte_aps") && val("vte_thrombo_test"));
+    scoreItem("Follow-up/counseling addressed", followup.length>0);
+    var scoreNum = completed.length;
+    var score = scoreNum + "/8";
+    var scoreLabel = scoreNum >= 7 ? "Complete" : (scoreNum >= 5 ? "Mostly complete" : "Gaps remain");
+
+    var evidenceAnchor =
+"Evidence anchors: Thrombosis Canada DVT/PE treatment and duration guides; ASH 2020 VTE treatment guideline; CHEST VTE antithrombotic guideline update; acute VTE trials AMPLIFY, EINSTEIN-DVT, EINSTEIN-PE, Hokusai-VTE, RE-COVER; extended-therapy trials AMPLIFY-EXT and EINSTEIN-CHOICE; APS anchor TRAPS/EULAR when APS suspected.";
+
+    var teaching =
+"Teaching: classify the clot first. A surgery-provoked DVT, unprovoked PE, recurrent VTE, cancer-associated clot, APS-associated clot, and thrombosis while on anticoagulation have different recurrence risk, anticoagulant choice, and duration. The blood thinner does not dissolve the clot directly; it prevents extension and recurrence while the body breaks it down.";
+
+    var safetyNet =
+"Safety-net: seek urgent care for worsening shortness of breath, chest pain, fainting, coughing blood, new severe limb swelling/pain/color change, severe headache or neurologic symptoms, black stools, vomiting blood, major bleeding, or trauma while anticoagulated.";
+
+    var urgentBanner = urgentTriggers.length ? "URGENT ESCALATION TRIGGERED: " + urgentTriggers.join("; ") + ".\n\n" : "";
+
+    var formalConsultantLetter =
+urgentBanner +
+"Dear Colleague,\n\n" +
+"Thank you for asking me to assess this patient in thrombosis clinic. I reviewed the index event, objective confirmation, VTE phenotype, provoking-factor classification, recurrence-risk features, bleeding-risk features, anticoagulant safety, duration question, and need for selective APS/thrombophilia or cancer-related workup.\n\n" +
+"My impression is that this is best classified as: " + phenotype + " The event classification is: " + eventClass + ". The event summary is: " + (val("vte_summary") || "not provided") + ". Objective confirmation status is " + val("vte_obj") + ", event timing is " + val("vte_time") + ", and clinical severity is " + val("vte_clotburden") + ".\n\n" +
+"The danger screen conclusion is: " + escalation + " Current anticoagulant context: " + acPlan.join(" ") + "\n\n" +
+"For duration, my current recommendation is: " + durationAuto + " Extended-phase option selected/reviewed: " + val("vte_extended_agent") + ". The decision is based on recurrence risk, bleeding risk, whether the provoking factor has resolved, patient values, and whether this is routine DVT/PE versus a special scenario requiring a separate pathway.\n\n" +
+"Workup plan: " + workupPlan.join(" ") + " Follow-up plan: " + followPlan.join(" ") + "\n\n" +
+"The VTE Care Standard Completion score is " + score + " — " + scoreLabel + (missing.length ? ", with remaining gaps: " + missing.join(", ") + "." : ", with no major remaining gaps in the selected care-standard items.") + "\n\n" +
+"I reviewed counseling and safety-net advice with the patient. " + teaching + " " + safetyNet + "\n\n" +
+evidenceAnchor + "\n\n" +
+"Sincerely,\nThrombosis / Vascular Medicine";
+
+    var conciseClinicNote =
+urgentBanner +
+"Impression:\n" +
+"- " + phenotype + "\n" +
+"- Event class: " + eventClass + "\n" +
+"- Danger screen: " + escalation + "\n\n" +
+"Important positives:\n" +
+"- Event: " + (val("vte_summary") || "not provided") + "; timing: " + val("vte_time") + "; objective status: " + val("vte_obj") + "\n" +
+"- Current anticoagulant: " + val("vte_current_ac") + "; phase: " + val("vte_phase") + "; dose/adherence: " + val("vte_dose_ok") + " / " + val("vte_adherence") + "\n" +
+"- Bleeding risk: " + val("vte_bleed_risk") + "; flags: " + (bleedShort.length ? bleedShort.join("; ") : "none selected") + "\n" +
+"- Workup: APS " + val("vte_aps") + "; thrombophilia " + val("vte_thrombo_test") + "\n\n" +
+"Plan:\n" +
+"- Anticoagulant: " + acPlan.join(" ") + "\n" +
+"- Duration: " + extended.join(" ") + "\n" +
+"- Workup: " + workupPlan.join(" ") + "\n" +
+"- Follow-up/counseling: " + followPlan.join(" ") + "\n" +
+"- Missing items: " + (missing.length ? missing.join(", ") : "none");
+
+    var counselingTeachingNote =
+urgentBanner +
+"Teaching for clinician/non-thrombosis attending:\n" +
+"- " + teaching + "\n" +
+"- Current patient classification: " + phenotype + " / " + eventClass + ".\n" +
+"- Duration logic: major transient resolved events often stop after the acute treatment course, while unprovoked, persistent-risk, recurrent, APS, cancer-associated, or anticoagulation-failure scenarios often require extended or individualized therapy if bleeding risk allows.\n" +
+"- Selective testing principle: do not order thrombophilia/APS testing unless the result could change anticoagulant choice, duration, family counseling, pregnancy/estrogen counseling, or APS management.\n\n" +
+"Patient explanation:\n" +
+"- A blood thinner mainly prevents the clot from growing or coming back while the body gradually breaks it down.\n" +
+"- The treatment length depends on why the clot happened, whether the trigger is gone, whether there were previous clots, and bleeding risk.\n" +
+"- If long-term prevention is needed, lower-dose DOAC options may be used for selected patients after the initial treatment period.\n\n" +
+"Safety-net:\n" +
+"- " + safetyNet + "\n\n" +
+"Evidence/trial names to remember:\n" +
+"- Acute VTE: AMPLIFY, EINSTEIN-DVT, EINSTEIN-PE, Hokusai-VTE, RE-COVER.\n" +
+"- Extended VTE prevention: AMPLIFY-EXT, EINSTEIN-CHOICE.\n" +
+"- Guideline anchors: Thrombosis Canada DVT/PE treatment and duration guides, ASH VTE treatment guideline, CHEST VTE antithrombotic guideline.";
+
+    var finalText = formalConsultantLetter;
+    if(mode === "Concise clinic note") finalText = conciseClinicNote;
+    if(mode === "Counseling / teaching note") finalText = counselingTeachingNote;
+
+    var level = urgentTriggers.length ? "red" : (routeUnusual || cancer || pregnancy || onACClot || recurrent || highBleed || missing.length ? "amber" : "green");
+    var out = document.getElementById("vte_out");
+    out.className = "output " + level;
+    out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
 
   function copyOut(id){
     var el = document.getElementById(id);
