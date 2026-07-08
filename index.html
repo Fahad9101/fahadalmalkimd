@@ -720,7 +720,7 @@ patientCounsel + "\n\n" +
 
 
   function renderCoreVTE(){
-    shell("Thrombosis Clinic Pathway","Consultant-level DVT/PE thrombosis clinic pathway: new vs follow-up assessment, phenotype, danger screen, provoking-factor classification, anticoagulant selection, duration, extended therapy, bleeding risk, thrombophilia/APS testing, follow-up, and three note styles.",
+    shell("Thrombosis Clinic Pathway","",
     '<section class="card">'+
 
     '<h4>0. Visit type</h4>'+
@@ -844,7 +844,7 @@ patientCounsel + "\n\n" +
 
     '<h4>7. Follow-up complications and counseling</h4>'+
     checks("vte_followup",[
-      "Persistent dyspnea/exercise limitation after PE — CTEPH screen if >3 months or concerning",
+      "Persistent dyspnea/exercise limitation after PE — post-PE syndrome / CTEPD evaluation if >3 months or concerning",
       "Persistent leg swelling/pain — PTS prevention/management",
       "Compression therapy discussion for symptoms",
       "Bleeding safety counseling needed",
@@ -1080,7 +1080,7 @@ patientCounsel + "\n\n" +
     if(!workupPlan.length) workupPlan.push("Workup should be selective; avoid thrombophilia testing that will not change management.");
 
     var followPlan = [];
-    if(vteHas(followup,"Persistent dyspnea")) followPlan.push("Persistent dyspnea/exercise limitation after PE: consider CTEPH/post-PE syndrome screen if persistent beyond ~3 months or clinically concerning.");
+    if(vteHas(followup,"Persistent dyspnea")) followPlan.push("Persistent dyspnea/exercise limitation after PE: consider post-PE syndrome / CTEPD evaluation if persistent beyond ~3 months or clinically concerning; CTEPH is the pulmonary-hypertension subtype.");
     if(vteHas(followup,"Persistent leg")) followPlan.push("Persistent leg symptoms: assess post-thrombotic syndrome, compression for symptoms, mobility, and recurrence clues.");
     if(vteHas(followup,"Bleeding safety")) followPlan.push("Bleeding safety counseling required.");
     if(vteHas(followup,"Medication adherence")) followPlan.push("Adherence counseling required: missed doses can rapidly reduce protection with DOACs.");

@@ -1,1 +1,1 @@
-Thrombosis Clinic Pathway lower-section rebuild: replaced the old bleeding checklist with practical anticoagulation safety modifiers, simplified duration/extended-therapy section, rebuilt APS/thrombophilia/cancer workup with VTE age <50 as the only young-age trigger, and preserved three note outputs.
+Thrombosis Clinic Pathway update: removed the descriptive paragraph under the pathway title and changed persistent dyspnea after PE wording from CTEPH screen to post-PE syndrome / CTEPD evaluation.
