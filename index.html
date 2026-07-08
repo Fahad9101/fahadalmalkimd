@@ -86,7 +86,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Core VTE Clinic Pathway",desc:"DVT/PE follow-up, provoked vs unprovoked classification, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
@@ -535,7 +535,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 urgentBanner +
 "Phenotype:\n" +
 "- " + phenotype + "\n" +
-"- Visit: " + visit + "; followed by: " + followed + "\n" +
+"- Visit: " + visit + "; focus: " + visitFocus + "\n" +
 "- Pattern: " + pattern + "; severity: " + sev + "\n" +
 "- PFD/MWD: " + (val("spad_pfd") || "NA") + " / " + (val("spad_mwd") || "NA") + "\n" +
 "- " + preset.join(" ") + "\n\n" +
@@ -679,7 +679,7 @@ urgentBanner +
 "- Limb safety/referral: " + referral + "\n" +
 "- Polyvascular screen: " + poly.join(" ") + "\n\n" +
 "Important positives only:\n" +
-"- Visit: " + visit + "; followed by: " + followed + "\n" +
+"- Visit: " + visit + "; focus: " + visitFocus + "\n" +
 "- Pattern: " + pattern + "; severity: " + sev + "; PFD/MWD: " + (val("spad_pfd") || "NA") + " / " + (val("spad_mwd") || "NA") + "\n" +
 "- Pulse/foot: " + val("spad_pulse") + "; " + val("spad_foot") + "; " + val("spad_temp_color") + "\n" +
 "- ABI/TBI: R ABI " + (val("spad_rabi") || "NA") + ", L ABI " + (val("spad_labi") || "NA") + ", waveforms " + val("spad_wave") + "\n" +
@@ -719,21 +719,13 @@ patientCounsel + "\n\n" +
 
 
   function renderCoreVTE(){
-    shell("Core VTE Clinic Pathway","Consultant-level routine thrombosis clinic pathway for DVT/PE: phenotype, danger screen, provoking-factor classification, anticoagulant selection, duration, extended therapy, bleeding risk, thrombophilia/APS testing, follow-up, and three note styles.",
+    shell("Thrombosis Clinic Pathway","Consultant-level DVT/PE thrombosis clinic pathway: new vs follow-up assessment, phenotype, danger screen, provoking-factor classification, anticoagulant selection, duration, extended therapy, bleeding risk, thrombophilia/APS testing, follow-up, and three note styles.",
     '<section class="card">'+
 
     '<h4>0. Visit type</h4>'+
     '<div class="grid2">'+
-    selectField("vte_visit","Visit type",["New acute VTE follow-up","Anticoagulation duration decision","Extended anticoagulation review","Recurrent VTE","Thrombosis while on anticoagulation","Bleeding or anticoagulant safety issue","APS / thrombophilia question","Cancer-associated VTE screen / route","Pregnancy/postpartum screen / route","Unusual-site thrombosis screen / route","Second opinion / unclear plan"],"Core VTE is for DVT/PE. Unusual-site thrombosis should route to the separate Unusual-Site pathway.")+
-    '<div class="followedbox"><label>Already followed by <span class="hint">Select all that apply.</span></label>'+
-    '<div class="followedchecks">'+
-    '<label class="check"><input type="checkbox" name="vte_followed" value="No one / needs coordination">No one / needs coordination</label>'+
-    '<label class="check"><input type="checkbox" name="vte_followed" value="Hematology/thrombosis following">Hematology/thrombosis following</label>'+
-    '<label class="check"><input type="checkbox" name="vte_followed" value="Oncology following">Oncology following</label>'+
-    '<label class="check"><input type="checkbox" name="vte_followed" value="Vascular medicine following">Vascular medicine following</label>'+
-    '<label class="check"><input type="checkbox" name="vte_followed" value="Pulmonary/cardiology following">Pulmonary/cardiology following</label>'+
-    '<label class="check"><input type="checkbox" name="vte_followed" value="Primary care following">Primary care following</label>'+
-    '</div></div>'+
+    selectField("vte_visit","Visit type",["New assessment","Follow-up"],"Use New for the first thrombosis clinic assessment; Follow-up for duration, safety, recurrence, or long-term anticoagulation review.")+
+    selectField("vte_visit_focus","Visit focus",["Acute VTE follow-up","Anticoagulation duration decision","Extended anticoagulation review","Recurrent VTE","Thrombosis while on anticoagulation","Bleeding or anticoagulant safety issue","APS / thrombophilia question","Cancer-associated VTE screen / route","Pregnancy/postpartum screen / route","Unusual-site thrombosis screen / route","Second opinion / unclear plan"],"This keeps the visit type simple while still capturing the clinical question.")+
     '</div>'+
 
     '<h4>1. VTE phenotype</h4>'+
@@ -751,8 +743,8 @@ patientCounsel + "\n\n" +
       "No objectively confirmed VTE yet"
     ])+
     '<div class="grid2">'+
-    inputField("vte_date","Index event date / timing","e.g. 2026-06-10, 6 weeks ago")+
-    selectField("vte_time","Time since index event",["<7 days","1-4 weeks","1-3 months","3-6 months",">6 months","Remote history","Unclear"],"Duration decision depends on acute vs primary treatment vs secondary prevention phase.")+
+    '<div class="field"><label>Date of VTE event</label><input id="vte_date" type="date"><span class="hint">Use the date the DVT/PE was diagnosed or the best-known event date.</span></div>'+
+    '<div class="field"><label>Time since event</label><div class="muted" id="vte_elapsed_hint">Calculated after generating the note from the event date.</div></div>'+
     selectField("vte_obj","Objective confirmation",["Confirmed by ultrasound/CTPA/VQ/CT/MRI","Outside report pending","Symptoms only / not confirmed","Residual clot vs new clot unclear","Unclear"],"Avoid treating 'recurrence' without comparing imaging when possible.")+
     selectField("vte_clotburden","Clinical severity",["Low-risk/stable","Intermediate-risk PE / RV strain concern","High-risk PE / shock","Extensive proximal clot burden","Distal/limited clot burden","Unclear"],"")+
     inputField("vte_summary","One-line event summary","e.g. first unprovoked proximal DVT; PE after surgery; recurrent VTE on DOAC")+
@@ -887,10 +879,41 @@ patientCounsel + "\n\n" +
     return arr.some(function(x){return x.indexOf(text)>=0;});
   }
 
+
+  function vteElapsedFromDate(dateStr){
+    if(!dateStr) return "not entered";
+    var d = new Date(dateStr + "T00:00:00");
+    if(isNaN(d.getTime())) return "not interpretable";
+    var diffDays = Math.floor((new Date() - d) / 86400000);
+    if(diffDays < 0) return "future date entered";
+    if(diffDays < 7) return diffDays + " days";
+    if(diffDays < 31) return Math.floor(diffDays/7) + " weeks";
+    if(diffDays < 183) return Math.max(1, Math.floor(diffDays/30)) + " months";
+    if(diffDays < 365) return "6-12 months";
+    return (diffDays/365.25).toFixed(1) + " years";
+  }
+
+  function vtePhaseFromDate(dateStr){
+    if(!dateStr) return "Unclear";
+    var d = new Date(dateStr + "T00:00:00");
+    if(isNaN(d.getTime())) return "Unclear";
+    var diffDays = Math.floor((new Date() - d) / 86400000);
+    if(diffDays < 0) return "Unclear";
+    if(diffDays < 7) return "<7 days";
+    if(diffDays < 31) return "1-4 weeks";
+    if(diffDays < 92) return "1-3 months";
+    if(diffDays < 183) return "3-6 months";
+    return ">6 months";
+  }
+
   function calcCoreVTE(){
     var visit = val("vte_visit");
-    var followedArr = checked("vte_followed");
-    var followed = followedArr.length ? followedArr.join("; ") : "not specified";
+    var visitFocus = val("vte_visit_focus");
+    var eventDate = val("vte_date");
+    var eventElapsed = vteElapsedFromDate(eventDate);
+    var eventPhase = vtePhaseFromDate(eventDate);
+    var elapsedHint = document.getElementById("vte_elapsed_hint");
+    if(elapsedHint) elapsedHint.textContent = eventElapsed;
     var pheno = checked("vte_pheno");
     var red = checked("vte_red");
     var risks = checked("vte_risk");
@@ -901,10 +924,10 @@ patientCounsel + "\n\n" +
 
     var emergency = vteHas(red,"Hemodynamic") || vteHas(red,"Severe hypoxia") || vteHas(red,"RV failure") || vteHas(red,"phlegmasia") || vteHas(red,"Active major bleeding") || vteHas(red,"Severe thrombocytopenia") || vteHas(red,"Suspected HIT") || vteHas(red,"Recurrent thrombosis while adherent");
     var routeUnusual = vteHas(pheno,"Splanchnic") || vteHas(pheno,"Superficial") || vteHas(workup,"Unusual-site") || vteHas(red,"Severe headache") || vteHas(red,"Severe abdominal");
-    var cancer = vteHas(risks,"Active cancer") || vteHas(workup,"Cancer-associated") || visit.indexOf("Cancer")>=0;
-    var pregnancy = vteHas(risks,"Pregnancy") || visit.indexOf("Pregnancy")>=0 || vteHas(red,"Pregnancy");
+    var cancer = vteHas(risks,"Active cancer") || vteHas(workup,"Cancer-associated") || visitFocus.indexOf("Cancer")>=0;
+    var pregnancy = vteHas(risks,"Pregnancy") || visitFocus.indexOf("Pregnancy")>=0 || vteHas(red,"Pregnancy");
     var recurrent = vteHas(pheno,"Recurrent") || val("vte_event_count").indexOf("Recurrent")>=0 || val("vte_event_count").indexOf("Multiple")>=0;
-    var onACClot = vteHas(pheno,"Thrombosis on anticoagulation") || visit.indexOf("Thrombosis while")>=0;
+    var onACClot = vteHas(pheno,"Thrombosis on anticoagulation") || visitFocus.indexOf("Thrombosis while")>=0;
     var unprovoked = vteHas(risks,"Unprovoked");
     var majorTransient = vteHas(risks,"Major transient");
     var minorTransient = vteHas(risks,"Minor transient");
@@ -1044,8 +1067,8 @@ patientCounsel + "\n\n" +
     var formalConsultantLetter =
 urgentBanner +
 "Dear Colleague,\n\n" +
-"Thank you for asking me to assess this patient in thrombosis clinic. I reviewed the index event, objective confirmation, VTE phenotype, provoking-factor classification, recurrence-risk features, bleeding-risk features, anticoagulant safety, duration question, and need for selective APS/thrombophilia or cancer-related workup.\n\n" +
-"My impression is that this is best classified as: " + phenotype + " The event classification is: " + eventClass + ". The event summary is: " + (val("vte_summary") || "not provided") + ". Objective confirmation status is " + val("vte_obj") + ", event timing is " + val("vte_time") + ", and clinical severity is " + val("vte_clotburden") + ".\n\n" +
+"Thank you for asking me to assess this patient in thrombosis clinic. This is a " + visit + " visit focused on " + visitFocus + ". I reviewed the index event, objective confirmation, VTE phenotype, provoking-factor classification, recurrence-risk features, bleeding-risk features, anticoagulant safety, duration question, and need for selective APS/thrombophilia or cancer-related workup.\n\n" +
+"My impression is that this is best classified as: " + phenotype + " The event classification is: " + eventClass + ". The event summary is: " + (val("vte_summary") || "not provided") + ". Objective confirmation status is " + val("vte_obj") + ". The VTE event date is " + (eventDate || "not entered") + " (" + eventElapsed + "), corresponding to the " + eventPhase + " phase. Clinical severity is " + val("vte_clotburden") + ".\n\n" +
 "The danger screen conclusion is: " + escalation + " Current anticoagulant context: " + acPlan.join(" ") + "\n\n" +
 "For duration, my current recommendation is: " + durationAuto + " Extended-phase option selected/reviewed: " + val("vte_extended_agent") + ". The decision is based on recurrence risk, bleeding risk, whether the provoking factor has resolved, patient values, and whether this is routine DVT/PE versus a special scenario requiring a separate pathway.\n\n" +
 "Workup plan: " + workupPlan.join(" ") + " Follow-up plan: " + followPlan.join(" ") + "\n\n" +
@@ -1061,7 +1084,7 @@ urgentBanner +
 "- Event class: " + eventClass + "\n" +
 "- Danger screen: " + escalation + "\n\n" +
 "Important positives:\n" +
-"- Event: " + (val("vte_summary") || "not provided") + "; timing: " + val("vte_time") + "; objective status: " + val("vte_obj") + "\n" +
+"- Event: " + (val("vte_summary") || "not provided") + "; date: " + (eventDate || "NA") + " (" + eventElapsed + "); phase: " + eventPhase + "; objective status: " + val("vte_obj") + "\n" +
 "- Current anticoagulant: " + val("vte_current_ac") + "; phase: " + val("vte_phase") + "; dose/adherence: " + val("vte_dose_ok") + " / " + val("vte_adherence") + "\n" +
 "- Bleeding risk: " + val("vte_bleed_risk") + "; flags: " + (bleedShort.length ? bleedShort.join("; ") : "none selected") + "\n" +
 "- Workup: APS " + val("vte_aps") + "; thrombophilia " + val("vte_thrombo_test") + "\n\n" +
@@ -1581,7 +1604,7 @@ urgentBanner +
 urgentBanner +
 "Phenotype:\n" +
 "- " + phenotype + "\n" +
-"- Visit: " + visit + "; followed by: " + followed + "\n" +
+"- Visit: " + visit + "; focus: " + visitFocus + "\n" +
 "- Rutherford: " + val("cpad_rutherford") + "; PFD/MWD: " + (val("cpad_pfd") || "NA") + " / " + (val("cpad_mwd") || "NA") + "\n" +
 "- " + preset.join(" ") + "\n\n" +
 
@@ -1740,7 +1763,7 @@ urgentBanner +
 "- Limb safety: " + escalation + "\n" +
 "- Polyvascular screen: " + poly.join(" ") + "\n\n" +
 "Important positives only:\n" +
-"- Visit: " + visit + "; followed by: " + followed + "\n" +
+"- Visit: " + visit + "; focus: " + visitFocus + "\n" +
 "- Rutherford: " + val("cpad_rutherford") + "; PFD/MWD: " + (val("cpad_pfd") || "NA") + " / " + (val("cpad_mwd") || "NA") + "\n" +
 "- Pulse/foot: " + val("cpad_pulse_status") + "; perfusion: " + val("cpad_perf_status") + (val("cpad_perf_note") ? " — " + val("cpad_perf_note") : "") + "\n\n" +
 "Plan:\n" +

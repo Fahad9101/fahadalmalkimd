@@ -1,1 +1,1 @@
-Core VTE Clinic Pathway added: DVT/PE phenotype, danger screen, provoking-factor classification, anticoagulant choice/safety, duration and extended therapy decision, APS/thrombophilia/cancer workup routing, follow-up complications, three note modes, evidence anchors.
+Thrombosis Clinic Pathway cleanup: renamed from Core VTE Clinic Pathway, simplified Visit type to New assessment vs Follow-up with separate Visit focus, removed Already followed by, and changed event timing to a calendar date picker with automatic elapsed-time/phase calculation.
