@@ -798,44 +798,35 @@ patientCounsel + "\n\n" +
     selectField("vte_renal","Renal function category",["Cockcroft–Gault CrCl ≥50: standard DOAC use usually acceptable if no other issue","Cockcroft–Gault CrCl 30-49: caution; verify agent, dose, bleeding risk, and follow-up labs","Cockcroft–Gault CrCl 15-29: severe renal impairment; specialist review, avoid casual DOAC use; consider warfarin/UFH/adjusted LMWH depending context","Cockcroft–Gault CrCl <15 or dialysis: specialist pathway; DOAC choice is highly individualized","AKI or rapidly fluctuating renal function: avoid fixed-dose assumptions; consider UFH/warfarin/specialist plan until stable","Unknown: check creatinine and calculate Cockcroft–Gault CrCl; use lab eGFR only if CrCl unavailable"],"For anticoagulant safety, prefer Cockcroft–Gault CrCl because many DOAC dosing/safety decisions are based on CrCl rather than lab eGFR.")+
     selectField("vte_liver","Liver disease / hepatic safety",["No significant liver disease or coagulopathy","Mild stable liver disease/transaminitis without synthetic dysfunction","Compensated cirrhosis / Child-Pugh A: caution; review bleeding risk and drug choice","Child-Pugh B or portal hypertension/varices: high caution; specialist review before DOAC","Child-Pugh C/decompensated cirrhosis/synthetic failure: avoid routine DOAC; specialist anticoagulation plan","Active hepatitis/marked LFT elevation or hepatic status unclear: clarify before final anticoagulant/duration decision","Unknown: check bilirubin, AST/ALT, albumin, INR, platelets and bleeding history"],"Liver disease changes both bleeding risk and drug metabolism; cirrhosis is not auto-anticoagulated.")+
     selectField("vte_interactions","Drug interaction / absorption concern",["No major concern","Strong CYP/P-gp interaction concern","Malabsorption/bariatric/poor intake","Chemotherapy/targeted therapy interaction","Unknown"],"")+
-    selectField("vte_antiplatelet","Antiplatelet/NSAID overlap",["None","Aspirin","DAPT","NSAID use","Multiple agents / high bleed concern","Unknown"],"")+
+    selectField("vte_antiplatelet","Antiplatelet / NSAID exposure",["None","Aspirin only","Dual antiplatelet therapy","NSAID use","Aspirin + NSAID","Multiple antithrombotic/NSAID agents","Unknown"],"This matters only if it changes bleeding risk, need for gastroprotection, deprescribing, or anticoagulant duration/intensity.")+
     '</div>'+
-    checks("vte_bleed_short",[
-      "No major bleeding concern selected",
-      "Active bleeding now",
-      "Major bleeding within 30 days",
-      "Major bleeding within 3 months",
-      "Prior intracranial bleeding",
-      "Active/recent GI or GU bleeding lesion",
-      "Hemoglobin falling or unexplained anemia",
-      "Platelets 50-100",
-      "Platelets <50",
-      "Cockcroft–Gault CrCl <30 or AKI",
-      "Decompensated cirrhosis / portal hypertension / varices",
-      "Upcoming high-bleeding-risk procedure",
-      "Dual antiplatelet therapy",
-      "Aspirin/NSAID overlap",
-      "Frailty/falls concern"
-    ])+
+
+    '<h4>4B. Anticoagulation safety modifiers</h4>'+
+    '<div class="grid2">'+
+    selectField("vte_bleed_status","Bleeding status",["No active/recent bleeding and Hb stable","Active bleeding now","Major bleeding within 30 days","Major bleeding within 3 months","Prior intracranial bleeding","Active/recent GI or GU bleeding lesion","Hemoglobin falling or unexplained anemia","Unknown / needs clarification"],"This is more useful than a generic bleeding score: it tells whether anticoagulation can continue safely now.")+
+    selectField("vte_platelets","Platelet category",["Platelets ≥100","Platelets 50-100","Platelets <50","Platelets unknown"],"Platelets <50 or rapidly falling platelets should trigger specialist anticoagulation planning.")+
+    selectField("vte_procedure","Procedure status",["No procedure planned","Low-bleeding-risk procedure planned","High-bleeding-risk procedure planned","Procedure timing unclear"],"Procedure timing changes interruption and bridging decisions, especially early after acute VTE.")+
+    selectField("vte_bleed_summary","Overall safety impact",["No major safety modifier","Caution: anticoagulation likely feasible with closer review/monitoring","High bleeding risk: individualize agent, intensity, duration, and monitoring","Temporarily unsafe: active bleeding or urgent procedure dominates","Unclear: need labs/history before final plan"],"This is the practical conclusion that should appear in the note.")+
+    '</div>'+
 
     '<h4>5. Duration and extended-therapy decision</h4>'+
     '<div class="grid2">'+
-    selectField("vte_duration_intent","Duration intent",["Auto-suggest from risk","Stop after 3 months","Continue 3-6 months then reassess","Extended anticoagulation preferred","Indefinite anticoagulation likely","Specialist individualized decision","Contraindicated / bleeding risk dominates"],"")+
+    selectField("vte_duration_intent","Duration intent",["Auto-suggest from risk","Stop after 3 months","Continue 3-6 months then reassess","Extended anticoagulation preferred","Indefinite anticoagulation likely","Specialist individualized decision","Contraindicated / bleeding risk dominates"],"The decision should be based on provoking factor, event count, clot phenotype, bleeding/safety modifiers, and patient preference.")+
     selectField("vte_extended_agent","Extended-phase option if continuing",["Not applicable","Continue full-dose DOAC","Reduced-dose apixaban 2.5 mg BID","Reduced-dose rivaroxaban 10 mg daily","Warfarin","LMWH","Aspirin only / not preferred if anticoagulation appropriate","No anticoagulation"],"CHEST favors reduced-dose DOAC over aspirin/no therapy when extended therapy is chosen.")+
-    selectField("vte_patient_pref","Patient preference / values",["Not discussed","Prefers stopping if safe","Prefers continuing to reduce recurrence","Bleeding fear dominates","Medication burden/cost issue","Shared decision completed"],"")+
-    inputField("vte_duration_note","Duration rationale note","brief reason: surgery-provoked, unprovoked PE, recurrent, bleeding risk, etc.")+
+    selectField("vte_patient_pref","Patient preference / values",["Not discussed","Prefers stopping if safe","Prefers continuing to reduce recurrence","Bleeding fear dominates","Medication burden/cost issue","Shared decision completed"],"Duration is a shared decision after recurrence and bleeding risks are explained.")+
+    inputField("vte_duration_note","Duration rationale note","brief reason: major transient provoked, unprovoked PE, recurrent, high bleeding risk, etc.")+
     '</div>'+
 
     '<h4>6. Workup decision: APS / thrombophilia / cancer</h4>'+
     '<div class="grid2">'+
     selectField("vte_workup_question","Main workup question",["No extra workup needed today","Should we test for APS?","Should we test for inherited thrombophilia?","Should we screen for occult cancer?","Is testing timing appropriate?","Route to unusual-site thrombosis workup","Route to cancer-associated thrombosis pathway","Unclear / needs specialist framing"],"Start with the question. Do not order broad panels unless the answer changes management.")+
-    selectField("vte_age_trigger","Age-related trigger",["Not a young-age presentation / age not relevant","VTE age <50","VTE age <45","Pediatric/teen VTE","Age unknown"],"Young age is not a diagnosis. It is a trigger to ask whether APS/thrombophilia testing would change duration, drug choice, estrogen/pregnancy counseling, or family counseling.")+
+    selectField("vte_age_trigger","Age-related trigger",["Not age-related / age not relevant","VTE age <50","Age unknown"],"ASH uses young age, e.g. <50 years, as a context where thrombophilia testing may be considered. It is not an automatic indication by itself.")+
     '</div>'+
     checks("vte_workup",[
       "No workup needed today",
       "APS trigger: arterial thrombosis, recurrent thrombosis, pregnancy morbidity, autoimmune disease, or prolonged aPTT",
-      "APS trigger: unprovoked proximal DVT/PE at young age if result would change anticoagulant choice",
-      "Inherited thrombophilia trigger: VTE age <50 especially <45 plus weak/no provoking factor",
+      "APS trigger: unprovoked proximal DVT/PE at age <50 if result would change anticoagulant choice",
+      "Inherited thrombophilia trigger: VTE age <50 plus weak/no provoking factor",
       "Inherited thrombophilia trigger: strong first-degree family history of VTE",
       "Inherited thrombophilia trigger: recurrent VTE if result would change counseling or family testing",
       "Inherited thrombophilia trigger: estrogen/pregnancy-associated VTE where result changes future hormone/pregnancy plan",
@@ -848,8 +839,9 @@ patientCounsel + "\n\n" +
     ])+
     '<div class="grid2">'+
     selectField("vte_aps","APS testing decision",["Not indicated today","Consider APS testing if result changes anticoagulant choice or duration","APS testing planned: LA, anticardiolipin, anti-beta-2 glycoprotein I with repeat ≥12 weeks if positive","Known APS","Triple-positive or arterial APS concern — warfarin-favored specialist pathway","Testing confounded by DOAC/acute anticoagulation — plan timing/interpretation carefully","Unclear"],"APS is the thrombophilia most likely to change anticoagulant choice: high-risk APS generally favors warfarin over DOAC.")+
-    selectField("vte_thrombo_test","Inherited thrombophilia testing decision",["Not indicated today","Consider selective testing only if result changes duration, family counseling, pregnancy/estrogen counseling, or unusual/recurrent phenotype management","Selective panel considered: antithrombin, protein C/S, factor V Leiden, prothrombin G20210A based on phenotype/timing","Already known thrombophilia","Defer because acute event/anticoagulation timing may distort protein C/S/AT results","Unclear"],"Inherited thrombophilia testing usually should not be reflexive; common low-risk thrombophilias often do not change duration by themselves.")+
+    selectField("vte_thrombo_test","Inherited thrombophilia testing decision",["Not indicated today","Consider selective testing only if result changes duration, family counseling, pregnancy/estrogen counseling, or unusual/recurrent phenotype management","Selective panel considered: antithrombin, protein C/S, factor V Leiden, prothrombin G20210A based on phenotype/timing","Already known thrombophilia","Defer because acute event/anticoagulation timing may distort protein C/S/AT results","Unclear"],"Inherited thrombophilia testing should not be reflexive; common low-risk thrombophilias often do not change duration by themselves.")+
     '</div>'+
+
     '<h4>7. Follow-up complications and counseling</h4>'+
     checks("vte_followup",[
       "Persistent dyspnea/exercise limitation after PE — CTEPH screen if >3 months or concerning",
@@ -962,7 +954,10 @@ patientCounsel + "\n\n" +
     var pheno = checked("vte_pheno");
     var red = checked("vte_red");
     var risks = checked("vte_risk");
-    var bleedShort = checked("vte_bleed_short");
+    var bleedShort = [];
+    [val("vte_bleed_status"), val("vte_platelets"), val("vte_procedure"), val("vte_antiplatelet"), val("vte_bleed_summary")].forEach(function(x){
+      if(x && x !== "None" && x.indexOf("No active/recent")<0 && x.indexOf("Platelets ≥100")<0 && x.indexOf("No procedure")<0 && x.indexOf("No major safety")<0) bleedShort.push(x);
+    });
     var workup = checked("vte_workup");
     var workupQuestion = val("vte_workup_question");
     var ageTrigger = val("vte_age_trigger");
@@ -982,7 +977,7 @@ patientCounsel + "\n\n" +
     var minorTransient = vteHas(risks,"Minor transient");
     var persistent = vteHas(risks,"Persistent");
     var aps = val("vte_aps").indexOf("Known")>=0 || val("vte_aps").indexOf("Triple")>=0 || vteHas(risks,"APS") || vteHas(workup,"APS");
-    var highBleed = val("vte_bleed_risk").indexOf("High")>=0 || val("vte_bleed_risk").indexOf("Active")>=0 || bleedShort.some(function(x){return x.indexOf("Active bleeding")>=0 || x.indexOf("within 30")>=0 || x.indexOf("intracranial")>=0 || x.indexOf("Platelets <50")>=0 || x.indexOf("eGFR/CrCl <30")>=0 || x.indexOf("Decompensated")>=0 || x.indexOf("high-bleeding-risk")>=0;});
+    var highBleed = val("vte_bleed_risk").indexOf("High")>=0 || val("vte_bleed_risk").indexOf("Active")>=0 || val("vte_bleed_status").indexOf("Active bleeding")>=0 || val("vte_bleed_status").indexOf("within 30")>=0 || val("vte_bleed_status").indexOf("intracranial")>=0 || val("vte_platelets").indexOf("<50")>=0 || val("vte_procedure").indexOf("High-bleeding-risk")>=0 || val("vte_bleed_summary").indexOf("High bleeding")>=0 || val("vte_bleed_summary").indexOf("Temporarily unsafe")>=0;
 
     var phenotype = "Core VTE clinic assessment.";
     if(routeUnusual) phenotype = "Possible unusual-site or non-core thrombosis — route to Unusual-Site Thrombosis Pathway.";
@@ -1048,7 +1043,8 @@ patientCounsel + "\n\n" +
     if(onACClot) acPlan.push("Possible recurrence on anticoagulation: first confirm new clot vs residual, then verify adherence, dose/loading, renal/liver function, interactions, absorption, cancer, APS, and HIT before declaring anticoagulant failure.");
     acPlan.push("Renal safety: " + renalSummary);
     acPlan.push("Hepatic safety: " + liverSummary + ".");
-    if(highBleed) acPlan.push("High bleeding-risk features present: anticoagulant intensity, agent, monitoring, and duration must be individualized.");
+    acPlan.push("Bleeding/safety modifiers: " + (bleedShort.length ? bleedShort.join("; ") : "none major selected") + ".");
+    if(highBleed) acPlan.push("High bleeding-risk features present: anticoagulant intensity, agent, monitoring, interruption planning, and duration must be individualized.");
 
     var durationAuto = "Specialist individualized decision.";
     if(val("vte_duration_intent") !== "Auto-suggest from risk"){
@@ -1075,7 +1071,7 @@ patientCounsel + "\n\n" +
     var workupPlan = [];
     if(vteHas(workup,"No workup")) workupPlan.push("No additional thrombophilia/APS/cancer workup needed today beyond clinical follow-up.");
     workupPlan.push("Workup question: " + workupQuestion + ". Age trigger: " + ageTrigger + ".");
-    if(ageTrigger.indexOf("<50")>=0 || ageTrigger.indexOf("<45")>=0 || ageTrigger.indexOf("Pediatric")>=0) workupPlan.push("Young-age VTE should trigger selective APS/inherited thrombophilia consideration only if the result would change duration, anticoagulant choice, estrogen/pregnancy counseling, or family counseling.");
+    if(ageTrigger.indexOf("<50")>=0) workupPlan.push("VTE at age <50 is a young-age trigger for selective workup consideration, but not an automatic indication for thrombophilia testing. Testing should be done only if it changes anticoagulant choice, duration, estrogen/pregnancy counseling, APS management, or family counseling.");
     if(aps || val("vte_aps").indexOf("Consider")>=0 || val("vte_aps").indexOf("planned")>=0) workupPlan.push("APS: consider lupus anticoagulant, anticardiolipin, and anti-beta-2 glycoprotein I testing when timing/anticoagulant interference allows; confirm persistence with repeat testing ≥12 weeks if positive.");
     if(val("vte_thrombo_test").indexOf("Consider")>=0 || val("vte_thrombo_test").indexOf("Selective")>=0 || vteHas(workup,"Inherited thrombophilia")) workupPlan.push("Inherited thrombophilia: consider selective testing such as antithrombin, protein C/S, factor V Leiden, and prothrombin G20210A only when management-changing; avoid reflex broad panels.");
     if(vteHas(workup,"Testing timing inappropriate")) workupPlan.push("Testing timing may be inappropriate now; defer until acute event/anticoagulant interference is addressed, especially for protein C/S/antithrombin interpretation.");
@@ -1100,7 +1096,7 @@ patientCounsel + "\n\n" +
     scoreItem("Provoking factor classified", risks.length>0);
     scoreItem("Anticoagulant safety reviewed", val("vte_current_ac") && val("vte_dose_ok") && val("vte_adherence") && (val("vte_egfr") || val("vte_renal")) && val("vte_liver"));
     scoreItem("Duration decision addressed", durationAuto.length>0);
-    scoreItem("Bleeding risk addressed", val("vte_bleed_risk") && bleedShort.length>0);
+    scoreItem("Bleeding risk addressed", val("vte_bleed_risk") && val("vte_bleed_status") && val("vte_platelets") && val("vte_procedure") && val("vte_bleed_summary"));
     scoreItem("Workup decision addressed", workup.length>0 && val("vte_workup_question") && val("vte_age_trigger") && val("vte_aps") && val("vte_thrombo_test"));
     scoreItem("Follow-up/counseling addressed", followup.length>0);
     var scoreNum = completed.length;
@@ -1140,7 +1136,7 @@ urgentBanner +
 "Important positives:\n" +
 "- Event: " + (val("vte_summary") || "not provided") + "; date: " + (eventDate || "NA") + " (" + eventElapsed + "); phase: " + eventPhase + "; objective status: " + val("vte_obj") + "\n" +
 "- Current anticoagulant: " + val("vte_current_ac") + "; phase: " + val("vte_phase") + "; dose/adherence: " + val("vte_dose_ok") + " / " + val("vte_adherence") + "\n" +
-"- Bleeding risk: " + val("vte_bleed_risk") + "; flags: " + (bleedShort.length ? bleedShort.join("; ") : "none selected") + "\n" +
+"- Bleeding risk: " + val("vte_bleed_risk") + "; safety modifiers: " + (bleedShort.length ? bleedShort.join("; ") : "none major selected") + "\n" +
 "- Renal/liver: " + renalSummary + " / " + liverSummary + "\n" +
 "- Workup: " + workupQuestion + "; age trigger: " + ageTrigger + "; APS " + val("vte_aps") + "; inherited thrombophilia " + val("vte_thrombo_test") + "\n\n" +
 "Plan:\n" +
@@ -1156,7 +1152,7 @@ urgentBanner +
 "- " + teaching + "\n" +
 "- Current patient classification: " + phenotype + " / " + eventClass + ".\n" +
 "- Duration logic: major transient resolved events often stop after the acute treatment course, while unprovoked, persistent-risk, recurrent, APS, cancer-associated, or anticoagulation-failure scenarios often require extended or individualized therapy if bleeding risk allows.\n" +
-"- Selective testing principle: young age alone is not enough. Do not order APS/inherited thrombophilia testing unless the result could change anticoagulant choice, duration, family counseling, pregnancy/estrogen counseling, or APS management.\n\n" +
+"- Selective testing principle: VTE age <50 is a trigger for selective consideration, not automatic testing. Do not order APS/inherited thrombophilia testing unless the result could change anticoagulant choice, duration, family counseling, pregnancy/estrogen counseling, or APS management.\n\n" +
 "Patient explanation:\n" +
 "- A blood thinner mainly prevents the clot from growing or coming back while the body gradually breaks it down.\n" +
 "- The treatment length depends on why the clot happened, whether the trigger is gone, whether there were previous clots, and bleeding risk.\n" +
