@@ -1,1 +1,1 @@
-Thrombosis Clinic Pathway cleanup: renamed from Core VTE Clinic Pathway, simplified Visit type to New assessment vs Follow-up with separate Visit focus, removed Already followed by, and changed event timing to a calendar date picker with automatic elapsed-time/phase calculation.
+Thrombosis Clinic Pathway update: made bleeding-risk, renal-function, and liver-disease fields more specific; added eGFR/CrCl input; expanded bleeding-risk drivers with platelet/Hb/recent bleed/procedure/antiplatelet details; outputs now include renal and hepatic safety context.

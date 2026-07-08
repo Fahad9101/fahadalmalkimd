@@ -375,6 +375,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     });
     card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
     if(out){ out.textContent = ""; out.className = "output hidden"; }
+    updateVTEElapsedHint();
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
@@ -744,7 +745,7 @@ patientCounsel + "\n\n" +
     ])+
     '<div class="grid2">'+
     '<div class="field"><label>Date of VTE event</label><input id="vte_date" type="date"><span class="hint">Use the date the DVT/PE was diagnosed or the best-known event date.</span></div>'+
-    '<div class="field"><label>Time since event</label><div class="muted" id="vte_elapsed_hint">Calculated after generating the note from the event date.</div></div>'+
+    '<div class="field"><label>Time since event</label><div class="muted" id="vte_elapsed_hint">Select the VTE event date to calculate time since event.</div></div>'+
     selectField("vte_obj","Objective confirmation",["Confirmed by ultrasound/CTPA/VQ/CT/MRI","Outside report pending","Symptoms only / not confirmed","Residual clot vs new clot unclear","Unclear"],"Avoid treating 'recurrence' without comparing imaging when possible.")+
     selectField("vte_clotburden","Clinical severity",["Low-risk/stable","Intermediate-risk PE / RV strain concern","High-risk PE / shock","Extensive proximal clot burden","Distal/limited clot burden","Unclear"],"")+
     inputField("vte_summary","One-line event summary","e.g. first unprovoked proximal DVT; PE after surgery; recurrent VTE on DOAC")+
@@ -784,7 +785,7 @@ patientCounsel + "\n\n" +
     '<div class="grid2">'+
     selectField("vte_event_count","Event count",["First VTE","Recurrent VTE","Multiple recurrent VTE","Unclear"],"")+
     selectField("vte_resolved","Provoking factor resolved?",["Not applicable","Yes, resolved","No, persistent","Unclear"],"")+
-    selectField("vte_bleed_risk","Bleeding-risk estimate",["Low / no major concern","Moderate / caution","High bleeding risk","Active bleeding / anticoagulation unsafe","Unclear"],"")+
+    selectField("vte_bleed_risk","Bleeding-risk category",["Low: no active/recent bleeding, Hb stable, platelets ≥100, eGFR ≥50, no severe liver disease, no antiplatelet/NSAID overlap","Moderate: prior bleed >3 months, platelets 50-100, eGFR 30-49, stable liver disease, single antiplatelet/NSAID/frailty concern","High: active/recent major bleed, Hb falling or unexplained anemia, platelets <50, eGFR <30/AKI, decompensated liver disease/varices, high-risk procedure soon","Active bleeding / anticoagulation temporarily unsafe","Unclear: labs/history needed before final anticoagulant or duration decision"],"Use this as a clinical estimate, not a reason alone to deny anticoagulation. It should trigger dose/agent/duration review.")+
     '</div>'+
 
     '<h4>4. Anticoagulant selection and safety</h4>'+
@@ -793,22 +794,28 @@ patientCounsel + "\n\n" +
     selectField("vte_phase","Treatment phase",["Initial treatment","Primary treatment 3-6 months","Secondary prevention / extended phase","Temporary interruption","Not anticoagulated","Unclear"],"")+
     selectField("vte_dose_ok","Dose/loading appropriate?",["Yes","No / underdosed","Loading phase missed/incorrect","Dose unclear","Not applicable"],"Apixaban/rivaroxaban have VTE-specific loading regimens; dabigatran/edoxaban require heparin lead-in.")+
     selectField("vte_adherence","Adherence",["Good","Missed doses","Unclear","Not applicable"],"")+
-    selectField("vte_renal","Renal function",["Adequate/known","CKD significant","AKI or fluctuating","Dialysis/severe renal impairment","Unknown"],"")+
-    selectField("vte_liver","Liver disease",["No major concern","Significant liver disease","Cirrhosis/portal HTN concern","Unknown"],"")+
+    inputField("vte_egfr","eGFR / CrCl if known","e.g. 72, 38, 24")+
+    selectField("vte_renal","Renal function category",["eGFR/CrCl ≥50: standard DOAC use usually acceptable if no other issue","eGFR/CrCl 30-49: caution; verify agent, dose, bleeding risk, and follow-up labs","eGFR/CrCl 15-29: severe renal impairment; specialist review, avoid casual DOAC use, consider warfarin/UFH/adjusted LMWH depending context","eGFR/CrCl <15 or dialysis: specialist pathway; DOAC choice is highly individualized","AKI or rapidly fluctuating renal function: avoid fixed-dose assumptions; consider UFH/warfarin/specialist plan until stable","Unknown: check creatinine/eGFR before prescribing or extending anticoagulation"],"Renal function affects DOAC exposure, bleeding risk, and peri-procedural interruption timing.")+
+    selectField("vte_liver","Liver disease / hepatic safety",["No significant liver disease or coagulopathy","Mild stable liver disease/transaminitis without synthetic dysfunction","Compensated cirrhosis / Child-Pugh A: caution; review bleeding risk and drug choice","Child-Pugh B or portal hypertension/varices: high caution; specialist review before DOAC","Child-Pugh C/decompensated cirrhosis/synthetic failure: avoid routine DOAC; specialist anticoagulation plan","Active hepatitis/marked LFT elevation or hepatic status unclear: clarify before final anticoagulant/duration decision","Unknown: check bilirubin, AST/ALT, albumin, INR, platelets and bleeding history"],"Liver disease changes both bleeding risk and drug metabolism; cirrhosis is not auto-anticoagulated.")+
     selectField("vte_interactions","Drug interaction / absorption concern",["No major concern","Strong CYP/P-gp interaction concern","Malabsorption/bariatric/poor intake","Chemotherapy/targeted therapy interaction","Unknown"],"")+
     selectField("vte_antiplatelet","Antiplatelet/NSAID overlap",["None","Aspirin","DAPT","NSAID use","Multiple agents / high bleed concern","Unknown"],"")+
     '</div>'+
     checks("vte_bleed_short",[
       "No major bleeding concern selected",
-      "Prior major bleeding",
-      "Active/recent GI bleed",
-      "Anemia under evaluation",
-      "Severe thrombocytopenia",
-      "Advanced CKD",
-      "Advanced liver disease",
-      "Upcoming procedure",
-      "Frailty/falls concern",
-      "Concomitant antiplatelet/NSAID"
+      "Active bleeding now",
+      "Major bleeding within 30 days",
+      "Major bleeding within 3 months",
+      "Prior intracranial bleeding",
+      "Active/recent GI or GU bleeding lesion",
+      "Hemoglobin falling or unexplained anemia",
+      "Platelets 50-100",
+      "Platelets <50",
+      "eGFR/CrCl <30 or AKI",
+      "Decompensated cirrhosis / portal hypertension / varices",
+      "Upcoming high-bleeding-risk procedure",
+      "Dual antiplatelet therapy",
+      "Aspirin/NSAID overlap",
+      "Frailty/falls concern"
     ])+
 
     '<h4>5. Duration and extended-therapy decision</h4>'+
@@ -860,6 +867,12 @@ patientCounsel + "\n\n" +
     document.getElementById("vteGenerate").addEventListener("click", calcCoreVTE);
     document.getElementById("vteCopy").addEventListener("click", function(){ copyOut("vte_out"); });
     document.getElementById("vteReset").addEventListener("click", resetCoreVTE);
+    var vteDateInput = document.getElementById("vte_date");
+    if(vteDateInput){
+      vteDateInput.addEventListener("change", updateVTEElapsedHint);
+      vteDateInput.addEventListener("input", updateVTEElapsedHint);
+      updateVTEElapsedHint();
+    }
   }
 
   function resetCoreVTE(){
@@ -872,6 +885,7 @@ patientCounsel + "\n\n" +
     });
     card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
     if(out){ out.textContent = ""; out.className = "output hidden"; }
+    updateVTEElapsedHint();
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
@@ -906,14 +920,41 @@ patientCounsel + "\n\n" +
     return ">6 months";
   }
 
+
+  function updateVTEElapsedHint(){
+    var el = document.getElementById("vte_elapsed_hint");
+    var dateEl = document.getElementById("vte_date");
+    if(!el || !dateEl) return;
+    var dateStr = dateEl.value;
+    var elapsed = vteElapsedFromDate(dateStr);
+    var phase = vtePhaseFromDate(dateStr);
+    if(!dateStr){
+      el.textContent = "Select the VTE event date to calculate time since event.";
+    } else {
+      el.textContent = elapsed + " since event; treatment phase: " + phase + ".";
+    }
+  }
+
+
+  function vteRenalSummary(){
+    var raw = val("vte_egfr");
+    var n = parseFloat(raw);
+    if(!isNaN(n)){
+      if(n >= 50) return "eGFR/CrCl " + n + ": ≥50, standard DOAC use usually acceptable if no other issue.";
+      if(n >= 30) return "eGFR/CrCl " + n + ": 30-49, use caution and verify agent/dose/bleeding risk.";
+      if(n >= 15) return "eGFR/CrCl " + n + ": 15-29, severe renal impairment; specialist review advised.";
+      if(n >= 0) return "eGFR/CrCl " + n + ": <15/dialysis range; specialist pathway.";
+    }
+    return val("vte_renal");
+  }
+
   function calcCoreVTE(){
     var visit = val("vte_visit");
     var visitFocus = val("vte_visit_focus");
     var eventDate = val("vte_date");
     var eventElapsed = vteElapsedFromDate(eventDate);
     var eventPhase = vtePhaseFromDate(eventDate);
-    var elapsedHint = document.getElementById("vte_elapsed_hint");
-    if(elapsedHint) elapsedHint.textContent = eventElapsed;
+    updateVTEElapsedHint();
     var pheno = checked("vte_pheno");
     var red = checked("vte_red");
     var risks = checked("vte_risk");
@@ -921,6 +962,8 @@ patientCounsel + "\n\n" +
     var workup = checked("vte_workup");
     var followup = checked("vte_followup");
     var mode = val("vte_output_mode");
+    var renalSummary = vteRenalSummary();
+    var liverSummary = val("vte_liver");
 
     var emergency = vteHas(red,"Hemodynamic") || vteHas(red,"Severe hypoxia") || vteHas(red,"RV failure") || vteHas(red,"phlegmasia") || vteHas(red,"Active major bleeding") || vteHas(red,"Severe thrombocytopenia") || vteHas(red,"Suspected HIT") || vteHas(red,"Recurrent thrombosis while adherent");
     var routeUnusual = vteHas(pheno,"Splanchnic") || vteHas(pheno,"Superficial") || vteHas(workup,"Unusual-site") || vteHas(red,"Severe headache") || vteHas(red,"Severe abdominal");
@@ -933,7 +976,7 @@ patientCounsel + "\n\n" +
     var minorTransient = vteHas(risks,"Minor transient");
     var persistent = vteHas(risks,"Persistent");
     var aps = val("vte_aps").indexOf("Known")>=0 || val("vte_aps").indexOf("Triple")>=0 || vteHas(risks,"APS") || vteHas(workup,"APS");
-    var highBleed = val("vte_bleed_risk").indexOf("High")>=0 || val("vte_bleed_risk").indexOf("Active")>=0 || bleedShort.some(function(x){return x.indexOf("No major")<0;});
+    var highBleed = val("vte_bleed_risk").indexOf("High")>=0 || val("vte_bleed_risk").indexOf("Active")>=0 || bleedShort.some(function(x){return x.indexOf("Active bleeding")>=0 || x.indexOf("within 30")>=0 || x.indexOf("intracranial")>=0 || x.indexOf("Platelets <50")>=0 || x.indexOf("eGFR/CrCl <30")>=0 || x.indexOf("Decompensated")>=0 || x.indexOf("high-bleeding-risk")>=0;});
 
     var phenotype = "Core VTE clinic assessment.";
     if(routeUnusual) phenotype = "Possible unusual-site or non-core thrombosis — route to Unusual-Site Thrombosis Pathway.";
@@ -997,7 +1040,9 @@ patientCounsel + "\n\n" +
     }
     if(aps && (current === "Apixaban" || current === "Rivaroxaban" || current === "Dabigatran" || current === "Edoxaban")) acPlan.push("APS concern selected: high-risk APS generally favors warfarin over DOAC; avoid DOAC in triple-positive/arterial APS unless specialist rationale.");
     if(onACClot) acPlan.push("Possible recurrence on anticoagulation: first confirm new clot vs residual, then verify adherence, dose/loading, renal/liver function, interactions, absorption, cancer, APS, and HIT before declaring anticoagulant failure.");
-    if(highBleed) acPlan.push("Bleeding risk flags present: anticoagulation intensity/duration must be individualized.");
+    acPlan.push("Renal safety: " + renalSummary);
+    acPlan.push("Hepatic safety: " + liverSummary + ".");
+    if(highBleed) acPlan.push("High bleeding-risk features present: anticoagulant intensity, agent, monitoring, and duration must be individualized.");
 
     var durationAuto = "Specialist individualized decision.";
     if(val("vte_duration_intent") !== "Auto-suggest from risk"){
@@ -1044,7 +1089,7 @@ patientCounsel + "\n\n" +
     scoreItem("VTE phenotype documented", pheno.length>0 && !vteHas(pheno,"No objectively"));
     scoreItem("Danger screen addressed", red.length>0);
     scoreItem("Provoking factor classified", risks.length>0);
-    scoreItem("Anticoagulant safety reviewed", val("vte_current_ac") && val("vte_dose_ok") && val("vte_adherence") && val("vte_renal"));
+    scoreItem("Anticoagulant safety reviewed", val("vte_current_ac") && val("vte_dose_ok") && val("vte_adherence") && (val("vte_egfr") || val("vte_renal")) && val("vte_liver"));
     scoreItem("Duration decision addressed", durationAuto.length>0);
     scoreItem("Bleeding risk addressed", val("vte_bleed_risk") && bleedShort.length>0);
     scoreItem("Workup decision addressed", workup.length>0 && val("vte_aps") && val("vte_thrombo_test"));
@@ -1087,6 +1132,7 @@ urgentBanner +
 "- Event: " + (val("vte_summary") || "not provided") + "; date: " + (eventDate || "NA") + " (" + eventElapsed + "); phase: " + eventPhase + "; objective status: " + val("vte_obj") + "\n" +
 "- Current anticoagulant: " + val("vte_current_ac") + "; phase: " + val("vte_phase") + "; dose/adherence: " + val("vte_dose_ok") + " / " + val("vte_adherence") + "\n" +
 "- Bleeding risk: " + val("vte_bleed_risk") + "; flags: " + (bleedShort.length ? bleedShort.join("; ") : "none selected") + "\n" +
+"- Renal/liver: " + renalSummary + " / " + liverSummary + "\n" +
 "- Workup: APS " + val("vte_aps") + "; thrombophilia " + val("vte_thrombo_test") + "\n\n" +
 "Plan:\n" +
 "- Anticoagulant: " + acPlan.join(" ") + "\n" +
