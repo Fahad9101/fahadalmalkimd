@@ -802,27 +802,27 @@ patientCounsel + "\n\n" +
 
     '<h4>5. Workup decision: APS / thrombophilia / cancer</h4>'+
     '<div class="grid2">'+
-    selectField("vte_workup_question","Main workup question",["No extra workup needed today","Should we test for APS?","Should we test for inherited thrombophilia?","Should we screen for occult cancer?","Is testing timing appropriate?","Route to unusual-site thrombosis workup","Route to cancer-associated thrombosis pathway","Unclear / needs specialist framing"],"Test only if the result is expected to change management: anticoagulant choice, duration, pregnancy/estrogen counseling, APS management, or family counseling.")+
-    selectField("vte_age_trigger","Age-related trigger",["Not age-related / age not relevant","VTE age <50","Age unknown"],"ASH uses young age, e.g. <50 years, as a context where thrombophilia testing may be considered. It is not an automatic indication by itself.")+
+    selectField("vte_workup_question","Main workup question",["No extra workup needed today","Should we test for APS?","Should we test for inherited thrombophilia?","Should we screen for occult cancer?","Is testing timing appropriate?","Route to unusual-site thrombosis workup","Route to cancer-associated thrombosis pathway","Unclear / needs specialist framing"],"Start with the management question. Testing is useful only if it could change anticoagulant choice, duration, APS management, pregnancy/estrogen counseling, or family counseling.")+
+    selectField("vte_age_trigger","Age-related trigger",["Not age-related / age not relevant","VTE age <50","Age unknown"],"Age <50 is a selective-workup context, not an automatic indication. Use it only with weak/no provoking factor, recurrence, family history, APS clues, or pregnancy/estrogen implications.")+
     '</div>'+
     checks("vte_workup",[
-      "No workup needed today",
-      "APS trigger: arterial thrombosis, recurrent thrombosis, pregnancy morbidity, autoimmune disease, or prolonged aPTT",
-      "APS trigger: unprovoked proximal DVT/PE at age <50 if result would change anticoagulant choice",
-      "Inherited thrombophilia trigger: VTE age <50 plus weak/no provoking factor",
-      "Strong first-degree family history suggesting inherited thrombophilia",
-      "Inherited thrombophilia trigger: recurrent VTE if result would change counseling or family testing",
-      "Hormone- or pregnancy-associated VTE where testing would change future contraception or pregnancy management",
-      "Testing timing inappropriate now / defer",
-      "Do not test: major transient provoked VTE if result will not change management",
-      "Do not test: patient already needs indefinite anticoagulation and result will not change drug choice",
-      "Unusual-site thrombosis — route to separate pathway",
-      "Cancer screening: history, exam, basic labs, and age-appropriate screening only unless red flags",
-      "Cancer-associated thrombosis — route if active cancer"
+      "No additional workup needed today",
+      "APS phenotype: arterial thrombosis, recurrent thrombosis, pregnancy morbidity, autoimmune disease, or unexplained prolonged aPTT",
+      "APS phenotype: unprovoked proximal DVT/PE at age <50 if result would change anticoagulant choice or duration",
+      "Inherited thrombophilia context: VTE age <50 with weak/no provoking factor",
+      "Inherited thrombophilia context: strong first-degree family history or known high-risk thrombophilia in family",
+      "Recurrent VTE where testing would change counseling, family testing, or management",
+      "Hormone- or pregnancy-associated VTE where testing would change contraception, pregnancy prophylaxis, or postpartum planning",
+      "Testing timing problem: acute thrombosis or current anticoagulant may distort results — defer/interpret carefully",
+      "Do not test: major transient provoked VTE when result will not change management",
+      "Do not test: indefinite anticoagulation already indicated and result will not change drug choice",
+      "Route out: unusual-site thrombosis — use separate pathway",
+      "Occult cancer screen: history, exam, basic labs, and age-appropriate screening unless red flags",
+      "Route out: active cancer-associated thrombosis — use cancer-associated pathway"
     ])+
     '<div class="grid2">'+
-    selectField("vte_aps","APS testing decision",["Not indicated today","Consider APS testing if result changes anticoagulant choice or duration","APS testing planned: LA, anticardiolipin, anti-beta-2 glycoprotein I with repeat ≥12 weeks if positive","Known APS","Triple-positive or arterial APS concern — warfarin-favored specialist pathway","Testing confounded by DOAC/acute anticoagulation — plan timing/interpretation carefully","Unclear"],"APS is the thrombophilia most likely to change anticoagulant choice: high-risk APS generally favors warfarin over DOAC.")+
-    selectField("vte_thrombo_test","Inherited thrombophilia testing decision",["Not indicated today","Consider selective testing only if result changes duration, family counseling, pregnancy/estrogen counseling, or unusual/recurrent phenotype management","Selective panel considered: antithrombin, protein C/S, factor V Leiden, prothrombin G20210A based on phenotype/timing","Already known thrombophilia","Defer because acute event/anticoagulation timing may distort protein C/S/AT results","Unclear"],"Inherited thrombophilia testing should not be reflexive; common low-risk thrombophilias often do not change duration by themselves.")+
+    selectField("vte_aps","APS testing decision",["Not indicated today","Consider APS testing — result would change anticoagulant choice or duration","APS testing planned: LA, anticardiolipin, anti-beta-2 glycoprotein I; repeat ≥12 weeks if positive","Known APS","Triple-positive or arterial APS concern — warfarin-favored pathway","Testing confounded by DOAC/acute anticoagulation — plan timing/interpretation carefully","Unclear"],"APS is the acquired thrombophilia most likely to change anticoagulant choice; high-risk APS generally favors warfarin rather than DOAC.")+
+    selectField("vte_thrombo_test","Inherited thrombophilia testing decision",["Not indicated today","Consider selective testing only if result changes duration, family counseling, pregnancy/estrogen counseling, or unusual/recurrent phenotype management","Selective panel considered: antithrombin, protein C/S, factor V Leiden, prothrombin G20210A based on phenotype and timing","Known thrombophilia — document type and whether high-risk","Defer: acute thrombosis or anticoagulation may distort protein C/S/antithrombin results","Unclear"],"Avoid reflex broad panels; common low-risk thrombophilias often do not change duration by themselves.")+
     '</div>'+
 
     '<h4>6. Follow-up complications and counseling</h4>'+
@@ -949,7 +949,7 @@ patientCounsel + "\n\n" +
     var liverSummary = val("vte_liver");
 
     var emergency = false;
-    var routeUnusual = vteHas(pheno,"Splanchnic") || vteHas(pheno,"Superficial") || vteHas(workup,"Unusual-site");
+    var routeUnusual = vteHas(pheno,"Splanchnic") || vteHas(pheno,"Superficial") || vteHas(workup,"Route out: unusual-site");
     var cancer = vteHas(risks,"Active cancer") || vteHas(workup,"Cancer-associated");
     var pregnancy = vteHas(risks,"Pregnancy");
     var recurrent = vteHas(pheno,"Recurrent") || val("vte_event_count").indexOf("Recurrent")>=0 || val("vte_event_count").indexOf("Multiple")>=0;
@@ -1035,15 +1035,16 @@ patientCounsel + "\n\n" +
     extended.push("Patient preference: " + val("vte_patient_pref") + ".");
 
     var workupPlan = [];
-    if(vteHas(workup,"No workup")) workupPlan.push("No additional thrombophilia/APS/cancer workup needed today beyond clinical follow-up.");
+    if(vteHas(workup,"No additional workup")) workupPlan.push("No additional APS/inherited thrombophilia/cancer workup needed today beyond clinical follow-up.");
     workupPlan.push("Workup question: " + workupQuestion + ". Age trigger: " + ageTrigger + ".");
-    if(ageTrigger.indexOf("<50")>=0) workupPlan.push("VTE at age <50 is a young-age trigger for selective workup consideration, but not an automatic indication for thrombophilia testing. Testing should be done only if it changes anticoagulant choice, duration, estrogen/pregnancy counseling, APS management, or family counseling.");
-    if(aps || val("vte_aps").indexOf("Consider")>=0 || val("vte_aps").indexOf("planned")>=0) workupPlan.push("APS: consider lupus anticoagulant, anticardiolipin, and anti-beta-2 glycoprotein I testing when timing/anticoagulant interference allows; confirm persistence with repeat testing ≥12 weeks if positive.");
-    if(val("vte_thrombo_test").indexOf("Consider")>=0 || val("vte_thrombo_test").indexOf("Selective")>=0 || (vteHas(workup,"Inherited thrombophilia") || vteHas(workup,"Strong first-degree") || vteHas(workup,"Hormone- or pregnancy"))) workupPlan.push("Inherited thrombophilia: consider selective testing such as antithrombin, protein C/S, factor V Leiden, and prothrombin G20210A only when management-changing; avoid reflex broad panels.");
-    if(vteHas(workup,"Testing timing inappropriate")) workupPlan.push("Testing timing may be inappropriate now; defer until acute event/anticoagulant interference is addressed, especially for protein C/S/antithrombin interpretation.");
+    if(ageTrigger.indexOf("<50")>=0) workupPlan.push("VTE at age <50 is a selective-workup context, not an automatic indication. Testing should be pursued only if it changes anticoagulant choice, duration, APS management, pregnancy/estrogen counseling, or family counseling.");
+    if(aps || val("vte_aps").indexOf("Consider")>=0 || val("vte_aps").indexOf("planned")>=0 || vteHas(workup,"APS phenotype")) workupPlan.push("APS: consider lupus anticoagulant, anticardiolipin, and anti-beta-2 glycoprotein I testing when timing/anticoagulant interference allows; confirm persistence with repeat testing ≥12 weeks if positive.");
+    if(val("vte_thrombo_test").indexOf("Consider")>=0 || val("vte_thrombo_test").indexOf("Selective")>=0 || vteHas(workup,"Inherited thrombophilia context") || vteHas(workup,"Recurrent VTE") || vteHas(workup,"Hormone- or pregnancy")) workupPlan.push("Inherited thrombophilia: consider selective testing such as antithrombin, protein C/S, factor V Leiden, and prothrombin G20210A only when management-changing; avoid reflex broad panels.");
+    if(vteHas(workup,"Testing timing problem")) workupPlan.push("Testing timing problem: defer or interpret carefully during acute thrombosis or while on anticoagulation, especially for protein C/S, antithrombin, and lupus anticoagulant interpretation.");
     if(vteHas(workup,"Do not test")) workupPlan.push("Do-not-test flag selected: avoid thrombophilia testing if the result will not change management.");
-    if(vteHas(workup,"Cancer screening")) workupPlan.push("Occult cancer screen: history, exam, basic labs, and age-appropriate screening only unless symptoms/signs suggest a targeted evaluation.");
-    if(!workupPlan.length) workupPlan.push("Workup should be selective; avoid thrombophilia testing that will not change management.");
+    if(vteHas(workup,"Occult cancer screen")) workupPlan.push("Occult cancer screen: history, exam, basic labs, and age-appropriate screening unless symptoms/signs suggest a targeted evaluation.");
+    if(vteHas(workup,"Route out")) workupPlan.push("Route-out flag selected: use the more specific pathway for unusual-site or active cancer-associated thrombosis.");
+    if(!workupPlan.length) workupPlan.push("Workup should be selective; avoid APS/inherited thrombophilia testing that will not change management.");
 
     var followPlan = [];
     if(vteHas(followup,"Persistent dyspnea")) followPlan.push("Persistent dyspnea/exercise limitation after PE: consider post-PE syndrome / CTEPD evaluation if persistent beyond ~3 months or clinically concerning; CTEPH is the pulmonary-hypertension subtype.");
