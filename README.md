@@ -1,1 +1,1 @@
-Thrombosis Clinic Pathway update: made bleeding-risk, renal-function, and liver-disease fields more specific; added eGFR/CrCl input; expanded bleeding-risk drivers with platelet/Hb/recent bleed/procedure/antiplatelet details; outputs now include renal and hepatic safety context.
+Thrombosis Clinic Pathway update: enhanced workup decision section; operationalized young-age VTE (<50, especially <45); added APS/inherited thrombophilia/cancer decision prompts, do-not-test prompts, timing cautions, and Cockcroft-Gault CrCl wording for anticoagulant renal safety.
