@@ -1,1 +1,1 @@
-Thrombosis Clinic Pathway update: removed the descriptive paragraph under the pathway title and changed persistent dyspnea after PE wording from CTEPH screen to post-PE syndrome / CTEPD evaluation.
+Thrombosis Clinic Pathway update: replaced the ED-style danger checkbox list with a compact outpatient clinic suitability / same-day escalation screen. The section now asks whether the patient is appropriate for routine outpatient thrombosis clinic today and the reason for same-day escalation if not.
