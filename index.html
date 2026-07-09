@@ -86,7 +86,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
@@ -188,6 +188,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "pad-suspected") return renderPAD();
     if(id === "pad-confirmed") return renderConfirmedPAD();
     if(id === "thrombosis-clinic") return renderCoreVTE();
+    if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -1136,6 +1137,260 @@ urgentBanner +
     var level = urgentTriggers.length ? "red" : (routeUnusual || cancer || pregnancy || onACClot || recurrent || highBleed || missing.length ? "amber" : "green");
     var out = document.getElementById("vte_out");
     out.className = "output " + level;
+    out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
+
+
+  function renderUnusualSiteThrombosis(){
+    shell("Unusual-Site Thrombosis Pathway","",
+    '<section class="card">'+
+    '<h4>0. Visit type</h4>'+
+    '<div class="grid2">'+
+    selectField("ust_visit","Visit type",["New assessment","Follow-up"],"New = first unusual-site thrombosis assessment. Follow-up = anticoagulation, duration, workup, or safety review.")+
+    '</div>'+
+
+    '<h4>1. Thrombosis site and phenotype</h4>'+
+    '<div class="grid2">'+
+    selectField("ust_site","Primary thrombosis site",["Cerebral venous thrombosis / dural sinus thrombosis","Portal vein thrombosis","Splanchnic thrombosis: mesenteric/splenic vein","Budd-Chiari / hepatic vein thrombosis","Upper-extremity DVT","Catheter-related thrombosis","Superficial vein thrombosis","Renal vein thrombosis","Gonadal/ovarian/testicular vein thrombosis","Retinal vein occlusion / ocular venous thrombosis","Other unusual venous thrombosis"],"Choose the dominant site. Site determines imaging, consultants, workup, anticoagulant choice, and duration.")+
+    selectField("ust_timing","Timing",["Acute / newly diagnosed","Subacute","Chronic / old thrombosis","Recurrent at unusual site","Incidentally found","Unclear"],"")+
+    inputField("ust_date","Date diagnosed if known","e.g. 2026-07-01")+
+    selectField("ust_confirm","Objective confirmation",["Confirmed by site-appropriate imaging","Outside report pending","Suspected but not confirmed","Residual/chronic vs acute unclear","Unclear"],"Avoid final duration or failure decisions without confirming acute vs chronic and comparing prior imaging when possible.")+
+    inputField("ust_summary","One-line case summary","e.g. acute portal vein thrombosis with cirrhosis; CVT postpartum; catheter-related UEDVT")+
+    '</div>'+
+
+    '<h4>2. Site-specific clinical context</h4>'+
+    checks("ust_context",[
+      "CVT: headache, seizure, papilledema, focal neurologic symptoms, or intracranial hemorrhage context",
+      "CVT: pregnancy/postpartum, estrogen, infection, malignancy, inflammatory disease",
+      "Portal/splanchnic: cirrhosis or portal hypertension",
+      "Portal/splanchnic: extension to SMV or bowel ischemia concern",
+      "Portal/splanchnic: pancreatitis, intra-abdominal infection/inflammation, surgery, or malignancy",
+      "Budd-Chiari: ascites, liver congestion, hepatic vein/IVC involvement",
+      "Upper-extremity: central venous catheter, PICC, port, pacemaker/lead, or dialysis access",
+      "Upper-extremity: effort thrombosis / thoracic outlet concern",
+      "SVT: length ≥5 cm",
+      "SVT: within 3 cm of SFJ/SPJ or extension into deep system",
+      "Renal/gonadal: pregnancy/postpartum, malignancy, nephrotic syndrome, local compression/inflammation",
+      "Retinal/ocular: assess standard vascular risk factors first; systemic thrombophilia workup only if phenotype suggests",
+      "No key site-specific modifier selected"
+    ])+
+    '<div class="grid2">'+
+    selectField("ust_symptoms","Current symptom status",["Improving/stable","Persistent symptoms","Worsening symptoms","Severe symptoms needing acute pathway","Asymptomatic/incidental","Unclear"],"")+
+    selectField("ust_consult","Main specialty coordination",["Thrombosis/vascular medicine only","Neurology/stroke","Hepatology/GI","Vascular surgery/IR","Oncology","Obstetrics/MFM","Ophthalmology","Nephrology/urology","Multiple teams","Unclear"],"")+
+    '</div>'+
+
+    '<h4>3. Anticoagulant and safety context</h4>'+
+    '<div class="grid2">'+
+    selectField("ust_current_ac","Current anticoagulant",["None","Apixaban","Rivaroxaban","Dabigatran","Edoxaban","LMWH","Warfarin","UFH infusion","Fondaparinux","Other/unclear"],"")+
+    selectField("ust_phase","Treatment phase",["Initial treatment","Primary treatment 3-6 months","Extended/secondary prevention","Temporary interruption","Completed treatment","Unclear"],"")+
+    inputField("ust_crcl","Cockcroft–Gault CrCl / lab eGFR if CrCl unavailable","e.g. CrCl 72, eGFR 38")+
+    selectField("ust_renal","Renal safety",["CrCl ≥50 / no major renal issue","CrCl 30-49 / caution","CrCl 15-29 / specialist review","CrCl <15 or dialysis / specialist pathway","AKI or fluctuating renal function","Unknown"],"Prefer Cockcroft–Gault CrCl for anticoagulant safety decisions; lab eGFR is a fallback if CrCl is not available.")+
+    selectField("ust_liver","Liver/varices safety",["No significant liver disease","Mild stable liver disease","Cirrhosis/portal hypertension but stable","Varices or high GI bleeding concern","Decompensated cirrhosis/synthetic failure","Unknown"],"Especially relevant for portal/splanchnic thrombosis and DOAC/warfarin/LMWH choice.")+
+    selectField("ust_bleed","Bleeding/safety status",["No active/recent bleeding and Hb stable","Active bleeding now","Major bleeding within 30 days","Major bleeding within 3 months","Prior intracranial bleeding","Active/recent GI or GU bleeding lesion","Hemoglobin falling or unexplained anemia","Unclear"],"")+
+    selectField("ust_platelets","Platelet category",["Platelets ≥100","Platelets 50-100","Platelets <50","Platelets unknown"],"")+
+    selectField("ust_procedure","Procedure status",["No procedure planned","Low-bleeding-risk procedure planned","High-bleeding-risk procedure planned","Procedure timing unclear"],"")+
+    '</div>'+
+
+    '<h4>4. Etiology / workup decision</h4>'+
+    '<div class="grid2">'+
+    selectField("ust_workup_question","Main workup question",["No extra workup needed today","APS evaluation","MPN/JAK2 evaluation","PNH evaluation","Inherited thrombophilia selective testing","Cancer-associated thrombosis evaluation","Local provoking factor explains event","Testing timing problem / defer","Unclear / needs specialist framing"],"Start with the management question. Testing should be targeted to site and phenotype.")+
+    selectField("ust_age_trigger","Age-related context",["Not age-related / age not relevant","VTE age <50","Age unknown"],"Age <50 is a selective-workup context, not an automatic indication.")+
+    '</div>'+
+    checks("ust_workup",[
+      "Local provoking factor: catheter/device/line",
+      "Local provoking factor: intra-abdominal inflammation/infection/pancreatitis/surgery",
+      "Local provoking factor: pregnancy/postpartum or estrogen",
+      "Cirrhosis/portal hypertension-related PVT",
+      "Active cancer or cancer treatment",
+      "MPN/JAK2 context: splanchnic/Budd-Chiari, unexplained unusual-site thrombosis, abnormal CBC/splenomegaly",
+      "PNH context: Budd-Chiari/splanchnic thrombosis with cytopenias or hemolysis clues",
+      "APS context: arterial events, recurrent thrombosis, pregnancy morbidity, autoimmune disease, prolonged aPTT",
+      "Inherited thrombophilia context: VTE age <50 with weak/no provoking factor",
+      "Strong first-degree family history suggesting inherited thrombophilia",
+      "Testing timing problem: acute thrombosis or anticoagulant may distort results — defer/interpret carefully",
+      "Do not test: clear local major provoking factor and result will not change management",
+      "Occult cancer screen: history, exam, basic labs, and age-appropriate screening unless red flags",
+      "No additional workup needed today"
+    ])+
+
+    '<h4>5. Site-specific management decision</h4>'+
+    '<div class="grid2">'+
+    selectField("ust_duration_intent","Duration intent",["Auto-suggest from site/risk","3 months then reassess","3-6 months then reassess","6-12 months then reassess","Extended/indefinite anticoagulation likely","Continue while provoking factor persists","Specialist individualized decision","Anticoagulation contraindicated / bleeding risk dominates"],"Unusual-site thrombosis duration is more site- and cause-specific than routine DVT/PE.")+
+    selectField("ust_agent_plan","Anticoagulant plan",["Continue current anticoagulant","Start/continue LMWH","Start/continue DOAC if suitable","Warfarin/VKA favored","UFH inpatient/bridging pathway","Fondaparinux / SVT-style prophylactic-dose pathway","Hold/interrupt temporarily due to bleeding/procedure","Specialist individualized plan"],"")+
+    selectField("ust_imaging_plan","Imaging / reassessment plan",["No repeat imaging planned today","Repeat imaging to document extension/recanalization","Compare with prior imaging to define acute vs chronic","Site-specific specialist to decide imaging interval","Imaging urgent because worsening symptoms","Unclear"],"")+
+    inputField("ust_plan_note","Management rationale note","brief reason: CVT, PVT with SMV extension, catheter-related UEDVT, SVT near SFJ, etc.")+
+    '</div>'+
+
+    '<h4>6. Follow-up and counseling</h4>'+
+    checks("ust_followup",[
+      "Bleeding safety counseling",
+      "Adherence counseling",
+      "Procedure/interruption planning",
+      "Pregnancy/estrogen counseling",
+      "Persistent neurologic symptoms / CVT follow-up",
+      "Portal hypertension/varices/hepatology coordination",
+      "Catheter/device decision: keep vs remove if infected, nonfunctional, or no longer needed",
+      "SVT extension/recurrence counseling",
+      "Post-thrombotic symptoms / limb swelling counseling",
+      "No special counseling issue today"
+    ])+
+
+    '<h4>7. Output</h4>'+
+    '<div class="grid2">'+
+    selectField("ust_output_mode","Output mode",["Formal consultant letter","Concise clinic note","Counseling / teaching note"],"")+
+    '</div>'+
+    '<div class="toolbar"><button class="primary" id="ustGenerate">Generate unusual-site note</button><button id="ustCopy">Copy output</button><button id="ustReset">Reset pathway</button></div><div id="ust_out" class="output hidden"></div>'+
+    '</section>');
+    document.getElementById("ustGenerate").addEventListener("click", calcUnusualSiteThrombosis);
+    document.getElementById("ustCopy").addEventListener("click", function(){ copyOut("ust_out"); });
+    document.getElementById("ustReset").addEventListener("click", resetUnusualSiteThrombosis);
+  }
+
+  function resetUnusualSiteThrombosis(){
+    var out = document.getElementById("ust_out");
+    var card = out ? out.closest("section.card") : document;
+    if(!card) card = document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function ustHas(arr, text){
+    return arr.some(function(x){ return x.indexOf(text)>=0; });
+  }
+
+  function calcUnusualSiteThrombosis(){
+    var visit = val("ust_visit");
+    var site = val("ust_site");
+    var timing = val("ust_timing");
+    var confirm = val("ust_confirm");
+    var context = checked("ust_context");
+    var work = checked("ust_workup");
+    var follow = checked("ust_followup");
+    var mode = val("ust_output_mode");
+
+    var cvt = site.indexOf("Cerebral")>=0;
+    var pvt = site.indexOf("Portal")>=0 || site.indexOf("Splanchnic")>=0 || site.indexOf("Budd")>=0;
+    var uedvt = site.indexOf("Upper")>=0 || site.indexOf("Catheter")>=0;
+    var svt = site.indexOf("Superficial")>=0;
+    var renalGonadal = site.indexOf("Renal")>=0 || site.indexOf("Gonadal")>=0;
+    var ocular = site.indexOf("Retinal")>=0;
+
+    var phenotype = site + " — " + timing + "; confirmation: " + confirm + ".";
+    var siteLogic = [];
+    if(cvt) siteLogic.push("CVT logic: anticoagulation is generally standard even when venous-congestion-related intracranial blood is present, unless a rare safety exception dominates; coordinate with neurology/stroke for seizures, intracranial hypertension, or neurologic deficits.");
+    if(pvt) siteLogic.push("Portal/splanchnic logic: assess cirrhosis/portal hypertension, varices/bleeding risk, SMV extension or bowel ischemia concern, malignancy, intra-abdominal inflammation, and MPN/PNH context.");
+    if(uedvt) siteLogic.push("Upper-extremity/catheter logic: define catheter/device need, function, infection, cancer/device status, and thoracic outlet/effort thrombosis phenotype.");
+    if(svt) siteLogic.push("SVT logic: management depends on length, proximity to SFJ/SPJ, deep extension, symptoms, and VTE risk factors; high-risk SVT often uses a 45-day anticoagulant strategy.");
+    if(renalGonadal) siteLogic.push("Renal/gonadal logic: assess pregnancy/postpartum, malignancy, nephrotic syndrome, local compression/inflammation, and need for follow-up imaging.");
+    if(ocular) siteLogic.push("Ocular venous thrombosis logic: prioritize standard vascular risk factors and ophthalmology context; systemic thrombophilia testing should be selective and phenotype-driven.");
+    if(!siteLogic.length) siteLogic.push("Other unusual-site thrombosis: use site-specific imaging, local provoking-factor assessment, anticoagulant safety review, and management-changing workup.");
+
+    var safety = [];
+    safety.push("Current anticoagulant: " + val("ust_current_ac") + "; phase: " + val("ust_phase") + ".");
+    safety.push("Renal safety: " + (val("ust_crcl") || val("ust_renal")) + " / " + val("ust_renal") + ".");
+    safety.push("Liver/varices safety: " + val("ust_liver") + ".");
+    safety.push("Bleeding/platelets/procedure: " + val("ust_bleed") + "; " + val("ust_platelets") + "; " + val("ust_procedure") + ".");
+    var highSafety = val("ust_bleed").indexOf("Active")>=0 || val("ust_bleed").indexOf("within 30")>=0 || val("ust_bleed").indexOf("intracranial")>=0 || val("ust_platelets").indexOf("<50")>=0 || val("ust_procedure").indexOf("High")>=0 || val("ust_liver").indexOf("Varices")>=0 || val("ust_liver").indexOf("Decompensated")>=0;
+
+    var workupPlan = [];
+    workupPlan.push("Workup question: " + val("ust_workup_question") + ". Age context: " + val("ust_age_trigger") + ".");
+    if(val("ust_age_trigger").indexOf("<50")>=0) workupPlan.push("VTE age <50 is a selective-workup context, not automatic testing.");
+    if(ustHas(work,"MPN/JAK2")) workupPlan.push("Consider MPN/JAK2 evaluation, especially for splanchnic/Budd-Chiari or unexplained unusual-site thrombosis.");
+    if(ustHas(work,"PNH")) workupPlan.push("Consider PNH flow cytometry if Budd-Chiari/splanchnic thrombosis is accompanied by cytopenias or hemolysis clues.");
+    if(ustHas(work,"APS context")) workupPlan.push("Consider APS testing if result would change anticoagulant choice/duration; high-risk APS generally favors warfarin over DOAC.");
+    if(ustHas(work,"Inherited thrombophilia context") || ustHas(work,"Strong first-degree")) workupPlan.push("Consider inherited thrombophilia testing only if management-changing: duration, family counseling, pregnancy/estrogen counseling, or unusual/recurrent phenotype management.");
+    if(ustHas(work,"Testing timing problem")) workupPlan.push("Testing timing problem: acute thrombosis or anticoagulant exposure may distort protein C/S, antithrombin, and lupus anticoagulant interpretation.");
+    if(ustHas(work,"Do not test")) workupPlan.push("Do-not-test flag selected: avoid testing if a clear local major provoking factor explains the event and results will not change management.");
+    if(ustHas(work,"Occult cancer")) workupPlan.push("Occult cancer screen: history, exam, basic labs, and age-appropriate screening unless red flags.");
+    if(ustHas(work,"No additional")) workupPlan.push("No additional workup needed today.");
+
+    var management = [];
+    management.push("Anticoagulant plan: " + val("ust_agent_plan") + ".");
+    management.push("Duration plan: " + val("ust_duration_intent") + ".");
+    management.push("Imaging plan: " + val("ust_imaging_plan") + ".");
+    if(val("ust_plan_note")) management.push("Rationale note: " + val("ust_plan_note") + ".");
+    if(highSafety) management.push("Safety caveat: high bleeding/procedure/platelet/liver-risk modifier selected; anticoagulant agent, intensity, interruption plan, and duration require individualized review.");
+
+    var followPlan = [];
+    if(ustHas(follow,"Bleeding safety")) followPlan.push("Bleeding safety counseling.");
+    if(ustHas(follow,"Adherence")) followPlan.push("Adherence counseling.");
+    if(ustHas(follow,"Procedure")) followPlan.push("Procedure/interruption planning.");
+    if(ustHas(follow,"Pregnancy")) followPlan.push("Pregnancy/estrogen counseling.");
+    if(ustHas(follow,"neurologic")) followPlan.push("Neurology/CVT follow-up for persistent neurologic symptoms.");
+    if(ustHas(follow,"Portal")) followPlan.push("Hepatology coordination for portal hypertension/varices.");
+    if(ustHas(follow,"Catheter")) followPlan.push("Catheter/device decision: keep vs remove depending need, function, infection, and symptoms.");
+    if(ustHas(follow,"SVT")) followPlan.push("SVT extension/recurrence counseling.");
+    if(ustHas(follow,"Post-thrombotic")) followPlan.push("Post-thrombotic symptoms counseling.");
+    if(!followPlan.length) followPlan.push("Routine counseling: bleeding, adherence, recurrence symptoms, and follow-up plan.");
+
+    var completed = [];
+    var missing = [];
+    function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("Site/phenotype documented", site && timing && confirm);
+    scoreItem("Site-specific context addressed", context.length>0);
+    scoreItem("Anticoagulant/safety reviewed", val("ust_current_ac") && val("ust_renal") && val("ust_liver") && val("ust_bleed") && val("ust_platelets"));
+    scoreItem("Etiology/workup addressed", val("ust_workup_question") && work.length>0);
+    scoreItem("Management/duration addressed", val("ust_duration_intent") && val("ust_agent_plan") && val("ust_imaging_plan"));
+    scoreItem("Follow-up/counseling addressed", follow.length>0);
+    var score = completed.length + "/6";
+    var scoreLabel = completed.length >= 5 ? "Complete" : (completed.length >= 4 ? "Mostly complete" : "Gaps remain");
+
+    var evidence = "Evidence anchors: Thrombosis Canada CVT guide and Canadian Stroke Best Practices CVT module; Thrombosis Canada portal vein thrombosis guide; ISTH splanchnic vein thrombosis guidance; Thrombosis Canada SVT guide; CALISTO and SURPRISE for SVT anticoagulation strategy; site-specific expert review for catheter-related UEDVT, Budd-Chiari, renal/gonadal, and ocular venous thrombosis.";
+    var teaching = "Teaching: unusual-site thrombosis is not managed by routine DVT/PE duration logic alone. First classify the site, then identify local provoking factors, site-specific complications, anticoagulant safety, and management-changing workup.";
+
+    var formal =
+"Dear Colleague,\n\n" +
+"Thank you for asking me to assess this patient with unusual-site thrombosis. This is a " + visit + " visit. The working phenotype is: " + phenotype + " Case summary: " + (val("ust_summary") || "not provided") + ".\n\n" +
+"Site-specific interpretation: " + siteLogic.join(" ") + " Current clinical context includes: " + (context.length ? context.join("; ") : "not specified") + ". Main specialty coordination: " + val("ust_consult") + ". Current symptom status: " + val("ust_symptoms") + ".\n\n" +
+"Anticoagulation and safety: " + safety.join(" ") + "\n\n" +
+"Etiology/workup plan: " + workupPlan.join(" ") + "\n\n" +
+"Management plan: " + management.join(" ") + "\n\n" +
+"Follow-up/counseling: " + followPlan.join(" ") + "\n\n" +
+"Care standard completion: " + score + " — " + scoreLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".") + "\n\n" +
+evidence + "\n\n" +
+"Sincerely,\nThrombosis / Vascular Medicine";
+
+    var concise =
+"Impression:\n" +
+"- " + phenotype + "\n" +
+"- Site-specific logic: " + siteLogic.join(" ") + "\n\n" +
+"Important positives:\n" +
+"- Summary: " + (val("ust_summary") || "not provided") + "\n" +
+"- Context: " + (context.length ? context.join("; ") : "not specified") + "\n" +
+"- Safety: " + safety.join(" ") + "\n\n" +
+"Plan:\n" +
+"- Workup: " + workupPlan.join(" ") + "\n" +
+"- Management: " + management.join(" ") + "\n" +
+"- Follow-up: " + followPlan.join(" ") + "\n" +
+"- Missing items: " + (missing.length ? missing.join(", ") : "none");
+
+    var counseling =
+"Teaching for clinician/non-thrombosis attending:\n" +
+"- " + teaching + "\n" +
+"- Current site: " + site + ". This site requires site-specific workup and follow-up rather than routine DVT/PE logic alone.\n\n" +
+"Patient explanation:\n" +
+"- This clot is in a less common location. Treatment decisions depend on the exact site, whether there is a local cause, whether it is acute or chronic, and bleeding risk.\n" +
+"- A blood thinner mainly prevents the clot from extending or recurring while the body gradually breaks clot down.\n\n" +
+"Safety-net:\n" +
+"- Seek urgent care for major bleeding, black stools, vomiting blood, severe headache or neurologic symptoms, worsening abdominal pain, worsening shortness of breath/chest pain, or rapidly worsening limb swelling/pain.\n\n" +
+"References/trials to remember:\n" +
+"- CVT: Thrombosis Canada CVT guide; Canadian Stroke Best Practices CVT module.\n" +
+"- Portal/splanchnic: Thrombosis Canada PVT guide; ISTH splanchnic guidance.\n" +
+"- SVT: CALISTO and SURPRISE.\n";
+
+    var finalText = formal;
+    if(mode === "Concise clinic note") finalText = concise;
+    if(mode === "Counseling / teaching note") finalText = counseling;
+
+    var out = document.getElementById("ust_out");
+    out.className = "output " + (highSafety || missing.length ? "amber" : "green");
     out.textContent = finalText;
     out.classList.remove("hidden");
   }
