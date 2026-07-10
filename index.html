@@ -86,7 +86,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF stroke-prevention shared decision aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
@@ -1410,7 +1410,7 @@ evidence + "\n\n" +
 
     '<h4>1. AF phenotype</h4>'+
     '<div class="grid2">'+
-    selectField("af_type","AF type / context",["Paroxysmal AF","Persistent AF","Permanent AF","Post-operative AF","Device-detected AF / AHRE — route-out prompt","AF after ablation/cardioversion — route-out prompt","Rheumatic/valvular AF concern","Unclear AF documentation"],"Anticoagulation is based mainly on stroke risk and eligibility, not symptoms or AF pattern alone.")+
+    selectField("af_type","AF type / context",["Paroxysmal AF","Persistent AF","Permanent AF","Post-operative AF","Device-detected AF / AHRE — route-out prompt","Rheumatic/valvular AF concern","Unclear AF documentation"],"Anticoagulation is based mainly on stroke risk and eligibility, not symptoms or AF pattern alone.")+
     selectField("af_documented","AF documentation",["ECG/rhythm strip documented AF","Device-detected episode documented","Outside documentation pending","Patient-reported only / not confirmed","Unclear"],"")+
     inputField("af_summary","One-line case summary","e.g. paroxysmal AF, CHA2DS2-VASc 3, prior GI bleed; new AF with rheumatic MS")+
     '</div>'+
@@ -1493,11 +1493,10 @@ evidence + "\n\n" +
     inputField("af_plan_note","Recommendation rationale note","brief reason: high stroke risk, warfarin because MS, aspirin deprescribing, renal issue, etc.")+
     '</div>'+
 
-    '<h4>8. Route-out prompts</h4>'+
+    '<h4>8. Scope / route-out prompts</h4>'+
+    '<p class="muted">This tool is for long-term AF stroke-prevention anticoagulation, not peri-cardioversion or ablation anticoagulation.</p>'+
     checks("af_special",[
-      "Cardioversion planned or recent — use dedicated pathway",
-      "AF ablation planned or recent — use dedicated pathway",
-      "Device-detected AF / AHRE without clinical AF — use dedicated pathway",
+      "Device-detected AF / AHRE without clinical AF — needs separate specialist framing if clinically relevant",
       "Recent ACS/PCI requiring antiplatelet pathway",
       "Post-operative AF with uncertain recurrence risk",
       "No special scenario today"
@@ -1658,11 +1657,8 @@ evidence + "\n\n" +
     }
 
     var specialText = special.length ? special.join("; ") : "none selected";
-    if(afHas(special,"Cardioversion") || afHas(special,"ablation")){
-      specialText += ". Cardioversion/ablation anticoagulation should use the dedicated timing pathway; long-term anticoagulation still depends on stroke risk rather than rhythm success alone.";
-    }
-    if(afHas(special,"Device-detected")){
-      specialText += ". Device-detected AF/AHRE requires shared decision-making based on episode duration and stroke-risk profile.";
+if(afHas(special,"Device-detected")){
+      specialText += ". Device-detected AF/AHRE needs separate specialist framing based on episode duration, burden, and stroke-risk profile.";
     }
 
     var recommendation = [];
@@ -1688,7 +1684,7 @@ evidence + "\n\n" +
     scoreItem("Renal/liver/antiplatelet safety assessed", val("af_renal") && val("af_liver") && val("af_antiplatelet") && val("af_safety_impact"));
     scoreItem("Dose-safety prompt addressed", val("af_dose_agent") && val("af_dose_conclusion"));
     scoreItem("Recommendation documented", val("af_oac_rec") && val("af_agent"));
-    scoreItem("Route-outs reviewed", special.length>0);
+    scoreItem("Scope/route-outs reviewed", special.length>0);
     var careScore = completed.length + "/8";
     var careLabel = completed.length >= 7 ? "Complete" : (completed.length >= 5 ? "Mostly complete" : "Gaps remain");
 
@@ -1707,7 +1703,7 @@ evidence + "\n\n" +
 doseText + "\n\n" +
 benefitHarm + "\n\n" +
 "My recommendation is: " + oacAuto + ". The selected strategy is: " + val("af_agent") + ". " + (val("af_lAAO").indexOf("Not needed")<0 ? "Left atrial appendage occlusion consideration: " + val("af_lAAO") + ". " : "") + (deprescribe ? "I would specifically review and deprescribe aspirin/NSAID exposure unless there is a current compelling indication. " : "") + (val("af_plan_note") ? "Rationale: " + val("af_plan_note") + "." : "") + "\n\n" +
-"Route-out prompts reviewed: " + specialText + "\n\n" +
+"Scope/route-out prompts reviewed: " + specialText + "\n\n" +
 "Care standard completion: " + careScore + " — " + careLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".") + "\n\n" +
 evidence + "\n\n" +
 "Sincerely,\nVascular Medicine / General Internal Medicine";
@@ -1730,7 +1726,7 @@ evidence + "\n\n" +
 "- Strategy: " + val("af_agent") + "\n" +
 "- Safety action: address modifiable bleeding risks, especially aspirin/NSAID overlap, uncontrolled BP, renal/liver uncertainty, active bleeding, thrombocytopenia, or procedure timing if present.\n" +
 "- LAAO: " + val("af_lAAO") + "\n" +
-"- Route-outs: " + specialText + "\n" +
+"- Scope/route-outs: " + specialText + "\n" +
 "- Missing items: " + (missing.length ? missing.join(", ") : "none");
 
     var counseling =
