@@ -86,7 +86,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 1 core AF stroke-prevention aid: DOAC eligibility, CHA₂DS₂-VASc, bleeding/safety modifiers, renal/liver context, antiplatelet overlap, OAC/LAAO recommendation, and consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
@@ -188,6 +188,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "pad-suspected") return renderPAD();
     if(id === "pad-confirmed") return renderConfirmedPAD();
     if(id === "thrombosis-clinic") return renderCoreVTE();
+    if(id === "af-anticoag" || id === "af-anticoagulation" || id === "af-decision") return renderAFDecisionAid();
     if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
@@ -1391,6 +1392,267 @@ evidence + "\n\n" +
 
     var out = document.getElementById("ust_out");
     out.className = "output " + (highSafety || missing.length ? "amber" : "green");
+    out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
+
+
+  function renderAFDecisionAid(){
+    shell("AF Anticoagulation Decision Aid","",
+    '<section class="card">'+
+
+    '<h4>0. Visit type</h4>'+
+    '<div class="grid2">'+
+    selectField("af_visit","Visit type",["New assessment","Follow-up"],"New = first anticoagulation decision assessment. Follow-up = review of anticoagulant choice, dose/safety, bleeding, renal/liver function, or patient preference.")+
+    '</div>'+
+
+    '<h4>1. AF phenotype</h4>'+
+    '<div class="grid2">'+
+    selectField("af_type","AF type / context",["Paroxysmal AF","Persistent AF","Permanent AF","Post-operative AF","Device-detected AF / AHRE — route-out prompt","AF after ablation/cardioversion — route-out prompt","Rheumatic/valvular AF concern","Unclear AF documentation"],"Anticoagulation is based mainly on stroke risk and eligibility, not symptoms or AF pattern alone.")+
+    selectField("af_documented","AF documentation",["ECG/rhythm strip documented AF","Device-detected episode documented","Outside documentation pending","Patient-reported only / not confirmed","Unclear"],"")+
+    inputField("af_summary","One-line case summary","e.g. paroxysmal AF, CHA2DS2-VASc 3, prior GI bleed; new AF with rheumatic MS")+
+    '</div>'+
+
+    '<h4>2. DOAC eligibility gate</h4>'+
+    checks("af_gate",[
+      "No DOAC-exclusion feature selected",
+      "Mechanical heart valve",
+      "Moderate-to-severe mitral stenosis",
+      "Rheumatic mitral stenosis / rheumatic heart disease",
+      "High-risk APS concern",
+      "Pregnancy or breastfeeding anticoagulation question",
+      "Severe renal impairment / dialysis concern",
+      "Significant liver disease / varices / synthetic dysfunction",
+      "Strong CYP3A4/P-gp interaction concern",
+      "Cost/access/adherence barrier to DOAC"
+    ])+
+    '<div class="grid2">'+
+    selectField("af_doac_elig","DOAC eligibility conclusion",["DOAC eligible if anticoagulation indicated","Warfarin/VKA pathway favored","Specialist individualized anticoagulant decision","Anticoagulation not indicated by current stroke risk","Unclear — clarify valve/renal/liver/drug interaction context"],"Mechanical valve and moderate-to-severe/rheumatic mitral stenosis should route to warfarin/VKA rather than DOAC.")+
+    selectField("af_valve_note","Valve/rheumatic note",["No mechanical valve or moderate-to-severe MS known","Mechanical valve present","Moderate-to-severe mitral stenosis present","Rheumatic heart disease-associated AF concern","Unclear — echo/valve history needed"],"")+
+    '</div>'+
+
+    '<h4>3. CHA₂DS₂-VASc stroke risk</h4>'+
+    checks("af_chads",[
+      "Congestive heart failure / LV dysfunction",
+      "Hypertension",
+      "Age ≥75",
+      "Diabetes mellitus",
+      "Prior stroke/TIA/systemic embolism",
+      "Vascular disease: MI/PAD/aortic plaque",
+      "Age 65-74",
+      "Sex category: female"
+    ])+
+    '<div class="grid2">'+
+    selectField("af_sex","Patient sex for score threshold",["Male","Female","Intersex/other/unclear — use clinical judgment"],"Female sex is a risk modifier in CHA₂DS₂-VASc; sex-alone risk is generally low.")+
+    selectField("af_patient_values","Patient preference / values",["Not discussed","Prefers stroke prevention if benefit is meaningful","Bleeding fear dominates","Medication burden/cost concern","Shared decision completed"],"")+
+    '</div>'+
+
+    '<h4>4. Bleeding and anticoagulant safety modifiers</h4>'+
+    '<div class="grid2">'+
+    selectField("af_bleed_status","Bleeding status",["No active/recent bleeding and Hb stable","Active bleeding now","Major bleeding within 30 days","Major bleeding within 3 months","Prior intracranial bleeding","Active/recent GI or GU bleeding lesion","Hemoglobin falling or unexplained anemia","Unclear / needs clarification"],"Bleeding risk should identify modifiable factors; it should not be a stop/go gate by itself.")+
+    selectField("af_platelets","Platelet category",["Platelets ≥100","Platelets 50-100","Platelets <50","Platelets unknown"],"")+
+    inputField("af_crcl","Cockcroft–Gault CrCl / lab eGFR if CrCl unavailable","e.g. CrCl 72, eGFR 38")+
+    selectField("af_renal","Renal safety",["CrCl ≥50 / no major renal issue","CrCl 30-49 / dose/safety review","CrCl 15-29 / severe renal impairment; specialist review","CrCl <15 or dialysis / specialist pathway","AKI or fluctuating renal function","Unknown"],"Prefer Cockcroft–Gault CrCl for DOAC dosing/safety decisions; lab eGFR is a fallback if CrCl is not available.")+
+    selectField("af_liver","Liver/varices safety",["No significant liver disease","Mild stable liver disease","Cirrhosis/portal hypertension but stable","Varices or high GI bleeding concern","Decompensated cirrhosis/synthetic failure","Unknown"],"")+
+    selectField("af_antiplatelet","Antiplatelet / NSAID exposure",["None","Aspirin only","Dual antiplatelet therapy","Recent ACS/PCI","Remote stable CAD/PAD on aspirin","NSAID use","Aspirin + NSAID","Unclear indication for aspirin"],"Avoid routine antiplatelet plus OAC for AF stroke prevention unless a separate CAD/PCI/PAD indication exists.")+
+    selectField("af_procedure","Procedure status",["No procedure planned","Low-bleeding-risk procedure planned","High-bleeding-risk procedure planned","Procedure timing unclear"],"")+
+    selectField("af_safety_impact","Overall safety impact",["No major safety modifier","Caution: anticoagulation likely feasible with closer review/monitoring","High bleeding risk: individualize agent, dose, monitoring, and risk mitigation","Temporarily unsafe: active bleeding or urgent procedure dominates","Unclear: need labs/history before final plan"],"")+
+    '</div>'+
+
+    '<h4>5. Recommendation</h4>'+
+    '<div class="grid2">'+
+    selectField("af_oac_rec","OAC recommendation",["Auto-suggest from score/eligibility","OAC recommended","OAC reasonable / shared decision","No anticoagulation usually","Warfarin/VKA pathway","LAAO consideration","Defer pending missing data"],"")+
+    selectField("af_agent","Preferred strategy",["DOAC preferred if eligible","Apixaban","Rivaroxaban","Dabigatran","Edoxaban","Warfarin/VKA","No anticoagulation","LAAO referral/consideration","Specialist individualized plan"],"")+
+    selectField("af_lAAO","LAAO consideration",["Not needed today","Consider if contraindication to long-term OAC","Consider if recurrent major bleeding despite need for stroke prevention","Consider if high bleeding risk and moderate-high stroke risk","Patient preference after counseling","Unclear"],"")+
+    inputField("af_plan_note","Recommendation rationale note","brief reason: high stroke risk, warfarin because MS, aspirin deprescribing, renal issue, etc.")+
+    '</div>'+
+
+    '<h4>6. Route-out prompts</h4>'+
+    checks("af_special",[
+      "Cardioversion planned or recent — use dedicated pathway",
+      "AF ablation planned or recent — use dedicated pathway",
+      "Device-detected AF / AHRE without clinical AF — use dedicated pathway",
+      "Recent ACS/PCI requiring antiplatelet pathway",
+      "Post-operative AF with uncertain recurrence risk",
+      "No special scenario today"
+    ])+
+
+    '<h4>7. Output</h4>'+
+    '<div class="grid2">'+
+    selectField("af_output_mode","Output mode",["Formal consultant letter","Concise clinic note","Counseling / teaching note"],"")+
+    '</div>'+
+    '<div class="toolbar"><button class="primary" id="afGenerate">Generate AF anticoagulation note</button><button id="afCopy">Copy output</button><button id="afReset">Reset pathway</button></div><div id="af_out" class="output hidden"></div>'+
+    '</section>');
+    document.getElementById("afGenerate").addEventListener("click", calcAFDecisionAid);
+    document.getElementById("afCopy").addEventListener("click", function(){ copyOut("af_out"); });
+    document.getElementById("afReset").addEventListener("click", resetAFDecisionAid);
+  }
+
+  function resetAFDecisionAid(){
+    var out = document.getElementById("af_out");
+    var card = out ? out.closest("section.card") : document;
+    if(!card) card = document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function afHas(arr, text){
+    return arr.some(function(x){ return x.indexOf(text)>=0; });
+  }
+
+  function calcAFDecisionAid(){
+    var visit = val("af_visit");
+    var afType = val("af_type");
+    var gate = checked("af_gate");
+    var chads = checked("af_chads");
+    var special = checked("af_special");
+    var mode = val("af_output_mode");
+
+    var score = 0;
+    if(afHas(chads,"Congestive")) score += 1;
+    if(afHas(chads,"Hypertension")) score += 1;
+    if(afHas(chads,"Age ≥75")) score += 2;
+    if(afHas(chads,"Diabetes")) score += 1;
+    if(afHas(chads,"Prior stroke")) score += 2;
+    if(afHas(chads,"Vascular")) score += 1;
+    if(afHas(chads,"Age 65-74")) score += 1;
+    if(afHas(chads,"female")) score += 1;
+
+    var sex = val("af_sex");
+    var doacExcluded = afHas(gate,"Mechanical") || afHas(gate,"Moderate-to-severe") || afHas(gate,"Rheumatic") || afHas(gate,"High-risk APS") || val("af_doac_elig").indexOf("Warfarin")>=0;
+    var specialist = afHas(gate,"Pregnancy") || afHas(gate,"Severe renal") || afHas(gate,"Significant liver") || afHas(gate,"Strong CYP") || val("af_doac_elig").indexOf("Specialist")>=0;
+    var lowRisk = (sex === "Male" && score === 0) || (sex === "Female" && score === 1 && afHas(chads,"female") && chads.length === 1);
+    var intermediate = (sex === "Male" && score === 1) || (sex === "Female" && score === 2);
+    var highRisk = (sex === "Male" && score >= 2) || (sex === "Female" && score >= 3);
+
+    var strokeCategory = "Risk category unclear — verify sex and CHA₂DS₂-VASc items.";
+    if(lowRisk) strokeCategory = "Low risk: anticoagulation usually not indicated.";
+    else if(intermediate) strokeCategory = "Intermediate risk: anticoagulation is reasonable and should be individualized with shared decision-making.";
+    else if(highRisk) strokeCategory = "High risk: oral anticoagulation is recommended unless contraindicated.";
+    else if(score > 0) strokeCategory = "Risk may be intermediate depending sex/risk modifiers; use shared decision-making.";
+
+    var safetyMods = [];
+    [val("af_bleed_status"), val("af_platelets"), val("af_renal"), val("af_liver"), val("af_antiplatelet"), val("af_procedure"), val("af_safety_impact")].forEach(function(x){
+      if(x && x !== "None" && x.indexOf("No active/recent")<0 && x.indexOf("Platelets ≥100")<0 && x.indexOf("CrCl ≥50")<0 && x.indexOf("No significant")<0 && x.indexOf("No procedure")<0 && x.indexOf("No major safety")<0) safetyMods.push(x);
+    });
+    var highSafety = val("af_bleed_status").indexOf("Active")>=0 || val("af_bleed_status").indexOf("within 30")>=0 || val("af_bleed_status").indexOf("intracranial")>=0 || val("af_platelets").indexOf("<50")>=0 || val("af_liver").indexOf("Varices")>=0 || val("af_liver").indexOf("Decompensated")>=0 || val("af_procedure").indexOf("High")>=0 || val("af_safety_impact").indexOf("High bleeding")>=0 || val("af_safety_impact").indexOf("Temporarily unsafe")>=0;
+
+    var oacAuto = "Defer pending missing data.";
+    if(val("af_oac_rec") !== "Auto-suggest from score/eligibility"){
+      oacAuto = val("af_oac_rec");
+    } else if(doacExcluded && (highRisk || intermediate)){
+      oacAuto = "Warfarin/VKA pathway";
+    } else if(highRisk && !highSafety){
+      oacAuto = "OAC recommended";
+    } else if(highRisk && highSafety){
+      oacAuto = "OAC recommended in principle, but bleeding/safety modifiers require individualized mitigation or alternative strategy.";
+    } else if(intermediate){
+      oacAuto = "OAC reasonable / shared decision";
+    } else if(lowRisk){
+      oacAuto = "No anticoagulation usually";
+    }
+
+    var eligibilityText = "DOAC eligibility: " + val("af_doac_elig") + ". Valve/rheumatic context: " + val("af_valve_note") + ".";
+    if(doacExcluded) eligibilityText += " Mechanical valve, moderate-to-severe/rheumatic mitral stenosis, or high-risk APS concern favors warfarin/VKA rather than DOAC.";
+    if(specialist) eligibilityText += " Specialist individualized decision needed due to pregnancy, severe renal/liver, or major interaction context.";
+
+    var antiplateletText = "Antiplatelet/NSAID context: " + val("af_antiplatelet") + ".";
+    if(val("af_antiplatelet").indexOf("Unclear")>=0 || val("af_antiplatelet").indexOf("Aspirin only")>=0 || val("af_antiplatelet").indexOf("Remote stable")>=0){
+      antiplateletText += " If no clear current indication exists, consider deprescribing aspirin/NSAID when OAC is used.";
+    }
+    if(val("af_antiplatelet").indexOf("Recent ACS")>=0 || val("af_antiplatelet").indexOf("Dual")>=0){
+      antiplateletText += " Recent ACS/PCI or DAPT requires a separate cardiology antithrombotic pathway.";
+    }
+
+    var specialText = special.length ? special.join("; ") : "none selected";
+    if(afHas(special,"Cardioversion") || afHas(special,"ablation")){
+      specialText += ". Cardioversion/ablation anticoagulation should use the dedicated timing pathway; long-term anticoagulation still depends on stroke risk rather than rhythm success alone.";
+    }
+    if(afHas(special,"Device-detected")){
+      specialText += ". Device-detected AF/AHRE requires shared decision-making based on episode duration and stroke-risk profile.";
+    }
+
+    var recommendation = [];
+    recommendation.push("Stroke risk: CHA₂DS₂-VASc = " + score + ". " + strokeCategory);
+    recommendation.push(eligibilityText);
+    recommendation.push("Recommended strategy: " + oacAuto + ". Preferred strategy selected: " + val("af_agent") + ".");
+    recommendation.push("Renal/liver safety: " + (val("af_crcl") || val("af_renal")) + " / " + val("af_renal") + "; " + val("af_liver") + ".");
+    recommendation.push("Bleeding/safety modifiers: " + (safetyMods.length ? safetyMods.join("; ") : "none major selected") + ".");
+    recommendation.push(antiplateletText);
+    recommendation.push("LAAO: " + val("af_lAAO") + ".");
+    if(val("af_plan_note")) recommendation.push("Rationale note: " + val("af_plan_note") + ".");
+
+    var completed = [];
+    var missing = [];
+    function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("AF context documented", val("af_type") && val("af_documented"));
+    scoreItem("DOAC eligibility assessed", gate.length>0 && val("af_doac_elig") && val("af_valve_note"));
+    scoreItem("CHA₂DS₂-VASc assessed", chads.length>0 || lowRisk);
+    scoreItem("Safety modifiers assessed", val("af_bleed_status") && val("af_platelets") && val("af_renal") && val("af_liver") && val("af_antiplatelet") && val("af_safety_impact"));
+    scoreItem("Recommendation documented", val("af_oac_rec") && val("af_agent"));
+    scoreItem("Route-outs reviewed", special.length>0);
+    var careScore = completed.length + "/6";
+    var careLabel = completed.length >= 5 ? "Complete" : (completed.length >= 4 ? "Mostly complete" : "Gaps remain");
+
+    var evidence = "Evidence anchors: 2023 ACC/AHA/ACCP/HRS AF guideline; Thrombosis Canada Stroke Prevention in AF guide; DOAC pivotal trials RE-LY, ROCKET AF, ARISTOTLE, ENGAGE AF-TIMI 48; INVICTUS for rheumatic heart disease-associated AF; RE-ALIGN for mechanical valves.";
+    var teaching = "Teaching: in AF, anticoagulation is based on stroke-risk profile and eligibility, not AF symptoms or AF pattern alone. Bleeding risk should identify modifiable risks and guide agent/dose/monitoring, not automatically exclude anticoagulation.";
+
+    var formal =
+"Dear Colleague,\n\n" +
+"Thank you for asking me to assess this patient with atrial fibrillation for stroke-prevention anticoagulation. This is a " + visit + " visit. AF context: " + afType + "; documentation: " + val("af_documented") + ". Case summary: " + (val("af_summary") || "not provided") + ".\n\n" +
+"My impression is that the CHA₂DS₂-VASc score is " + score + ". " + strokeCategory + "\n\n" +
+eligibilityText + "\n\n" +
+"Anticoagulant safety review: " + recommendation.slice(3,6).join(" ") + "\n\n" +
+"My anticoagulation recommendation is: " + oacAuto + ". Preferred strategy: " + val("af_agent") + ". " + (val("af_plan_note") ? "Rationale: " + val("af_plan_note") + "." : "") + "\n\n" +
+"Route-out prompts reviewed: " + specialText + "\n\n" +
+"Care standard completion: " + careScore + " — " + careLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".") + "\n\n" +
+evidence + "\n\n" +
+"Sincerely,\nVascular Medicine / General Internal Medicine";
+
+    var concise =
+"Impression:\n" +
+"- AF stroke-prevention anticoagulation assessment.\n" +
+"- CHA₂DS₂-VASc = " + score + ". " + strokeCategory + "\n" +
+"- DOAC eligibility: " + val("af_doac_elig") + "; valve/rheumatic context: " + val("af_valve_note") + "\n\n" +
+"Important positives:\n" +
+"- AF context: " + afType + "; documentation: " + val("af_documented") + "\n" +
+"- Safety: " + (safetyMods.length ? safetyMods.join("; ") : "none major selected") + "\n" +
+"- Renal/liver: " + (val("af_crcl") || val("af_renal")) + " / " + val("af_liver") + "\n" +
+"- Antiplatelet/NSAID: " + val("af_antiplatelet") + "\n\n" +
+"Plan:\n" +
+"- OAC recommendation: " + oacAuto + "\n" +
+"- Strategy: " + val("af_agent") + "\n" +
+"- LAAO: " + val("af_lAAO") + "\n" +
+"- Route-outs: " + specialText + "\n" +
+"- Missing items: " + (missing.length ? missing.join(", ") : "none");
+
+    var counseling =
+"Teaching for clinician/non-cardiology attending:\n" +
+"- " + teaching + "\n" +
+"- CHA₂DS₂-VASc = " + score + ". " + strokeCategory + "\n" +
+"- DOACs are generally preferred when eligible, but warfarin/VKA is favored for mechanical valves and moderate-to-severe/rheumatic mitral stenosis.\n\n" +
+"Patient explanation:\n" +
+"- AF can allow clots to form in the heart, which can travel to the brain and cause stroke.\n" +
+"- A blood thinner lowers stroke risk, but it can increase bleeding risk.\n" +
+"- We choose treatment by balancing your stroke risk, bleeding risk, kidney/liver function, other medicines such as aspirin/NSAIDs, and your preferences.\n\n" +
+"Today’s decision:\n" +
+"- " + oacAuto + ". Strategy: " + val("af_agent") + ".\n" +
+"- Safety modifiers: " + (safetyMods.length ? safetyMods.join("; ") : "none major selected") + ".\n\n" +
+"Trial/guideline names to remember:\n" +
+"- RE-LY, ROCKET AF, ARISTOTLE, ENGAGE AF-TIMI 48; INVICTUS; RE-ALIGN; 2023 ACC/AHA/ACCP/HRS AF guideline; Thrombosis Canada AF stroke prevention guide.";
+
+    var finalText = formal;
+    if(mode === "Concise clinic note") finalText = concise;
+    if(mode === "Counseling / teaching note") finalText = counseling;
+
+    var out = document.getElementById("af_out");
+    out.className = "output " + (highSafety || missing.length || specialist ? "amber" : "green");
     out.textContent = finalText;
     out.classList.remove("hidden");
   }
