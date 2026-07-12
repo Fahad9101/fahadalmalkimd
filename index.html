@@ -52,6 +52,16 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 
 
 .badgeNote{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px;color:#0b5964;background:#eef8fa;font-weight:800}
+.pathStep{border:1px solid var(--line);border-radius:16px;background:#fbfdfe;margin:16px 0;overflow:hidden}
+.pathStep>summary{cursor:pointer;list-style:none;padding:18px 20px;font-weight:900;font-size:17px;color:#073f4a;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.pathStep>summary::-webkit-details-marker{display:none}
+.pathStep>summary:after{content:"＋";font-size:20px;color:var(--teal2);line-height:1}
+.pathStep[open]>summary{background:#eef8fa;border-bottom:1px solid var(--line)}
+.pathStep[open]>summary:after{content:"−"}
+.pathStepBody{padding:4px 20px 20px}
+.miniStep{border:1px dashed var(--line);border-radius:12px;background:white;margin:14px 0;padding:0 14px}
+.miniStep>summary{cursor:pointer;padding:13px 0;font-weight:800;color:#31535d}
+.stepIntro{margin:12px 0 18px;color:#5b6b78}
 
 </style>
 </head>
@@ -80,7 +90,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 <script>
 (function(){
   var USERNAME = "fahad";
-  var PASSWORD = "ChangeThisPassword2026!";
+  var PASSWORD_HASH = "441a58b07454cb4475218ed81796578a53c6001b9d92f8419a821854e8c7eaea";
   var authed = sessionStorage.getItem("fa_auth") === "yes";
 
   var tools = [
@@ -90,7 +100,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
-    {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Post-op Troponin Pathway",desc:"Guided MINS pathway: screening, elevated troponin interpretation, RCRI, BNP/NT-proBNP, ECG, symptoms, competing triggers, and follow-up."},
+    {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Diarrhea Diagnostic Pathway",desc:"Danger-first diarrhea approach: watery vs inflammatory vs fatty, osmotic vs secretory, medications, bile acid, pancreatic, microscopic colitis."},
     {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Tonicity-first pathway, ADH-on/off reasoning, urine osm/sodium, SIADH mimics, ODS risk, and correction guardrails."},
     {id:"hypokalemia",cat:"GIM Diagnostic Reasoning",title:"Hypokalemia + Acid–Base Engine",desc:"GI vs renal potassium loss, metabolic acidosis/alkalosis, urine potassium/chloride, RTA, diuretics, mineralocorticoid clues."},
@@ -110,6 +120,12 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   }
   function setHash(page,param){ location.hash = param ? page + ":" + param : page; render(); }
   window.setHash = setHash;
+
+  async function sha256Text(value){
+    var data = new TextEncoder().encode(value);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.prototype.map.call(new Uint8Array(digest), function(x){ return x.toString(16).padStart(2,"0"); }).join("");
+  }
 
   document.addEventListener("click", function(e){
     var p = e.target.closest("[data-page]");
@@ -149,8 +165,9 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   function renderLogin(target){
     showHero(false);
     app().innerHTML = '<section class="lock card"><small>Protected library</small><h2>Clinical Pathways Login</h2><div class="field"><label>Username</label><input id="u"></div><div class="field"><label>Password</label><input id="p" type="password"></div><button class="primary" id="loginBtn">Enter</button><p class="hint">Soft access gate only. Real privacy later needs Cloudflare Access or similar.</p></section>';
-    document.getElementById("loginBtn").addEventListener("click", function(){
-      if(val("u") === USERNAME && val("p") === PASSWORD){
+    document.getElementById("loginBtn").addEventListener("click", async function(){
+      var enteredHash = await sha256Text(val("p"));
+      if(val("u") === USERNAME && enteredHash === PASSWORD_HASH){
         sessionStorage.setItem("fa_auth","yes");
         authed = true;
         var parts = target.split(":");
@@ -190,6 +207,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "thrombosis-clinic") return renderCoreVTE();
     if(id === "af-anticoag" || id === "af-anticoagulation" || id === "af-decision") return renderAFDecisionAid();
     if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
+    if(id === "postop-troponin") return renderPostopMINS();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -1754,6 +1772,463 @@ evidence + "\n\n" +
 
     var out = document.getElementById("af_out");
     out.className = "output " + (highSafety || missing.length || specialist ? "amber" : "green");
+    out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
+
+  function renderPostopMINS(){
+    shell("Perioperative Cardiac Risk & MINS Pathway","Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and follow-up after noncardiac surgery.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>One pathway across the operation:</b> estimate preoperative cardiac risk, decide who needs postoperative troponin surveillance, and interpret an abnormal result without equating every elevation with myocardial infarction.</p></div>'+
+    '<p class="stepIntro">Choose your clinical starting point below. Only the relevant section opens; the deeper documentation checklists remain optional.</p>'+
+
+    '<details class="pathStep" id="mins_step_preop" open><summary>1. Preoperative cardiac risk & surveillance</summary><div class="pathStepBody">'+
+
+    '<h4>Clinical starting point</h4>'+
+    '<div class="grid2">'+
+    selectField("mins_entry","Pathway entry",["Screening eligibility before/after surgery","Interpret an elevated postoperative troponin","Established MINS / postoperative MI management","Follow-up after detected postoperative myocardial injury"],"Choose the closest clinical question; all sections remain available.")+
+    inputField("mins_procedure","Procedure / one-line case summary","e.g. POD 1 after urgent colectomy; hs-cTnT 42 to 55 ng/L")+
+    selectField("mins_urgency","Surgical urgency",["Elective","Time-sensitive","Urgent","Emergency","Unknown"],"")+
+    selectField("mins_surgery_risk","Noncardiac surgery risk",["Elevated-risk noncardiac surgery","Low-risk noncardiac surgery","Risk not yet classified"],"Elevated-risk refers to procedural and patient context; it is not identical to the RCRI high-risk-surgery item.")+
+    '<div class="field"><label>Postoperative day</label><input id="mins_pod" type="number" min="0" step="1" placeholder="e.g. 1"><span class="hint">MINS is defined within 30 days, but surveillance protocols focus on the early postoperative period.</span></div>'+
+    '</div>'+
+
+    '<h4>Danger first</h4>'+
+    selectField("mins_danger","Most important immediate concern",["No immediate danger feature","Ongoing chest pain or ischemic equivalent","Hemodynamic instability, shock, or persistent hypotension","ST elevation or other high-risk new ischemic ECG change","Sustained ventricular arrhythmia or unstable tachyarrhythmia","Acute pulmonary edema or severe heart failure","Severe or worsening hypoxemia","Active major bleeding or rapid hemoglobin fall","New focal neurologic deficit / possible acute stroke"],"If more than one is present, choose the most urgent and add the others to the case summary.")+
+    '<div class="subtlebox"><b>Escalation rule:</b> instability, ongoing ischemia, high-risk ECG change, serious arrhythmia, pulmonary edema, major bleeding, severe hypoxemia, or possible stroke triggers immediate bedside escalation. Do not wait for the generated note.</div>'+
+
+    '<h4>Screening eligibility</h4>'+
+    '<div class="grid2">'+
+    selectField("mins_age","Age category",["Age <45 years","Age 45-64 years","Age ≥65 years","Age unknown"],"")+
+    selectField("mins_cv_context","Cardiovascular context",["Known cardiovascular disease","Symptoms suggestive of cardiovascular disease","Cardiovascular risk factors without known CVD","No known CVD or cardiovascular risk factor","Unknown"],"Known CVD includes coronary, cerebrovascular, peripheral arterial disease, or heart failure.")+
+    selectField("mins_bnp","Preoperative natriuretic peptide",["Not measured / unavailable","NT-proBNP <300 ng/L","NT-proBNP ≥300 ng/L","BNP <92 ng/L","BNP ≥92 ng/L","Measured but threshold/assay unclear"],"The displayed BNP/NT-proBNP cutoffs are from the Canadian perioperative guideline.")+
+    selectField("mins_baseline_available","Preoperative/baseline troponin",["Available and entered below","Not available","Available but value/assay unclear"],"A baseline improves acute-versus-chronic interpretation, especially with CKD or structural heart disease.")+
+    '</div>'+
+    '<label>Revised Cardiac Risk Index (RCRI) items</label>'+
+    checks("mins_rcri",[
+      "No RCRI factor selected",
+      "High-risk surgery by RCRI definition",
+      "History of ischemic heart disease",
+      "History of heart failure",
+      "History of cerebrovascular disease",
+      "Diabetes treated with insulin",
+      "Preoperative creatinine >177 µmol/L / 2.0 mg/dL"
+    ])+
+    '<div class="subtlebox"><b>Website surveillance protocol:</b> obtain symptom-driven troponin at any time when clinically indicated. For selected higher-risk patients undergoing elevated-risk noncardiac surgery, use a baseline when feasible and measure cardiac troponin at approximately 24 and 48 hours. Consider a 72-hour value when an earlier result is abnormal/rising or clinical concern persists. Do not routinely screen asymptomatic low-risk surgery patients.</div>'+
+    '</div></details>'+
+
+    '<details class="pathStep" id="mins_step_postop"><summary>2. Postoperative troponin & MINS classification</summary><div class="pathStepBody">'+
+    '<h4>Assay and serial troponin</h4>'+
+    '<div class="grid2">'+
+    selectField("mins_assay","Troponin assay",["Roche high-sensitivity troponin T (hs-cTnT) — VISION thresholds supported","Other high-sensitivity troponin T assay","High-sensitivity troponin I (hs-cTnI)","Conventional troponin T or I","Assay unknown"],"VISION numeric thresholds must not be transferred automatically to hs-cTnI or another assay.")+
+    selectField("mins_units","Reported units",["ng/L","ng/mL","Other / unclear"],"Confirm units before interpretation; the tool does not convert between units.")+
+    '<div class="field"><label>Laboratory 99th-percentile upper reference limit</label><input id="mins_url" type="number" min="0" step="any" placeholder="Enter local assay URL"><span class="hint">Myocardial injury is defined using the assay-specific 99th-percentile URL.</span></div>'+
+    '<div class="field"><label>Preoperative / baseline troponin</label><input id="mins_t0" type="number" min="0" step="any" placeholder="Leave blank if unavailable"></div>'+
+    '<div class="field"><label>First postoperative troponin</label><input id="mins_t1" type="number" min="0" step="any" placeholder="Value"></div>'+
+    '<div class="field"><label>Time of first value</label><input id="mins_time1" placeholder="e.g. 6 h or POD 1"></div>'+
+    '<div class="field"><label>Second postoperative troponin</label><input id="mins_t2" type="number" min="0" step="any" placeholder="Value"></div>'+
+    '<div class="field"><label>Time of second value</label><input id="mins_time2" placeholder="e.g. 24 h or POD 2"></div>'+
+    '<div class="field"><label>Third postoperative troponin</label><input id="mins_t3" type="number" min="0" step="any" placeholder="Value"></div>'+
+    '<div class="field"><label>Time of third value</label><input id="mins_time3" placeholder="e.g. 48 h or POD 3"></div>'+
+    selectField("mins_pattern","Serial pattern assessment",["Auto-assess cautiously from entered values","Definite clinically significant rise and/or fall","Elevated but stable / no clinically significant change","Only one postoperative value available","Pattern unclear / assay-specific delta not established"],"For non-VISION assays, use the local assay and clinical delta standard. A single elevated value establishes injury, not necessarily acute injury.")+
+    '</div>'+
+    '<div class="subtlebox"><b>VISION hs-cTnT biomarker rule:</b> the attached substudy used hs-cTnT 20 to &lt;65 ng/L with an absolute change ≥5 ng/L, or hs-cTnT ≥65 ng/L, followed by clinical adjudication that the injury was ischemic. This rule is shown only for the matching Roche hs-cTnT selection and never establishes MI by itself.</div>'+
+
+    '<h4>Clinical interpretation</h4>'+
+    '<div class="grid2">'+
+    selectField("mins_ecg","ECG assessment",["Not yet performed","No new ischemic change","New ST depression / T-wave ischemic change","ST elevation / STEMI pattern","New pathologic Q waves","Nonspecific or uninterpretable change","Baseline ECG unavailable"],"Obtain and compare a 12-lead ECG when postoperative myocardial injury is detected.")+
+    selectField("mins_echo","Cardiac imaging",["Not performed / not currently indicated","No new regional wall-motion abnormality","New regional wall-motion abnormality","New LV/RV dysfunction or acute heart failure finding","Other significant finding","Result pending / unclear"],"Echocardiography is targeted to instability, heart failure, suspected new dysfunction, or diagnostic uncertainty—not automatic for every mild elevation.")+
+    selectField("mins_ischemia_one","Evidence of acute myocardial ischemia",["No ischemic evidence","Ischemic symptoms or ischemic equivalent","New ischemic ECG changes","New regional wall-motion abnormality / new loss of viable myocardium","Coronary thrombus or acute coronary occlusion demonstrated"],"Choose the strongest evidence present.")+
+    selectField("mins_trigger_one","Main ischemic supply–demand contributor",["No clear supply–demand contributor","Hypotension, shock, or significant blood-pressure drop","Anemia or perioperative blood loss","Hypoxemia or respiratory failure","Sustained tachyarrhythmia","Severe hypertension","Marked pain, agitation, or physiologic stress"],"Choose the main contributor; add additional contributors to the etiology note.")+
+    selectField("mins_nonischemic_one","Main competing nonischemic diagnosis",["No competing nonischemic diagnosis","Sepsis or severe systemic infection","Pulmonary embolism","Acute decompensated heart failure","Acute stroke or major neurologic event","Myocarditis, Takotsubo syndrome, or other noncoronary cardiac injury","Chronic kidney disease / structural heart disease with stable chronic elevation","Other competing diagnosis"],"Choose the most likely alternative explanation.")+
+    selectField("mins_final_class","Clinician classification",["Auto-suggest from entered data","No myocardial injury","Acute myocardial injury — cause not yet established","Chronic myocardial injury","Probable MINS without formal MI criteria","Perioperative type 2 MI / ischemic supply–demand injury","Postoperative NSTEMI / probable type 1 MI","Postoperative STEMI","Nonischemic acute myocardial injury","Mixed or indeterminate myocardial injury"],"The generated suggestion remains provisional until the clinical context, serial pattern, and alternative causes are reviewed.")+
+    inputField("mins_cause_note","Etiology / classification note","e.g. likely ischemic injury during hypotension and blood loss; sepsis is a stronger alternative")+
+    '</div>'+
+    '</div></details>'+
+
+    '<details class="pathStep" id="mins_step_management"><summary>3. Safety, management & follow-up</summary><div class="pathStepBody">'+
+    '<details class="miniStep"><summary>Optional: document the minimum evaluation completed</summary>'+
+    checks("mins_workup",[
+      "Repeat troponin using the same assay",
+      "Twelve-lead ECG obtained and compared",
+      "Focused symptoms, examination, vitals, and hemodynamics reviewed",
+      "CBC / hemoglobin trend and surgical bleeding assessed",
+      "Creatinine, electrolytes, and oxygenation reviewed",
+      "Sepsis/infection assessment completed when relevant",
+      "PE, stroke, heart failure, and arrhythmia considered",
+      "Telemetry/monitored bed used when clinically indicated",
+      "Targeted echocardiography planned or completed when indicated",
+      "Surgery, anesthesia, GIM, cardiology, or critical-care coordination documented"
+    ])+'</details>'+
+
+    '<h4>Bleeding and antithrombotic safety</h4>'+
+    '<div class="grid2">'+
+    selectField("mins_bleeding","Surgical bleeding/hemostasis",["Hemostasis secure; no active/recent major bleeding","Active major bleeding","Ongoing or suspected postoperative bleeding","Very high surgical bleeding risk / early postoperative state","Recent major bleeding but currently controlled","Hemostasis uncertain — confirm with surgical team"],"No antithrombotic decision should bypass the operative bleeding assessment.")+
+    inputField("mins_hb","Hemoglobin / trend","e.g. 118 to 86 g/L after surgery")+
+    selectField("mins_platelets","Platelet category",["Platelets ≥100 ×10⁹/L","Platelets 50-99 ×10⁹/L","Platelets <50 ×10⁹/L","Platelets unknown"],"")+
+    selectField("mins_renal","Renal function",["Stable renal function / CrCl ≥50","CrCl 30-49","CrCl 15-29","CrCl <15 or dialysis","AKI or rapidly changing renal function","Unknown"],"MANAGE excluded eGFR <35 mL/min; verify current product labeling and local policy if dabigatran is considered.")+
+    selectField("mins_neuraxial","Neuraxial/procedural consideration",["No active neuraxial or urgent procedural issue","Epidural/neuraxial catheter present or recently removed","Urgent reoperation/invasive procedure possible","Procedure timing unclear"],"")+
+    selectField("mins_current_antithrombotic","Current antithrombotic therapy",["None","VTE prophylaxis only","Aspirin","Dual antiplatelet therapy","Therapeutic anticoagulation","Antiplatelet plus therapeutic anticoagulation","Held because of surgery/bleeding","Unknown"],"Clarify the indication before adding or intensifying therapy.")+
+    '</div>'+
+
+    '<h4>Treatment and follow-up</h4>'+
+    '<details class="miniStep"><summary>Optional: document reversible contributors and cardiovascular actions</summary>'+
+    '<label>Correct reversible contributors</label>'+
+    checks("mins_trigger_plan",[
+      "No trigger-specific treatment selected",
+      "Correct hypotension / optimize perfusion and volume status",
+      "Treat bleeding or clinically important anemia",
+      "Correct hypoxemia / treat respiratory failure",
+      "Control sustained tachyarrhythmia",
+      "Treat sepsis or infection",
+      "Use dedicated PE pathway",
+      "Treat acute heart failure",
+      "Improve analgesia and reduce physiologic stress"
+    ])+
+    '<label>Cardiovascular management</label>'+
+    checks("mins_cv_plan",[
+      "No cardiovascular action selected",
+      "Continue or initiate statin when appropriate",
+      "Review aspirin only after indication and bleeding safety assessment",
+      "Continue chronic beta blocker if hemodynamically appropriate; do not start reflexively for troponin alone",
+      "Optimize blood pressure, diabetes, renal function, and other ASCVD risks after stabilization",
+      "Cardiology / GIM / perioperative medicine assessment",
+      "Targeted echocardiography",
+      "Consider ischemia/anatomic evaluation after recovery if it will change management",
+      "Document MINS/MI in discharge diagnosis and communicate to primary/specialty care"
+    ])+'</details>'+
+    '<div class="grid2">'+
+    selectField("mins_antithrombotic_plan","Antithrombotic strategy",["No automatic antithrombotic escalation; complete classification and bleeding review","Urgent postoperative ACS/STEMI pathway with cardiology and surgical bleeding-risk coordination","Consider aspirin after confirming ischemic indication and acceptable bleeding risk","Consider MANAGE-style dabigatran 110 mg twice daily only after specialist eligibility/hemostasis review","Not a candidate for antithrombotic intensification because bleeding risk dominates","Already has another indication for therapeutic anticoagulation — reconcile rather than duplicate","Decision deferred pending hemostasis, renal function, or diagnostic clarification"],"Antithrombotic therapy for MINS is individualized; MANAGE supports consideration, not automatic treatment.")+
+    selectField("mins_followup","Follow-up plan",["Before discharge and within 1-2 weeks after discharge","Before discharge and within 2-4 weeks after discharge","Urgent cardiology follow-up ≤7 days","Routine cardiovascular follow-up within 4-6 weeks","Continue inpatient management; follow-up timing pending","No follow-up plan documented"],"Ensure explicit ownership, medication reconciliation, and review of pending investigations.")+
+    inputField("mins_plan_note","Additional management / ownership note","e.g. surgical team confirms hemostasis; cardiology to review before discharge; repeat hs-cTnT tomorrow")+
+    '</div>'+
+
+    '<h4>Output</h4>'+
+    '<div class="grid2">'+
+    selectField("mins_output_mode","Output mode",["Formal consultant letter","Concise perioperative note","Counseling / teaching note"],"")+
+    '</div>'+
+    '</div></details>'+
+    '<div class="toolbar"><button class="primary" id="minsGenerate">Generate perioperative cardiac pathway</button><button id="minsCopy">Copy output</button><button id="minsReset">Reset pathway</button></div><div id="mins_out" class="output hidden"></div>'+
+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>VISION general-surgery substudy:</b> among 7,950 patients, MINS occurred in 12.3%, was detected at a median of postoperative day 2, and was associated with 8.78% versus 2.21% 30-day mortality, adjusted HR 2.00, and an attributable fraction of 14.4%. Major bleeding and sepsis were also leading mortality-associated complications. These are cohort associations, not an individual risk calculator.</p><p class="hint">Primary anchors: Park et al., Annals of Surgery 2025 (VISION substudy); 2024 AHA/ACC perioperative cardiovascular guideline; 2017 Canadian Cardiovascular Society perioperative guideline; Fourth Universal Definition of MI; MANAGE randomized trial. Version 1 should be locally reviewed before use as an institutional protocol.</p></div></details>'+
+    '</section>');
+    document.getElementById("minsGenerate").addEventListener("click", calcPostopMINS);
+    document.getElementById("minsCopy").addEventListener("click", function(){ copyOut("mins_out"); });
+    document.getElementById("minsReset").addEventListener("click", resetPostopMINS);
+    document.getElementById("mins_entry").addEventListener("change", updateMinsSteps);
+    updateMinsSteps();
+  }
+
+  function updateMinsSteps(){
+    var entry = val("mins_entry");
+    var preop = document.getElementById("mins_step_preop");
+    var postop = document.getElementById("mins_step_postop");
+    var management = document.getElementById("mins_step_management");
+    if(!preop || !postop || !management) return;
+    preop.open = entry.indexOf("Screening")>=0;
+    postop.open = entry.indexOf("Interpret")>=0 || entry.indexOf("Established")>=0;
+    management.open = entry.indexOf("Established")>=0 || entry.indexOf("Follow-up")>=0;
+  }
+
+  function resetPostopMINS(){
+    var out = document.getElementById("mins_out");
+    var card = out ? out.closest("section.card") : document;
+    if(!card) card = document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    card.querySelectorAll(".miniStep").forEach(function(el){ el.open = false; });
+    updateMinsSteps();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function minsHas(arr, text){
+    return arr.some(function(x){ return x.indexOf(text)>=0; });
+  }
+
+  function minsNum(id){
+    var raw = val(id);
+    if(raw === "") return null;
+    var n = Number(raw);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function minsMeaningful(arr, noneText){
+    return arr.filter(function(x){ return x.indexOf(noneText)<0; });
+  }
+
+  function calcPostopMINS(){
+    var entry = val("mins_entry");
+    var danger = val("mins_danger");
+    var redAll = danger ? [danger] : [];
+    var redFlags = danger.indexOf("No immediate")>=0 ? [] : redAll;
+    var rcriItems = minsMeaningful(checked("mins_rcri"),"No RCRI");
+    var ischemiaChoice = val("mins_ischemia_one");
+    var triggerChoice = val("mins_trigger_one");
+    var nonischemicChoice = val("mins_nonischemic_one");
+    var ischemia = ischemiaChoice.indexOf("No ischemic")>=0 ? [] : [ischemiaChoice];
+    var triggers = triggerChoice.indexOf("No clear")>=0 ? [] : [triggerChoice];
+    var nonischemic = nonischemicChoice.indexOf("No competing")>=0 ? [] : [nonischemicChoice];
+    var workup = checked("mins_workup");
+    var triggerPlan = minsMeaningful(checked("mins_trigger_plan"),"No trigger");
+    var cvPlan = minsMeaningful(checked("mins_cv_plan"),"No cardiovascular");
+    var mode = val("mins_output_mode");
+
+    var rcriScore = rcriItems.length;
+    var age = val("mins_age");
+    var surgeryRisk = val("mins_surgery_risk");
+    var cvContext = val("mins_cv_context");
+    var bnp = val("mins_bnp");
+    var elevatedSurgery = surgeryRisk.indexOf("Elevated")>=0;
+    var lowSurgery = surgeryRisk.indexOf("Low-risk")>=0;
+    var age65 = age.indexOf("≥65")>=0;
+    var age45to64 = age.indexOf("45-64")>=0;
+    var knownCVD = cvContext.indexOf("Known")>=0;
+    var cvSymptoms = cvContext.indexOf("Symptoms")>=0;
+    var cvRiskFactors = cvContext.indexOf("risk factors")>=0 && cvContext.indexOf("No known")<0;
+    var bnpHigh = bnp.indexOf("≥300")>=0 || bnp.indexOf("≥92")>=0;
+    var accCandidate = elevatedSurgery && (knownCVD || cvSymptoms || (age65 && cvRiskFactors));
+    var ccsCandidate = bnpHigh || rcriScore>=1 || age65 || (age45to64 && knownCVD);
+
+    var surveillance = "";
+    if(redFlags.length || cvSymptoms){
+      surveillance = "This is no longer routine surveillance alone: obtain immediate diagnostic ECG/troponin and bedside assessment according to the clinical presentation.";
+    } else if(lowSurgery){
+      surveillance = "Routine postoperative troponin surveillance is not indicated for asymptomatic low-risk surgery; use symptom- or deterioration-triggered testing.";
+    } else if(accCandidate){
+      surveillance = "Higher-risk surveillance is reasonable. Website protocol: use a preoperative/baseline troponin when feasible and measure troponin at approximately 24 and 48 hours; add a 72-hour value if abnormal/rising or concern persists.";
+    } else if(elevatedSurgery && ccsCandidate){
+      surveillance = "Surveillance is supported by Canadian higher-risk criteria. Website protocol: baseline when feasible, then approximately 24 and 48 hours; consider 72 hours if still hospitalized or if any value is abnormal/rising.";
+    } else if(elevatedSurgery){
+      surveillance = "Routine surveillance is not automatically triggered by the selected data. Recheck age, CVD context, BNP/NT-proBNP, RCRI, and local policy; test immediately if symptoms or deterioration occur.";
+    } else {
+      surveillance = "Surgery risk is not yet classified, so surveillance eligibility cannot be finalized.";
+    }
+
+    var assay = val("mins_assay");
+    var units = val("mins_units");
+    var url = minsNum("mins_url");
+    var t0 = minsNum("mins_t0");
+    var t1 = minsNum("mins_t1");
+    var t2 = minsNum("mins_t2");
+    var t3 = minsNum("mins_t3");
+    var postopValues = [t1,t2,t3].filter(function(x){ return x !== null; });
+    var sequence = [t0,t1,t2,t3].filter(function(x){ return x !== null; });
+    var maxPost = postopValues.length ? Math.max.apply(null,postopValues) : null;
+    var maxDelta = null;
+    if(sequence.length>=2){
+      maxDelta = 0;
+      for(var i=1;i<sequence.length;i++) maxDelta = Math.max(maxDelta,Math.abs(sequence[i]-sequence[i-1]));
+    }
+    var aboveUrl = maxPost !== null && url !== null && maxPost > url;
+    var visionAssay = assay.indexOf("Roche")>=0;
+    var visionMet = false;
+    if(visionAssay && maxPost !== null){
+      visionMet = maxPost>=65 || (maxPost>=20 && maxPost<65 && maxDelta !== null && maxDelta>=5);
+    }
+    var pattern = val("mins_pattern");
+    var acutePattern = pattern.indexOf("Definite")>=0;
+    var stablePattern = pattern.indexOf("stable")>=0;
+    if(pattern.indexOf("Auto-assess")>=0){
+      if(t0 !== null && url !== null && t0<=url && maxPost !== null && maxPost>url) acutePattern = true;
+      if(visionAssay && maxPost !== null && maxPost>=20 && maxPost<65 && maxDelta !== null && maxDelta>=5) acutePattern = true;
+      if(visionAssay && t0 !== null && maxPost !== null && maxPost>=65 && Math.abs(maxPost-t0)>=5) acutePattern = true;
+    }
+    var injuryPresent = aboveUrl || visionMet;
+    var chronicPattern = injuryPresent && stablePattern;
+    var acuteUncertain = injuryPresent && !acutePattern && !chronicPattern;
+
+    var valueText = "Baseline " + (t0===null ? "not available" : t0+" "+units) +
+      "; postoperative values " + (postopValues.length ? postopValues.join(", ")+" "+units : "not entered") +
+      "; local 99th-percentile URL " + (url===null ? "not entered" : url+" "+units) + ".";
+    var deltaText = maxDelta===null ? "No calculable serial absolute change." : "Largest consecutive absolute change entered: "+maxDelta+" "+units+".";
+    var visionText = visionAssay ? (visionMet ? "The VISION hs-cTnT biomarker threshold is met; ischemic adjudication is still required." : "The entered values do not currently meet the VISION hs-cTnT biomarker threshold, or serial change is insufficient.") : "VISION hs-cTnT numeric thresholds are not applied to the selected assay.";
+
+    var ecg = val("mins_ecg");
+    var echo = val("mins_echo");
+    var hasIschemiaEvidence = ischemia.length>0 || ecg.indexOf("ST depression")>=0 || ecg.indexOf("ST elevation")>=0 || ecg.indexOf("pathologic Q")>=0 || echo.indexOf("regional wall")>=0;
+    var hasClearNonischemic = nonischemic.length>0 && !(nonischemic.length===1 && minsHas(nonischemic,"Chronic kidney"));
+    var hasSupplyDemand = triggers.length>0;
+    var clinicianClass = val("mins_final_class");
+    var classification = "";
+    if(clinicianClass.indexOf("Auto-suggest")<0){
+      classification = clinicianClass;
+    } else if(!injuryPresent && postopValues.length && url !== null){
+      classification = "No myocardial injury detected from the entered assay-specific URL.";
+    } else if(!postopValues.length || url === null){
+      classification = "Indeterminate — postoperative value and assay-specific URL are required.";
+    } else if(chronicPattern || (stablePattern && minsHas(nonischemic,"Chronic kidney"))){
+      classification = "Chronic myocardial injury is favored; reassess if symptoms, ECG change, or a new rise/fall develops.";
+    } else if(injuryPresent && hasClearNonischemic && !hasIschemiaEvidence){
+      classification = "Nonischemic acute myocardial injury is favored; treat and document the underlying diagnosis rather than labeling this MINS automatically.";
+    } else if(injuryPresent && acutePattern && ecg.indexOf("ST elevation")>=0){
+      classification = "Postoperative STEMI — urgent cardiology/reperfusion pathway with surgical bleeding-risk coordination.";
+    } else if(injuryPresent && acutePattern && hasIschemiaEvidence && hasSupplyDemand){
+      classification = "Perioperative type 2 MI / ischemic supply–demand injury is favored; type 1 MI must still be excluded when clinically plausible.";
+    } else if(injuryPresent && acutePattern && hasIschemiaEvidence){
+      classification = "Perioperative myocardial infarction criteria are likely met; determine STEMI/NSTEMI and type 1 versus type 2 mechanism.";
+    } else if(injuryPresent && acutePattern && !hasClearNonischemic){
+      classification = "Probable MINS without formal MI criteria, pending final clinical adjudication.";
+    } else if(acuteUncertain){
+      classification = "Myocardial injury is present, but acute versus chronic pattern and MINS etiology remain indeterminate.";
+    } else {
+      classification = "Classification remains indeterminate; verify serial pattern, ischemic evidence, and competing diagnoses.";
+    }
+
+    var urgentClass = classification.indexOf("STEMI")>=0 || classification.indexOf("myocardial infarction criteria")>=0;
+    var urgent = redFlags.length>0 || urgentClass;
+    var bleeding = val("mins_bleeding");
+    var platelets = val("mins_platelets");
+    var renal = val("mins_renal");
+    var neuraxial = val("mins_neuraxial");
+    var bleedingProhibitive = bleeding.indexOf("Active")>=0 || bleeding.indexOf("Ongoing")>=0 || platelets.indexOf("<50")>=0 || neuraxial.indexOf("Epidural")>=0 || neuraxial.indexOf("Urgent reoperation")>=0;
+    var bleedingUncertain = bleeding.indexOf("uncertain")>=0 || bleeding.indexOf("Very high")>=0 || renal.indexOf("AKI")>=0 || renal.indexOf("Unknown")>=0 || platelets.indexOf("unknown")>=0 || neuraxial.indexOf("unclear")>=0;
+
+    var antithromboticPlan = val("mins_antithrombotic_plan");
+    var antithromboticSafety = "Selected strategy: " + antithromboticPlan + ".";
+    if(bleedingProhibitive){
+      antithromboticSafety += " Active/prohibitive bleeding or procedural risk is present: do not initiate or intensify antithrombotic therapy from this tool; obtain immediate multidisciplinary review.";
+    } else if(bleedingUncertain){
+      antithromboticSafety += " Hemostasis, renal function, platelet count, or procedure timing remains uncertain and must be clarified before escalation.";
+    } else {
+      antithromboticSafety += " Hemostasis appears acceptable from the selected fields, but the ischemic indication and surgical-team agreement still require confirmation.";
+    }
+    if(antithromboticPlan.indexOf("MANAGE")>=0){
+      antithromboticSafety += " MANAGE-style dabigatran is a selective post-MINS consideration—not routine acute ACS treatment—and requires acceptable hemostasis, renal eligibility, no conflicting anticoagulation indication, interaction review, and shared specialist decision.";
+    }
+
+    var immediateActions = [];
+    if(urgent) immediateActions.push("Immediate bedside escalation; obtain/review ECG and serial troponin, stabilize airway/breathing/circulation, and involve the appropriate cardiology, surgery, anesthesia, GIM, or critical-care team.");
+    if(classification.indexOf("STEMI")>=0) immediateActions.push("Activate the postoperative STEMI pathway; reperfusion and antithrombotic decisions must balance ischemic severity against operative bleeding risk.");
+    if(classification.indexOf("Nonischemic")>=0) immediateActions.push("Treat the identified nonischemic process and reassess the troponin trajectory and cardiac status.");
+    if(classification.indexOf("MINS")>=0 || classification.indexOf("type 2")>=0) immediateActions.push("Correct reversible supply–demand contributors and complete the bleeding-safe cardiovascular plan.");
+    if(acuteUncertain) immediateActions.push("Repeat troponin with the same assay and establish the rise/fall pattern before final labeling.");
+    if(!immediateActions.length) immediateActions.push("Complete the selected surveillance/evaluation plan and reassess if symptoms or clinical deterioration develop.");
+
+    var completed = [];
+    var missing = [];
+    var preopOnly = entry.indexOf("Screening")>=0;
+    function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("Operative context documented", val("mins_procedure") && val("mins_surgery_risk") && val("mins_urgency"));
+    scoreItem("Danger screen reviewed", !!danger);
+    scoreItem("Surveillance risk assessed", val("mins_age") && val("mins_cv_context") && checked("mins_rcri").length>0 && val("mins_bnp"));
+    if(!preopOnly){
+      scoreItem("Assay and local URL documented", assay && units && url !== null);
+      scoreItem("Postoperative troponin values/timing documented", postopValues.length>0 && (val("mins_time1") || val("mins_time2") || val("mins_time3")));
+      scoreItem("Serial pattern assessed", pattern && pattern.indexOf("unclear")<0);
+      scoreItem("Ischemia and competing causes assessed", ecg && ischemiaChoice && nonischemicChoice);
+      scoreItem("Minimum evaluation documented", workup.length>=5);
+      scoreItem("Bleeding/renal/procedural safety assessed", bleeding && platelets && renal && neuraxial && val("mins_current_antithrombotic"));
+      scoreItem("Treatment, ownership, and follow-up documented", (triggerPlan.length || cvPlan.length) && antithromboticPlan && val("mins_followup"));
+    }
+    var totalItems = completed.length + missing.length;
+    var completionPct = totalItems ? completed.length / totalItems : 0;
+    var score = completed.length + "/" + totalItems;
+    var scoreLabel = completionPct>=0.9 ? "Complete" : (completionPct>=0.7 ? "Mostly complete" : "Gaps remain");
+
+    var evidence =
+      "Evidence anchors: 2024 AHA/ACC perioperative cardiovascular guideline; 2017 Canadian Cardiovascular Society perioperative guideline; Fourth Universal Definition of MI; MANAGE randomized trial; Park et al. VISION general-surgery substudy, Annals of Surgery 2025. In VISION general surgery, MINS occurred in 12.3%, median day 2, and was associated with 8.78% versus 2.21% 30-day mortality and adjusted HR 2.00. These observational data do not provide an individual causal risk estimate.";
+
+    var formal =
+      "Dear Colleague,\n\n" +
+      "Thank you for asking me to assess this patient using the Perioperative Cardiac Risk & MINS Pathway. The entry question is: " + entry + ". Operative context: " + (val("mins_procedure") || "not entered") + "; urgency: " + val("mins_urgency") + "; surgery risk: " + val("mins_surgery_risk") + "; postoperative day: " + (val("mins_pod") || "not entered") + ".\n\n" +
+      "Danger-first assessment:\n" +
+      (redFlags.length ? "Immediate concerns selected: " + redFlags.join("; ") + ". " + immediateActions.join(" ") : "No immediate danger feature was selected. " + immediateActions.join(" ")) + "\n\n" +
+      "Surveillance assessment:\n" +
+      "RCRI = " + rcriScore + ". Age: " + age + "; cardiovascular context: " + cvContext + "; natriuretic peptide: " + bnp + ". " + surveillance + "\n\n" +
+      "Troponin interpretation:\n" +
+      "Assay: " + assay + ". " + valueText + " " + deltaText + " " + visionText + " Serial-pattern assessment: " + pattern + ".\n\n" +
+      "Clinical classification:\n" +
+      classification + " ECG: " + ecg + ". Imaging: " + echo + ". Ischemic evidence: " + (ischemia.length ? ischemia.join("; ") : "none selected") + ". Supply–demand contributors: " + (triggers.length ? triggers.join("; ") : "none selected") + ". Competing nonischemic diagnoses: " + (nonischemic.length ? nonischemic.join("; ") : "none selected") + ". " + (val("mins_cause_note") ? "Clinical etiology note: " + val("mins_cause_note") + "." : "") + "\n\n" +
+      "Minimum evaluation:\n" +
+      (workup.length ? workup.map(function(x){return "- "+x;}).join("\n") : "- No evaluation items documented") + "\n\n" +
+      "Bleeding and antithrombotic safety:\n" +
+      "Hemostasis: " + bleeding + "; hemoglobin/trend: " + (val("mins_hb") || "not entered") + "; platelets: " + platelets + "; renal function: " + renal + "; procedural/neuraxial context: " + neuraxial + "; current therapy: " + val("mins_current_antithrombotic") + ". " + antithromboticSafety + "\n\n" +
+      "Plan:\n" +
+      "- Reversible contributors: " + (triggerPlan.length ? triggerPlan.join("; ") : "none selected") + ".\n" +
+      "- Cardiovascular plan: " + (cvPlan.length ? cvPlan.join("; ") : "none selected") + ".\n" +
+      "- Follow-up: " + val("mins_followup") + ".\n" +
+      (val("mins_plan_note") ? "- Ownership/additional plan: " + val("mins_plan_note") + ".\n" : "") +
+      "\nCare standard completion: " + score + " — " + scoreLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ". No major pathway gaps identified.") + "\n\n" +
+      evidence + "\n\n" +
+      "Sincerely,\nGeneral Internal Medicine / Perioperative Medicine";
+
+    var concise =
+      "Perioperative Cardiac Risk / MINS Assessment\n\n" +
+      "Context: " + (val("mins_procedure") || "not entered") + "; " + val("mins_urgency") + "; " + val("mins_surgery_risk") + "; POD " + (val("mins_pod") || "?") + ".\n" +
+      "Danger screen: " + (redFlags.length ? redFlags.join("; ") : "no immediate danger feature selected") + ".\n" +
+      "Surveillance: RCRI " + rcriScore + "; " + surveillance + "\n\n" +
+      "Troponin: " + assay + ". " + valueText + " " + deltaText + " " + visionText + "\n" +
+      "ECG/imaging: " + ecg + "; " + echo + ".\n" +
+      "Classification: " + classification + "\n" +
+      "Potential triggers: " + (triggers.length ? triggers.join("; ") : "none selected") + ".\n" +
+      "Competing diagnoses: " + (nonischemic.length ? nonischemic.join("; ") : "none selected") + ".\n\n" +
+      "Plan:\n" +
+      "- " + immediateActions.join(" ") + "\n" +
+      "- Evaluation: " + (workup.length ? workup.join("; ") : "not documented") + ".\n" +
+      "- Correct contributors: " + (triggerPlan.length ? triggerPlan.join("; ") : "none selected") + ".\n" +
+      "- Cardiovascular: " + (cvPlan.length ? cvPlan.join("; ") : "none selected") + ".\n" +
+      "- Antithrombotic safety: " + antithromboticSafety + "\n" +
+      "- Follow-up: " + val("mins_followup") + ".\n" +
+      "- Care standard: " + score + " — " + scoreLabel + "; missing: " + (missing.length ? missing.join(", ") : "none") + ".";
+
+    var teaching =
+      "Clinician teaching note\n\n" +
+      "1. Troponin above the assay-specific 99th-percentile URL means myocardial injury. A rise/fall supports acute injury. Acute MI additionally requires evidence of ischemia.\n" +
+      "2. MINS is postoperative myocardial injury judged ischemic, whether or not symptoms are present. Sepsis, PE, acute heart failure, stroke, myocarditis, and chronic stable elevation should not be mislabeled as MINS automatically.\n" +
+      "3. In this case: " + valueText + " " + deltaText + " " + visionText + "\n" +
+      "4. Working classification: " + classification + "\n" +
+      "5. The first bedside question is not only whether troponin is elevated, but whether the patient is unstable, has ischemic evidence, has a correctable supply–demand trigger, or has a stronger nonischemic diagnosis.\n" +
+      "6. The operative bleeding context changes ACS and antithrombotic decisions. " + antithromboticSafety + "\n\n" +
+      "Why this matters:\n" +
+      "The VISION general-surgery substudy found MINS in 12.3% of patients, usually early (median postoperative day 2), with approximately twice the adjusted hazard of 30-day mortality. Major bleeding and sepsis were also leading mortality-associated complications, supporting a combined ischemia–bleeding–sepsis assessment rather than a troponin-only response.\n\n" +
+      "Patient explanation:\n" +
+      "A troponin rise means there may have been stress or injury to the heart muscle around the time of surgery. It does not automatically mean a classic heart attack. We compare repeated levels, the ECG, symptoms, blood pressure, oxygen level, bleeding, infection, heart rhythm, kidney function, and other findings to identify the cause and choose treatment that is safe after surgery.\n\n" +
+      "Care standard: " + score + " — " + scoreLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".");
+
+    var preopFormal =
+      "Dear Colleague,\n\n" +
+      "Thank you for asking me to complete a preoperative cardiac-risk assessment using the Perioperative Cardiac Risk & MINS Pathway. The planned procedure/context is: " + (val("mins_procedure") || "not entered") + ". Surgical urgency: " + val("mins_urgency") + "; procedural risk: " + val("mins_surgery_risk") + ".\n\n" +
+      "The patient is " + age + ", with cardiovascular context: " + cvContext + ". RCRI is " + rcriScore + " based on the selected items. Preoperative natriuretic peptide: " + bnp + ". Immediate danger screen: " + danger + ".\n\n" +
+      "Postoperative surveillance plan:\n" +
+      surveillance + "\n\n" +
+      "This assessment determines surveillance intensity; it does not provide a validated percentage probability of MINS. A baseline troponin improves interpretation when surveillance is planned, particularly in CKD or structural heart disease.\n\n" +
+      "Preoperative care-standard completion: " + score + " — " + scoreLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ". No major pathway gaps identified.") + "\n\n" +
+      evidence + "\n\n" +
+      "Sincerely,\nGeneral Internal Medicine / Perioperative Medicine";
+
+    var preopConcise =
+      "Preoperative Cardiac Risk / MINS Surveillance Plan\n\n" +
+      "Procedure: " + (val("mins_procedure") || "not entered") + "; " + val("mins_urgency") + "; " + val("mins_surgery_risk") + ".\n" +
+      "Risk profile: " + age + "; " + cvContext + "; RCRI " + rcriScore + "; " + bnp + ".\n" +
+      "Danger screen: " + danger + ".\n" +
+      "Plan: " + surveillance + "\n" +
+      "Care standard: " + score + " — " + scoreLabel + "; missing: " + (missing.length ? missing.join(", ") : "none") + ".";
+
+    var preopTeaching =
+      "Preoperative teaching note\n\n" +
+      "- RCRI, age, known cardiovascular disease, operative risk, and BNP/NT-proBNP help identify who benefits from postoperative surveillance.\n" +
+      "- This patient’s RCRI is " + rcriScore + "; age/CVD context: " + age + " / " + cvContext + "; natriuretic peptide: " + bnp + ".\n" +
+      "- Recommended surveillance: " + surveillance + "\n" +
+      "- Routine troponin screening is not indicated after asymptomatic low-risk surgery. When higher-risk surveillance is selected, baseline plus approximately 24- and 48-hour measurements improve detection and interpretation.\n" +
+      "- This is a surveillance decision, not a numerical MINS probability estimate.\n\n" +
+      "Care standard: " + score + " — " + scoreLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".");
+
+    var finalText = formal;
+    if(mode === "Concise perioperative note") finalText = concise;
+    if(mode === "Counseling / teaching note") finalText = teaching;
+    if(preopOnly){
+      finalText = preopFormal;
+      if(mode === "Concise perioperative note") finalText = preopConcise;
+      if(mode === "Counseling / teaching note") finalText = preopTeaching;
+    }
+
+    var out = document.getElementById("mins_out");
+    out.className = "output " + (urgent ? "red" : ((missing.length || acuteUncertain || bleedingProhibitive || bleedingUncertain) ? "amber" : "green"));
     out.textContent = finalText;
     out.classList.remove("hidden");
   }
