@@ -104,7 +104,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Bleeding and reversal, HIT/PF4, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and antiplatelet overlap."},
     {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Diarrhea Diagnostic Pathway",desc:"Danger-first diarrhea approach: watery vs inflammatory vs fatty, osmotic vs secretory, medications, bile acid, pancreatic, microscopic colitis."},
-    {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Tonicity-first pathway, ADH-on/off reasoning, urine osm/sodium, SIADH mimics, ODS risk, and correction guardrails."},
+    {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Danger-first treatment, tonicity and glucose correction, ADH/urine interpretation, phenotype, ODS risk, correction monitoring, and copy-ready notes."},
     {id:"hypokalemia",cat:"GIM Diagnostic Reasoning",title:"Hypokalemia + Acid–Base Engine",desc:"GI vs renal potassium loss, metabolic acidosis/alkalosis, urine potassium/chloride, RTA, diuretics, mineralocorticoid clues."},
     {id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
     {id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review Checklist",desc:"Diagnostic clarity, danger overnight, VTE prophylaxis, meds, mobility, pending tests, discharge barriers, and communication."}
@@ -211,6 +211,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
     if(id === "postop-troponin") return renderPostopMINS();
     if(id === "antithrombotic") return renderAntithromboticSafety();
+    if(id === "hyponatremia") return renderHyponatremia();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -2163,6 +2164,277 @@ evidence + "\n\n" +
     var out = document.getElementById("ats_out");
     out.className = "output " + level;
     out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
+
+  function renderHyponatremia(){
+    shell("Hyponatremia Diagnostic Engine","Danger-first assessment, glucose and tonicity confirmation, ADH/urine interpretation, phenotype, ODS-risk correction guardrails, treatment, and copy-ready notes.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>Clinical sequence:</b> treat dangerous symptoms first, confirm whether hyponatremia is hypotonic, use urine osmolality to decide whether ADH is active, interpret urine sodium with its caveats, then choose cause-specific treatment with correction safeguards.</p><p class="hint">Use the same laboratory platform during active correction when possible. Symptoms, onset, urine output, potassium replacement, and removal of the cause can change the sodium trajectory rapidly.</p></div>'+
+
+    '<details class="pathStep" open><summary>1. Danger, sodium and tonicity</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    inputField("hypo_summary","One-line case summary","e.g. Na 116 with confusion after thiazide and poor intake")+
+    '<div class="field"><label>Current serum sodium (mmol/L)</label><input id="hypo_na" type="number" step="any" placeholder="e.g. 118"></div>'+
+    selectField("hypo_symptoms","Symptom severity",["No or mild symptoms","Moderately severe symptoms: confusion, headache, or nausea without vomiting","Severe symptoms: seizure, markedly reduced consciousness, persistent vomiting, or cardiorespiratory compromise","Symptoms present but another cause is more likely","Unable to assess"],"Management is driven by symptoms and tempo, not sodium value alone.")+
+    selectField("hypo_duration","Duration/tempo",["Clearly acute <48 hours","Likely acute <48 hours","Chronic ≥48 hours","Duration unknown — manage correction as chronic","Recurrent/chronic baseline hyponatremia"],"")+
+    '<div class="field"><label>Serum glucose</label><input id="hypo_glucose" type="number" min="0" step="any" placeholder="Enter value"></div>'+
+    selectField("hypo_glucose_unit","Glucose unit",["mmol/L","mg/dL"],"The tool estimates glucose-corrected sodium using a 1.6 mmol/L correction factor.")+
+    '<div class="field"><label>Measured serum osmolality (mOsm/kg)</label><input id="hypo_osm" type="number" min="0" step="any" placeholder="Leave blank if unavailable"></div>'+
+    selectField("hypo_pseudo","Hypertonic/pseudohyponatremia context",["No known hypertonic or pseudohyponatremia context","Marked hyperglycemia","Mannitol, glycine, contrast, or another effective osmole","Marked hyperlipidemia/paraproteinemia with indirect ISE concern","Direct ISE confirms true low sodium","Context unclear"],"Measured osmolality and laboratory method prevent misclassification.")+
+    '</div>'+
+    '<div class="subtlebox"><b>Emergency rule:</b> severe or moderately severe symptoms plausibly caused by hyponatremia require immediate monitored treatment with a local 3% saline bolus protocol. Aim for an initial rise of approximately 4–6 mmol/L or symptom improvement—not normalization.</div>'+
+    '</div></details>'+
+
+    '<details class="pathStep"><summary>2. ADH logic and diagnostic phenotype</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    '<div class="field"><label>Urine osmolality (mOsm/kg)</label><input id="hypo_uosm" type="number" min="0" step="any" placeholder="e.g. 420"><span class="hint">≤100 suggests appropriately suppressed ADH; >100 indicates impaired water excretion/active ADH.</span></div>'+
+    '<div class="field"><label>Urine sodium (mmol/L)</label><input id="hypo_una" type="number" step="any" placeholder="e.g. 18"><span class="hint">Use approximately 30 mmol/L as a practical branch, with diuretic, CKD, vomiting, and dietary caveats.</span></div>'+
+    '<div class="field"><label>Urine potassium (optional)</label><input id="hypo_uk" type="number" step="any" placeholder="Optional"></div>'+
+    selectField("hypo_volume","Clinical volume/effective arterial-volume context",["Clinically euvolemic","Hypovolemia likely","Edema / heart failure / cirrhosis / nephrotic state","Volume status mixed or unreliable","Unknown"],"Physical volume assessment is imperfect; integrate history, urine studies, hemodynamics, and response.")+
+    selectField("hypo_diuretic","Diuretic/medication context",["No diuretic or major drug cause identified","Thiazide or thiazide-like diuretic","Loop diuretic","Recent IV fluids","SSRI/SNRI, carbamazepine/oxcarbazepine, or another SIADH-associated drug","Desmopressin exposure","Medication review incomplete"],"Diuretics can make urine sodium difficult to interpret.")+
+    selectField("hypo_renal","Renal function",["Stable / no major renal impairment","AKI","Advanced CKD","Dialysis","Unknown"],"")+
+    '<div class="field"><label>Serum potassium (mmol/L)</label><input id="hypo_k" type="number" step="any" placeholder="e.g. 2.9"><span class="hint">Potassium replacement can raise serum sodium and must count toward correction.</span></div>'+
+    selectField("hypo_adrenal","Adrenal assessment",["Adrenal insufficiency clinically unlikely / excluded","Morning cortisol reassuring","Morning cortisol indeterminate/pending","Adrenal insufficiency possible","Adrenal crisis suspected","Chronic glucocorticoid exposure or recent withdrawal"],"Treat suspected adrenal crisis immediately after drawing appropriate labs when feasible; do not wait for confirmation.")+
+    selectField("hypo_thyroid","Thyroid assessment",["Severe hypothyroidism unlikely / excluded","TSH/free T4 pending","Severe hypothyroidism possible","Known severe hypothyroidism","Unknown"],"Mild thyroid abnormalities rarely explain substantial hyponatremia.")+
+    selectField("hypo_context","Dominant clinical context",["No dominant cause selected","Vomiting/diarrhea or poor intake","Primary polydipsia","Low-solute intake","Pain, nausea, postoperative state, or pulmonary/CNS trigger","Heart failure","Cirrhosis/portal hypertension","Nephrotic syndrome","Adrenal insufficiency","Severe hypothyroidism","Renal failure","Reset osmostat possible","Mixed causes"],"")+
+    selectField("hypo_override","Clinician phenotype",["Auto-suggest from entered data","Hypovolemic hypotonic hyponatremia","SIADH/euvolemic hypotonic hyponatremia","Hypervolemic hypotonic hyponatremia","Primary polydipsia / low-solute hyponatremia","Adrenal-insufficiency-associated hyponatremia","Renal-failure-associated hyponatremia","Hypertonic/translocational hyponatremia","Pseudohyponatremia","Mixed/indeterminate"],"")+
+    '</div>'+
+    '</div></details>'+
+
+    '<details class="pathStep"><summary>3. Correction safety and treatment</summary><div class="pathStepBody">'+
+    '<label>Osmotic demyelination / overcorrection risk</label>'+
+    checks("hypo_ods",["No high-risk feature identified","Serum sodium ≤105 mmol/L","Alcohol-use disorder","Malnutrition or very low solute intake","Hypokalemia","Advanced liver disease","Rapid spontaneous water diuresis likely","Recent thiazide/desmopressin withdrawal or volume restoration"])+
+    '<div class="grid2">'+
+    '<div class="field"><label>Starting sodium for current correction window</label><input id="hypo_start_na" type="number" step="any" placeholder="e.g. 112"></div>'+
+    '<div class="field"><label>Latest sodium in correction window</label><input id="hypo_latest_na" type="number" step="any" placeholder="e.g. 118"></div>'+
+    '<div class="field"><label>Hours elapsed</label><input id="hypo_hours" type="number" min="0" step="any" placeholder="e.g. 10"></div>'+
+    selectField("hypo_urine_output","Urine-output trajectory",["Stable / no aquaresis","Increasing urine output / water diuresis","Marked polyuria","Oliguria","Not monitored / unknown"],"A sudden aquaresis is a common signal for impending overcorrection.")+
+    selectField("hypo_treatment","Current or planned treatment",["Diagnostic evaluation only","3% hypertonic saline using local bolus protocol","Isotonic saline / volume restoration","Fluid restriction","Stop culprit medication","Controlled solute/protein reintroduction","Loop diuretic plus underlying HF/cirrhosis management","Glucocorticoid/adrenal-crisis pathway","Treat hyperglycemia/effective osmole","Desmopressin clamp / controlled correction","Relowering with electrolyte-free water plus desmopressin","Specialist individualized plan"],"")+
+    selectField("hypo_monitoring","Sodium monitoring plan",["Every 2-4 hours during active/high-risk correction","Every 4-6 hours","Every 6-12 hours","Daily only","Monitoring plan not documented"],"Monitor more frequently with hypertonic saline, changing urine output, very low sodium, or high ODS risk.")+
+    selectField("hypo_owner","Primary ownership",["General Internal Medicine / primary team","Critical care","Nephrology","Endocrinology","Emergency medicine","Multidisciplinary plan"],"")+
+    inputField("hypo_plan_note","Additional plan / cause note","e.g. stop hydrochlorothiazide; repeat Na and urine output in 2 hours")+
+    '</div>'+
+    '<div class="subtlebox"><b>Correction guardrail:</b> generally target a controlled rise of 4–6 mmol/L. In high-risk patients, do not exceed 8 mmol/L in any 24 hours. In standard-risk chronic/unknown-duration hyponatremia, avoid >10 mmol/L in the first 24 hours and >8 mmol/L in each subsequent 24 hours; a conservative ≤8 mmol/L target is reasonable when uncertainty exists.</div>'+
+    '</div></details>'+
+
+    '<details class="pathStep"><summary>4. Output</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    selectField("hypo_output_mode","Output mode",["Formal consultant letter","Concise clinical note","Counseling / teaching note"],"")+
+    '</div>'+
+    '</div></details>'+
+    '<div class="toolbar"><button class="primary" id="hypoGenerate">Generate hyponatremia assessment</button><button id="hypoCopy">Copy output</button><button id="hypoReset">Reset pathway</button></div><div id="hypo_out" class="output hidden"></div>'+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> European Society of Endocrinology hyponatremia guideline; Society for Endocrinology emergency guidance for symptomatic hyponatremia; Hyponatraemia Treatment Standard 2024; US/Irish correction-limit recommendations; Endocrine Society adrenal-insufficiency guidance.</p><p class="hint">Symptoms may have another cause. Hypertonic saline and overcorrection rescue require a monitored setting and institution-specific prescribing. Formulas cannot replace serial sodium and urine-output assessment.</p></div></details>'+
+    '</section>');
+    document.getElementById("hypoGenerate").addEventListener("click", calcHyponatremia);
+    document.getElementById("hypoCopy").addEventListener("click", function(){ copyOut("hypo_out"); });
+    document.getElementById("hypoReset").addEventListener("click", resetHyponatremia);
+  }
+
+  function resetHyponatremia(){
+    var out = document.getElementById("hypo_out");
+    var card = out ? out.closest("section.card") : document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    card.querySelectorAll(".pathStep").forEach(function(el,i){ el.open = i===0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function hypoNum(id){
+    var raw = val(id);
+    if(raw==="") return null;
+    var n = Number(raw);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function calcHyponatremia(){
+    var na = hypoNum("hypo_na");
+    var glucose = hypoNum("hypo_glucose");
+    var correctedNa = na;
+    if(na!==null && glucose!==null){
+      if(val("hypo_glucose_unit")==="mg/dL" && glucose>100) correctedNa = na + 1.6*((glucose-100)/100);
+      if(val("hypo_glucose_unit")==="mmol/L" && glucose>5.6) correctedNa = na + 1.6*((glucose-5.6)/5.6);
+    }
+    var osm = hypoNum("hypo_osm");
+    var uosm = hypoNum("hypo_uosm");
+    var una = hypoNum("hypo_una");
+    var k = hypoNum("hypo_k");
+    var symptoms = val("hypo_symptoms");
+    var severe = symptoms.indexOf("Severe symptoms")>=0;
+    var moderate = symptoms.indexOf("Moderately severe")>=0;
+    var level = severe || moderate ? "red" : "green";
+    var safety = level==="red" ? "RED — symptomatic hyponatremia requiring immediate monitored treatment" : "GREEN — no severe symptom trigger selected";
+    var actions = [], tests = [], treatment = [], monitoring = [], cautions = [];
+
+    var tonicity = "Tonicity not established";
+    if(osm!==null){
+      if(osm<275) tonicity = "Hypotonic hyponatremia";
+      else if(osm<=295) tonicity = "Isotonic range — evaluate pseudohyponatremia/laboratory method";
+      else tonicity = "Hypertonic/translocational hyponatremia";
+    } else if(val("hypo_pseudo").indexOf("Marked hyperglycemia")>=0 || val("hypo_pseudo").indexOf("effective osmole")>=0){
+      tonicity = "Hypertonic/translocational hyponatremia is likely";
+    } else if(val("hypo_pseudo").indexOf("hyperlipidemia")>=0){
+      tonicity = "Pseudohyponatremia is possible";
+    } else if(correctedNa!==null && correctedNa>=135 && glucose!==null){
+      tonicity = "Glucose-corrected sodium is not hyponatremic; translocational hyponatremia is favored";
+    }
+
+    var phenotype = "";
+    var override = val("hypo_override");
+    if(override.indexOf("Auto-suggest")<0){
+      phenotype = override;
+    } else if(tonicity.indexOf("Hypertonic")>=0 || tonicity.indexOf("translocational")>=0){
+      phenotype = "Hypertonic/translocational hyponatremia";
+    } else if(tonicity.indexOf("Pseudo")>=0 || val("hypo_pseudo").indexOf("hyperlipidemia")>=0){
+      phenotype = "Pseudohyponatremia";
+    } else if(val("hypo_adrenal").indexOf("possible")>=0 || val("hypo_adrenal").indexOf("crisis")>=0 || val("hypo_context")==="Adrenal insufficiency"){
+      phenotype = "Adrenal-insufficiency-associated hyponatremia";
+    } else if(val("hypo_renal").indexOf("Advanced")>=0 || val("hypo_renal")==="Dialysis" || val("hypo_context")==="Renal failure"){
+      phenotype = "Renal-failure-associated hyponatremia";
+    } else if(uosm!==null && uosm<=100){
+      phenotype = val("hypo_context")==="Low-solute intake" ? "Low-solute hypotonic hyponatremia with suppressed ADH" : "Primary polydipsia/low-solute hypotonic hyponatremia";
+    } else if(uosm!==null && uosm>100 && una!==null && una<=30){
+      phenotype = val("hypo_volume").indexOf("Edema")>=0 ? "Hypervolemic hypotonic hyponatremia with low effective arterial volume" : "Hypovolemic/low-effective-arterial-volume hypotonic hyponatremia";
+    } else if(uosm!==null && uosm>100 && una!==null && una>30){
+      if(val("hypo_volume").indexOf("euvolemic")>=0 && val("hypo_diuretic").indexOf("No diuretic")>=0 && val("hypo_adrenal").indexOf("unlikely")>=0 && val("hypo_thyroid").indexOf("unlikely")>=0) phenotype = "SIADH/euvolemic hypotonic hyponatremia";
+      else if(val("hypo_diuretic").indexOf("Thiazide")>=0) phenotype = "Thiazide-associated hypotonic hyponatremia";
+      else phenotype = "ADH-active hypotonic hyponatremia with urine sodium >30 — cause remains mixed/indeterminate";
+    } else {
+      phenotype = "Hyponatremia phenotype remains indeterminate";
+    }
+
+    if(severe || moderate){
+      actions.push("Begin immediate monitored treatment using the local 3% hypertonic-saline bolus protocol, regardless of the final cause, when symptoms are plausibly due to hyponatremia.");
+      treatment.push("Aim for symptom improvement or an initial sodium increase of approximately 4–6 mmol/L; stop repeated boluses once the clinical target is achieved.");
+      monitoring.push("Check serum sodium frequently during active treatment, commonly every 2–4 hours, with continuous clinical reassessment.");
+      cautions.push("Investigate other causes of neurologic symptoms, especially if sodium is >130 mmol/L or symptoms do not improve after an appropriate initial rise.");
+    }
+
+    tests.push("Repeat serum sodium and glucose; obtain measured serum osmolality when tonicity is not established.");
+    tests.push("For true hypotonic hyponatremia, obtain urine osmolality and urine sodium ideally before major therapy when this will not delay emergency treatment.");
+    tests.push("Review medications, renal function, potassium, volume/effective arterial-volume context, cortisol/adrenal risk, and thyroid status.");
+
+    if(phenotype.indexOf("Hypertonic")>=0){
+      treatment.push("Treat hyperglycemia or the effective osmole and monitor the measured sodium as water shifts reverse.");
+      cautions.push("Do not treat translocational hyponatremia as hypotonic SIADH.");
+    } else if(phenotype.indexOf("Pseudo")>=0){
+      treatment.push("Confirm the sodium using direct ion-selective electrode methodology and address the lipid/paraprotein context.");
+      cautions.push("Do not give sodium-directed therapy for pseudohyponatremia.");
+    } else if(phenotype.indexOf("Hypovolemic")>=0){
+      treatment.push("Restore effective circulating volume with isotonic crystalloid and treat ongoing sodium/fluid losses.");
+      monitoring.push("Watch closely for sudden water diuresis and rapid correction after volume restoration.");
+    } else if(phenotype.indexOf("Hypervolemic")>=0){
+      treatment.push("Treat the underlying heart failure/cirrhosis/nephrotic state; use individualized fluid/sodium restriction and loop-diuretic strategy.");
+    } else if(phenotype.indexOf("SIADH")>=0){
+      treatment.push("Remove reversible triggers/medications and use an individualized fluid restriction; consider solute/urea or loop-based strategies through local specialist guidance when restriction is ineffective.");
+      cautions.push("Confirm adrenal sufficiency and exclude major thyroid/renal confounders before calling this SIADH.");
+    } else if(phenotype.indexOf("Thiazide")>=0){
+      treatment.push("Stop the thiazide, correct potassium/volume abnormalities, and avoid future rechallenge when causality is convincing.");
+      monitoring.push("Thiazide withdrawal can trigger rapid water diuresis and overcorrection.");
+    } else if(phenotype.indexOf("polydipsia")>=0 || phenotype.indexOf("Low-solute")>=0){
+      treatment.push("Limit excess free water and reintroduce dietary solute/protein in a controlled manner.");
+      monitoring.push("Low-solute states can autocorrect rapidly after solute is restored; monitor sodium and urine output closely.");
+    } else if(phenotype.indexOf("Adrenal")>=0){
+      treatment.push("Draw cortisol/ACTH when feasible without delaying care; if adrenal crisis is suspected, begin the emergency glucocorticoid and volume-resuscitation pathway immediately.");
+      monitoring.push("Glucocorticoid replacement can produce brisk water diuresis and rapid sodium correction.");
+    } else if(phenotype.indexOf("Renal")>=0){
+      treatment.push("Individualize fluid, solute, diuretic, and dialysis strategy with nephrology based on residual kidney function and volume status.");
+    }
+
+    if(val("hypo_diuretic").indexOf("SIADH-associated")>=0 || val("hypo_diuretic").indexOf("Desmopressin")>=0) treatment.push("Review and stop the culprit medication when safe; anticipate water diuresis after withdrawal.");
+    if(k!==null && k<3.5){
+      treatment.push("Correct hypokalemia and count its effect toward the total sodium correction.");
+      cautions.push("Potassium replacement can materially raise serum sodium.");
+    }
+
+    var ods = checked("hypo_ods").filter(function(x){return x.indexOf("No high-risk")<0;});
+    var highODS = ods.length>0 || (na!==null && na<=105);
+    var ceiling = highODS ? "Target approximately 4–6 mmol/L and do not exceed 8 mmol/L in any 24-hour period." : "Target approximately 4–6 mmol/L; avoid >10 mmol/L in the first 24 hours and >8 mmol/L in each subsequent 24 hours. Use a conservative ≤8 mmol/L target when uncertainty exists.";
+    monitoring.push(ceiling);
+
+    var startNa = hypoNum("hypo_start_na");
+    var latestNa = hypoNum("hypo_latest_na");
+    var hours = hypoNum("hypo_hours");
+    var correctionText = "Correction trajectory not calculable.";
+    var overcorrect = false;
+    if(startNa!==null && latestNa!==null && hours!==null && hours>0){
+      var delta = latestNa-startNa;
+      var rate = delta/hours;
+      var projected = rate*24;
+      correctionText = "Sodium changed by " + delta.toFixed(1) + " mmol/L over " + hours.toFixed(1) + " hours (" + rate.toFixed(2) + " mmol/L/h; linear 24-hour projection " + projected.toFixed(1) + " mmol/L).";
+      var allowed = highODS ? 8 : 10;
+      if((hours<=24 && delta>=allowed) || projected>allowed) overcorrect = true;
+    }
+    if(val("hypo_urine_output").indexOf("Increasing")>=0 || val("hypo_urine_output").indexOf("Marked")>=0) overcorrect = true;
+    if(overcorrect){
+      level = "red";
+      safety = "RED — overcorrection or rapid-aquaresis risk";
+      actions.push("Stop ongoing corrective drivers and obtain urgent expert review for a desmopressin/electrolyte-free-water strategy to halt or relower correction according to the local protocol.");
+      monitoring.push("Measure sodium and urine output at short intervals until the trajectory is controlled.");
+    } else if(highODS && level!=="red"){
+      level = "amber";
+      safety = "AMBER — high risk for osmotic demyelination/overcorrection";
+    } else if(phenotype.indexOf("indeterminate")>=0 && level!=="red"){
+      level = "amber";
+      safety = "AMBER — diagnostic phenotype incomplete";
+    }
+
+    var completed=[], missing=[];
+    function scoreItem(name,ok){if(ok)completed.push(name);else missing.push(name);}
+    scoreItem("Symptoms and duration assessed", symptoms!=="Unable to assess" && !!val("hypo_duration"));
+    scoreItem("Sodium/glucose documented", na!==null && glucose!==null);
+    scoreItem("Tonicity assessed", osm!==null || val("hypo_pseudo")!=="Context unclear");
+    scoreItem("Urine ADH physiology assessed", uosm!==null);
+    scoreItem("Urine sodium/caveats assessed", una!==null && !!val("hypo_diuretic") && !!val("hypo_renal"));
+    scoreItem("Adrenal/thyroid mimics reviewed", val("hypo_adrenal")!=="Unknown" && val("hypo_thyroid")!=="Unknown");
+    scoreItem("ODS risk and correction plan assessed", checked("hypo_ods").length>0 && !!val("hypo_treatment"));
+    scoreItem("Monitoring and ownership documented", val("hypo_monitoring")!=="Monitoring plan not documented" && !!val("hypo_owner"));
+    var total=completed.length+missing.length,pct=total?completed.length/total:0;
+    var careScore=completed.length+"/"+total;
+    var careLabel=pct>=0.9?"Complete":(pct>=0.7?"Mostly complete":"Gaps remain");
+
+    if(!actions.length) actions.push("No immediate emergency treatment trigger selected; complete the diagnostic and cause-specific plan.");
+    if(!treatment.length) treatment.push("Do not choose definitive therapy until tonicity and the dominant physiology are clarified, unless dangerous symptoms require immediate hypertonic saline.");
+    if(!monitoring.length) monitoring.push(val("hypo_monitoring") + ".");
+    if(!cautions.length) cautions.push("Avoid rapid correction and reassess whenever urine output or the underlying cause changes.");
+
+    var core =
+      "Safety status: " + safety + "\n" +
+      "Tonicity: " + tonicity + "\n" +
+      "Working phenotype: " + phenotype + "\n" +
+      "Measured sodium: " + (na===null?"not entered":na.toFixed(1)) + " mmol/L; estimated glucose-corrected sodium: " + (correctedNa===null?"not calculable":correctedNa.toFixed(1)) + " mmol/L.\n" +
+      "Urine physiology: Uosm " + (uosm===null?"not entered":uosm) + " mOsm/kg; urine Na " + (una===null?"not entered":una) + " mmol/L.\n" +
+      "Correction trajectory: " + correctionText + "\n\n" +
+      "Immediate actions:\n" + atsBullets(actions) + "\n\n" +
+      "Minimum evaluation:\n" + atsBullets(tests) + "\n\n" +
+      "Treatment:\n" + atsBullets(treatment) + "\n\n" +
+      "Correction/monitoring:\n" + atsBullets(monitoring) + "\n\n" +
+      "Avoid/cautions:\n" + atsBullets(cautions) + "\n\n" +
+      "Ownership: " + val("hypo_owner") + ".\n" +
+      (val("hypo_plan_note")?"Additional plan: "+val("hypo_plan_note")+".\n":"") +
+      "Care standard: " + careScore + " — " + careLabel + (missing.length?". Remaining gaps: "+missing.join(", ")+".":".");
+
+    var formal =
+      "Dear Colleague,\n\nThank you for asking me to assess hyponatremia. " +
+      (val("hypo_summary")?"In brief: "+val("hypo_summary")+". ":"") +
+      "The duration is " + val("hypo_duration") + " and symptoms are classified as: " + symptoms + ".\n\n" +
+      core + "\n\nEvidence anchors: European Society of Endocrinology diagnostic/treatment guideline; Society for Endocrinology emergency guidance; Hyponatraemia Treatment Standard 2024; US/Irish correction-limit recommendations; Endocrine Society adrenal-insufficiency guidance.\n\nSincerely,\nGeneral Internal Medicine";
+    var concise = "Hyponatremia Assessment\n\n" + core;
+    var teaching =
+      "Clinician teaching note\n\n" +
+      "The safe sequence is: symptoms first, confirm tonicity, ask whether ADH is suppressed using urine osmolality, interpret urine sodium with diuretic/CKD/volume caveats, exclude adrenal disease, then treat the cause while controlling correction.\n\n" +
+      core + "\n\nPatient explanation:\nA low sodium result can come from excess water, loss of salt and fluid, medicines, hormone problems, heart/liver/kidney disease, or high glucose. Treatment depends on the cause and how quickly the sodium changed. Repeated blood tests are important because sodium can rise quickly after treatment begins.";
+    var finalText=formal;
+    if(val("hypo_output_mode")==="Concise clinical note") finalText=concise;
+    if(val("hypo_output_mode")==="Counseling / teaching note") finalText=teaching;
+    var out=document.getElementById("hypo_out");
+    out.className="output "+level;
+    out.textContent=finalText;
     out.classList.remove("hidden");
   }
 
