@@ -103,7 +103,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Bleeding and reversal, HIT/PF4, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and antiplatelet overlap."},
     {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
-    {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Diarrhea Diagnostic Pathway",desc:"Danger-first diarrhea approach: watery vs inflammatory vs fatty, osmotic vs secretory, medications, bile acid, pancreatic, microscopic colitis."},
+    {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Adult Diarrhea Triage & Diagnostic Pathway",desc:"Focused triage, syndrome classification, selective stool testing, C. difficile safety, hydration, medication review, and escalation planning."},
     {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Danger-first treatment, tonicity and glucose correction, ADH/urine interpretation, phenotype, ODS risk, correction monitoring, and copy-ready notes."},
     {id:"hypokalemia",cat:"GIM Diagnostic Reasoning",title:"Hypokalemia + Acid–Base Engine",desc:"GI vs renal potassium loss, metabolic acidosis/alkalosis, urine potassium/chloride, RTA, diuretics, mineralocorticoid clues."},
     {id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
@@ -212,6 +212,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "postop-troponin") return renderPostopMINS();
     if(id === "antithrombotic") return renderAntithromboticSafety();
     if(id === "hyponatremia") return renderHyponatremia();
+    if(id === "diarrhea") return renderDiarrhea();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -2164,6 +2165,255 @@ evidence + "\n\n" +
     var out = document.getElementById("ats_out");
     out.className = "output " + level;
     out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
+
+  function renderDiarrhea(){
+    shell("Adult Diarrhea Triage & Diagnostic Pathway","Focused adult assessment for urgency, syndrome classification, selective testing, hydration, medication review, infection control, and safe escalation.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>Focused by design:</b> first identify danger and dehydration, then classify the syndrome. Acute, chronic, and fatty-diarrhea questions appear only when relevant.</p><p class="hint">This pathway supports adult clinical reasoning and local protocols. It does not replace emergency assessment, infectious-diseases or gastroenterology consultation, public-health reporting, or local antimicrobial guidance. Version 1 does not prescribe antibiotics.</p></div>'+
+
+    '<details class="pathStep" id="diarr_step_danger" open><summary>1. Triage and hydration</summary><div class="pathStepBody">'+
+    '<p class="stepIntro">Choose the highest-priority finding. A danger feature overrides the rest of the pathway.</p>'+
+    '<div class="grid2">'+
+    inputField("diarr_summary","One-line case summary","e.g. 4 days of watery diarrhea after recent antibiotics")+
+    selectField("diarr_duration","Duration",["Not yet classified","Acute: less than 14 days","Persistent: 14-29 days","Chronic: 4 weeks or longer","Uncertain"],"")+
+    selectField("diarr_frequency","Stool frequency / 24 hours",["Not documented","1-2 loose stools","3-5 unformed stools","6 or more unformed stools","Frequent but exact count unknown","No current diarrhea / formed stool"],"Document a change from baseline, not frequency alone.")+
+    selectField("diarr_danger","Immediate danger screen",["Not assessed","No immediate danger feature","Hemodynamic instability, syncope, or shock","Severe dehydration, major AKI, or altered mental status","Peritonitis, ileus, marked distension, or toxic megacolon concern","Sepsis or systemic toxicity","Significant gastrointestinal bleeding","Severe pain out of proportion / ischemia concern"],"A positive selection requires immediate bedside escalation; do not wait for the generated note.")+
+    selectField("diarr_hydration","Hydration / perfusion",["Not assessed","Clinically euvolemic / well perfused","Mild dehydration","Moderate dehydration or orthostasis","Severe dehydration / hypoperfusion","Volume assessment limited"],"")+
+    selectField("diarr_oral","Oral intake",["Not assessed","Tolerating oral fluids","Reduced intake but able to drink","Unable to maintain oral hydration","Aspiration risk / unsafe oral intake"],"")+
+    selectField("diarr_host","Host-risk context",["Standard adult risk","Age 65 or older / frailty","Pregnancy","Immunocompromised","Advanced kidney, heart, or liver disease","Inflammatory bowel disease","Recent GI surgery or transplant","Risk context uncertain"],"Lower the threshold for investigation and escalation in high-risk hosts.")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" id="diarr_step_classify"><summary>2. Classify the syndrome</summary><div class="pathStepBody">'+
+    '<p class="stepIntro">Use the dominant stool pattern. The pathway will show only the most relevant follow-up questions.</p>'+
+    '<div class="grid2">'+
+    selectField("diarr_phenotype","Dominant phenotype",["Unclear / mixed","Watery: loose or liquid without visible blood","Inflammatory: blood, mucus, fever, or marked urgency","Fatty / malabsorptive: greasy, floating, difficult-to-flush stool"],"")+
+    selectField("diarr_course","Pattern",["Not characterized","Daytime/intermittent","Nocturnal or continues despite fasting","Improves substantially with fasting","Post-prandial","Alternating bowel pattern"],"")+
+    selectField("diarr_cdi_risk","C. difficile exposure context",["No major exposure identified","Antibiotics now or recently","Hospital or long-term-care exposure","Prior C. difficile infection","Antibiotic plus healthcare exposure","Exposure history uncertain"],"")+
+    selectField("diarr_laxative","Laxative / bowel-regimen context",["No laxative or bowel-regimen explanation","Laxative/stool softener within the last 48 hours","Laxative stopped more than 48 hours ago and diarrhea persists","Known overflow diarrhea / fecal impaction concern","Medication history uncertain"],"Avoid inappropriate C. difficile testing when a recent laxative is a sufficient explanation, unless the clinical picture remains concerning.")+
+    selectField("diarr_medication","Medication cause",["No likely medication culprit identified","Likely medication-related diarrhea","Recent medication start or dose increase","Enteral feeding-related contribution","Medication review incomplete"],"")+
+    inputField("diarr_med_note","Medication / feeding details","e.g. metformin increase, magnesium, laxative, antibiotic, colchicine, tube feed")+
+    '</div>'+
+
+    '<div class="scenarioPanel hidden" id="diarr_infectious_panel"><h3>Acute or inflammatory exposure screen</h3><span class="hint">A single focused exposure is more useful than an indiscriminate stool panel.</span><div class="grid2">'+
+    selectField("diarr_exposure","Dominant exposure",["No specific exposure","Sick contact or institutional outbreak","Travel or unsafe food/water","Undercooked meat, unpasteurized food, or animal exposure","Seafood / salt-water exposure","Daycare or healthcare-associated exposure","Sexual exposure relevant to enteric infection","Exposure uncertain"],"")+
+    selectField("diarr_inflammatory","Inflammatory features",["None identified","Fever","Visible blood or mucus","Severe abdominal cramping or tenderness","Fever plus blood/mucus","Signs of sepsis","Unable to assess"],"")+
+    '</div></div>'+
+
+    '<div class="scenarioPanel hidden" id="diarr_chronic_panel"><h3>Chronic-diarrhea screen</h3><span class="hint">Alarm features move the plan toward gastroenterology assessment and endoscopy rather than a functional diagnosis.</span><div class="grid2">'+
+    selectField("diarr_alarm","Chronic alarm features",["No alarm feature identified","Unintentional weight loss or nutritional decline","Iron-deficiency anemia or unexplained anemia","Persistent visible blood","Hypoalbuminemia or objective inflammation","Family history of IBD, celiac disease, or colorectal cancer","New onset at older age","Multiple alarm features","Not assessed"],"")+
+    selectField("diarr_chronic_clue","Dominant chronic clue",["No dominant clue","Celiac disease / malabsorption concern","Bile-acid diarrhea risk","Microscopic colitis risk","Inflammatory bowel disease concern","Functional diarrhea / IBS-D pattern after exclusions","Endocrine/systemic cause concern","Immunocompromised chronic infection concern","Unclear"],"")+
+    selectField("diarr_surgery","Relevant surgery / anatomy",["No relevant surgery","Cholecystectomy","Ileal disease or resection","Bariatric surgery","Pancreatic surgery or chronic pancreatitis","Short bowel / extensive resection","Other GI surgery","Anatomy uncertain"],"")+
+    '</div></div>'+
+
+    '<div class="scenarioPanel hidden" id="diarr_fatty_panel"><h3>Fatty / malabsorptive screen</h3><div class="grid2">'+
+    selectField("diarr_pancreas","Pancreatic context",["No pancreatic risk identified","Chronic pancreatitis","Pancreatic surgery","Pancreatic cancer / duct obstruction concern","Longstanding diabetes with possible pancreatic dysfunction","Risk uncertain"],"")+
+    selectField("diarr_nutrition","Nutritional impact",["No objective nutritional impact known","Weight loss","Low albumin or micronutrient deficiency","Both weight loss and laboratory deficiency","Not assessed"],"")+
+    '</div></div>'+
+    '</div></details>'+
+
+    '<details class="pathStep" id="diarr_step_testing"><summary>3. Testing and supportive management</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    selectField("diarr_basic_labs","Basic laboratory status",["Not yet assessed","Electrolytes and kidney function reassuring","Electrolyte abnormality","AKI / kidney-function decline","Anemia, leukocytosis, or inflammatory signal","Multiple abnormalities"],"")+
+    selectField("diarr_stool_status","Stool-testing status",["No stool testing yet","Multiplex enteric panel / culture pending","C. difficile test pending","Giardia / parasite testing pending","Fecal calprotectin or lactoferrin pending","Prior stool testing negative","Positive result available — interpret clinically"],"")+
+    selectField("diarr_support","Current hydration plan",["No plan documented","Oral rehydration solution","Oral fluids without structured replacement","IV isotonic crystalloid","Combined oral and IV replacement","Fluid plan requires comorbidity-specific adjustment"],"")+
+    selectField("diarr_antimotility","Antimotility / symptomatic therapy",["Not being used","Considering only if non-inflammatory diarrhea is confirmed","Currently receiving loperamide or similar","Avoiding due to inflammatory, C. difficile, STEC, ileus, or toxic-colitis concern","Medication plan uncertain"],"")+
+    selectField("diarr_owner","Primary ownership",["General Internal Medicine / primary team","Emergency medicine","Critical care","Gastroenterology","Infectious diseases","Surgery","Multidisciplinary plan"],"")+
+    inputField("diarr_plan_note","Additional plan or local-protocol note","e.g. contact precautions started; repeat creatinine tomorrow")+
+    '</div>'+
+    '<div class="scenarioPanel hidden" id="diarr_osm_panel"><h3>Optional chronic watery physiology</h3><span class="hint">Use only when stool electrolytes were obtained. Stool osmotic gap = 290 − 2 × (stool sodium + stool potassium).</span><div class="grid2"><div class="field"><label>Stool sodium (mmol/L)</label><input id="diarr_stool_na" type="number" min="0" step="any" placeholder="Optional"></div><div class="field"><label>Stool potassium (mmol/L)</label><input id="diarr_stool_k" type="number" min="0" step="any" placeholder="Optional"></div></div></div>'+
+    '</div></details>'+
+
+    '<details class="pathStep"><summary>4. Output</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("diarr_output_mode","Output mode",["Concise clinical note","Formal consultant letter","Counseling / teaching note"],"")+
+    '</div></div></details>'+
+    '<div class="toolbar"><button class="primary" id="diarrGenerate">Generate diarrhea assessment</button><button id="diarrCopy">Copy output</button><button id="diarrReset">Reset pathway</button></div><div id="diarr_out" class="output hidden"></div>'+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> IDSA infectious-diarrhea guideline; CDC C. difficile clinical overview and testing stewardship; AGA laboratory evaluation of chronic watery diarrhea; ACG adult acute-diarrhea guidance.</p><p class="hint">Interpret multiplex panels in the clinical context because nucleic-acid detection may not prove active disease. Apply local laboratory acceptance criteria, infection-control policy, antimicrobial stewardship, and public-health reporting requirements.</p></div></details>'+
+    '</section>');
+
+    ["diarr_duration","diarr_phenotype"].forEach(function(id){ document.getElementById(id).addEventListener("change", updateDiarrheaPanels); });
+    document.getElementById("diarrGenerate").addEventListener("click", calcDiarrhea);
+    document.getElementById("diarrCopy").addEventListener("click", function(){ copyOut("diarr_out"); });
+    document.getElementById("diarrReset").addEventListener("click", resetDiarrhea);
+    updateDiarrheaPanels();
+  }
+
+  function updateDiarrheaPanels(){
+    var duration = val("diarr_duration");
+    var phenotype = val("diarr_phenotype");
+    var infectious = duration.indexOf("Acute")===0 || duration.indexOf("Persistent")===0 || phenotype.indexOf("Inflammatory")===0;
+    var chronic = duration.indexOf("Chronic")===0;
+    var fatty = phenotype.indexOf("Fatty")===0;
+    var chronicWatery = chronic && phenotype.indexOf("Watery")===0;
+    var p1=document.getElementById("diarr_infectious_panel"); if(p1) p1.classList.toggle("hidden",!infectious);
+    var p2=document.getElementById("diarr_chronic_panel"); if(p2) p2.classList.toggle("hidden",!chronic);
+    var p3=document.getElementById("diarr_fatty_panel"); if(p3) p3.classList.toggle("hidden",!fatty);
+    var p4=document.getElementById("diarr_osm_panel"); if(p4) p4.classList.toggle("hidden",!chronicWatery);
+  }
+
+  function resetDiarrhea(){
+    var out=document.getElementById("diarr_out");
+    var card=out ? out.closest("section.card") : document;
+    card.querySelectorAll("input").forEach(function(el){ if(el.type==="checkbox" || el.type==="radio") el.checked=false; else el.value=""; });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex=0; });
+    card.querySelectorAll(".pathStep").forEach(function(el,i){ el.open=i===0; });
+    if(out){ out.textContent=""; out.className="output hidden"; }
+    updateDiarrheaPanels();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function diarrNum(id){
+    var raw=val(id); if(raw==="") return null;
+    var n=Number(raw); return Number.isFinite(n)?n:null;
+  }
+
+  function calcDiarrhea(){
+    var duration=val("diarr_duration"), phenotype=val("diarr_phenotype"), danger=val("diarr_danger");
+    var hydration=val("diarr_hydration"), oral=val("diarr_oral"), host=val("diarr_host");
+    var inflammatory=val("diarr_inflammatory"), alarm=val("diarr_alarm"), course=val("diarr_course");
+    var cdiRisk=val("diarr_cdi_risk"), laxative=val("diarr_laxative"), frequency=val("diarr_frequency");
+    var red=danger!=="Not assessed" && danger!=="No immediate danger feature";
+    var dehydrationConcern=hydration.indexOf("Moderate")===0 || hydration.indexOf("Severe")===0 || oral.indexOf("Unable")===0 || oral.indexOf("Aspiration")===0;
+    var highHost=host!=="Standard adult risk" && host!=="Risk context uncertain";
+    var inflammatorySyndrome=phenotype.indexOf("Inflammatory")===0 || (inflammatory && inflammatory!=="None identified" && inflammatory!=="Unable to assess");
+    var unformed3=frequency.indexOf("3-5")===0 || frequency.indexOf("6 or more")===0;
+    var meaningfulCdiExposure=cdiRisk!=="No major exposure identified" && cdiRisk!=="Exposure history uncertain";
+    var laxativeExplains=laxative.indexOf("within the last 48")>=0;
+    var laxativeEligibilityKnown=laxative.indexOf("No laxative")===0 || laxative.indexOf("stopped more than 48")>=0;
+    var cdiEligible=unformed3 && meaningfulCdiExposure && laxativeEligibilityKnown;
+    var level=red?"red":((dehydrationConcern || highHost || inflammatorySyndrome || cdiEligible || danger==="Not assessed")?"amber":"green");
+    var safety=red?"RED — immediate bedside escalation required":(level==="amber"?"AMBER — higher-risk features require active review":"GREEN — no immediate danger feature selected");
+    var immediate=[], tests=[], avoid=[], support=[], follow=[];
+
+    if(red){
+      immediate.push("Escalate now for monitored assessment and resuscitation; do not wait for outpatient stool results.");
+      tests.push("Obtain urgent CBC, electrolytes, creatinine, glucose, and additional perfusion/sepsis testing guided by the presentation.");
+      if(danger.indexOf("Peritonitis")>=0 || danger.indexOf("distension")>=0 || danger.indexOf("ischemia")>=0) immediate.push("Obtain urgent abdominal imaging and surgical/critical-care review as clinically indicated.");
+      if(danger.indexOf("Sepsis")>=0) tests.push("Obtain blood cultures and targeted source evaluation before antimicrobials when feasible without delaying treatment.");
+    } else if(danger==="Not assessed"){
+      immediate.push("Complete the danger screen before relying on this output.");
+    } else {
+      immediate.push("No emergency trigger selected; continue focused assessment and reassess if perfusion, pain, mental status, or stool output worsens.");
+    }
+
+    if(hydration.indexOf("Severe")===0 || oral.indexOf("Unable")===0 || oral.indexOf("Aspiration")===0){
+      support.push("Use monitored isotonic IV crystalloid resuscitation with comorbidity-specific reassessment of perfusion, urine output, electrolytes, and kidney function.");
+    } else if(hydration.indexOf("Mild")===0 || hydration.indexOf("Moderate")===0 || oral.indexOf("Reduced")===0){
+      support.push("Use oral rehydration solution in frequent small volumes when safe; add IV isotonic crystalloid if oral replacement is inadequate.");
+    } else {
+      support.push("Encourage oral rehydration solution and continued nutrition as tolerated; replace ongoing losses and monitor for dehydration.");
+    }
+    if(val("diarr_basic_labs").indexOf("Electrolyte abnormality")===0 || val("diarr_basic_labs").indexOf("AKI")===0 || val("diarr_basic_labs").indexOf("Multiple")===0) support.push("Correct electrolyte and kidney-function abnormalities with serial reassessment rather than a fixed fluid plan.");
+
+    var classification="Indeterminate diarrhea syndrome";
+    if(duration.indexOf("Acute")===0 && phenotype.indexOf("Watery")===0) classification="Acute watery diarrhea";
+    else if(duration.indexOf("Persistent")===0 && phenotype.indexOf("Watery")===0) classification="Persistent watery diarrhea";
+    else if(duration.indexOf("Chronic")===0 && phenotype.indexOf("Watery")===0) classification="Chronic watery diarrhea";
+    else if(phenotype.indexOf("Inflammatory")===0) classification=(duration.indexOf("Chronic")===0?"Chronic inflammatory diarrhea":"Acute/persistent inflammatory diarrhea");
+    else if(phenotype.indexOf("Fatty")===0) classification="Fatty / malabsorptive diarrhea";
+
+    var physiology="Not applicable or not established";
+    var stoolNa=diarrNum("diarr_stool_na"), stoolK=diarrNum("diarr_stool_k"), gap=null;
+    if(stoolNa!==null && stoolK!==null){
+      gap=290-(2*(stoolNa+stoolK));
+      if(gap>100) physiology="High stool osmotic gap ("+gap.toFixed(0)+" mOsm/kg): osmotic physiology favored";
+      else if(gap<50) physiology="Low stool osmotic gap ("+gap.toFixed(0)+" mOsm/kg): secretory physiology favored";
+      else physiology="Intermediate stool osmotic gap ("+gap.toFixed(0)+" mOsm/kg): mixed/indeterminate physiology";
+    } else if(duration.indexOf("Chronic")===0 && phenotype.indexOf("Watery")===0 && course.indexOf("continues despite fasting")>=0){
+      physiology="Secretory physiology favored by nocturnal/fasting persistence";
+    } else if(duration.indexOf("Chronic")===0 && phenotype.indexOf("Watery")===0 && course.indexOf("Improves substantially")===0){
+      physiology="Osmotic physiology favored by improvement with fasting";
+    }
+
+    if(duration.indexOf("Acute")===0){
+      if(inflammatorySyndrome || red || highHost){
+        tests.push("Use selective bacterial stool testing guided by local availability; include Shiga-toxin/STEC detection when blood, severe cramping, tenderness, fever, or sepsis raises concern.");
+      } else {
+        avoid.push("Do not order a broad stool panel routinely for short, uncomplicated watery diarrhea without inflammatory or high-risk features.");
+      }
+    }
+    if(duration.indexOf("Persistent")===0){
+      tests.push("Reassess the exposure timeline and use targeted testing for Giardia and other pathogens/parasites based on travel, water, outbreak, immune, and public-health context.");
+    }
+    if(inflammatorySyndrome){
+      tests.push("Evaluate for invasive infection and inflammatory colitis; use CBC, renal/electrolyte assessment, stool pathogen testing, and gastroenterology evaluation according to severity and duration.");
+      avoid.push("Avoid antimotility drugs when inflammatory diarrhea, STEC, C. difficile, ileus, or toxic colitis is suspected.");
+      avoid.push("Do not generate automatic empiric antibiotics; first consider STEC and use local infectious-diseases and antimicrobial-stewardship guidance.");
+    } else if(val("diarr_antimotility").indexOf("Currently receiving")===0){
+      support.push("Reconfirm that there is no fever, blood, inflammatory colitis, C. difficile, STEC, ileus, or toxic-colitis concern before continuing antimotility therapy.");
+    }
+
+    if(cdiEligible){
+      immediate.push("Start contact precautions now for suspected C. difficile according to local infection-control policy.");
+      tests.push("Send an unformed stool specimen using the local C. difficile testing algorithm; interpret a positive result only in the compatible clinical syndrome.");
+      avoid.push("Do not repeat C. difficile testing to document cure after symptoms resolve.");
+    } else if(laxativeExplains && !red){
+      avoid.push("A laxative or bowel regimen may explain the diarrhea: stop it when appropriate and reassess after at least 48 hours before C. difficile testing if symptoms persist.");
+    } else if(frequency.indexOf("No current")===0){
+      avoid.push("Do not send C. difficile testing on formed stool or in the absence of a compatible diarrheal syndrome.");
+    }
+
+    if(duration.indexOf("Chronic")===0){
+      tests.push("For chronic watery diarrhea, consider fecal calprotectin or lactoferrin, Giardia testing, celiac serology with tTG-IgA plus an IgA-deficiency strategy, and assessment for bile-acid diarrhea.");
+      avoid.push("Without relevant travel, immigration, or immune risk, avoid routine broad ova-and-parasite testing beyond Giardia.");
+      if(alarm && alarm!=="No alarm feature identified" && alarm!=="Not assessed"){
+        follow.push("Alarm features are present: arrange gastroenterology assessment and endoscopic evaluation rather than assigning a functional diagnosis.");
+      } else if(val("diarr_chronic_clue").indexOf("Microscopic")===0){
+        follow.push("Request colonoscopy with colonic biopsies when evaluating possible microscopic colitis; the mucosa may appear normal.");
+      } else {
+        follow.push("If initial chronic-diarrhea evaluation is unrevealing, reassess medication, bile-acid, microscopic-colitis, malabsorption, endocrine, and functional causes before labeling IBS-D.");
+      }
+    }
+    if(phenotype.indexOf("Fatty")===0){
+      tests.push("Assess nutritional status and malabsorption; consider celiac testing and fecal elastase with pancreatic imaging or specialist review when pancreatic insufficiency is plausible.");
+      follow.push("Refer for gastroenterology/nutrition assessment when weight loss, deficiencies, pancreatic disease, or altered anatomy is present.");
+    }
+    if(val("diarr_medication")!=="No likely medication culprit identified" && val("diarr_medication")!=="Medication review incomplete"){
+      follow.push("Review timing and necessity of the suspected medication or feeding trigger; adjust safely and document whether symptoms improve.");
+    } else if(val("diarr_medication")==="Medication review incomplete"){
+      follow.push("Complete medication reconciliation, including laxatives, magnesium, metformin, antibiotics, colchicine, PPIs, NSAIDs, SSRIs, immunosuppressants, and enteral feeds.");
+    }
+    if(!tests.length) tests.push("No automatic stool test is generated; choose testing only after duration, phenotype, host risk, and exposures are established.");
+    if(!avoid.length) avoid.push("Avoid reflex broad panels and treatment escalation without a compatible syndrome and interpretable specimen.");
+    if(!follow.length) follow.push("Reassess within the clinical timeframe appropriate to hydration, host risk, stool frequency, and symptom trajectory.");
+
+    var completed=[],missing=[];
+    function scoreItem(name,ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("Danger and hydration assessed",danger!=="Not assessed" && hydration!=="Not assessed" && oral!=="Not assessed");
+    scoreItem("Duration and frequency classified",duration!=="Not yet classified" && frequency!=="Not documented");
+    scoreItem("Phenotype characterized",phenotype!=="Unclear / mixed");
+    scoreItem("C. difficile eligibility reviewed",cdiRisk!=="Exposure history uncertain" && laxative!=="Medication history uncertain");
+    scoreItem("Medication cause reviewed",val("diarr_medication")!=="Medication review incomplete");
+    scoreItem("Laboratory and hydration plan documented",val("diarr_basic_labs")!=="Not yet assessed" && val("diarr_support")!=="No plan documented");
+    scoreItem("Ownership documented",!!val("diarr_owner"));
+    var total=completed.length+missing.length, pct=completed.length/total;
+    var careLabel=pct>=0.9?"Complete":(pct>=0.7?"Mostly complete":"Gaps remain");
+
+    var core=
+      "Safety status: "+safety+"\n"+
+      "Syndrome: "+classification+". Duration: "+duration+". Frequency: "+frequency+".\n"+
+      "Physiology: "+physiology+".\n"+
+      "C. difficile testing eligibility: "+(cdiEligible?"Eligible based on entered stool frequency, exposure, and laxative context":"Not established from the entered data")+".\n\n"+
+      "Immediate triage / infection control:\n"+atsBullets(immediate)+"\n\n"+
+      "Testing now or next:\n"+atsBullets(tests)+"\n\n"+
+      "Supportive management:\n"+atsBullets(support)+"\n\n"+
+      "Avoid / safety cautions:\n"+atsBullets(avoid)+"\n\n"+
+      "Follow-up and escalation:\n"+atsBullets(follow)+"\n\n"+
+      "Ownership: "+val("diarr_owner")+".\n"+
+      (val("diarr_plan_note")?"Additional plan: "+val("diarr_plan_note")+".\n":"")+
+      "Care standard: "+completed.length+"/"+total+" — "+careLabel+(missing.length?". Remaining gaps: "+missing.join(", ")+".":".");
+
+    var concise="Adult Diarrhea Assessment\n\n"+core;
+    var formal="Dear Colleague,\n\nThank you for asking me to assess this adult with diarrhea. "+(val("diarr_summary")?"In brief: "+val("diarr_summary")+". ":"")+"The presentation is classified as "+classification.toLowerCase()+".\n\n"+core+"\n\nEvidence anchors: IDSA infectious-diarrhea guidance; CDC C. difficile testing and infection-control guidance; AGA chronic watery-diarrhea laboratory guidance; ACG acute-diarrhea guidance.\n\nSincerely,\nGeneral Internal Medicine";
+    var teaching="Clinician teaching note\n\nThe safe sequence is: triage perfusion and abdominal danger, classify duration and stool phenotype, decide whether C. difficile or selective pathogen testing is justified, replace fluid and electrolytes, review medications, and escalate chronic alarm or malabsorptive features.\n\n"+core+"\n\nPatient explanation:\nMost short episodes improve with careful fluid replacement, but some patterns need stool testing or urgent assessment. Seek prompt reassessment for inability to drink, fainting, worsening severe pain, blood in stool, confusion, reduced urine output, or rapid clinical deterioration.";
+    var finalText=concise;
+    if(val("diarr_output_mode")==="Formal consultant letter") finalText=formal;
+    if(val("diarr_output_mode")==="Counseling / teaching note") finalText=teaching;
+    var out=document.getElementById("diarr_out");
+    out.className="output "+level;
+    out.textContent=finalText;
     out.classList.remove("hidden");
   }
 
