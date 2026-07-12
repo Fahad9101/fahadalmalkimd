@@ -62,6 +62,8 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 .miniStep{border:1px dashed var(--line);border-radius:12px;background:white;margin:14px 0;padding:0 14px}
 .miniStep>summary{cursor:pointer;padding:13px 0;font-weight:800;color:#31535d}
 .stepIntro{margin:12px 0 18px;color:#5b6b78}
+.scenarioPanel{border:1px solid var(--line);border-radius:16px;background:#fbfdfe;padding:20px;margin:18px 0}
+.scenarioPanel>h3{color:#073f4a;margin-bottom:4px}.scenarioPanel>.hint{margin-bottom:16px}
 
 </style>
 </head>
@@ -99,7 +101,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
     {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
     {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
-    {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Thrombosis on anticoagulation, HIT/PF4/VITT, anti-Xa pitfalls, AT deficiency, APS, DOAC danger zones, and vascular red flags."},
+    {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Bleeding and reversal, HIT/PF4, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and antiplatelet overlap."},
     {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Diarrhea Diagnostic Pathway",desc:"Danger-first diarrhea approach: watery vs inflammatory vs fatty, osmotic vs secretory, medications, bile acid, pancreatic, microscopic colitis."},
     {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Tonicity-first pathway, ADH-on/off reasoning, urine osm/sodium, SIADH mimics, ODS risk, and correction guardrails."},
@@ -208,6 +210,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "af-anticoag" || id === "af-anticoagulation" || id === "af-decision") return renderAFDecisionAid();
     if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
     if(id === "postop-troponin") return renderPostopMINS();
+    if(id === "antithrombotic") return renderAntithromboticSafety();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -1772,6 +1775,393 @@ evidence + "\n\n" +
 
     var out = document.getElementById("af_out");
     out.className = "output " + (highSafety || missing.length || specialist ? "amber" : "green");
+    out.textContent = finalText;
+    out.classList.remove("hidden");
+  }
+
+
+  function renderAntithromboticSafety(){
+    shell("Antithrombotic Safety Assistant","Scenario-driven safety assessment for bleeding, HIT/PF4 syndromes, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and anticoagulant–antiplatelet overlap.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>Safety before escalation:</b> identify the immediate hazard, verify the drug and indication, determine whether treatment is failing or unsafe, and produce a focused action plan. Select one primary scenario; only its relevant fields will appear.</p><p class="hint">This tool supports clinical reasoning and local protocols. It does not replace emergency response, pharmacy verification, hematology/cardiology consultation, or institution-specific reversal dosing.</p></div>'+
+
+    '<h4>1. Core medication and safety context</h4>'+
+    '<div class="grid2">'+
+    selectField("ats_scenario","Primary safety problem",["Bleeding or urgent reversal","Thrombocytopenia / suspected HIT or PF4 syndrome","New thrombosis despite antithrombotic treatment","DOAC or anticoagulant danger-zone check","Heparin resistance / anti-Xa / antithrombin problem","Anticoagulant–antiplatelet overlap"],"Only the selected scenario opens below.")+
+    inputField("ats_summary","One-line case summary","e.g. platelet fall 220 to 85 on day 6 of UFH with new DVT")+
+    selectField("ats_indication","Primary antithrombotic indication",["Acute VTE treatment","Extended VTE prevention","Atrial fibrillation stroke prevention","Mechanical heart valve","Acute coronary syndrome / PCI","Peripheral or coronary arterial disease","VTE prophylaxis","HIT treatment","Other / unclear"],"")+
+    selectField("ats_agent","Current anticoagulant",["None","Apixaban","Rivaroxaban","Edoxaban","Dabigatran","Warfarin/VKA","Unfractionated heparin","LMWH","Fondaparinux","Argatroban","Bivalirudin","Other / unclear"],"")+
+    inputField("ats_dose","Dose and schedule","e.g. apixaban 5 mg twice daily; UFH infusion 18 units/kg/h")+
+    selectField("ats_lastdose","Last dose / adherence",["Taken as prescribed; timing known","Possible missed doses","Multiple missed doses / interruption","Last dose within 6 hours","Last dose 6-12 hours ago","Last dose 12-24 hours ago","Last dose >24 hours ago","Continuous infusion","Unknown"],"Timing matters most for bleeding, reversal, urgent procedures, and suspected treatment failure.")+
+    selectField("ats_antiplatelet","Current antiplatelet exposure",["None","Aspirin","Clopidogrel","Ticagrelor or prasugrel","Dual antiplatelet therapy","Antiplatelet plus NSAID","Unknown"],"")+
+    selectField("ats_renal","Renal function",["Stable / Cockcroft–Gault CrCl ≥50","CrCl 30-49","CrCl 15-29","CrCl <15 or dialysis","AKI or rapidly changing renal function","Unknown"],"Prefer Cockcroft–Gault CrCl for DOAC dosing decisions.")+
+    selectField("ats_liver","Liver/hemostatic context",["No significant liver disease","Stable compensated liver disease","Cirrhosis / portal hypertension","Varices or high GI bleeding concern","Decompensated liver disease / synthetic dysfunction","Unknown"],"")+
+    selectField("ats_danger","Immediate danger screen",["No immediate danger feature","Hemodynamic instability or uncontrolled major bleeding","Intracranial, spinal, pericardial, retroperitoneal, or other critical-site bleeding","Massive/high-risk PE or severe cardiopulmonary compromise","Acute limb, cerebral, coronary, or mesenteric ischemia","Rapid platelet fall with new thrombosis on heparin","Urgent surgery/procedure cannot wait","Other immediate threat"],"A positive danger screen requires immediate bedside escalation; do not wait for the generated note.")+
+    '</div>'+
+
+    '<div class="scenarioPanel" id="ats_bleed_panel">'+
+    '<h3>Bleeding or urgent reversal</h3><span class="hint">Classify severity, determine whether clinically relevant drug remains, and use agent-specific reversal only when benefit outweighs thrombosis risk.</span>'+
+    '<div class="grid2">'+
+    selectField("ats_bleed_severity","Bleeding severity",["No active bleeding — urgent procedure only","Minor/nonmajor bleeding","Major bleeding","Life-threatening or uncontrolled bleeding","Critical-site bleeding","Severity unclear"],"")+
+    selectField("ats_bleed_site","Bleeding site",["No bleeding","Gastrointestinal","Intracranial/neurologic","Retroperitoneal","Genitourinary","Airway/pulmonary","Operative/procedural site","Other / unclear"],"")+
+    selectField("ats_urgent_procedure","Procedure urgency",["No urgent procedure","Procedure can wait for drug clearance","Urgent procedure within 24 hours","Emergency procedure cannot wait","Timing unclear"],"")+
+    inputField("ats_hb","Hemoglobin and trend","e.g. 112 to 78 g/L")+
+    selectField("ats_platelets","Platelet count",["≥100 ×10⁹/L","50-99 ×10⁹/L","<50 ×10⁹/L","Unknown"],"")+
+    selectField("ats_reversal_available","Reversal/hemostatic resources",["Availability not yet checked","Drug-specific antidote available","4-factor PCC available","Only plasma/supportive resources known","Transfusion medicine/pharmacy contacted"],"")+
+    '</div></div>'+
+
+    '<div class="scenarioPanel hidden" id="ats_hit_panel">'+
+    '<h3>Thrombocytopenia / suspected HIT or PF4 syndrome</h3><span class="hint">The 4Ts score estimates pretest probability. It should be calculated before PF4 testing.</span>'+
+    '<div class="grid2">'+
+    selectField("ats_hit_platelet","4Ts — thrombocytopenia",["2 — Platelet fall >50% and nadir ≥20","1 — Fall 30-50% or nadir 10-19","0 — Fall <30% or nadir <10","Unknown — use best available data"],"")+
+    selectField("ats_hit_timing","4Ts — timing",["2 — Clear onset day 5-10, or ≤1 day with heparin exposure within 30 days","1 — Consistent with day 5-10 but unclear; onset after day 10; or ≤1 day with exposure 30-100 days ago","0 — Fall within 4 days without recent heparin exposure","Unknown — reconstruct exposure timeline"],"")+
+    selectField("ats_hit_thrombosis","4Ts — thrombosis/sequelae",["2 — New confirmed thrombosis, skin necrosis, or acute systemic reaction after IV heparin","1 — Progressive/recurrent or suspected thrombosis; non-necrotizing skin lesions","0 — None","Unknown"],"")+
+    selectField("ats_hit_other","4Ts — other causes",["2 — No other cause apparent","1 — Possible other cause","0 — Definite alternative cause","Unknown"],"")+
+    selectField("ats_heparin_exposure","Heparin exposure",["UFH therapeutic infusion","UFH prophylaxis","LMWH","Heparin flushes/catheter exposure","Recent heparin exposure but current source unclear","No heparin exposure identified"],"Include all flushes, line locks, dialysis, procedures, and outside-hospital exposure.")+
+    selectField("ats_pf4_status","HIT laboratory status",["Not sent","PF4 immunoassay pending","PF4 immunoassay negative","PF4 immunoassay positive; optical density unavailable","PF4 positive with optical density known","Functional assay pending","Functional assay positive","Functional assay negative"],"")+
+    selectField("ats_hit_bleeding","Bleeding risk if empiric non-heparin anticoagulation is considered",["Low/acceptable bleeding risk","High bleeding risk","Active bleeding","Procedure planned","Unknown"],"")+
+    selectField("ats_pf4_special","PF4 special syndrome prompt",["No VITT/other PF4 syndrome concern","Recent relevant vaccine/exposure with thrombocytopenia and thrombosis","Unusual-site thrombosis with high D-dimer/low fibrinogen concern","Spontaneous/autoimmune HIT concern without proximate heparin","Unclear — specialist review"],"")+
+    '</div></div>'+
+
+    '<div class="scenarioPanel hidden" id="ats_failure_panel">'+
+    '<h3>New thrombosis despite antithrombotic treatment</h3><span class="hint">First prove that the event is new. Then identify underexposure, the wrong drug for the indication, or a strong persistent driver.</span>'+
+    '<div class="grid2">'+
+    selectField("ats_fail_type","Event type",["Venous thrombosis / PE","Arterial thrombosis","Cardioembolic event","Catheter/device thrombosis","Superficial venous thrombosis","Event type unclear"],"")+
+    selectField("ats_fail_confirm","Objective confirmation",["New thrombosis confirmed against prior imaging","Progression/extension confirmed","Suspected; imaging pending","Chronic clot/post-thrombotic change favored","Imaging not comparable","No objective assessment"],"")+
+    selectField("ats_fail_adherence","Exposure/adherence assessment",["Reliable therapeutic exposure","Possible missed doses","Clear missed doses or interruption","Incorrect dose suspected","Drug interaction may reduce exposure","Malabsorption/bariatric surgery concern","Unable to verify"],"")+
+    selectField("ats_fail_dose","Dose appropriateness",["Correct therapeutic dose","Prophylactic dose only","Inappropriate dose reduction","Dose not adjusted for renal/weight context","Warfarin INR subtherapeutic","LMWH dose/weight unclear","Unknown"],"")+
+    selectField("ats_fail_action","Preferred specialist strategy",["Confirm event and causes before changing therapy","Consider switch to therapeutic LMWH after confirmation","Review LMWH dose/intensity if recurrence occurred on therapeutic LMWH","Correct adherence/dose/interaction problem","Route arterial event to indication-specific pathway","Individualized hematology/thrombosis plan"],"No automatic escalation is generated without objective confirmation and bleeding review.")+
+    '</div>'+
+    '<label>Persistent or alternative drivers</label>'+
+    checks("ats_fail_causes",["Active cancer","High-risk APS","HIT/PF4 syndrome","Mechanical valve or rheumatic mitral stenosis","Anatomic compression or catheter/device","MPN/JAK2 or PNH concern","Pregnancy/postpartum","Major inflammatory/systemic disease","No strong driver identified"])+
+    '</div>'+
+
+    '<div class="scenarioPanel hidden" id="ats_doac_panel">'+
+    '<h3>DOAC or anticoagulant danger-zone check</h3><span class="hint">Identify situations where the agent is inappropriate, temporarily unsafe, or requires correction and closer monitoring.</span>'+
+    '<div class="grid2">'+
+    selectField("ats_doac_indication","Indication/eligibility conclusion",["Standard DOAC-eligible indication","Indication unclear","Warfarin/VKA indication likely","Parenteral anticoagulant temporarily preferred","Specialist individualized decision"],"")+
+    inputField("ats_crcl","Cockcroft–Gault CrCl / key renal value","e.g. CrCl 24 mL/min; AKI from baseline 80")+
+    inputField("ats_weight","Weight / absorption context","e.g. 142 kg; Roux-en-Y 3 months ago")+
+    selectField("ats_dose_safety","Dose-safety assessment",["Dose appears appropriate from available data","Possible underdose","Possible overdose","Dose-reduction criteria incomplete","Renal function makes current dose unsafe/uncertain","Cannot assess"],"")+
+    selectField("ats_interaction","Drug interaction assessment",["No major interaction identified","Strong inducer may reduce anticoagulant exposure","Strong inhibitor may increase bleeding risk","Multiple antithrombotics/NSAID increase bleeding risk","Interaction review incomplete"],"")+
+    '</div>'+
+    '<label>Danger zones</label>'+
+    checks("ats_doac_dangers",["Mechanical heart valve","Moderate-to-severe/rheumatic mitral stenosis","High-risk/triple-positive APS","Pregnancy or breastfeeding","AKI or severe renal impairment","Decompensated liver disease/varices","Strong CYP3A4/P-gp interaction","Recent bariatric surgery or malabsorption","Extreme weight requiring agent-specific review","Unreliable adherence","Duplicate anticoagulants","No danger zone identified"])+
+    '</div>'+
+
+    '<div class="scenarioPanel hidden" id="ats_heparin_panel">'+
+    '<h3>Heparin resistance / anti-Xa / antithrombin problem</h3><span class="hint">Interpret the clinical effect, assay calibration, and sample timing together. A single number without this context is unsafe.</span>'+
+    '<div class="grid2">'+
+    selectField("ats_heparin_agent","Agent under assessment",["UFH infusion","Therapeutic LMWH","Prophylactic LMWH","Fondaparinux","Factor Xa DOAC","Other / unclear"],"")+
+    selectField("ats_heparin_issue","Primary monitoring problem",["Escalating UFH requirement / apparent heparin resistance","aPTT low but anti-Xa therapeutic","aPTT high but anti-Xa low/normal","Unexpectedly low anti-Xa","Unexpectedly high anti-Xa","Thrombosis while treated","Assay result difficult to interpret"],"")+
+    selectField("ats_assay","Assay used",["UFH-calibrated anti-Xa","LMWH-calibrated anti-Xa","Drug-specific DOAC anti-Xa","Generic/unclear anti-Xa assay","aPTT only","Thrombin time/dilute thrombin time","Assay unknown"],"")+
+    selectField("ats_sample_time","Sample timing",["Appropriate steady-state/timing confirmed","LMWH peak approximately 4 hours after dose","Trough sample","Drawn too early/late","Timing unknown"],"")+
+    inputField("ats_aptt","aPTT result / ratio","e.g. 42 seconds while UFH infusion running")+
+    inputField("ats_antixa","Anti-Xa result and units","e.g. 0.18 IU/mL")+
+    selectField("ats_at_level","Antithrombin assessment",["Not measured","Normal","Mildly reduced","Markedly reduced","Result may be confounded by acute illness/heparin","Lab assay method unclear"],"")+
+    selectField("ats_inflammation","aPTT discordance context",["No major inflammatory signal","High factor VIII/fibrinogen or major inflammation likely","Lupus anticoagulant may prolong aPTT","DIC/coagulopathy may prolong aPTT","Context unknown"],"")+
+    selectField("ats_heparin_thrombosis","Clinical outcome",["No new thrombosis","New thrombosis suspected","New thrombosis confirmed","Bleeding concern","Outcome unclear"],"")+
+    inputField("ats_lab_note","Laboratory clarification note","e.g. lab anti-Xa assay adds exogenous antithrombin; DOAC interference possible")+
+    '</div></div>'+
+
+    '<div class="scenarioPanel hidden" id="ats_overlap_panel">'+
+    '<h3>Anticoagulant–antiplatelet overlap</h3><span class="hint">Every drug needs a current indication. Minimize unnecessary aspirin, NSAIDs, and prolonged triple therapy.</span>'+
+    '<div class="grid2">'+
+    selectField("ats_overlap_regimen","Current combined regimen",["Anticoagulant + aspirin","Anticoagulant + P2Y12 inhibitor","Triple therapy: anticoagulant + aspirin + P2Y12 inhibitor","Dual antiplatelet therapy without anticoagulant","Anticoagulant + NSAID","Regimen unclear"],"")+
+    selectField("ats_overlap_indication","Reason for antiplatelet therapy",["Recent ACS/PCI","Prior PCI but timing unclear","Stable CAD without recent PCI","Symptomatic PAD/revascularization indication","Primary prevention only","No clear indication","Unknown"],"")+
+    selectField("ats_pci_timing","Time since ACS/PCI",["No ACS/PCI","<1 month","1-6 months","6-12 months",">12 months","Unknown"],"")+
+    selectField("ats_overlap_bleed","Bleeding-risk context",["No major modifier","Prior GI bleeding","Prior intracranial bleeding","Anemia/thrombocytopenia","CKD/liver disease","Active bleeding","High-risk procedure planned"],"")+
+    selectField("ats_nsaid","NSAID/other bleeding medication",["None","Regular NSAID","Intermittent NSAID","Systemic steroid","SSRI/SNRI or other contributor","Medication review incomplete"],"")+
+    selectField("ats_overlap_plan","Overlap conclusion",["Review and deprescribe unnecessary aspirin/NSAID","Recent PCI/ACS — cardiology antithrombotic pathway","Minimize triple-therapy duration","Separate PAD indication requires individualized review","Combined therapy currently justified","Indication unclear — reconcile before discharge"],"")+
+    '</div></div>'+
+
+    '<h4>2. Output and ownership</h4>'+
+    '<div class="grid2">'+
+    selectField("ats_owner","Primary coordination/consultation",["General Internal Medicine / primary team","Hematology / thrombosis","Cardiology","Surgery / procedural service","Critical care","Transfusion medicine / pharmacy","Multidisciplinary review"],"")+
+    selectField("ats_output_mode","Output mode",["Formal consultant letter","Concise clinical note","Counseling / teaching note"],"")+
+    inputField("ats_plan_note","Additional plan / ownership note","e.g. pharmacy checking andexanet availability; hematology to review PF4 result")+
+    '</div>'+
+    '<div class="toolbar"><button class="primary" id="atsGenerate">Generate antithrombotic safety assessment</button><button id="atsCopy">Copy output</button><button id="atsReset">Reset pathway</button></div><div id="ats_out" class="output hidden"></div>'+
+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> ASH HIT guideline and 4Ts diagnostic pathway; ACC anticoagulant-related bleeding pathway; ASH VTE/cancer guidance for recurrent thrombosis; ISTH guidance for DOAC special populations and reversal. Obesity alone is not treated as a universal DOAC exclusion. Reversal and empiric alternative anticoagulation require assessment of bleeding and thrombosis risk.</p><p class="hint">This assistant deliberately routes full AF stroke-benefit decisions, VTE-duration decisions, and peri-procedural interruption schedules to their dedicated pathways.</p></div></details>'+
+    '</section>');
+    document.getElementById("atsGenerate").addEventListener("click", calcAntithromboticSafety);
+    document.getElementById("atsCopy").addEventListener("click", function(){ copyOut("ats_out"); });
+    document.getElementById("atsReset").addEventListener("click", resetAntithromboticSafety);
+    document.getElementById("ats_scenario").addEventListener("change", updateATSScenario);
+    updateATSScenario();
+  }
+
+  function updateATSScenario(){
+    var map = {
+      "Bleeding or urgent reversal":"ats_bleed_panel",
+      "Thrombocytopenia / suspected HIT or PF4 syndrome":"ats_hit_panel",
+      "New thrombosis despite antithrombotic treatment":"ats_failure_panel",
+      "DOAC or anticoagulant danger-zone check":"ats_doac_panel",
+      "Heparin resistance / anti-Xa / antithrombin problem":"ats_heparin_panel",
+      "Anticoagulant–antiplatelet overlap":"ats_overlap_panel"
+    };
+    document.querySelectorAll(".scenarioPanel").forEach(function(el){ el.classList.add("hidden"); });
+    var target = document.getElementById(map[val("ats_scenario")]);
+    if(target) target.classList.remove("hidden");
+  }
+
+  function resetAntithromboticSafety(){
+    var out = document.getElementById("ats_out");
+    var card = out ? out.closest("section.card") : document;
+    card.querySelectorAll("input").forEach(function(el){
+      if(el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    updateATSScenario();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function atsScoreValue(id){
+    var n = parseInt(val(id),10);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function atsBullets(items){
+    return items.length ? items.map(function(x){ return "- " + x; }).join("\n") : "- None generated";
+  }
+
+  function calcAntithromboticSafety(){
+    var scenario = val("ats_scenario");
+    var agent = val("ats_agent");
+    var indication = val("ats_indication");
+    var danger = val("ats_danger");
+    var level = danger.indexOf("No immediate")>=0 ? "green" : "red";
+    var safety = level === "red" ? "RED — immediate/high-risk safety issue" : "GREEN — no immediate danger identified";
+    var phenotype = scenario;
+    var actions = [];
+    var avoid = [];
+    var tests = [];
+    var strategy = [];
+    var monitoring = [];
+    var teaching = "";
+    var hitScore = null;
+
+    function makeAmber(){
+      if(level !== "red"){
+        level = "amber";
+        safety = "AMBER — significant concern, missing data, or specialist review needed";
+      }
+    }
+    function makeRed(){
+      level = "red";
+      safety = "RED — immediate/high-risk safety issue";
+    }
+    function addCommonTests(){
+      tests.push("Verify the exact drug, dose, indication, last dose, adherence, renal function, liver context, platelet count, hemoglobin, and interacting medicines.");
+    }
+
+    if(level === "red") actions.push("Escalate immediately to the bedside clinical team and the appropriate emergency/specialty pathway; do not wait for this note.");
+
+    if(scenario === "Bleeding or urgent reversal"){
+      var severity = val("ats_bleed_severity");
+      phenotype = severity + " while receiving " + agent;
+      addCommonTests();
+      tests.push("Assess bleeding source, hemodynamics, CBC/hemoglobin trend, creatinine, coagulation context, type and screen/crossmatch, and time since last dose.");
+      if(severity.indexOf("Major")>=0 || severity.indexOf("Life-threatening")>=0 || severity.indexOf("Critical-site")>=0){
+        makeRed();
+        actions.push("Hold the antithrombotic agent, control the source, provide supportive resuscitation, and contact pharmacy/transfusion medicine plus the responsible procedural team.");
+        if(agent.indexOf("Warfarin")>=0) strategy.push("For major VKA-associated bleeding, use the local 4-factor PCC plus intravenous vitamin K pathway; use plasma only when PCC is unavailable or otherwise indicated.");
+        else if(agent === "Dabigatran") strategy.push("For life-threatening/uncontrolled dabigatran effect or emergency surgery, use the idarucizumab pathway when clinically relevant drug is present.");
+        else if(agent === "Apixaban" || agent === "Rivaroxaban" || agent === "Edoxaban") strategy.push("For clinically relevant factor Xa inhibitor effect, use the local andexanet pathway when appropriate/available for apixaban or rivaroxaban; 4-factor PCC is an alternative strategy. Edoxaban requires local specialist guidance.");
+        else if(agent.indexOf("Unfractionated")>=0) strategy.push("Use the local protamine reversal pathway for UFH after confirming recent exposure.");
+        else if(agent === "LMWH") strategy.push("Protamine provides partial LMWH reversal; base the local pathway on agent, dose, timing, renal function, and bleeding severity.");
+        else if(agent === "Fondaparinux") strategy.push("Fondaparinux has no specific antidote; use supportive/hemostatic specialist management and consider PCC-based options only through local expert guidance.");
+        else strategy.push("Confirm the agent before choosing reversal; do not use a nonspecific reversal product reflexively.");
+      } else if(severity.indexOf("Minor")>=0){
+        makeAmber();
+        actions.push("Use local measures, review the need for temporary interruption, correct reversible factors, and reassess.");
+        avoid.push("Avoid routine reversal for most nonmajor bleeding.");
+      } else if(severity.indexOf("urgent procedure")>=0 || val("ats_urgent_procedure").indexOf("Urgent")>=0 || val("ats_urgent_procedure").indexOf("Emergency")>=0){
+        makeAmber();
+        actions.push("Confirm procedure urgency, last dose, renal clearance, and whether the procedure can safely wait for drug clearance.");
+        strategy.push("Use agent-specific urgent-procedure guidance; reversal is justified only when the procedure cannot wait and clinically relevant anticoagulant effect is likely.");
+      } else makeAmber();
+      avoid.push("Avoid assuming PT/INR or aPTT reliably excludes clinically relevant DOAC effect.");
+      monitoring.push("Reassess bleeding control, hemoglobin, organ function, thrombosis risk, and when/if antithrombotic therapy should resume.");
+      teaching = "Reversal is for life-threatening/major bleeding or genuinely urgent procedures when relevant drug effect is likely—not for most minor bleeding.";
+    }
+
+    if(scenario === "Thrombocytopenia / suspected HIT or PF4 syndrome"){
+      hitScore = atsScoreValue("ats_hit_platelet") + atsScoreValue("ats_hit_timing") + atsScoreValue("ats_hit_thrombosis") + atsScoreValue("ats_hit_other");
+      var hitProb = hitScore<=3 ? "low-probability HIT" : (hitScore<=5 ? "intermediate-probability HIT" : "high-probability HIT");
+      phenotype = hitProb + " (4Ts " + hitScore + "/8)";
+      tests.push("Reconstruct every heparin exposure and platelet count, including flushes, dialysis, procedures, and outside-hospital treatment.");
+      if(hitScore<=3){
+        actions.push("HIT is unlikely from the selected 4Ts data; evaluate alternative thrombocytopenia causes.");
+        avoid.push("Avoid routine PF4 testing when the 4Ts score is reliably low, because false-positive labeling can cause harm.");
+        strategy.push("Heparin may generally continue or resume if otherwise indicated and no separate contraindication exists.");
+      } else {
+        makeRed();
+        actions.push("Stop all heparin products and heparin flushes; assess bleeding risk and begin an appropriate non-heparin anticoagulant unless contraindicated.");
+        tests.push("Send a PF4 immunoassay; if positive and available, use a functional assay to clarify the diagnosis.");
+        strategy.push("Choose argatroban, bivalirudin, fondaparinux, or a DOAC according to clinical stability, organ function, bleeding/procedure context, and local expertise.");
+        avoid.push("Avoid starting warfarin during acute HIT; if recently started, obtain urgent specialist advice regarding vitamin K reversal.");
+        avoid.push("Avoid routine platelet transfusion unless active bleeding or a high-risk procedure warrants it.");
+        monitoring.push("Trend platelets and assess for thrombosis; in isolated acute HIT, screen appropriate limbs for clinically silent proximal DVT according to the exposure context.");
+      }
+      if(val("ats_pf4_special").indexOf("No VITT")<0){
+        makeRed();
+        tests.push("For a possible VITT/autoimmune PF4 syndrome, urgently assess CBC, D-dimer, fibrinogen, PF4 ELISA, and thrombosis at symptom-directed sites.");
+        strategy.push("Use urgent hematology guidance for IVIG and non-heparin anticoagulation when the syndrome is clinically suspected.");
+      }
+      monitoring.push("Reassess when immunoassay/functional testing returns; a negative immunoassay usually redirects away from HIT.");
+      teaching = "The 4Ts score comes before PF4 testing. The core acute HIT actions are to avoid heparin and provide appropriate non-heparin anticoagulation.";
+    }
+
+    if(scenario === "New thrombosis despite antithrombotic treatment"){
+      var confirmation = val("ats_fail_confirm");
+      phenotype = confirmation.indexOf("confirmed")>=0 ? "Objectively confirmed thrombosis despite treatment" : "Possible anticoagulant failure — recurrence not yet fully confirmed";
+      addCommonTests();
+      tests.push("Compare current and prior imaging to distinguish new thrombosis/extension from chronic clot or post-thrombotic symptoms.");
+      tests.push("Review adherence, interruptions, dose, INR where relevant, renal function, interactions, absorption, weight, cancer, APS, HIT, and anatomic/device drivers.");
+      if(confirmation.indexOf("confirmed")>=0){
+        makeRed();
+        actions.push("Treat this as a clinically important recurrent event while simultaneously identifying why therapeutic exposure failed.");
+      } else {
+        makeAmber();
+        actions.push("Obtain objective confirmation before labeling treatment failure or escalating intensity.");
+      }
+      if(val("ats_fail_adherence").indexOf("missed")>=0 || val("ats_fail_adherence").indexOf("interruption")>=0 || val("ats_fail_dose").indexOf("subtherapeutic")>=0 || val("ats_fail_dose").indexOf("Inappropriate")>=0){
+        strategy.push("Correct the identified underexposure problem; this may represent inadequate exposure rather than biological anticoagulant failure.");
+      }
+      strategy.push(val("ats_fail_action") + ".");
+      if(val("ats_fail_action").indexOf("LMWH")>=0) strategy.push("A switch to therapeutic LMWH or review of LMWH intensity should occur only after confirmation, bleeding assessment, and specialist review.");
+      if(val("ats_fail_type").indexOf("Arterial")>=0 || val("ats_fail_type").indexOf("Cardioembolic")>=0) strategy.push("Route the event to the indication-specific arterial/AF/valve/APS pathway; simply increasing a DOAC may be inappropriate.");
+      avoid.push("Avoid reflexively adding antiplatelet therapy or increasing anticoagulation without defining the event and mechanism.");
+      monitoring.push("Document the confirmed baseline imaging comparison and arrange thrombosis/hematology ownership for reassessment.");
+      teaching = "Most apparent anticoagulant failure is first a verification problem: confirm a new clot, then check exposure, indication, and persistent drivers.";
+    }
+
+    if(scenario === "DOAC or anticoagulant danger-zone check"){
+      var dangers = checked("ats_doac_dangers");
+      var hardDanger = dangers.some(function(x){ return x.indexOf("Mechanical")>=0 || x.indexOf("mitral")>=0 || x.indexOf("APS")>=0 || x.indexOf("Pregnancy")>=0; });
+      var cautionDanger = dangers.some(function(x){ return x.indexOf("renal")>=0 || x.indexOf("liver")>=0 || x.indexOf("interaction")>=0 || x.indexOf("bariatric")>=0 || x.indexOf("adherence")>=0 || x.indexOf("Duplicate")>=0; });
+      phenotype = hardDanger ? "Likely inappropriate/high-risk anticoagulant context" : (cautionDanger ? "Anticoagulant safety concern requiring correction" : "No major danger zone identified from selected data");
+      addCommonTests();
+      if(hardDanger){
+        makeRed();
+        actions.push("Do not assume routine DOAC eligibility; verify the indication and use the appropriate warfarin, pregnancy, APS, or specialist pathway.");
+      } else if(cautionDanger || val("ats_dose_safety").indexOf("appropriate")<0){
+        makeAmber();
+        actions.push("Clarify the correct agent and dose before continuing unchanged.");
+      }
+      if(dangers.some(function(x){return x.indexOf("Duplicate")>=0;})) actions.push("Stop unintended duplicate anticoagulation after immediate medication reconciliation.");
+      if(dangers.some(function(x){return x.indexOf("AKI")>=0;})) strategy.push("Avoid fixed-dose assumptions during AKI; use a short-acting/monitorable strategy when clinically appropriate until renal function stabilizes.");
+      if(dangers.some(function(x){return x.indexOf("bariatric")>=0;})) strategy.push("Review postoperative timing, absorption, indication, and whether a monitorable/parenteral strategy is preferred.");
+      if(dangers.some(function(x){return x.indexOf("Extreme")>=0;})) strategy.push("Extreme weight is not a universal DOAC exclusion; make an agent- and indication-specific decision.");
+      strategy.push("Dose assessment: " + val("ats_dose_safety") + ". Interaction assessment: " + val("ats_interaction") + ".");
+      avoid.push("Avoid transferring one DOAC’s renal, weight, or dose-reduction criteria to another agent.");
+      monitoring.push("Document Cockcroft–Gault CrCl, weight, liver status, interaction review, and follow-up laboratory timing.");
+      teaching = "A DOAC danger-zone check is about the right drug, indication, dose, organ function, interactions, absorption, and adherence—not a single creatinine or weight cutoff.";
+    }
+
+    if(scenario === "Heparin resistance / anti-Xa / antithrombin problem"){
+      phenotype = val("ats_heparin_issue") + " on " + val("ats_heparin_agent");
+      makeAmber();
+      tests.push("Confirm the administered dose, weight, infusion delivery, sample timing, assay calibration, and whether a DOAC or coagulopathy interferes.");
+      tests.push("Compare aPTT and anti-Xa when UFH response is discordant; review factor VIII/fibrinogen, lupus anticoagulant, DIC, liver disease, and antithrombin.");
+      if(val("ats_heparin_thrombosis").indexOf("confirmed")>=0){
+        makeRed();
+        actions.push("Treat confirmed thrombosis as clinical anticoagulant failure while urgently clarifying heparin delivery, HIT, antithrombin, and assay interpretation.");
+      }
+      if(val("ats_at_level").indexOf("reduced")>=0){
+        strategy.push("Low antithrombin can reduce UFH/LMWH effect; interpret the level in the acute clinical context and confirm whether the anti-Xa assay adds exogenous antithrombin.");
+        strategy.push("Argatroban and bivalirudin are direct thrombin inhibitors and do not depend on antithrombin.");
+      }
+      if(val("ats_inflammation").indexOf("factor VIII")>=0) strategy.push("A low aPTT despite therapeutic anti-Xa may reflect high factor VIII/fibrinogen rather than inadequate UFH effect.");
+      if(val("ats_assay").indexOf("unclear")>=0 || val("ats_assay").indexOf("unknown")>=0) actions.push("Contact the coagulation laboratory before acting on the anti-Xa result.");
+      avoid.push("Avoid interpreting a UFH-, LMWH-, or DOAC-calibrated anti-Xa result as interchangeable.");
+      avoid.push("Avoid escalating heparin solely to normalize an aPTT when anti-Xa and the clinical picture suggest adequate effect.");
+      monitoring.push("Repeat the correctly timed/calibrated test after delivery and assay issues are resolved; follow clinical thrombosis and bleeding endpoints.");
+      teaching = "Heparin resistance is a clinic–laboratory problem. Delivery, timing, assay calibration, inflammation, antithrombin, and true thrombosis all matter.";
+    }
+
+    if(scenario === "Anticoagulant–antiplatelet overlap"){
+      phenotype = val("ats_overlap_regimen") + " for " + val("ats_overlap_indication");
+      makeAmber();
+      tests.push("Reconcile the indication and intended stop date for every anticoagulant, antiplatelet, and NSAID.");
+      if(val("ats_overlap_regimen").indexOf("Triple")>=0 || val("ats_overlap_bleed").indexOf("Active")>=0){
+        makeRed();
+        actions.push("Obtain urgent cardiology/primary-team review of the combined regimen and bleeding status.");
+      }
+      if(val("ats_overlap_indication").indexOf("Recent")>=0) strategy.push("Use the dedicated ACS/PCI antithrombotic pathway; minimize triple-therapy exposure and document the planned transition.");
+      if(val("ats_overlap_indication").indexOf("Stable CAD")>=0 || val("ats_overlap_indication").indexOf("Primary")>=0 || val("ats_overlap_indication").indexOf("No clear")>=0) strategy.push("Review whether aspirin provides a current net benefit when therapeutic anticoagulation is already required.");
+      if(val("ats_nsaid").indexOf("NSAID")>=0) avoid.push("Avoid NSAIDs where possible because they add bleeding risk without antithrombotic benefit.");
+      strategy.push("Selected conclusion: " + val("ats_overlap_plan") + ".");
+      avoid.push("Avoid indefinite triple therapy or anticoagulant–aspirin overlap without a documented indication and stop date.");
+      monitoring.push("Document the owner, planned duration, gastroprotection when indicated, and bleeding review.");
+      teaching = "Every antithrombotic drug needs its own current indication and planned duration. Unnecessary aspirin and NSAIDs are common correctable hazards.";
+    }
+
+    var completed = [], missing = [];
+    function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("Clinical scenario summarized", !!val("ats_summary"));
+    scoreItem("Indication documented", indication && indication.indexOf("unclear")<0);
+    scoreItem("Agent and dose documented", agent && agent.indexOf("unclear")<0 && !!val("ats_dose"));
+    scoreItem("Last dose/adherence documented", val("ats_lastdose") && val("ats_lastdose")!=="Unknown");
+    scoreItem("Renal/liver safety assessed", val("ats_renal")!=="Unknown" && val("ats_liver")!=="Unknown");
+    scoreItem("Immediate danger screen reviewed", !!danger);
+    if(scenario.indexOf("HIT")>=0) scoreItem("4Ts elements completed", val("ats_hit_platelet").indexOf("Unknown")<0 && val("ats_hit_timing").indexOf("Unknown")<0 && val("ats_hit_thrombosis")!=="Unknown" && val("ats_hit_other")!=="Unknown");
+    else if(scenario.indexOf("Bleeding")>=0) scoreItem("Bleeding severity/timing assessed", val("ats_bleed_severity").indexOf("unclear")<0 && !!val("ats_lastdose"));
+    else if(scenario.indexOf("thrombosis")>=0) scoreItem("Recurrence objectively assessed", val("ats_fail_confirm")!=="No objective assessment");
+    else if(scenario.indexOf("danger-zone")>=0) scoreItem("Danger zones and dose reviewed", checked("ats_doac_dangers").length>0 && !!val("ats_dose_safety"));
+    else if(scenario.indexOf("Heparin")>=0) scoreItem("Assay and timing reviewed", val("ats_assay")!=="Assay unknown" && val("ats_sample_time")!=="Timing unknown");
+    else scoreItem("Overlap indication and duration assessed", !!val("ats_overlap_indication") && val("ats_pci_timing")!=="Unknown");
+    scoreItem("Ownership/follow-up documented", !!val("ats_owner"));
+    var total = completed.length + missing.length;
+    var pct = total ? completed.length/total : 0;
+    var careScore = completed.length + "/" + total;
+    var careLabel = pct>=0.9 ? "Complete" : (pct>=0.7 ? "Mostly complete" : "Gaps remain");
+
+    if(!actions.length) actions.push("No immediate emergency action generated; complete the selected safety review and reassess if the clinical situation changes.");
+    if(!tests.length) addCommonTests();
+    if(!strategy.length) strategy.push("Use an individualized antithrombotic plan after indication, exposure, bleeding risk, and organ function are verified.");
+    if(!monitoring.length) monitoring.push("Reassess clinical response, bleeding, thrombosis, CBC, and organ function according to the active problem.");
+    if(!avoid.length) avoid.push("Avoid changing therapy without confirming the drug, indication, dose, exposure, and active safety problem.");
+
+    var core =
+      "Safety status: " + safety + "\n" +
+      "Working phenotype: " + phenotype + "\n" +
+      (hitScore===null ? "" : "4Ts score: " + hitScore + "/8\n") +
+      "Immediate actions:\n" + atsBullets(actions) + "\n\n" +
+      "Hold/avoid:\n" + atsBullets(avoid) + "\n\n" +
+      "Minimum investigations:\n" + atsBullets(tests) + "\n\n" +
+      "Agent-specific strategy:\n" + atsBullets(strategy) + "\n\n" +
+      "Monitoring/reassessment:\n" + atsBullets(monitoring) + "\n\n" +
+      "Primary ownership: " + val("ats_owner") + ".\n" +
+      (val("ats_plan_note") ? "Additional plan: " + val("ats_plan_note") + ".\n" : "") +
+      "Care standard: " + careScore + " — " + careLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".");
+
+    var formal =
+      "Dear Colleague,\n\n" +
+      "Thank you for asking me to review antithrombotic safety. The primary scenario is " + scenario + ". " + (val("ats_summary") ? "In brief: " + val("ats_summary") + "." : "A one-line case summary was not entered.") + "\n\n" +
+      "The current indication is " + indication + ". Therapy: " + agent + ", " + (val("ats_dose") || "dose not entered") + "; last-dose/adherence status: " + val("ats_lastdose") + "; antiplatelet exposure: " + val("ats_antiplatelet") + ". Renal context: " + val("ats_renal") + "; liver context: " + val("ats_liver") + ".\n\n" +
+      core + "\n\n" +
+      "Teaching line: " + teaching + "\n\n" +
+      "Evidence anchors: ASH HIT and VTE guidance; ACC anticoagulant-related bleeding pathway; ISTH guidance on DOAC reversal and special populations. This Version 1 output requires clinical and local-protocol verification.\n\n" +
+      "Sincerely,\nVascular Medicine / General Internal Medicine";
+
+    var concise = "Antithrombotic Safety Assessment\n\n" + core;
+
+    var counseling =
+      "Clinician teaching note\n\n" +
+      teaching + "\n\n" +
+      core + "\n\n" +
+      "Patient explanation:\nBlood-thinning medicines reduce clotting risk but can become unsafe when there is bleeding, a new clot, a major platelet fall, kidney/liver change, an interaction, or unnecessary overlap with another blood-thinning medicine. The safest plan depends on confirming the exact medicine, why it is being used, the last dose, current laboratory results, and the cause of the new problem.";
+
+    var finalText = formal;
+    if(val("ats_output_mode")==="Concise clinical note") finalText = concise;
+    if(val("ats_output_mode")==="Counseling / teaching note") finalText = counseling;
+    var out = document.getElementById("ats_out");
+    out.className = "output " + level;
     out.textContent = finalText;
     out.classList.remove("hidden");
   }
