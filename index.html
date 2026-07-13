@@ -2528,11 +2528,23 @@ evidence + "\n\n" +
     '<div class="scenarioPanel hidden" id="pot_hypo_panel"><h3>Hypokalemia mechanism</h3><span class="hint">Separate redistribution from true depletion; excessive replacement after a transient shift can cause rebound hyperkalemia.</span><div class="grid2">'+
     selectField("pot_hypo_mech","Dominant mechanism",["Unclear / mixed","Gastrointestinal loss","Renal potassium wasting","Transcellular shift without proven depletion","Low intake contributing to another mechanism","Redistribution plus true loss","Inherited or acquired tubulopathy concern"],"")+
     selectField("pot_hypo_meds","Medication / exposure clue",["No major medication clue","Loop or thiazide diuretic","Laxative or high-output GI loss","Insulin, beta-agonist, alkalosis, or refeeding shift","Amphotericin, aminoglycoside, cisplatin, or other tubular toxin","Glucocorticoid/mineralocorticoid effect","Barium, catecholamine, or other unusual exposure","Medication review incomplete"],"")+
-    selectField("pot_hypo_urine","Urinary potassium response",["Not assessed","Appropriate renal potassium conservation","Inappropriate renal potassium loss","24-hour urine or spot urine K/creatinine supports renal wasting","Urine result confounded by diuretics, volume status, CKD, or timing","Specialist interpretation required"],"Prefer a timed urine or spot potassium/creatinine assessment over urine potassium concentration alone when the cause remains unclear.")+
+    selectField("pot_hypo_urine_method","Urine potassium assessment",["Not obtained / not required","Spot urine potassium / creatinine ratio","24-hour urine potassium","Documented qualitative interpretation"],"Choose one method. Numerical questions appear only when selected; urine potassium concentration alone is not used to classify renal wasting.")+
     selectField("pot_hypo_bp","Blood pressure / volume phenotype",["Not assessed","Normotensive / no edema","Hypertension","Volume depletion / orthostasis","Edema / reduced effective arterial volume","Phenotype mixed or uncertain"],"")+
     selectField("pot_hypo_oral","Oral route",["Not assessed","Oral replacement feasible","Nausea / limited oral tolerance","Unable or unsafe to use oral route","Ongoing high-output loss may exceed oral replacement"],"")+
     '<div class="field"><label>Urine chloride (mmol/L)</label><input id="pot_urine_cl" type="number" min="0" step="any" placeholder="Optional when metabolic alkalosis"></div>'+
+    '</div>'+
+    '<div class="subtlebox hidden" id="pot_hypo_urine_spot_panel"><h4>Spot urine potassium / creatinine</h4><div class="grid2">'+
+    '<div class="field"><label>Spot urine potassium (mmol/L)</label><input id="pot_urine_k_spot" type="number" min="0" step="any" placeholder="e.g. 28"></div>'+
+    '<div class="field"><label>Spot urine creatinine</label><div class="unitrow"><input id="pot_urine_cr_spot" type="number" min="0" step="any" placeholder="e.g. 8"><select id="pot_urine_cr_unit"><option>mmol/L</option><option>mg/dL</option></select></div></div>'+
+    '</div><span class="hint">The engine calculates urine K/creatinine in mmol/mmol. A value above 1.5 supports inappropriate renal potassium loss during hypokalemia; interpret with timing and confounders.</span></div>'+
+    '<div class="subtlebox hidden" id="pot_hypo_urine_24_panel"><h4>24-hour urine potassium</h4><div class="grid2">'+
+    '<div class="field"><label>24-hour urine potassium (mmol/day)</label><input id="pot_urine_k_24" type="number" min="0" step="any" placeholder="e.g. 12 or 45"></div>'+
+    selectField("pot_urine_24_quality","Collection quality",["Not assessed","Collection appears complete","Collection may be incomplete","Collected after potassium replacement or diuretic exposure"],"")+
+    '</div><span class="hint">During hypokalemia, less than 15 mmol/day is consistent with appropriate renal conservation; higher excretion supports renal loss but remains context dependent.</span></div>'+
+    '<div class="subtlebox hidden" id="pot_hypo_urine_qual_panel"><h4>Documented urine interpretation</h4><div class="grid2">'+
+    selectField("pot_hypo_urine_qual","Urinary potassium response",["Not interpreted","Appropriate renal potassium conservation","Inappropriate renal potassium loss","Result confounded by diuretics, replacement, volume status, CKD, or timing","Specialist interpretation required"],"")+
     '</div></div>'+
+    '</div>'+
     '<div class="scenarioPanel hidden" id="pot_hyper_panel"><h3>Hyperkalemia mechanism</h3><span class="hint">Treat electrical instability first, then shift potassium temporarily and remove potassium from the body while correcting the cause.</span><div class="grid2">'+
     selectField("pot_hyper_mech","Dominant mechanism",["Unclear / mixed","Pseudohyperkalemia / specimen artifact","Reduced renal excretion","Medication-related impaired excretion","Transcellular shift: acidosis or insulin deficiency","Cell/tissue release: rhabdomyolysis, hemolysis, tumor lysis, or burns","Excess intake/supplement with impaired excretion","Hypoaldosterone / type 4 RTA physiology"],"")+
     selectField("pot_hyper_meds","Medication / exposure clue",["No major medication clue","ACE inhibitor / ARB / renin inhibitor","Mineralocorticoid-receptor antagonist or potassium-sparing diuretic","Trimethoprim, NSAID, heparin, calcineurin inhibitor, or similar contributor","Potassium supplement, salt substitute, or potassium-containing fluid","Digoxin toxicity concern","Succinylcholine or major tissue injury context","Medication review incomplete"],"")+
@@ -2560,10 +2572,11 @@ evidence + "\n\n" +
     selectField("pot_output_mode","Output mode",["Concise clinical note","Formal consultant letter","Counseling / teaching note"],"")+
     '</div></div></details>'+
     '<div class="toolbar"><button class="primary" id="potGenerate">Generate potassium assessment</button><button id="potCopy">Copy output</button><button id="potReset">Reset pathway</button></div><div id="pot_out" class="output hidden"></div>'+
-    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> KDIGO potassium-management and acute-hyperkalemia conference reports; current adult hypokalemia guidance; local-protocol safety principles for ECG monitoring, oral versus IV replacement, membrane stabilization, intracellular shifting, potassium removal, and glucose surveillance.</p><p class="hint">ECG sensitivity is limited. Serum potassium does not quantify total-body potassium reliably during redistribution. Repeat measurements must be timed to the intervention and the risk of rebound.</p></div></details>'+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> KDIGO potassium-management and acute-hyperkalemia conference reports; current adult hypokalemia guidance; urine potassium literature supporting paired spot urine K/creatinine or timed collection; local-protocol safety principles for ECG monitoring, oral versus IV replacement, membrane stabilization, intracellular shifting, potassium removal, and glucose surveillance.</p><p class="hint">ECG sensitivity is limited. Serum potassium does not quantify total-body potassium reliably during redistribution. Urine potassium concentration alone and TTKG are intentionally not used for classification. Repeat measurements must be timed to the intervention and the risk of rebound.</p></div></details>'+
     '</section>');
 
     ["pot_scenario","pot_k"].forEach(function(id){document.getElementById(id).addEventListener("change",updatePotassiumPanels);document.getElementById(id).addEventListener("input",updatePotassiumPanels);});
+    document.getElementById("pot_hypo_urine_method").addEventListener("change",updatePotassiumUrinePanels);
     document.getElementById("potGenerate").addEventListener("click",calcPotassium);
     document.getElementById("potCopy").addEventListener("click",function(){copyOut("pot_out");});
     document.getElementById("potReset").addEventListener("click",resetPotassium);
@@ -2589,6 +2602,17 @@ evidence + "\n\n" +
     ["pot_hypo_panel","pot_hypo_plan_panel"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("hidden",!hypo);});
     ["pot_hyper_panel","pot_hyper_plan_panel"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("hidden",!hyper);});
     var choose=document.getElementById("pot_choose_panel");if(choose)choose.classList.toggle("hidden",lane!=="unclear");
+    updatePotassiumUrinePanels();
+  }
+
+  function updatePotassiumUrinePanels(){
+    var hypo=potassiumLane()==="hypo",method=val("pot_hypo_urine_method");
+    var map={
+      pot_hypo_urine_spot_panel:"Spot urine potassium / creatinine ratio",
+      pot_hypo_urine_24_panel:"24-hour urine potassium",
+      pot_hypo_urine_qual_panel:"Documented qualitative interpretation"
+    };
+    Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("hidden",!hypo||method!==map[id]);});
   }
 
   function resetPotassium(){
@@ -2655,12 +2679,39 @@ evidence + "\n\n" +
     avoid.push("A normal ECG does not exclude clinically dangerous dyskalemia.");
 
     if(lane==="hypo"){
-      var hypoMech=val("pot_hypo_mech"),hypoMeds=val("pot_hypo_meds"),urineK=val("pot_hypo_urine"),bp=val("pot_hypo_bp");
+      var hypoMech=val("pot_hypo_mech"),hypoMeds=val("pot_hypo_meds"),urineMethod=val("pot_hypo_urine_method"),urineQual=val("pot_hypo_urine_qual"),bp=val("pot_hypo_bp");
+      var urineSupportsRenal=false,urineSupportsConservation=false,urineInterpretation="";
+      if(urineMethod==="Spot urine potassium / creatinine ratio"){
+        var urineKSpot=potNum("pot_urine_k_spot"),urineCrSpot=potNum("pot_urine_cr_spot"),urineCrMmol=urineCrSpot;
+        if(urineCrSpot!==null&&val("pot_urine_cr_unit")==="mg/dL")urineCrMmol=urineCrSpot*0.0884;
+        if(urineKSpot!==null&&urineCrMmol!==null&&urineCrMmol>0){
+          var urineKCr=urineKSpot/urineCrMmol;
+          if(urineKCr>1.5){urineSupportsRenal=true;urineInterpretation="Spot urine K/creatinine is "+urineKCr.toFixed(2)+" mmol/mmol ("+(urineKCr*8.84).toFixed(1)+" mEq/g), above 1.5 mmol/mmol and supportive of inappropriate renal potassium loss.";}
+          else{urineSupportsConservation=true;urineInterpretation="Spot urine K/creatinine is "+urineKCr.toFixed(2)+" mmol/mmol ("+(urineKCr*8.84).toFixed(1)+" mEq/g), at or below 1.5 mmol/mmol and supportive of appropriate renal conservation, an extrarenal loss, or redistribution.";}
+        } else if(urineKSpot!==null&&urineCrSpot===null){
+          urineInterpretation="Spot urine potassium was entered without urine creatinine; concentration alone is not classified because urine dilution can mislead.";
+        } else urineInterpretation="Spot urine K/creatinine was selected but valid paired values were not entered; no ratio was calculated.";
+      } else if(urineMethod==="24-hour urine potassium"){
+        var urineK24=potNum("pot_urine_k_24"),collectionQuality=val("pot_urine_24_quality");
+        if(urineK24!==null){
+          if(urineK24<15){urineSupportsConservation=true;urineInterpretation="Twenty-four-hour urine potassium is "+urineK24.toFixed(1)+" mmol/day, below 15 mmol/day and consistent with appropriate renal conservation during hypokalemia.";}
+          else{urineSupportsRenal=true;urineInterpretation="Twenty-four-hour urine potassium is "+urineK24.toFixed(1)+" mmol/day; excretion at or above 15 mmol/day during hypokalemia supports ongoing renal potassium loss.";}
+          if(collectionQuality!=="Collection appears complete")urineInterpretation+=" Collection context: "+collectionQuality.toLowerCase()+".";
+        } else urineInterpretation="Twenty-four-hour urine potassium was selected but no valid result was entered.";
+      } else if(urineMethod==="Documented qualitative interpretation"){
+        if(urineQual==="Appropriate renal potassium conservation")urineSupportsConservation=true;
+        if(urineQual==="Inappropriate renal potassium loss")urineSupportsRenal=true;
+        urineInterpretation=urineQual==="Not interpreted"?"A qualitative urine method was selected but no interpretation was documented.":"Documented urinary potassium interpretation: "+urineQual.toLowerCase()+".";
+      }
       if(hypoMech==="Gastrointestinal loss")mechanism.push("Extrarenal potassium depletion is favored; quantify diarrhea/vomiting/ostomy losses and restore volume/chloride as appropriate.");
-      else if(hypoMech==="Renal potassium wasting"||urineK.indexOf("renal wasting")>=0||urineK.indexOf("Inappropriate")===0)mechanism.push("Renal potassium wasting is favored; review diuretics, magnesium depletion, mineralocorticoid physiology, tubulopathy, RTA, and nephrotoxic medications.");
+      else if(hypoMech==="Renal potassium wasting"||urineSupportsRenal)mechanism.push("Renal potassium wasting is favored; review diuretics, magnesium depletion, mineralocorticoid physiology, tubulopathy, RTA, and nephrotoxic medications.");
       else if(hypoMech.indexOf("Transcellular")===0)mechanism.push("Redistribution is favored; address insulin, beta-agonist/catecholamine effect, alkalosis, refeeding, or other shift and avoid assuming a large total-body deficit.");
       else if(hypoMech.indexOf("Low intake")===0)mechanism.push("Low intake may contribute but rarely explains significant hypokalemia alone; look for concurrent loss or redistribution.");
       else mechanism.push("Mechanism remains unclear or mixed; integrate urine potassium response, acid–base phenotype, magnesium, blood pressure, losses, and medications.");
+      if(urineInterpretation)mechanism.push(urineInterpretation);
+      if(urineSupportsConservation&&hypoMech==="Renal potassium wasting")mechanism.push("The selected renal-wasting mechanism is not supported by the entered urine index; review collection timing, recent replacement, diuretic exposure, kidney function, and competing causes.");
+      if(urineMethod==="Not obtained / not required"&&hypoMech==="Unclear / mixed")mechanism.push("If the cause remains unclear, obtain paired spot urine potassium and creatinine before treatment when feasible; do not delay urgent potassium replacement to collect it.");
+      if(urineMethod!=="Not obtained / not required")avoid.push("Interpret urine potassium with collection timing, recent potassium replacement, diuretics, intake, volume status, and kidney function; no single cutoff overrides the clinical context.");
       if(hypoMeds!=="No major medication clue"&&hypoMeds!=="Medication review incomplete")mechanism.push("Medication/exposure clue: "+hypoMeds+".");
       if(acidbase==="Metabolic acidosis — normal gap"){
         if(hypoMech==="Gastrointestinal loss")mechanism.push("Normal-gap acidosis plus GI loss supports gastrointestinal bicarbonate and potassium loss.");
