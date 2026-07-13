@@ -104,6 +104,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Adult Diarrhea Triage & Diagnostic Pathway",desc:"Focused triage, syndrome classification, selective stool testing, C. difficile safety, hydration, medication review, and escalation planning."},
     {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Danger-first treatment, tonicity and glucose correction, ADH/urine interpretation, phenotype, ODS risk, correction monitoring, and copy-ready notes."},
     {id:"acid-base",cat:"GIM Diagnostic Reasoning",title:"Acid–Base Diagnostic Engine",desc:"ABG/VBG-aware interpretation, expected compensation, mixed disorders, albumin-corrected anion gap, delta analysis, cause-directed testing, and copy-ready notes."},
+    {id:"potassium",cat:"GIM Diagnostic Reasoning",title:"Potassium Disorders Engine",desc:"Hypokalemia and hyperkalemia triage, ECG and specimen safety, redistribution versus gain/loss, acid–base integration, treatment strategy, monitoring, and copy-ready notes."},
     {id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
     {id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review Checklist",desc:"Diagnostic clarity, danger overnight, VTE prophylaxis, meds, mobility, pending tests, discharge barriers, and communication."}
   ];
@@ -212,6 +213,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "hyponatremia") return renderHyponatremia();
     if(id === "diarrhea") return renderDiarrhea();
     if(id === "acid-base") return renderAcidBase();
+    if(id === "potassium") return renderPotassium();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -2495,6 +2497,259 @@ evidence + "\n\n" +
     if(val("ab_output_mode")==="Formal consultant letter")finalText=formal;
     if(val("ab_output_mode")==="Counseling / teaching note")finalText=teaching;
     var out=document.getElementById("ab_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
+  }
+
+
+  function renderPotassium(){
+    shell("Potassium Disorders Engine","Adult hypokalemia and hyperkalemia triage, ECG/specimen safety, mechanism, acid–base integration, treatment strategy, monitoring, and follow-up.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>Two independent lanes:</b> choose hypokalemia or hyperkalemia, or allow the entered value to select the lane. The engine separates immediate electrical risk from confirmation, mechanism, definitive potassium correction/removal, and prevention of recurrence.</p><p class="hint">Use local medication concentrations, infusion limits, monitoring requirements, dialysis access, and emergency protocols. This engine intentionally does not generate exact calcium, insulin, glucose, potassium-infusion, binder, or dialysis prescriptions.</p></div>'+
+
+    '<details class="pathStep" id="pot_step_triage" open><summary>1. Potassium, confirmation, and danger</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    inputField("pot_summary","One-line case summary","e.g. AKI with potassium 6.4 mmol/L after spironolactone")+
+    selectField("pot_scenario","Primary lane",["Auto-classify from potassium","Hypokalemia","Hyperkalemia","Abnormal result pending confirmation"],"Manual selection can be used when the value is pending or the clinical concern differs from the latest result.")+
+    '<div class="field"><label>Current potassium (mmol/L)</label><input id="pot_k" type="number" step="any" placeholder="e.g. 2.8 or 6.2"></div>'+
+    '<div class="field"><label>Previous potassium (mmol/L)</label><input id="pot_previous" type="number" step="any" placeholder="Optional"></div>'+
+    '<div class="field"><label>Hours between values</label><input id="pot_hours" type="number" min="0" step="any" placeholder="Optional"></div>'+
+    selectField("pot_sample","Specimen / confirmation",["Not assessed","Clean non-hemolyzed sample","Hemolyzed specimen","Difficult draw, fist clenching, delay, or collection concern","Marked thrombocytosis or leukocytosis / pseudohyperkalemia concern","Repeat plasma or whole-blood potassium confirms result","Repeat result normal / artifact likely"],"Confirm an unexpected result, but do not delay emergency treatment when the value, ECG, or clinical state is dangerous.")+
+    selectField("pot_danger","Immediate danger screen",["Not assessed","No immediate danger feature","Arrhythmia, syncope, or cardiac arrest","Severe weakness, paralysis, or respiratory compromise","Rapid deterioration with AKI, oliguria, or tissue breakdown","Suspected digoxin toxicity","Severe dyskalemia with inability to monitor safely","Other immediate threat"],"")+
+    selectField("pot_ecg","ECG assessment",["Not obtained / not documented","No potassium-associated change identified","Hyperkalemia-compatible change: peaked T waves, conduction slowing, wide QRS, bradycardia, block, or arrhythmia","Hypokalemia-compatible change: ST depression, T-wave flattening, prominent U waves, QT/QU prolongation, or ectopy","Nonspecific abnormality","Paced rhythm / difficult to interpret"],"A normal ECG does not exclude dangerous hyperkalemia or hypokalemia.")+
+    selectField("pot_renal","Renal and urine-output context",["Not assessed","Stable kidney function and urine output","AKI","Advanced CKD","Kidney failure on dialysis","Oliguria or anuria","Renal function changing / uncertain"],"")+
+    selectField("pot_highrisk","Risk modifier",["No major modifier identified","Known cardiovascular disease / heart failure","Digoxin exposure","Acute coronary syndrome or active ischemia","Rapid potassium change","Critical illness / postoperative state","Pregnancy","Multiple risk modifiers","Risk assessment incomplete"],"")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" id="pot_step_cause" open><summary>2. Mechanism and acid–base context</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    selectField("pot_acidbase","Acid–base phenotype",["Not assessed / use Acid–Base Engine","No major acid–base disturbance","Metabolic acidosis — high gap","Metabolic acidosis — normal gap","Metabolic alkalosis","Respiratory acidosis","Respiratory alkalosis","Mixed disorder"],"Use the separate Acid–Base Diagnostic Engine when the phenotype is uncertain.")+
+    '<div class="field"><label>Magnesium (mmol/L)</label><input id="pot_mg" type="number" min="0" step="any" placeholder="Optional"></div>'+
+    '</div>'+
+    '<div class="scenarioPanel hidden" id="pot_choose_panel"><h3>Select a potassium lane</h3><p>Enter the current potassium or choose hypokalemia/hyperkalemia manually to reveal only the relevant cause questions.</p></div>'+
+    '<div class="scenarioPanel hidden" id="pot_hypo_panel"><h3>Hypokalemia mechanism</h3><span class="hint">Separate redistribution from true depletion; excessive replacement after a transient shift can cause rebound hyperkalemia.</span><div class="grid2">'+
+    selectField("pot_hypo_mech","Dominant mechanism",["Unclear / mixed","Gastrointestinal loss","Renal potassium wasting","Transcellular shift without proven depletion","Low intake contributing to another mechanism","Redistribution plus true loss","Inherited or acquired tubulopathy concern"],"")+
+    selectField("pot_hypo_meds","Medication / exposure clue",["No major medication clue","Loop or thiazide diuretic","Laxative or high-output GI loss","Insulin, beta-agonist, alkalosis, or refeeding shift","Amphotericin, aminoglycoside, cisplatin, or other tubular toxin","Glucocorticoid/mineralocorticoid effect","Barium, catecholamine, or other unusual exposure","Medication review incomplete"],"")+
+    selectField("pot_hypo_urine","Urinary potassium response",["Not assessed","Appropriate renal potassium conservation","Inappropriate renal potassium loss","24-hour urine or spot urine K/creatinine supports renal wasting","Urine result confounded by diuretics, volume status, CKD, or timing","Specialist interpretation required"],"Prefer a timed urine or spot potassium/creatinine assessment over urine potassium concentration alone when the cause remains unclear.")+
+    selectField("pot_hypo_bp","Blood pressure / volume phenotype",["Not assessed","Normotensive / no edema","Hypertension","Volume depletion / orthostasis","Edema / reduced effective arterial volume","Phenotype mixed or uncertain"],"")+
+    selectField("pot_hypo_oral","Oral route",["Not assessed","Oral replacement feasible","Nausea / limited oral tolerance","Unable or unsafe to use oral route","Ongoing high-output loss may exceed oral replacement"],"")+
+    '<div class="field"><label>Urine chloride (mmol/L)</label><input id="pot_urine_cl" type="number" min="0" step="any" placeholder="Optional when metabolic alkalosis"></div>'+
+    '</div></div>'+
+    '<div class="scenarioPanel hidden" id="pot_hyper_panel"><h3>Hyperkalemia mechanism</h3><span class="hint">Treat electrical instability first, then shift potassium temporarily and remove potassium from the body while correcting the cause.</span><div class="grid2">'+
+    selectField("pot_hyper_mech","Dominant mechanism",["Unclear / mixed","Pseudohyperkalemia / specimen artifact","Reduced renal excretion","Medication-related impaired excretion","Transcellular shift: acidosis or insulin deficiency","Cell/tissue release: rhabdomyolysis, hemolysis, tumor lysis, or burns","Excess intake/supplement with impaired excretion","Hypoaldosterone / type 4 RTA physiology"],"")+
+    selectField("pot_hyper_meds","Medication / exposure clue",["No major medication clue","ACE inhibitor / ARB / renin inhibitor","Mineralocorticoid-receptor antagonist or potassium-sparing diuretic","Trimethoprim, NSAID, heparin, calcineurin inhibitor, or similar contributor","Potassium supplement, salt substitute, or potassium-containing fluid","Digoxin toxicity concern","Succinylcholine or major tissue injury context","Medication review incomplete"],"")+
+    selectField("pot_hyper_glucose","Glucose / insulin context",["Not assessed","Glucose stable / no insulin-deficiency concern","Hyperglycemia or insulin deficiency","DKA / ketoacidosis context","Recent insulin–glucose treatment","High hypoglycemia risk","Glucose monitoring unavailable"],"")+
+    selectField("pot_hyper_dialysis","Dialysis / potassium-removal context",["Not a dialysis patient","Dialysis patient with working access","Dialysis patient; access uncertain","Severe/refractory hyperkalemia — urgent dialysis review","Diuresis possible","Oliguria/anuria limits renal removal","Potassium-removal plan uncertain"],"")+
+    '</div></div>'+
+    '</div></details>'+
+
+    '<details class="pathStep" id="pot_step_plan"><summary>3. Treatment strategy and monitoring</summary><div class="pathStepBody">'+
+    '<div class="scenarioPanel hidden" id="pot_hypo_plan_panel"><h3>Hypokalemia strategy</h3><div class="grid2">'+
+    selectField("pot_hypo_plan","Current or planned approach",["No plan documented","Confirm result and mechanism","Oral potassium replacement using local protocol","Monitored IV potassium replacement using local protocol","Correct magnesium and ongoing losses","Stop/reduce culprit and use potassium-sparing strategy when appropriate","Nephrology/endocrine individualized plan"],"Oral replacement is preferred when feasible; IV replacement requires concentration/rate limits and monitoring defined by the institution.")+
+    selectField("pot_hypo_target","Replacement target context",["No target documented","General inpatient target individualized to context","Cardiac/arrhythmia-risk target individualized","Chronic adapted hypokalemia — avoid rapid overcorrection","Ongoing loss requires replacement plus source control","Specialist-directed target"],"")+
+    '</div></div>'+
+    '<div class="scenarioPanel hidden" id="pot_hyper_plan_panel"><h3>Hyperkalemia strategy</h3><div class="grid2">'+
+    selectField("pot_hyper_plan","Current or planned approach",["No plan documented","Urgent repeat/confirmation only","Emergency bundle: stabilize membrane when indicated, shift potassium, and remove potassium","Intracellular shifting treatment initiated","Potassium removal: diuresis, approved binder, or dialysis strategy","Stop potassium sources and review contributing medications","Chronic hyperkalemia mitigation / RAAS-enabling strategy","Nephrology/critical-care individualized plan"],"")+
+    selectField("pot_glucose_monitor","Glucose monitoring after insulin",["Insulin not used","Monitoring plan not documented","Baseline and frequent serial glucose monitoring planned","Hypoglycemia occurred / rescue required","Insulin avoided or modified due to hypoglycemia risk","Local protocol in use"],"Hypoglycemia can occur after insulin–glucose treatment and requires planned monitoring.")+
+    '</div></div>'+
+    '<div class="grid2">'+
+    selectField("pot_monitoring","Potassium / ECG monitoring",["No plan documented","Repeat potassium after confirmation/treatment","Frequent serial potassium in monitored setting","Continuous ECG plus serial potassium","Potassium, glucose, magnesium, renal function, and urine output monitoring","Dialysis/specialist-directed monitoring"],"")+
+    selectField("pot_owner","Primary ownership",["General Internal Medicine / primary team","Emergency medicine","Critical care","Nephrology","Cardiology","Endocrinology","Toxicology / poison service","Multidisciplinary plan"],"")+
+    inputField("pot_plan_note","Additional plan or local-protocol note","e.g. repeat plasma potassium now; telemetry; recheck glucose at protocol intervals")+
+    '</div></div></details>'+
+
+    '<details class="pathStep"><summary>4. Output</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("pot_output_mode","Output mode",["Concise clinical note","Formal consultant letter","Counseling / teaching note"],"")+
+    '</div></div></details>'+
+    '<div class="toolbar"><button class="primary" id="potGenerate">Generate potassium assessment</button><button id="potCopy">Copy output</button><button id="potReset">Reset pathway</button></div><div id="pot_out" class="output hidden"></div>'+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> KDIGO potassium-management and acute-hyperkalemia conference reports; current adult hypokalemia guidance; local-protocol safety principles for ECG monitoring, oral versus IV replacement, membrane stabilization, intracellular shifting, potassium removal, and glucose surveillance.</p><p class="hint">ECG sensitivity is limited. Serum potassium does not quantify total-body potassium reliably during redistribution. Repeat measurements must be timed to the intervention and the risk of rebound.</p></div></details>'+
+    '</section>');
+
+    ["pot_scenario","pot_k"].forEach(function(id){document.getElementById(id).addEventListener("change",updatePotassiumPanels);document.getElementById(id).addEventListener("input",updatePotassiumPanels);});
+    document.getElementById("potGenerate").addEventListener("click",calcPotassium);
+    document.getElementById("potCopy").addEventListener("click",function(){copyOut("pot_out");});
+    document.getElementById("potReset").addEventListener("click",resetPotassium);
+    updatePotassiumPanels();
+  }
+
+  function potNum(id){
+    var raw=val(id);if(raw==="")return null;
+    var n=Number(raw);return Number.isFinite(n)?n:null;
+  }
+
+  function potassiumLane(){
+    var scenario=val("pot_scenario"),k=potNum("pot_k");
+    if(scenario==="Hypokalemia")return "hypo";
+    if(scenario==="Hyperkalemia")return "hyper";
+    if(k!==null&&k<3.5)return "hypo";
+    if(k!==null&&k>=5.5)return "hyper";
+    return "unclear";
+  }
+
+  function updatePotassiumPanels(){
+    var lane=potassiumLane(),hypo=lane==="hypo",hyper=lane==="hyper";
+    ["pot_hypo_panel","pot_hypo_plan_panel"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("hidden",!hypo);});
+    ["pot_hyper_panel","pot_hyper_plan_panel"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("hidden",!hyper);});
+    var choose=document.getElementById("pot_choose_panel");if(choose)choose.classList.toggle("hidden",lane!=="unclear");
+  }
+
+  function resetPotassium(){
+    var out=document.getElementById("pot_out"),card=out?out.closest("section.card"):document;
+    card.querySelectorAll("input").forEach(function(el){if(el.type==="checkbox"||el.type==="radio")el.checked=false;else el.value="";});
+    card.querySelectorAll("select").forEach(function(el){el.selectedIndex=0;});
+    card.querySelectorAll(".pathStep").forEach(function(el,i){el.open=i<2;});
+    if(out){out.textContent="";out.className="output hidden";}
+    updatePotassiumPanels();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function calcPotassium(){
+    var lane=potassiumLane(),k=potNum("pot_k"),previous=potNum("pot_previous"),hours=potNum("pot_hours"),mg=potNum("pot_mg"),urineCl=potNum("pot_urine_cl");
+    var danger=val("pot_danger"),ecg=val("pot_ecg"),sample=val("pot_sample"),renal=val("pot_renal"),risk=val("pot_highrisk"),acidbase=val("pot_acidbase");
+    var immediate=[],confirmation=[],mechanism=[],treatment=[],monitoring=[],avoid=[];
+    var severe=false,moderate=false,mild=false,severity="Potassium severity not classifiable";
+    if(lane==="hypo"&&k!==null){
+      if(k<2.5){severe=true;severity="Severe hypokalemia";}
+      else if(k<3.0){moderate=true;severity="Moderate hypokalemia";}
+      else if(k<3.5){mild=true;severity="Mild hypokalemia";}
+      else severity="Selected hypokalemia lane but current potassium is not below 3.5 mmol/L";
+    } else if(lane==="hyper"&&k!==null){
+      if(k>=6.5){severe=true;severity="Severe hyperkalemia";}
+      else if(k>=6.0){moderate=true;severity="Moderate hyperkalemia";}
+      else if(k>=5.5){mild=true;severity="Mild hyperkalemia";}
+      else severity="Selected hyperkalemia lane but current potassium is below 5.5 mmol/L";
+    } else if(k!==null){severity="Current potassium lies between common hypokalemia and hyperkalemia thresholds";}
+
+    var ecgDanger=ecg.indexOf("Hyperkalemia-compatible")===0||ecg.indexOf("Hypokalemia-compatible")===0;
+    var dangerPositive=danger!=="Not assessed"&&danger!=="No immediate danger feature";
+    var highRisk=risk!=="No major modifier identified"&&risk!=="Risk assessment incomplete";
+    var missingEcgRisk=ecg==="Not obtained / not documented"&&(moderate||severe||highRisk||(lane==="hyper"&&k!==null&&k>=6.0)||(lane==="hypo"&&k!==null&&k<3.0));
+    var level="green",safety="GREEN — no immediate danger trigger selected";
+    if(danger==="Not assessed"||lane==="unclear"||k===null){level="amber";safety="AMBER — potassium lane, value, or danger assessment incomplete";}
+    if(lane!=="unclear"&&k!==null&&danger!=="Not assessed"&&(moderate||highRisk||renal==="AKI"||renal==="Oliguria or anuria"||renal==="Not assessed"||missingEcgRisk)){if(level!=="red"){level="amber";safety="AMBER — active assessment and timely monitoring required";}}
+    if(severe||ecgDanger||dangerPositive){level="red";safety="RED — potassium emergency / immediate monitored management required";}
+
+    var trend="Trend not calculable";
+    if(k!==null&&previous!==null){
+      var delta=k-previous;trend="Potassium changed by "+delta.toFixed(1)+" mmol/L";
+      if(hours!==null&&hours>0)trend+=" over "+hours.toFixed(1)+" hours ("+(delta/hours).toFixed(2)+" mmol/L/h)";
+      trend+=".";
+      if(Math.abs(delta)>=0.5&&hours!==null&&hours<=6){if(level!=="red")level="amber";safety=level==="red"?safety:"AMBER — rapid potassium change entered";}
+    }
+
+    if(dangerPositive||ecgDanger)immediate.push("Escalate immediately to a monitored setting and follow the local dyskalemia/arrhythmia emergency protocol.");
+    if(severe)immediate.push("Do not delay active treatment while repeating the potassium when the result and clinical context are credible.");
+    if(!dangerPositive&&!ecgDanger&&!severe)immediate.push("No emergency feature selected; confirm the result as needed, define the mechanism, and treat according to severity and trajectory.");
+
+    var artifactConcern=sample==="Hemolyzed specimen"||sample.indexOf("Difficult draw")===0||sample.indexOf("thrombocytosis")>=0;
+    if(lane==="hyper"&&artifactConcern){
+      confirmation.push("Pseudohyperkalemia is possible: repeat promptly using appropriate plasma/whole-blood collection and address hemolysis, fist clenching, processing delay, thrombocytosis, or leukocytosis.");
+      if(severe||ecgDanger||dangerPositive)confirmation.push("Because the clinical/ECG risk is high, repeat testing must occur in parallel and must not delay emergency treatment.");
+    } else if(sample==="Repeat result normal / artifact likely"){
+      confirmation.push("The repeat result favors artifact; reconcile the original specimen and avoid unnecessary potassium-lowering or replacement treatment.");
+    } else if(sample==="Not assessed"){
+      confirmation.push("Review specimen quality and repeat an unexpected result when safe to do so.");
+    } else {
+      confirmation.push("The entered specimen context does not identify a major artifact signal.");
+    }
+    if(lane==="hyper"&&k!==null&&k>=6.0)confirmation.push("Obtain an urgent 12-lead ECG and use continuous monitoring according to severity and the local protocol.");
+    if(lane==="hypo"&&(moderate||severe||highRisk))confirmation.push("Obtain/review an ECG and compare with prior potassium, magnesium, renal function, and medication exposure.");
+    avoid.push("A normal ECG does not exclude clinically dangerous dyskalemia.");
+
+    if(lane==="hypo"){
+      var hypoMech=val("pot_hypo_mech"),hypoMeds=val("pot_hypo_meds"),urineK=val("pot_hypo_urine"),bp=val("pot_hypo_bp");
+      if(hypoMech==="Gastrointestinal loss")mechanism.push("Extrarenal potassium depletion is favored; quantify diarrhea/vomiting/ostomy losses and restore volume/chloride as appropriate.");
+      else if(hypoMech==="Renal potassium wasting"||urineK.indexOf("renal wasting")>=0||urineK.indexOf("Inappropriate")===0)mechanism.push("Renal potassium wasting is favored; review diuretics, magnesium depletion, mineralocorticoid physiology, tubulopathy, RTA, and nephrotoxic medications.");
+      else if(hypoMech.indexOf("Transcellular")===0)mechanism.push("Redistribution is favored; address insulin, beta-agonist/catecholamine effect, alkalosis, refeeding, or other shift and avoid assuming a large total-body deficit.");
+      else if(hypoMech.indexOf("Low intake")===0)mechanism.push("Low intake may contribute but rarely explains significant hypokalemia alone; look for concurrent loss or redistribution.");
+      else mechanism.push("Mechanism remains unclear or mixed; integrate urine potassium response, acid–base phenotype, magnesium, blood pressure, losses, and medications.");
+      if(hypoMeds!=="No major medication clue"&&hypoMeds!=="Medication review incomplete")mechanism.push("Medication/exposure clue: "+hypoMeds+".");
+      if(acidbase==="Metabolic acidosis — normal gap"){
+        if(hypoMech==="Gastrointestinal loss")mechanism.push("Normal-gap acidosis plus GI loss supports gastrointestinal bicarbonate and potassium loss.");
+        else mechanism.push("Normal-gap acidosis with renal potassium loss raises RTA or medication-related tubular physiology; use the Acid–Base Engine and renal evaluation.");
+      }
+      if(acidbase==="Metabolic alkalosis"){
+        if(urineCl!==null&&urineCl<20)mechanism.push("Low urine chloride ("+urineCl.toFixed(1)+" mmol/L) favors vomiting/remote diuretic or chloride-depletion physiology, interpreted with timing and volume status.");
+        else if(urineCl!==null&&urineCl>=20&&bp==="Hypertension")mechanism.push("Urine chloride is not low with hypertension: review mineralocorticoid excess, current diuretics, licorice/exogenous steroid effects, and renal vascular context.");
+        else if(urineCl!==null&&urineCl>=20)mechanism.push("Urine chloride is not low without selected hypertension: active diuretic effect, Bartter/Gitelman-type physiology, magnesium depletion, or other renal loss is possible.");
+      }
+      if(mg!==null&&mg<0.7)mechanism.push("Hypomagnesemia is present and can make potassium repletion refractory; correct magnesium using the local protocol.");
+      if(severe||ecgDanger||dangerPositive||val("pot_hypo_oral")==="Unable or unsafe to use oral route"){
+        treatment.push("Use monitored IV potassium replacement under the institutional concentration, access, infusion-rate, renal-function, and ECG protocol; transition to oral replacement when safe.");
+      } else if(val("pot_hypo_oral")==="Oral replacement feasible"||mild||moderate){
+        treatment.push("Prefer oral potassium replacement when feasible, correct the cause and magnesium, and divide/reassess dosing according to the local protocol.");
+      } else treatment.push("Document oral feasibility and replacement strategy before treatment.");
+      treatment.push("Choose the potassium salt and accompanying fluid strategy from the acid–base, chloride, phosphate, renal, and volume context rather than potassium alone.");
+      if(renal!=="Stable kidney function and urine output")avoid.push("Reduced or changing renal clearance increases overcorrection risk; use smaller reassessed steps and verify urine output.");
+      avoid.push("Do not estimate a precise total-body potassium deficit from one serum value, especially when redistribution is possible.");
+      if(val("pot_hypo_plan")!=="No plan documented")treatment.push("Documented approach: "+val("pot_hypo_plan")+".");
+    } else if(lane==="hyper"){
+      var hyperMech=val("pot_hyper_mech"),hyperMeds=val("pot_hyper_meds");
+      var artifactOnly=artifactConcern&&!severe&&!ecgDanger&&!dangerPositive;
+      if(hyperMech.indexOf("Pseudohyperkalemia")===0)mechanism.push("Specimen artifact is the leading mechanism; confirm correctly while preserving emergency treatment if ECG/clinical risk is present.");
+      else if(hyperMech==="Reduced renal excretion"||hyperMech.indexOf("Medication-related")===0)mechanism.push("Impaired potassium excretion is favored; review AKI/CKD, urine output, RAAS/MRA and other medications, hypoaldosterone states, and recent potassium exposure.");
+      else if(hyperMech.indexOf("Transcellular shift")===0)mechanism.push("Transcellular shift is favored; correct insulin deficiency/hyperglycemia or acid–base drivers while assessing whether total-body potassium excess also exists.");
+      else if(hyperMech.indexOf("Cell/tissue")===0)mechanism.push("Cellular potassium release is favored; evaluate rhabdomyolysis, tumor lysis, hemolysis, burns, ischemia, or other tissue injury and protect kidney function.");
+      else mechanism.push("Mechanism remains unclear or mixed; integrate specimen quality, kidney function, acid–base status, glucose/insulin, tissue injury, intake, and medications.");
+      if(hyperMeds!=="No major medication clue"&&hyperMeds!=="Medication review incomplete")mechanism.push("Medication/exposure clue: "+hyperMeds+".");
+      if(acidbase.indexOf("Metabolic acidosis")===0)mechanism.push("Acidosis may contribute to extracellular potassium shift, but renal excretion and total-body potassium still require assessment.");
+
+      if(ecgDanger)treatment.push("Give IV calcium promptly for membrane stabilization using the local hyperkalemia protocol; calcium does not lower serum potassium.");
+      else if(severe)treatment.push("Initiate the local severe-hyperkalemia emergency bundle; determine membrane-stabilization need from ECG/monitoring and protocol while repeat confirmation occurs in parallel.");
+      if(artifactOnly){
+        treatment.push("Prioritize urgent repeat potassium with a properly collected specimen and maintain ECG/clinical surveillance; do not give potassium-lowering treatment solely for a compromised specimen when the patient and ECG are stable.");
+      } else if(severe||moderate||ecgDanger||dangerPositive){
+        treatment.push("Use rapid intracellular shifting therapy such as insulin–glucose and an inhaled beta-agonist according to the local protocol, contraindications, and glucose plan.");
+        treatment.push("Start definitive potassium removal through appropriate diuresis, an approved binder, and/or urgent dialysis based on kidney function, urine output, severity, and rebound risk.");
+      } else treatment.push("For stable mild hyperkalemia, confirm the result, stop potassium sources, reconcile medications, and correct the cause before deciding on acute lowering therapy.");
+      if(val("pot_hyper_dialysis").indexOf("Severe/refractory")===0||renal==="Kidney failure on dialysis"||renal==="Oliguria or anuria")treatment.push("Obtain urgent nephrology/dialysis review when potassium remains severe, rebounds, or cannot be removed medically.");
+      if(val("pot_hyper_plan")!=="No plan documented")treatment.push("Documented approach: "+val("pot_hyper_plan")+".");
+      if(val("pot_glucose_monitor")==="Monitoring plan not documented"&&(severe||moderate))avoid.push("If insulin–glucose is used, establish baseline and serial glucose surveillance before treatment whenever the emergency allows.");
+      monitoring.push("Recheck potassium after temporizing therapy and continue until definitive removal is established because intracellular shifting can wear off and hyperkalemia can rebound.");
+      if(val("pot_hyper_glucose")==="High hypoglycemia risk")monitoring.push("Use the local high-hypoglycemia-risk insulin/glucose pathway with intensified glucose surveillance.");
+      avoid.push("Do not use sodium bicarbonate routinely as the sole acute hyperkalemia treatment; reserve it for an appropriate acid–base context and local protocol.");
+      avoid.push("Do not stop prognostically important RAAS therapy permanently without reassessing reversible contributors and chronic potassium-mitigation options.");
+    } else {
+      mechanism.push("No potassium lane is established. Verify the value and select hypokalemia or hyperkalemia before using cause-specific recommendations.");
+      treatment.push("No treatment strategy generated until the potassium abnormality is confirmed and classified.");
+    }
+
+    monitoring.push(val("pot_monitoring")+".");
+    if(level==="red")monitoring.push("Use continuous ECG when indicated and frequent reassessment of potassium, renal function, glucose after insulin, magnesium, acid–base status, and clinical response.");
+    else monitoring.push("Set the repeat interval from severity, trajectory, renal function, treatment route, and the likelihood of ongoing loss, shift, or rebound.");
+    if(!avoid.length)avoid.push("Avoid treating an isolated number without confirming specimen quality, ECG/clinical risk, renal function, and mechanism.");
+
+    var completed=[],missing=[];
+    function scoreItem(name,ok){if(ok)completed.push(name);else missing.push(name);}
+    scoreItem("Potassium value and lane established",k!==null&&lane!=="unclear");
+    scoreItem("Danger and ECG assessed",danger!=="Not assessed"&&ecg!=="Not obtained / not documented");
+    scoreItem("Specimen quality reviewed",sample!=="Not assessed");
+    scoreItem("Renal function and urine output reviewed",renal!=="Not assessed");
+    scoreItem("Acid–base and magnesium considered",acidbase!=="Not assessed / use Acid–Base Engine"&&mg!==null);
+    scoreItem("Mechanism and medications reviewed",lane==="hypo"?(val("pot_hypo_mech")!=="Unclear / mixed"&&val("pot_hypo_meds")!=="Medication review incomplete"):(lane==="hyper"?(val("pot_hyper_mech")!=="Unclear / mixed"&&val("pot_hyper_meds")!=="Medication review incomplete"):false));
+    scoreItem("Treatment strategy documented",lane==="hypo"?val("pot_hypo_plan")!=="No plan documented":(lane==="hyper"?val("pot_hyper_plan")!=="No plan documented":false));
+    scoreItem("Monitoring and ownership documented",val("pot_monitoring")!=="No plan documented"&&!!val("pot_owner"));
+    var total=completed.length+missing.length,pct=completed.length/total,careLabel=pct>=0.9?"Complete":(pct>=0.7?"Mostly complete":"Gaps remain");
+    var laneName=lane==="hypo"?"Hypokalemia":(lane==="hyper"?"Hyperkalemia":"Unclassified potassium result");
+    var core=
+      "Safety status: "+safety+"\n"+
+      "Classification: "+laneName+" — "+severity+". Current potassium: "+(k===null?"not entered":k.toFixed(1)+" mmol/L")+".\n"+
+      "Trajectory: "+trend+"\n"+
+      "ECG: "+ecg+". Renal context: "+renal+".\n\n"+
+      "Immediate actions:\n"+atsBullets(immediate)+"\n\n"+
+      "Confirmation / electrical safety:\n"+atsBullets(confirmation)+"\n\n"+
+      "Working mechanism:\n"+atsBullets(mechanism)+"\n\n"+
+      "Treatment strategy:\n"+atsBullets(treatment)+"\n\n"+
+      "Monitoring:\n"+atsBullets(monitoring)+"\n\n"+
+      "Avoid / limitations:\n"+atsBullets(avoid)+"\n\n"+
+      "Ownership: "+val("pot_owner")+".\n"+
+      (val("pot_plan_note")?"Additional plan: "+val("pot_plan_note")+".\n":"")+
+      "Care standard: "+completed.length+"/"+total+" — "+careLabel+(missing.length?". Remaining gaps: "+missing.join(", ")+".":".");
+    var concise="Potassium Disorders Assessment\n\n"+core;
+    var formal="Dear Colleague,\n\nThank you for asking me to assess the potassium disorder. "+(val("pot_summary")?"In brief: "+val("pot_summary")+". ":"")+"The current classification is "+laneName.toLowerCase()+" with "+severity.toLowerCase()+".\n\n"+core+"\n\nEvidence anchors: KDIGO potassium-management and acute-hyperkalemia conference reports, current adult hypokalemia guidance, and local medication/monitoring protocols.\n\nSincerely,\nGeneral Internal Medicine";
+    var teaching="Clinician teaching note\n\nFor hyperkalemia: confirm when appropriate, stabilize the membrane when indicated, shift potassium temporarily, remove potassium definitively, and monitor for hypoglycemia and rebound. For hypokalemia: distinguish redistribution from depletion, correct magnesium and ongoing losses, choose oral versus monitored IV replacement, and avoid overcorrection.\n\n"+core;
+    var finalText=concise;
+    if(val("pot_output_mode")==="Formal consultant letter")finalText=formal;
+    if(val("pot_output_mode")==="Counseling / teaching note")finalText=teaching;
+    var out=document.getElementById("pot_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
   }
 
 
