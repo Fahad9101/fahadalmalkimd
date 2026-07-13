@@ -99,13 +99,11 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
     {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
-    {id:"unusual",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Workup Tool",desc:"Splanchnic, CVST, renal vein, upper-extremity, young arterial thrombosis; OCP, Lp(a), JAK2/MPN, PNH, APS, cancer, anatomy."},
-    {id:"af",cat:"Thrombosis / Antithrombotic Safety",title:"AF Anticoagulation Decision Aid",desc:"CHA2DS2-VASc, bleeding-risk frame, 1/5/10-year risk, DOAC vs warfarin danger zones, and shared decision note."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Bleeding and reversal, HIT/PF4, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and antiplatelet overlap."},
     {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Adult Diarrhea Triage & Diagnostic Pathway",desc:"Focused triage, syndrome classification, selective stool testing, C. difficile safety, hydration, medication review, and escalation planning."},
     {id:"hyponatremia",cat:"GIM Diagnostic Reasoning",title:"Hyponatremia Diagnostic Engine",desc:"Danger-first treatment, tonicity and glucose correction, ADH/urine interpretation, phenotype, ODS risk, correction monitoring, and copy-ready notes."},
-    {id:"hypokalemia",cat:"GIM Diagnostic Reasoning",title:"Hypokalemia + Acid–Base Engine",desc:"GI vs renal potassium loss, metabolic acidosis/alkalosis, urine potassium/chloride, RTA, diuretics, mineralocorticoid clues."},
+    {id:"acid-base",cat:"GIM Diagnostic Reasoning",title:"Acid–Base Diagnostic Engine",desc:"ABG/VBG-aware interpretation, expected compensation, mixed disorders, albumin-corrected anion gap, delta analysis, cause-directed testing, and copy-ready notes."},
     {id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
     {id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review Checklist",desc:"Diagnostic clarity, danger overnight, VTE prophylaxis, meds, mobility, pending tests, discharge barriers, and communication."}
   ];
@@ -213,6 +211,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "antithrombotic") return renderAntithromboticSafety();
     if(id === "hyponatremia") return renderHyponatremia();
     if(id === "diarrhea") return renderDiarrhea();
+    if(id === "acid-base") return renderAcidBase();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -2166,6 +2165,336 @@ evidence + "\n\n" +
     out.className = "output " + level;
     out.textContent = finalText;
     out.classList.remove("hidden");
+  }
+
+
+  function renderAcidBase(){
+    shell("Acid–Base Diagnostic Engine","ABG/VBG-aware interpretation of the primary process, expected compensation, mixed disorders, anion gap, cause-directed testing, safety, and follow-up.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>Acid–base first:</b> establish the blood source, identify acidemia or alkalemia, determine the primary process, test expected compensation, then use the anion gap and clinical context to identify mixed disorders and causes.</p><p class="hint">This is a diagnostic support tool, not an automated ventilation, bicarbonate, dialysis, antidote, or electrolyte-prescribing protocol. Use the local laboratory reference ranges and escalate unstable or severely abnormal cases immediately.</p></div>'+
+
+    '<details class="pathStep" id="ab_step_safety" open><summary>1. Source, safety, and clinical frame</summary><div class="pathStepBody">'+
+    '<div class="grid2">'+
+    inputField("ab_summary","One-line case summary","e.g. septic patient with AKI and increasing work of breathing")+
+    selectField("ab_source","Blood-gas source",["Arterial blood gas","Peripheral venous blood gas","Central venous blood gas","Capillary blood gas","Source uncertain"],"Venous pH and bicarbonate can support metabolic assessment, but venous PCO₂ is not interchangeable with arterial PCO₂ for precise respiratory decisions.")+
+    selectField("ab_danger","Immediate danger screen",["Not assessed","No immediate danger feature","Hemodynamic instability or shock","Severe respiratory distress, fatigue, or impending ventilatory failure","Reduced consciousness, seizure, or inability to protect airway","Arrhythmia or major potassium concern","Suspected toxic ingestion","Rapid clinical deterioration / critical illness"],"A positive selection requires immediate bedside escalation; do not wait for the generated note.")+
+    selectField("ab_chronicity","Respiratory-process timing",["Unknown / cannot determine","Acute process likely","Chronic stable process likely","Acute-on-chronic process possible"],"Timing changes the expected renal compensation for respiratory disorders.")+
+    selectField("ab_context","Dominant clinical context",["No dominant context selected","Shock, sepsis, hypoperfusion, or tissue ischemia","Diabetes, ketosis, fasting, or alcohol-related ketosis","Kidney failure / reduced acid excretion","Diarrhea or gastrointestinal bicarbonate loss","Chloride-rich fluid / saline exposure","Vomiting or nasogastric losses","Diuretic or contraction physiology","Chronic lung disease / baseline hypercapnia","Acute hypoventilation, airway, CNS, or neuromuscular problem","Hyperventilation: hypoxemia, sepsis, pain, pregnancy, liver, or CNS context","Possible medication or toxic ingestion","Mixed / postoperative / unclear"],"")+
+    selectField("ab_timing","Gas and chemistry timing",["Same draw / clinically simultaneous","Within 2 hours with stable physiology","Separated samples or changing physiology","Timing unknown"],"Anion-gap and blood-gas interpretation is strongest when values reflect the same physiologic moment.")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" id="ab_step_values" open><summary>2. Core values</summary><div class="pathStepBody">'+
+    '<p class="stepIntro">Enter the measured values without rounding. Chemistry total CO₂ is preferred for the chemistry anion gap when available from the same time point.</p>'+
+    '<div class="grid2">'+
+    '<div class="field"><label>pH</label><input id="ab_ph" type="number" min="6.5" max="8" step="0.001" placeholder="e.g. 7.28"></div>'+
+    '<div class="field"><label>PCO₂</label><div class="unitrow"><input id="ab_pco2" type="number" min="0" step="any" placeholder="e.g. 29"><select id="ab_pco2_unit"><option>mmHg</option><option>kPa</option></select></div></div>'+
+    '<div class="field"><label>Blood-gas HCO₃⁻ (mmol/L)</label><input id="ab_gas_hco3" type="number" step="any" placeholder="e.g. 14"><span class="hint">Usually calculated by the analyzer.</span></div>'+
+    '<div class="field"><label>Chemistry total CO₂ (mmol/L)</label><input id="ab_chem_hco3" type="number" step="any" placeholder="Optional"><span class="hint">Use a simultaneous chemistry result when available.</span></div>'+
+    '<div class="field"><label>Sodium (mmol/L)</label><input id="ab_na" type="number" step="any" placeholder="For anion gap"></div>'+
+    '<div class="field"><label>Chloride (mmol/L)</label><input id="ab_cl" type="number" step="any" placeholder="For anion gap"></div>'+
+    '<div class="field"><label>Albumin</label><div class="unitrow"><input id="ab_albumin" type="number" min="0" step="any" placeholder="Optional"><select id="ab_albumin_unit"><option>g/L</option><option>g/dL</option></select></div><span class="hint">Albumin correction may uncover a masked high anion gap.</span></div>'+
+    '<div class="field"><label>Local normal anion-gap benchmark</label><input id="ab_normal_ag" type="number" step="any" placeholder="Default 12"><span class="hint">Use the local laboratory method/reference; 12 is used only when left blank.</span></div>'+
+    '<div class="field"><label>Base excess / deficit (mmol/L)</label><input id="ab_be" type="number" step="any" placeholder="Optional"></div>'+
+    '<div class="field"><label>Lactate (mmol/L)</label><input id="ab_lactate" type="number" min="0" step="any" placeholder="Optional"></div>'+
+    '</div></div></details>'+
+
+    '<details class="pathStep" id="ab_step_modifiers"><summary>3. Cause-directed modifiers</summary><div class="pathStepBody">'+
+    '<p class="stepIntro">These fields refine cause and safety. They are not required for the initial acid–base classification.</p>'+
+    '<div class="scenarioPanel hidden" id="ab_met_panel"><h3>Metabolic modifiers</h3><div class="grid2">'+
+    '<div class="field"><label>Potassium (mmol/L)</label><input id="ab_k" type="number" step="any" placeholder="Optional"></div>'+
+    '<div class="field"><label>Magnesium (mmol/L)</label><input id="ab_mg" type="number" min="0" step="any" placeholder="Optional"></div>'+
+    selectField("ab_renal","Renal context",["Not assessed","Renal function stable","AKI","Advanced CKD / kidney failure","Dialysis","Renal function uncertain"],"")+
+    selectField("ab_ketones","Glucose / ketone context",["Not assessed","No ketosis concern","Hyperglycemia / DKA concern","Euglycemic ketosis possible","Starvation or alcohol-related ketosis possible","Ketones measured and elevated","Ketones measured and not elevated"],"")+
+    '<div class="field"><label>Urine chloride (mmol/L)</label><input id="ab_urine_cl" type="number" min="0" step="any" placeholder="Optional for metabolic alkalosis"></div>'+
+    selectField("ab_urine_acid","Urinary acidification context",["Not assessed","Direct urine ammonium available / interpreted locally","Urine pH below 5.5","Urine pH 5.5 or higher","Urine indices confounded by low urine sodium, ketoanions, drugs, or CKD","RTA evaluation planned with nephrology"],"For persistent normal-gap acidosis, direct urine ammonium is preferable when available; surrogate urine indices require context.")+
+    selectField("ab_medication","Medication / toxin context",["No major contributor identified","Diuretic exposure","Carbonic-anhydrase inhibitor / topiramate-type effect","RAAS blocker, potassium-sparing drug, or hypoaldosterone context","Alkali, bicarbonate, citrate, or milk-alkali exposure","Salicylate concern","Toxic alcohol / solvent concern","Opioid, sedative, or respiratory depressant","Medication/toxin review incomplete"],"")+
+    '</div></div>'+
+    '<div class="scenarioPanel hidden" id="ab_resp_panel"><h3>Respiratory modifiers</h3><div class="grid2">'+
+    selectField("ab_resp_cause","Respiratory context",["Not assessed","COPD or chronic ventilatory disorder","Airway obstruction / severe obstructive exacerbation","CNS or medication-related hypoventilation","Neuromuscular or chest-wall weakness","Mechanical ventilation / ventilator interaction","Hypoxemia or pulmonary vascular disease","Sepsis, pain, pregnancy, liver, or CNS hyperventilation","Cause unclear"],"")+
+    selectField("ab_oxygen","Oxygenation assessment",["Not assessed","Pulse oximetry and clinical oxygenation reassuring","Hypoxemia present","Supplemental oxygen / ventilatory support in use","Arterial oxygenation required","Oxygenation context uncertain"],"Venous PO₂ must not be used to assess arterial oxygenation.")+
+    '</div></div>'+
+    '<div class="grid2">'+
+    selectField("ab_monitoring","Repeat assessment plan",["No plan documented","Repeat gas/electrolytes after intervention","Serial gas/electrolytes in monitored setting","Continuous respiratory monitoring plus repeat ABG","Cause-specific laboratory monitoring","Specialist-directed plan"],"")+
+    selectField("ab_owner","Primary ownership",["General Internal Medicine / primary team","Emergency medicine","Critical care","Nephrology","Respirology / pulmonary medicine","Toxicology / poison service","Multidisciplinary plan"],"")+
+    inputField("ab_plan_note","Additional plan or local-protocol note","e.g. repeat ABG after NIV adjustment; check beta-hydroxybutyrate")+
+    '</div></div></details>'+
+
+    '<details class="pathStep"><summary>4. Output</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("ab_output_mode","Output mode",["Concise clinical note","Formal consultant letter","Counseling / teaching note"],"")+
+    '</div></div></details>'+
+    '<div class="toolbar"><button class="primary" id="abGenerate">Generate acid–base assessment</button><button id="abCopy">Copy output</button><button id="abReset">Reset pathway</button></div><div id="ab_out" class="output hidden"></div>'+
+    '<details class="pathStep"><summary>Evidence and protocol notes</summary><div class="pathStepBody"><p><b>Version 1 anchors:</b> physiological acid–base assessment literature; standard expected-compensation relationships; laboratory-specific anion-gap interpretation with albumin correction; evidence comparing arterial and venous blood gases; expert guidance for severe metabolic acidosis.</p><p class="hint">Compensation formulas and delta analysis are approximations. Diagnose and treat the underlying illness, compare with prior values, use simultaneous samples, and confirm arterial ventilation/oxygenation when clinically necessary.</p></div></details>'+
+    '</section>');
+
+    ["ab_ph","ab_pco2","ab_pco2_unit","ab_gas_hco3","ab_chem_hco3"].forEach(function(id){ document.getElementById(id).addEventListener("input",updateAcidBasePanels); document.getElementById(id).addEventListener("change",updateAcidBasePanels); });
+    document.getElementById("abGenerate").addEventListener("click",calcAcidBase);
+    document.getElementById("abCopy").addEventListener("click",function(){copyOut("ab_out");});
+    document.getElementById("abReset").addEventListener("click",resetAcidBase);
+    updateAcidBasePanels();
+  }
+
+  function abNum(id){
+    var raw=val(id); if(raw==="") return null;
+    var n=Number(raw); return Number.isFinite(n)?n:null;
+  }
+
+  function abPco2(){
+    var n=abNum("ab_pco2");
+    if(n===null) return null;
+    return val("ab_pco2_unit")==="kPa" ? n*7.50062 : n;
+  }
+
+  function updateAcidBasePanels(){
+    var gasH=abNum("ab_gas_hco3"),chemH=abNum("ab_chem_hco3"),h=gasH!==null?gasH:chemH,p=abPco2();
+    var showMet=h!==null && (h<22 || h>26);
+    var showResp=p!==null && (p<35 || p>45);
+    var met=document.getElementById("ab_met_panel"),resp=document.getElementById("ab_resp_panel");
+    if(met) met.classList.toggle("hidden",!showMet);
+    if(resp) resp.classList.toggle("hidden",!showResp);
+  }
+
+  function resetAcidBase(){
+    var out=document.getElementById("ab_out"),card=out?out.closest("section.card"):document;
+    card.querySelectorAll("input").forEach(function(el){if(el.type==="checkbox"||el.type==="radio")el.checked=false;else el.value="";});
+    card.querySelectorAll("select").forEach(function(el){el.selectedIndex=0;});
+    card.querySelectorAll(".pathStep").forEach(function(el,i){el.open=i<2;});
+    if(out){out.textContent="";out.className="output hidden";}
+    updateAcidBasePanels();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function calcAcidBase(){
+    var ph=abNum("ab_ph"),pco2=abPco2(),gasH=abNum("ab_gas_hco3"),chemH=abNum("ab_chem_hco3");
+    var hco3=gasH!==null?gasH:chemH;
+    var na=abNum("ab_na"),cl=abNum("ab_cl"),albumin=abNum("ab_albumin"),normalAg=abNum("ab_normal_ag");
+    var lactate=abNum("ab_lactate"),k=abNum("ab_k"),urineCl=abNum("ab_urine_cl");
+    if(normalAg===null) normalAg=12;
+    var coreComplete=ph!==null&&pco2!==null&&hco3!==null;
+    var plausible=coreComplete&&ph>6.5&&ph<8&&pco2>0&&hco3>0;
+    var danger=val("ab_danger"),source=val("ab_source"),chronicity=val("ab_chronicity"),context=val("ab_context");
+    var immediate=[],compensation=[],mixed=[],tests=[],causePlan=[],monitoring=[],cautions=[];
+    function addUnique(arr,x){if(arr.indexOf(x)<0)arr.push(x);}
+    function rangeText(center,spread){return (center-spread).toFixed(1)+"–"+(center+spread).toFixed(1);}
+
+    var level="green",safety="GREEN — no immediate danger feature selected";
+    if(danger==="Not assessed"){
+      level="amber"; safety="AMBER — immediate danger screen incomplete";
+      immediate.push("Complete the bedside danger assessment before relying on this interpretation.");
+    } else if(danger!=="No immediate danger feature"){
+      level="red"; safety="RED — immediate bedside escalation required";
+      immediate.push("Escalate now for monitored assessment and treatment of airway, breathing, circulation, arrhythmia, or toxicologic risk as applicable.");
+    }
+    if(ph!==null&&(ph<7.20||ph>=7.60)){
+      level="red"; safety="RED — severe acid–base abnormality requiring urgent monitored review";
+      immediate.push("Treat the underlying cause urgently and reassess ventilation, perfusion, electrolytes, and the blood gas at short intervals.");
+    } else if(ph!==null&&((ph>=7.20&&ph<7.30)||(ph>7.54&&ph<7.60))&&level!=="red"){
+      level="amber"; safety="AMBER — clinically important acid–base abnormality";
+    }
+    if(!plausible){
+      level="amber"; safety="AMBER — core blood-gas values incomplete or implausible";
+      immediate.push("Enter and verify pH, PCO₂, and bicarbonate from a coherent sample before assigning a disorder.");
+    }
+    if(k!==null&&(k<2.5||k>=6.5)){
+      level="red"; safety="RED — extreme potassium value entered with acid–base disturbance";
+      immediate.push("Use the local emergency potassium/ECG pathway immediately; this acid–base tool does not replace potassium-specific treatment.");
+    }
+
+    var diagnosis="Acid–base disorder not classifiable from the entered values";
+    var pattern="Core values incomplete";
+    var metabolicAcid=false,metabolicAlk=false,respAcid=false,respAlk=false;
+    if(plausible){
+      metabolicAcid=hco3<22; metabolicAlk=hco3>26; respAcid=pco2>45; respAlk=pco2<35;
+      var runMetAcid=false,runMetAlk=false,runRespAcid=false,runRespAlk=false;
+      var inferMetAcid=true,inferMetAlk=true,inferRespAcid=true,inferRespAlk=true;
+      if(ph<7.35){
+        pattern="Acidemia";
+        if(metabolicAcid&&respAcid) diagnosis="Mixed metabolic and respiratory acidosis";
+        else if(metabolicAcid) diagnosis="Primary metabolic acidosis";
+        else if(respAcid) diagnosis="Primary respiratory acidosis";
+        else diagnosis="Acidemia with discordant or borderline PCO₂/HCO₃⁻ values";
+        runMetAcid=metabolicAcid; runRespAcid=respAcid;
+      } else if(ph>7.45){
+        pattern="Alkalemia";
+        if(metabolicAlk&&respAlk) diagnosis="Mixed metabolic and respiratory alkalosis";
+        else if(metabolicAlk) diagnosis="Primary metabolic alkalosis";
+        else if(respAlk) diagnosis="Primary respiratory alkalosis";
+        else diagnosis="Alkalemia with discordant or borderline PCO₂/HCO₃⁻ values";
+        runMetAlk=metabolicAlk; runRespAlk=respAlk;
+      } else {
+        pattern="Near-normal pH";
+        if(metabolicAcid&&respAlk){
+          var nearWinter=1.5*hco3+8,nearAcuteRAlk=24-2*((40-pco2)/10),nearChronicRAlk=24-4*((40-pco2)/10);
+          var nearMetMatch=Math.abs(pco2-nearWinter)<=2;
+          var nearRespTarget=chronicity==="Acute process likely"?nearAcuteRAlk:(chronicity==="Chronic stable process likely"?nearChronicRAlk:null);
+          var nearRespMatch=nearRespTarget!==null?Math.abs(hco3-nearRespTarget)<=2:Math.min(Math.abs(hco3-nearAcuteRAlk),Math.abs(hco3-nearChronicRAlk))<=2;
+          if(nearMetMatch&&!nearRespMatch){diagnosis="Compensated metabolic acidosis with near-normal pH";runMetAcid=true;}
+          else if(nearRespMatch&&!nearMetMatch){diagnosis="Compensated respiratory alkalosis with near-normal pH";runRespAlk=true;}
+          else {diagnosis="Low HCO₃⁻ / low PCO₂ pattern: compensated metabolic acidosis, respiratory alkalosis, or a mixed disorder";runMetAcid=true;runRespAlk=true;inferMetAcid=false;inferRespAlk=false;}
+        }
+        else if(metabolicAlk&&respAcid){
+          var nearMetAlk=40+0.7*(hco3-24),nearAcuteRA=24+(pco2-40)/10,nearChronicRA=24+3.5*((pco2-40)/10);
+          var nearMetAlkMatch=Math.abs(pco2-nearMetAlk)<=5;
+          var nearRespAcidTarget=chronicity==="Acute process likely"?nearAcuteRA:(chronicity==="Chronic stable process likely"?nearChronicRA:null);
+          var nearRespAcidMatch=nearRespAcidTarget!==null?Math.abs(hco3-nearRespAcidTarget)<=2:Math.min(Math.abs(hco3-nearAcuteRA),Math.abs(hco3-nearChronicRA))<=2;
+          if(nearMetAlkMatch&&!nearRespAcidMatch){diagnosis="Compensated metabolic alkalosis with near-normal pH";runMetAlk=true;}
+          else if(nearRespAcidMatch&&!nearMetAlkMatch){diagnosis="Compensated respiratory acidosis with near-normal pH";runRespAcid=true;}
+          else {diagnosis="High HCO₃⁻ / high PCO₂ pattern: compensated metabolic alkalosis, respiratory acidosis, or a mixed disorder";runMetAlk=true;runRespAcid=true;inferMetAlk=false;inferRespAcid=false;}
+        }
+        else if(metabolicAcid&&respAcid) diagnosis="Mixed metabolic and respiratory acidosis with near-normal measured pH — verify values/source";
+        else if(metabolicAlk&&respAlk) diagnosis="Mixed metabolic and respiratory alkalosis with near-normal measured pH — verify values/source";
+        else diagnosis="No major primary acid–base disturbance identified by standard arterial thresholds";
+        if(metabolicAcid&&respAcid){runMetAcid=true;runRespAcid=true;}
+        if(metabolicAlk&&respAlk){runMetAlk=true;runRespAlk=true;}
+      }
+
+      if(runMetAcid){
+        var winter=1.5*hco3+8,wLow=winter-2,wHigh=winter+2;
+        compensation.push("Metabolic-acidosis check: expected PCO₂ "+rangeText(winter,2)+" mmHg by Winter formula; measured "+pco2.toFixed(1)+" mmHg.");
+        if(!inferMetAcid) compensation.push("The near-normal pH pattern overlaps with respiratory alkalosis; this formula does not assign a unique primary process by itself.");
+        else if(pco2>wHigh) addUnique(mixed,"additional respiratory acidosis");
+        else if(pco2<wLow) addUnique(mixed,"additional respiratory alkalosis");
+        else compensation.push("Respiratory compensation is within the expected metabolic-acidosis range.");
+      }
+      if(runMetAlk){
+        var metAlkExpected=40+0.7*(hco3-24),maLow=metAlkExpected-5,maHigh=metAlkExpected+5;
+        compensation.push("Metabolic-alkalosis check: expected PCO₂ approximately "+rangeText(metAlkExpected,5)+" mmHg; measured "+pco2.toFixed(1)+" mmHg.");
+        if(!inferMetAlk) compensation.push("The near-normal pH pattern overlaps with respiratory acidosis; this formula does not assign a unique primary process by itself.");
+        else if(pco2>maHigh) addUnique(mixed,"additional respiratory acidosis");
+        else if(pco2<maLow) addUnique(mixed,"additional respiratory alkalosis");
+        else compensation.push("Respiratory compensation is compatible with metabolic alkalosis.");
+      }
+      if(runRespAcid){
+        var rDelta=(pco2-40)/10,acuteRA=24+rDelta,chronicRA=24+3.5*rDelta;
+        compensation.push("Respiratory-acidosis check: expected HCO₃⁻ about "+acuteRA.toFixed(1)+" mmol/L if acute and "+chronicRA.toFixed(1)+" mmol/L if chronic; measured "+hco3.toFixed(1)+" mmol/L.");
+        var targetRA=null;
+        if(chronicity==="Acute process likely")targetRA=acuteRA;
+        if(chronicity==="Chronic stable process likely")targetRA=chronicRA;
+        if(targetRA!==null){
+          if(!inferRespAcid)compensation.push("The near-normal pH pattern overlaps with metabolic alkalosis; chronicity and clinical context determine the primary process.");
+          else if(hco3<targetRA-2)addUnique(mixed,"additional metabolic acidosis");
+          else if(hco3>targetRA+2)addUnique(mixed,"additional metabolic alkalosis");
+          else compensation.push("Renal compensation is compatible with the selected respiratory chronicity.");
+        } else {
+          if(inferRespAcid&&hco3<Math.min(acuteRA,chronicRA)-2)addUnique(mixed,"additional metabolic acidosis");
+          if(inferRespAcid&&hco3>Math.max(acuteRA,chronicRA)+2)addUnique(mixed,"additional metabolic alkalosis");
+        }
+      }
+      if(runRespAlk){
+        var alkDelta=(40-pco2)/10,acuteRAlk=24-2*alkDelta,chronicRAlk=24-4*alkDelta;
+        compensation.push("Respiratory-alkalosis check: expected HCO₃⁻ about "+acuteRAlk.toFixed(1)+" mmol/L if acute and "+chronicRAlk.toFixed(1)+" mmol/L if chronic; measured "+hco3.toFixed(1)+" mmol/L.");
+        var targetRAlk=null;
+        if(chronicity==="Acute process likely")targetRAlk=acuteRAlk;
+        if(chronicity==="Chronic stable process likely")targetRAlk=chronicRAlk;
+        if(targetRAlk!==null){
+          if(!inferRespAlk)compensation.push("The near-normal pH pattern overlaps with metabolic acidosis; chronicity and clinical context determine the primary process.");
+          else if(hco3<targetRAlk-2)addUnique(mixed,"additional metabolic acidosis");
+          else if(hco3>targetRAlk+2)addUnique(mixed,"additional metabolic alkalosis");
+          else compensation.push("Renal compensation is compatible with the selected respiratory chronicity.");
+        } else {
+          if(inferRespAlk&&hco3<Math.min(acuteRAlk,chronicRAlk)-2)addUnique(mixed,"additional metabolic acidosis");
+          if(inferRespAlk&&hco3>Math.max(acuteRAlk,chronicRAlk)+2)addUnique(mixed,"additional metabolic alkalosis");
+        }
+      }
+    }
+
+    var agText="Anion gap not calculable",ag=null,correctedAg=null,deltaText="Delta analysis not applicable";
+    var agH=chemH!==null?chemH:hco3;
+    if(na!==null&&cl!==null&&agH!==null){
+      ag=na-cl-agH; correctedAg=ag;
+      if(albumin!==null){
+        var albuminGdl=val("ab_albumin_unit")==="g/L"?albumin/10:albumin;
+        correctedAg=ag+2.5*(4-albuminGdl);
+        agText="Anion gap "+ag.toFixed(1)+" mmol/L; albumin-corrected gap "+correctedAg.toFixed(1)+" mmol/L; entered normal benchmark "+normalAg.toFixed(1)+".";
+      } else {
+        agText="Uncorrected anion gap "+ag.toFixed(1)+" mmol/L; entered normal benchmark "+normalAg.toFixed(1)+". Albumin not entered.";
+        cautions.push("A low albumin can mask a clinically important high anion gap.");
+      }
+      if(correctedAg>normalAg){
+        tests.push("A raised anion gap is present: assess lactate, beta-hydroxybutyrate/glucose, renal failure, medications/toxins, and other organic acids according to context.");
+        if(agH<24&&24-agH>0){
+          var ratio=(correctedAg-normalAg)/(24-agH);
+          if(ratio<0.4)deltaText="Delta ratio "+ratio.toFixed(2)+": predominant normal-gap acidosis or a small gap contribution is suggested.";
+          else if(ratio<0.8)deltaText="Delta ratio "+ratio.toFixed(2)+": mixed high-gap and normal-gap metabolic acidosis is suggested.";
+          else if(ratio<=2)deltaText="Delta ratio "+ratio.toFixed(2)+": broadly compatible with high-gap metabolic acidosis.";
+          else deltaText="Delta ratio "+ratio.toFixed(2)+": concurrent metabolic alkalosis or an elevated baseline bicarbonate is possible.";
+        }
+      } else if(hco3!==null&&hco3<22&&runMetAcid){
+        tests.push("A normal-gap/hyperchloremic metabolic acidosis is favored: review GI bicarbonate loss, chloride-rich fluids, kidney function, medications, hypoaldosterone states, and RTA physiology.");
+      }
+    } else {
+      tests.push("Obtain simultaneous sodium, chloride, chemistry total CO₂, and albumin to classify a metabolic acidosis reliably.");
+    }
+
+    if(runMetAlk){
+      tests.push("For metabolic alkalosis, assess blood pressure, effective volume, potassium, magnesium, vomiting/NG losses, diuretics, alkali exposure, and urine chloride.");
+      if(urineCl!==null){
+        if(urineCl<20)causePlan.push("Urine chloride is low ("+urineCl.toFixed(1)+" mmol/L): chloride-responsive physiology such as vomiting/remote diuretic or contraction is favored, interpreted with timing and volume context.");
+        else causePlan.push("Urine chloride is not low ("+urineCl.toFixed(1)+" mmol/L): ongoing diuretic effect, mineralocorticoid physiology, tubulopathy, severe potassium depletion, or other chloride-resistant causes require review.");
+      }
+    }
+    if(runRespAcid)tests.push("Assess ventilation and airway, sedatives/opioids, obstructive disease, neuromuscular/chest-wall weakness, fatigue, and ventilator interaction; compare with the baseline PCO₂ when available.");
+    if(runRespAlk)tests.push("Assess hypoxemia, sepsis, pulmonary vascular disease, pain, pregnancy, liver/CNS disease, and salicylates before attributing hyperventilation to anxiety.");
+    if(context.indexOf("Shock")===0)causePlan.push("Trend lactate with perfusion and source-control response; lactate does not explain every component of acidosis automatically.");
+    if(context.indexOf("Diabetes")===0)causePlan.push("Check glucose, beta-hydroxybutyrate, renal function, and treatment response; consider euglycemic ketoacidosis when exposure/context fits.");
+    if(context.indexOf("Kidney")===0)causePlan.push("Assess AKI/CKD severity, potassium, medication effects, and whether nephrology/dialysis review is required by the whole clinical picture.");
+    if(context.indexOf("Diarrhea")===0)causePlan.push("Quantify GI losses and volume status; persistent unexplained normal-gap acidosis may require renal acidification assessment.");
+    if(context.indexOf("Possible medication")===0||val("ab_medication").indexOf("Salicylate")===0||val("ab_medication").indexOf("Toxic alcohol")===0)causePlan.push("Contact toxicology/poison services early and obtain agent-specific testing, osmolal-gap assessment, and treatment through the local protocol.");
+    if(val("ab_urine_acid").indexOf("Direct urine ammonium")===0)causePlan.push("Interpret the direct urine ammonium result with nephrology/laboratory context to distinguish appropriate renal acid excretion from impaired ammoniagenesis.");
+    if(val("ab_urine_acid").indexOf("Urine pH 5.5 or higher")===0)causePlan.push("A urine pH ≥5.5 can support impaired distal acidification only when systemic acidosis is established and infection, low distal sodium delivery, and other confounders are excluded.");
+    if(lactate!==null)causePlan.push("Lactate entered: "+lactate.toFixed(1)+" mmol/L; interpret the trajectory and cause rather than using the value alone as the entire acid–base diagnosis.");
+    if(k!==null)causePlan.push("Potassium entered: "+k.toFixed(1)+" mmol/L. Use it to refine the cause, but route replacement/emergency treatment through the dedicated potassium protocol.");
+    if(!causePlan.length)causePlan.push("Use the calculated phenotype to select cause-specific testing; no single cause is assigned without clinical context.");
+
+    if(source!=="Arterial blood gas"){
+      cautions.push("The source is "+source.toLowerCase()+": venous/capillary PCO₂ should not drive precise ventilatory decisions, and venous PO₂ cannot assess arterial oxygenation.");
+      if((runRespAcid||runRespAlk||level==="red")&&coreComplete)immediate.push("Obtain an arterial blood gas when precise ventilation or oxygenation assessment will change urgent management.");
+    }
+    if(gasH!==null&&chemH!==null&&Math.abs(gasH-chemH)>3)cautions.push("Blood-gas HCO₃⁻ and chemistry total CO₂ differ by more than 3 mmol/L; verify timing, sampling, handling, and changing physiology.");
+    if(val("ab_timing")==="Separated samples or changing physiology"||val("ab_timing")==="Timing unknown")cautions.push("Gas and chemistry values may not represent the same physiologic moment; repeat simultaneous values before relying on mixed-disorder calculations.");
+    if(mixed.length)cautions.push("Compensation analysis suggests: "+mixed.join(" and ")+".");
+    cautions.push("Delta ratios and expected-compensation formulas support—not replace—clinical diagnosis and prior-value comparison.");
+    cautions.push("Do not administer bicarbonate, acid, change ventilation, initiate dialysis, or give an antidote solely from this calculator output.");
+    if(!immediate.length)immediate.push("No immediate danger trigger selected; address the cause and reassess after the relevant intervention.");
+    monitoring.push(val("ab_monitoring")+".");
+    if(level==="red")monitoring.push("Use a monitored setting with short-interval reassessment of gas, electrolytes, ventilation, perfusion, neurologic status, and urine output as applicable.");
+    else monitoring.push("Repeat a coherent gas/chemistry set after a meaningful clinical change or treatment rather than trending isolated numbers.");
+
+    var completed=[],missing=[];
+    function scoreItem(name,ok){if(ok)completed.push(name);else missing.push(name);}
+    scoreItem("Source and danger assessed",source!=="Source uncertain"&&danger!=="Not assessed");
+    scoreItem("Core pH/PCO₂/HCO₃⁻ entered",plausible);
+    scoreItem("Gas/chemistry timing documented",val("ab_timing")!=="Timing unknown");
+    scoreItem("Anion gap calculable",na!==null&&cl!==null&&agH!==null);
+    scoreItem("Albumin correction available",albumin!==null);
+    scoreItem("Clinical cause context selected",context!=="No dominant context selected");
+    scoreItem("Respiratory chronicity considered",chronicity!=="Unknown / cannot determine"||(!runRespAcid&&!runRespAlk));
+    scoreItem("Monitoring and ownership documented",val("ab_monitoring")!=="No plan documented"&&!!val("ab_owner"));
+    var total=completed.length+missing.length,pct=completed.length/total,careLabel=pct>=0.9?"Complete":(pct>=0.7?"Mostly complete":"Gaps remain");
+
+    var valueLine="pH "+(ph===null?"not entered":ph.toFixed(3))+", PCO₂ "+(pco2===null?"not entered":pco2.toFixed(1)+" mmHg")+", HCO₃⁻ "+(hco3===null?"not entered":hco3.toFixed(1)+" mmol/L")+".";
+    var core=
+      "Safety status: "+safety+"\n"+
+      "Source: "+source+". "+valueLine+"\n"+
+      "pH pattern: "+pattern+".\n"+
+      "Primary interpretation: "+diagnosis+".\n"+
+      "Mixed-process signal: "+(mixed.length?mixed.join("; "):"No additional process established from compensation testing")+".\n\n"+
+      "Expected compensation:\n"+atsBullets(compensation.length?compensation:["Not calculable or not required from the entered values."])+"\n\n"+
+      "Anion gap:\n- "+agText+"\n- "+deltaText+"\n\n"+
+      "Immediate actions:\n"+atsBullets(immediate)+"\n\n"+
+      "Cause-directed evaluation:\n"+atsBullets(tests)+"\n\n"+
+      "Clinical integration:\n"+atsBullets(causePlan)+"\n\n"+
+      "Monitoring:\n"+atsBullets(monitoring)+"\n\n"+
+      "Limitations / avoid:\n"+atsBullets(cautions)+"\n\n"+
+      "Ownership: "+val("ab_owner")+".\n"+
+      (val("ab_plan_note")?"Additional plan: "+val("ab_plan_note")+".\n":"")+
+      "Care standard: "+completed.length+"/"+total+" — "+careLabel+(missing.length?". Remaining gaps: "+missing.join(", ")+".":".");
+    var concise="Acid–Base Assessment\n\n"+core;
+    var formal="Dear Colleague,\n\nThank you for asking me to interpret the acid–base disorder. "+(val("ab_summary")?"In brief: "+val("ab_summary")+". ":"")+"The primary interpretation is "+diagnosis.toLowerCase()+".\n\n"+core+"\n\nEvidence anchors: physiological acid–base assessment, standard compensation relationships, albumin-aware anion-gap interpretation, and arterial-versus-venous blood-gas evidence.\n\nSincerely,\nGeneral Internal Medicine";
+    var teaching="Clinician teaching note\n\nUse the sequence: source and safety → pH direction → primary process → expected compensation → anion gap with albumin → delta relationship → cause and response to treatment. A near-normal pH does not exclude a mixed disorder.\n\n"+core;
+    var finalText=concise;
+    if(val("ab_output_mode")==="Formal consultant letter")finalText=formal;
+    if(val("ab_output_mode")==="Counseling / teaching note")finalText=teaching;
+    var out=document.getElementById("ab_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
   }
 
 
