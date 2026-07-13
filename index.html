@@ -2223,7 +2223,6 @@ evidence + "\n\n" +
     selectField("diarr_owner","Primary ownership",["General Internal Medicine / primary team","Emergency medicine","Critical care","Gastroenterology","Infectious diseases","Surgery","Multidisciplinary plan"],"")+
     inputField("diarr_plan_note","Additional plan or local-protocol note","e.g. contact precautions started; repeat creatinine tomorrow")+
     '</div>'+
-    '<div class="scenarioPanel hidden" id="diarr_osm_panel"><h3>Optional chronic watery physiology</h3><span class="hint">Use only when stool electrolytes were obtained. Stool osmotic gap = 290 − 2 × (stool sodium + stool potassium).</span><div class="grid2"><div class="field"><label>Stool sodium (mmol/L)</label><input id="diarr_stool_na" type="number" min="0" step="any" placeholder="Optional"></div><div class="field"><label>Stool potassium (mmol/L)</label><input id="diarr_stool_k" type="number" min="0" step="any" placeholder="Optional"></div></div></div>'+
     '</div></details>'+
 
     '<details class="pathStep"><summary>4. Output</summary><div class="pathStepBody"><div class="grid2">'+
@@ -2246,11 +2245,9 @@ evidence + "\n\n" +
     var infectious = duration.indexOf("Acute")===0 || duration.indexOf("Persistent")===0 || phenotype.indexOf("Inflammatory")===0;
     var chronic = duration.indexOf("Chronic")===0;
     var fatty = phenotype.indexOf("Fatty")===0;
-    var chronicWatery = chronic && phenotype.indexOf("Watery")===0;
     var p1=document.getElementById("diarr_infectious_panel"); if(p1) p1.classList.toggle("hidden",!infectious);
     var p2=document.getElementById("diarr_chronic_panel"); if(p2) p2.classList.toggle("hidden",!chronic);
     var p3=document.getElementById("diarr_fatty_panel"); if(p3) p3.classList.toggle("hidden",!fatty);
-    var p4=document.getElementById("diarr_osm_panel"); if(p4) p4.classList.toggle("hidden",!chronicWatery);
   }
 
   function resetDiarrhea(){
@@ -2262,11 +2259,6 @@ evidence + "\n\n" +
     if(out){ out.textContent=""; out.className="output hidden"; }
     updateDiarrheaPanels();
     window.scrollTo({top:0,behavior:"smooth"});
-  }
-
-  function diarrNum(id){
-    var raw=val(id); if(raw==="") return null;
-    var n=Number(raw); return Number.isFinite(n)?n:null;
   }
 
   function calcDiarrhea(){
@@ -2315,13 +2307,7 @@ evidence + "\n\n" +
     else if(phenotype.indexOf("Fatty")===0) classification="Fatty / malabsorptive diarrhea";
 
     var physiology="Not applicable or not established";
-    var stoolNa=diarrNum("diarr_stool_na"), stoolK=diarrNum("diarr_stool_k"), gap=null;
-    if(stoolNa!==null && stoolK!==null){
-      gap=290-(2*(stoolNa+stoolK));
-      if(gap>100) physiology="High stool osmotic gap ("+gap.toFixed(0)+" mOsm/kg): osmotic physiology favored";
-      else if(gap<50) physiology="Low stool osmotic gap ("+gap.toFixed(0)+" mOsm/kg): secretory physiology favored";
-      else physiology="Intermediate stool osmotic gap ("+gap.toFixed(0)+" mOsm/kg): mixed/indeterminate physiology";
-    } else if(duration.indexOf("Chronic")===0 && phenotype.indexOf("Watery")===0 && course.indexOf("continues despite fasting")>=0){
+    if(duration.indexOf("Chronic")===0 && phenotype.indexOf("Watery")===0 && course.indexOf("continues despite fasting")>=0){
       physiology="Secretory physiology favored by nocturnal/fasting persistence";
     } else if(duration.indexOf("Chronic")===0 && phenotype.indexOf("Watery")===0 && course.indexOf("Improves substantially")===0){
       physiology="Osmotic physiology favored by improvement with fasting";
