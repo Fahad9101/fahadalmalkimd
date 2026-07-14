@@ -106,7 +106,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     {id:"acid-base",cat:"GIM Diagnostic Reasoning",title:"Acid–Base Diagnostic Engine",desc:"ABG/VBG-aware interpretation, expected compensation, mixed disorders, albumin-corrected anion gap, delta analysis, cause-directed testing, and copy-ready notes."},
     {id:"potassium",cat:"GIM Diagnostic Reasoning",title:"Potassium Disorders Engine",desc:"Hypokalemia and hyperkalemia triage, ECG and specimen safety, redistribution versus gain/loss, acid–base integration, treatment strategy, monitoring, and copy-ready notes."},
     {id:"cirrhosis-coag",cat:"GIM Diagnostic Reasoning",title:"Coagulation in Cirrhosis",desc:"Rebalanced hemostasis, procedure risk, INR pitfalls, fibrinogen/platelets, TEG/ROTEM, vitamin K, and thrombosis despite high INR."},
-    {id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review Checklist",desc:"Diagnostic clarity, danger overnight, VTE prophylaxis, meds, mobility, pending tests, discharge barriers, and communication."}
+    {id:"ctu-daily",cat:"CTU / Rounding Standard",title:"CTU Daily Review & Discharge Readiness",desc:"Sixty-second danger screen, daily diagnostic direction, treatment review, preventable-harm checks, discharge criteria, barriers, ownership, and copy-ready rounding outputs."}
   ];
 
   function app(){ return document.getElementById("app"); }
@@ -215,6 +215,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "acid-base") return renderAcidBase();
     if(id === "potassium") return renderPotassium();
     if(id === "cirrhosis-coag") return renderCirrhosisCoag();
+    if(id === "ctu-daily") return renderCTUDaily();
     return shell(t.title, t.desc, '<section class="card"><h3>Guided pathway scaffold</h3><ol><li>Choose clinical scenario</li><li>Danger-first screen</li><li>Classify phenotype</li><li>Minimum standard assessment</li><li>Action plan</li><li>Teaching pearl</li><li>Copy-ready note</li></ol><p class="hint">This pathway is visible and ready for deeper expansion while keeping the site stable.</p></section>');
   }
 
@@ -223,6 +224,110 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   }
   function inputField(id,label,placeholder){
     return '<div class="field"><label>'+esc(label)+'</label><input id="'+id+'" placeholder="'+esc(placeholder||"")+'"></div>';
+  }
+
+  function renderCTUDaily(){
+    shell("CTU Daily Review & Discharge Readiness","A focused daily-rounding tool that turns safety concerns, clinical goals, pending work, and discharge barriers into owned actions with deadlines.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1</span><p><b>Flow principle:</b> establish whether the patient is safe, define what must happen today, and progress discharge work in parallel with medical care.</p><p class="hint">This is a rounding and communication aid—not a substitute for bedside assessment, escalation policy, medication reconciliation, or local discharge criteria. Do not delay urgent review to complete the checklist.</p></div>'+
+
+    '<details class="pathStep" open><summary>1. Sixty-second safety and clinical direction</summary><div class="pathStepBody"><div class="grid2">'+
+    inputField("ctu_summary","One-line case summary","e.g. day 3 CAP, improving oxygen need, discharge target tomorrow")+
+    selectField("ctu_danger","Immediate deterioration screen",["Not assessed","No immediate danger feature","New or increasing oxygen / respiratory deterioration","Hypotension, shock, or poor perfusion","Acute neurologic change","Clinically important bleeding","Sepsis or other significant deterioration","Critical laboratory or imaging result","Uncontrolled symptoms or other urgent threat"],"")+
+    selectField("ctu_overnight","Important event since last review",["Not assessed","No important overnight event","Rapid response or clinical escalation","Fall","Fever or new infection concern","Hypoglycemia or severe hyperglycemia","Arrhythmia or chest-pain event","New procedure complication","Other event requiring action"],"")+
+    selectField("ctu_location","Current level of care",["Not assessed","Ward appropriate","Needs closer ward monitoring","Urgent critical-care assessment","Urgent specialist assessment","Goals-of-care review required"],"")+
+    selectField("ctu_phase","Phase of stay",["Not assessed","Diagnostic uncertainty","Active treatment","Stabilization / de-escalation","Medically ready pending nonmedical arrangements","Discharge today"],"")+
+    selectField("ctu_diagnosis","Working diagnosis",["Not assessed","Clear and supported","Clear but important alternative remains","Evolving with defined next decision","Unclear / diagnostic reset needed"],"")+
+    selectField("ctu_cantmiss","Cannot-miss alternative",["Not assessed","No unresolved cannot-miss diagnosis","Identified and reasonably excluded","Investigation pending today","Concern remains without a defined plan"],"")+
+    inputField("ctu_today_goal","Single clinical goal for today","e.g. off oxygen at rest and with ambulation")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>2. Tests, treatment, and de-escalation</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("ctu_pending","Pending tests / consultations",["None affecting current plan","Result changes management today","Result is required before discharge","Can be completed or followed after discharge","Pending item has no clear decision attached","Not assessed"],"Every test should have a decision, timing, and owner.")+
+    inputField("ctu_pending_item","Key pending item and decision","e.g. culture: narrow antibiotics if susceptible")+
+    inputField("ctu_pending_owner","Result owner and review deadline","e.g. Dr X by 15:00; call patient if after discharge")+
+    selectField("ctu_antibiotic","Antimicrobial review",["Not applicable","Indication, source, cultures, day and duration reviewed","IV-to-oral opportunity","Narrow or stop opportunity","Infectious plan incomplete"],"")+
+    selectField("ctu_vte","VTE / antithrombotic safety",["Reviewed and appropriate","Not applicable / documented contraindication","Prophylaxis absent or held without current plan","Therapeutic anticoagulation issue","Antiplatelet / anticoagulant overlap needs review","Not assessed"],"")+
+    selectField("ctu_meds","Medication safety and reconciliation",["Reviewed; no unresolved issue","Renal / hepatic dose or interaction issue","Insulin, steroid, opioid, sedative, or other high-risk plan needed","Essential home medication restart / hold decision needed","Medication reconciliation incomplete","Not assessed"],"")+
+    selectField("ctu_fluids","Fluids, diuresis, oxygen, and route",["Not applicable or targets clear","IV fluid can stop / route can simplify","Diuresis or volume target needs adjustment","Oxygen weaning / home-oxygen assessment needed","Electrolyte replacement or monitoring plan needed","Not assessed"],"")+
+    selectField("ctu_deescalate","Other de-escalation opportunity",["None identified","Stop unnecessary laboratory testing","Stop telemetry or excess monitoring","Remove urinary catheter, vascular line, or drain","Convert another IV therapy to oral","Multiple opportunities","Not assessed"],"")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>3. Preventable harm and function</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("ctu_mobility","Mobility and function",["At baseline / plan complete","Mobilize today","PT/OT assessment needed","New functional decline or equipment need","Not assessed"],"")+
+    selectField("ctu_cognition","Delirium, sleep, and cognition",["No active issue / plan complete","Delirium prevention actions needed","Active delirium requires evaluation and management","Capacity / cognition affects disposition","Not assessed"],"")+
+    selectField("ctu_nutrition","Nutrition and swallowing",["No active issue / plan complete","Intake support needed","Swallow assessment needed","Nutrition support / dietitian review needed","Not assessed"],"")+
+    selectField("ctu_falls_skin","Falls, skin, bowel, and devices",["Reviewed; no unresolved issue","Falls-prevention action needed","Pressure-injury / wound action needed","Constipation / retention action needed","Device removal or care action needed","Multiple issues","Not assessed"],"")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>4. Discharge readiness and parallel planning</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("ctu_medready","Medical readiness",["Not assessed","Not medically ready","Potentially ready within 24 hours","Medically ready now","Discharge today"],"")+
+    inputField("ctu_edd","Expected discharge date / window","e.g. tomorrow or 2026-07-15")+
+    inputField("ctu_criteria","Clinical criteria for discharge","e.g. room air, oral therapy, safe mobility")+
+    selectField("ctu_barrier","Main discharge barrier",["Not assessed","No current barrier","Medical stability / treatment","Test, procedure, or consultant decision","Medication access or reconciliation","Mobility, equipment, or home oxygen","Home support, placement, or community service","Transport","Follow-up, teaching, or communication","Multiple barriers"],"")+
+    inputField("ctu_barrier_action","Barrier action, owner, and deadline","e.g. case manager: confirm home support by 14:00")+
+    selectField("ctu_discharge_work","Discharge work",["Complete / ready","Medication reconciliation or prescription pending","Follow-up pending","Patient / caregiver teaching pending","Transport or equipment pending","Several tasks pending","Not started / not assessed"],"")+
+    selectField("ctu_outpatient_results","Pending-result ownership after discharge",["No pending outpatient result","Owner and communication plan documented","Owner or communication plan missing","Not assessed"],"")+
+    selectField("ctu_understanding","Patient / caregiver understanding",["Confirmed using teach-back or equivalent","Updated but understanding not confirmed","Teaching / update still needed","Unable; alternate decision-maker / support plan needed","Not assessed"],"")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>5. Communication and output</summary><div class="pathStepBody"><div class="grid2">'+
+    inputField("ctu_owner","Overall plan owner / team","e.g. CTU Blue / Dr X")+
+    inputField("ctu_nursing","Nursing / allied-health priority","e.g. supervised ambulation and room-air trial")+
+    inputField("ctu_patient_plan","Patient-facing plan for today","e.g. walk, switch to oral medicines, prepare for tomorrow")+
+    selectField("ctu_output_mode","Output format",["CTU daily progress note","Multidisciplinary rounds action list","Discharge-readiness note"],"")+
+    '</div></div></details>'+
+
+    '<div class="toolbar"><button class="primary" id="ctuGenerate">Generate daily review</button><button id="ctuCopy">Copy output</button><button id="ctuReset">Reset pathway</button></div><div id="ctu_out" class="output hidden"></div>'+
+    '<p class="hint">Evidence anchors: discharge planning from admission, expected discharge date, daily multidisciplinary review, clinical criteria for discharge, and explicit ownership of pending results and barriers. Measure local impact rather than assuming the checklist alone reduces LOS.</p></section>');
+    document.getElementById("ctuGenerate").addEventListener("click",calcCTUDaily);
+    document.getElementById("ctuCopy").addEventListener("click",function(){copyOut("ctu_out");});
+    document.getElementById("ctuReset").addEventListener("click",resetCTUDaily);
+  }
+
+  function resetCTUDaily(){
+    document.querySelectorAll('[id^="ctu_"]').forEach(function(el){
+      if(el.tagName==="SELECT")el.selectedIndex=0;else if(el.tagName==="INPUT")el.value="";
+    });
+    var out=document.getElementById("ctu_out");out.textContent="";out.className="output hidden";
+  }
+
+  function calcCTUDaily(){
+    var danger=val("ctu_danger"),location=val("ctu_location"),overnight=val("ctu_overnight"),phase=val("ctu_phase"),diagnosis=val("ctu_diagnosis"),cantmiss=val("ctu_cantmiss");
+    var pending=val("ctu_pending"),pendingOwner=val("ctu_pending_owner"),medready=val("ctu_medready"),barrier=val("ctu_barrier"),barrierAction=val("ctu_barrier_action");
+    var red=danger!=="Not assessed"&&danger!=="No immediate danger feature" || location.indexOf("Urgent")===0;
+    var safetyGaps=[],actions=[],deescalation=[],harm=[],barriers=[];
+    if(danger==="Not assessed")safetyGaps.push("Immediate deterioration screen not completed");
+    if(location==="Not assessed")safetyGaps.push("Appropriate level of care not confirmed");
+    if(cantmiss==="Not assessed"||cantmiss.indexOf("without a defined plan")>=0)safetyGaps.push("Cannot-miss diagnosis review needs completion");
+    if(red)actions.push("Urgent bedside reassessment and escalation through the local deterioration pathway; do not wait for routine rounds");
+    if(val("ctu_today_goal"))actions.push("Clinical goal: "+val("ctu_today_goal"));
+    else actions.push("Define one observable clinical goal for today");
+    if(diagnosis==="Unclear / diagnostic reset needed")actions.push("Perform a diagnostic reset: reframe the problem, review discordant data, and define the next decision");
+    if(cantmiss==="Investigation pending today")actions.push("Close the pending cannot-miss assessment today with a documented response to the result");
+    if(pending.indexOf("changes management")>=0||pending.indexOf("required before discharge")>=0)actions.push("Pending decision: "+(val("ctu_pending_item")||pending)+(pendingOwner?" — "+pendingOwner:" — assign owner and deadline"));
+    if(pending.indexOf("no clear decision")>=0)actions.push("Define what the pending item will change; cancel or defer it if it will not change inpatient management");
+    if(val("ctu_antibiotic")==="IV-to-oral opportunity"||val("ctu_antibiotic")==="Narrow or stop opportunity")deescalation.push("Antimicrobials: "+val("ctu_antibiotic"));
+    if(val("ctu_fluids")==="IV fluid can stop / route can simplify")deescalation.push("Stop unnecessary IV fluid or simplify route");
+    if(val("ctu_deescalate")!=="None identified"&&val("ctu_deescalate")!=="Not assessed")deescalation.push(val("ctu_deescalate"));
+    [["VTE / antithrombotic",val("ctu_vte")],["Medication",val("ctu_meds")],["Mobility",val("ctu_mobility")],["Delirium / cognition",val("ctu_cognition")],["Nutrition / swallow",val("ctu_nutrition")],["Falls / skin / bowel / devices",val("ctu_falls_skin")]].forEach(function(x){var resolved=/^(Reviewed and appropriate|Reviewed; no unresolved issue|At baseline \/ plan complete|No active issue \/ plan complete|Reviewed; no unresolved issue)$/.test(x[1]);if(!resolved&&!/^Not applicable/.test(x[1]))harm.push(x[0]+": "+x[1]);});
+    if(barrier!=="No current barrier"&&barrier!=="Not assessed")barriers.push(barrier+(barrierAction?" — "+barrierAction:" — assign action, owner, and deadline"));
+    if(barrier==="Not assessed")barriers.push("Discharge barriers not assessed");
+    if(!val("ctu_edd"))barriers.push("Expected discharge date/window not documented");
+    if(!val("ctu_criteria"))barriers.push("Clinical criteria for discharge not documented");
+    if(val("ctu_discharge_work")!=="Complete / ready")barriers.push("Discharge work: "+val("ctu_discharge_work"));
+    if(val("ctu_outpatient_results")==="Owner or communication plan missing"||val("ctu_outpatient_results")==="Not assessed")safetyGaps.push("Pending-result ownership after discharge is incomplete");
+    if((pending.indexOf("changes management")>=0||pending.indexOf("required before discharge")>=0)&&!pendingOwner)safetyGaps.push("High-impact pending result lacks an owner/deadline");
+    var amber=!red&&(safetyGaps.length||harm.length||barriers.length||diagnosis==="Not assessed"||phase==="Not assessed");
+    var level=red?"red":(amber?"amber":"green"),status=red?"RED — urgent deterioration / escalation concern":(amber?"AMBER — unresolved daily-care or discharge work":"GREEN — no unresolved safety or flow gap identified");
+    function top3(){var all=actions.concat(harm.slice(0,2)).concat(barriers.slice(0,2));return all.slice(0,3).length?all.slice(0,3):["Continue the current plan and confirm readiness at the next meaningful clinical checkpoint"];}
+    var tally=safetyGaps.length+" unresolved safety gap(s) · "+actions.length+" clinical action(s) · "+barriers.length+" discharge barrier/task(s)";
+    var common="Status: "+status+"\nOperational tally: "+tally+"\nPhase: "+phase+". Medical readiness: "+medready+".\n\nToday's top priorities:\n"+atsBullets(top3())+"\n\nSafety gaps:\n"+atsBullets(safetyGaps.length?safetyGaps:["None identified from completed fields"])+"\n\nStop / simplify opportunities:\n"+atsBullets(deescalation.length?deescalation:["None identified"])+"\n\nPreventable-harm actions:\n"+atsBullets(harm.length?harm:["No unresolved item identified"])+"\n\nDischarge readiness:\n- Expected date/window: "+(val("ctu_edd")||"not documented")+"\n- Clinical criteria: "+(val("ctu_criteria")||"not documented")+"\n- Barriers/tasks:\n"+atsBullets(barriers.length?barriers:["No current barrier identified"])+"\n\nPending work and ownership:\n- "+(val("ctu_pending_item")||pending)+"\n- Owner/deadline: "+(pendingOwner||"not documented")+"\n\nCommunication:\n- Nursing/allied-health priority: "+(val("ctu_nursing")||"not documented")+"\n- Patient-facing plan: "+(val("ctu_patient_plan")||"not documented")+"\n- Overall owner: "+(val("ctu_owner")||"not documented")+".";
+    var note="CTU Daily Review & Discharge Readiness\n\n"+(val("ctu_summary")?"Summary: "+val("ctu_summary")+".\n":"")+common;
+    var huddle="CTU Multidisciplinary Rounds Action List\n\n"+common;
+    var discharge="CTU Discharge-Readiness Note\n\nMedical readiness: "+medready+". Expected discharge: "+(val("ctu_edd")||"not documented")+".\nClinical criteria: "+(val("ctu_criteria")||"not documented")+".\n\nRemaining barriers and owned actions:\n"+atsBullets(barriers.length?barriers:["No current barrier identified"])+"\n\nPending results: "+(val("ctu_pending_item")||pending)+". Owner/deadline: "+(pendingOwner||"not documented")+".\nPatient/caregiver understanding: "+val("ctu_understanding")+".\nOverall owner: "+(val("ctu_owner")||"not documented")+".";
+    var finalText=note;if(val("ctu_output_mode")==="Multidisciplinary rounds action list")finalText=huddle;if(val("ctu_output_mode")==="Discharge-readiness note")finalText=discharge;
+    var out=document.getElementById("ctu_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
   }
 
 
