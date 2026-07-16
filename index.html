@@ -412,7 +412,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 
     '<h4>6. Output</h4>'+
     '<div class="grid2">'+
-    selectField("tr_output_mode","Output mode",["Formal consultant letter","Practical order / handoff plan","Patient instruction"],"")+
+    selectField("tr_output_mode","Output mode",["Practical order / handoff plan","Patient instruction"],"")+
     '</div>'+
     '<div class="toolbar"><button class="primary" id="trGenerate">Generate transition plan</button><button id="trCopy">Copy output</button><button id="trReset">Reset pathway</button></div><div id="tr_out" class="output hidden"></div>'+
     '</section>');
@@ -501,7 +501,6 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(caution.length) warnings.push("Caution modifiers: " + caution.join("; ") + ".");
     if(current === "Warfarin" || target === "Warfarin") warnings.push("Warfarin involved: document INR target, INR timing, and who owns follow-up.");
     if(current === "UFH infusion" || target === "UFH infusion") warnings.push("UFH involved: document aPTT/anti-Xa monitoring approach and recognize that lupus anticoagulant, inflammation, antithrombin issues, or residual DOAC may complicate interpretation.");
-    var transitionSummary = "Reason: " + val("tr_reason_main") + ". Current anticoagulant: " + current + " (" + (val("tr_current_dose") || "dose not entered") + "), last dose/status: " + (val("tr_last_dose") || "not entered") + ". Target: " + target + " (" + (val("tr_target_dose") || "dose not entered") + "). Indication/phase: " + val("tr_indication") + " / " + val("tr_phase") + ".";
     var completed = [], missing = [];
     function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
     scoreItem("Reason documented", val("tr_reason_main"));
@@ -510,17 +509,6 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     scoreItem("Transition timing plan generated", transitionPlan);
     scoreItem("Safety modifiers reviewed", safety.length>0 && val("tr_safety_impact"));
     scoreItem("Monitoring/handoff specified", monitor.length>0 && val("tr_manage_where") && val("tr_follow_date"));
-    var careScore = completed.length + "/6";
-    var careLabel = completed.length >= 5 ? "Complete" : (completed.length >= 4 ? "Mostly complete" : "Gaps remain");
-    var evidence = "Evidence anchors: Anticoagulation Forum transition charts and practical DOAC management guidance; Thrombosis Canada Warfarin and DOAC comparison guides; institutional anticoagulant conversion protocols. Apply local formulary and anticoagulation-service protocol for final dosing and timing.";
-    var formal = "Dear Colleague,\n\n" +
-      "Thank you for asking me to advise on anticoagulant transition. " + (val("tr_summary") ? "In brief, " + val("tr_summary") + ". " : "") + transitionSummary + "\n\n" +
-      "The proposed transition plan is: " + transitionPlan + "\n\n" +
-      (warnings.length ? "Important safety considerations: " + warnings.join(" ") + "\n\n" : "") +
-      "Monitoring and handoff: " + monitoringPlan.join(" ") + "\n\n" +
-      "Patient instruction should be explicit: " + patientInstruction + "\n\n" +
-      "Care standard completion: " + careScore + " — " + careLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".") + "\n\n" +
-      evidence + "\n\nSincerely,\nThrombosis / Vascular Medicine";
     var handoff = "ANTICOAGULANT TRANSITION HANDOFF\n\n" +
       "Indication: " + val("tr_indication") + "\n" +
       "Reason for switch: " + val("tr_reason_main") + "\n" +
@@ -542,8 +530,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
       "Do not take both blood thinners together unless your doctor specifically tells you to overlap them. Do not stop a blood thinner early unless this was part of the written plan.\n\n" +
       "Seek urgent care or contact your care team for major bleeding, black stools, vomiting blood, severe headache, new weakness, chest pain, shortness of breath, or new/worsening limb swelling or pain.\n\n" +
       "Follow-up:\n" + monitoringPlan.join(" ");
-    var finalText = formal;
-    if(mode === "Practical order / handoff plan") finalText = handoff;
+    var finalText = handoff;
     if(mode === "Patient instruction") finalText = patient;
     var out = document.getElementById("tr_out");
     out.className = "output " + (hardStops.length || missing.length ? "amber" : "green");
