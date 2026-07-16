@@ -98,7 +98,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"anticoagulant-transitions",cat:"Vascular Medicine Clinic",title:"Anticoagulant Transitions Pathway",desc:"Medication-to-medication anticoagulant switching planner: current agent, target agent, last dose/INR/renal safety, transition timing, hard-stop modifiers, monitoring handoff, and patient instructions."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Bleeding and reversal, HIT/PF4, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and antiplatelet overlap."},
     {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Adult Diarrhea Triage & Diagnostic Pathway",desc:"Focused triage, syndrome classification, selective stool testing, C. difficile safety, hydration, medication review, and escalation planning."},
@@ -207,6 +207,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "pad-confirmed") return renderConfirmedPAD();
     if(id === "thrombosis-clinic") return renderCoreVTE();
     if(id === "af-anticoag" || id === "af-anticoagulation" || id === "af-decision") return renderAFDecisionAid();
+    if(id === "anticoagulant-transitions" || id === "anticoagulant-switching") return renderAnticoagulantTransitions();
     if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
     if(id === "postop-troponin") return renderPostopMINS();
     if(id === "antithrombotic") return renderAntithromboticSafety();
@@ -328,6 +329,226 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     var discharge="CTU Discharge-Readiness Note\n\nMedical readiness: "+medready+". Expected discharge: "+(val("ctu_edd")||"not documented")+".\nClinical criteria: "+(val("ctu_criteria")||"not documented")+".\n\nRemaining barriers and owned actions:\n"+atsBullets(barriers.length?barriers:["No current barrier identified"])+"\n\nPending results: "+(val("ctu_pending_item")||pending)+". Owner/deadline: "+(pendingOwner||"not documented")+".\nPatient/caregiver understanding: "+val("ctu_understanding")+".\nOverall owner: "+(val("ctu_owner")||"not documented")+".";
     var finalText=note;if(val("ctu_output_mode")==="Multidisciplinary rounds action list")finalText=huddle;if(val("ctu_output_mode")==="Discharge-readiness note")finalText=discharge;
     var out=document.getElementById("ctu_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
+  }
+
+
+  function renderAnticoagulantTransitions(){
+    shell("Anticoagulant Transitions Pathway","",
+    '<section class="card">'+
+    '<p class="muted">Medication-to-medication switching planner. This is not a peri-procedural bridging or neuraxial anesthesia pathway.</p>'+
+
+    '<h4>0. Reason for transition</h4>'+
+    '<div class="grid2">'+
+    selectField("tr_reason_main","Main reason",["Convenience / oral switch","Discharge from UFH/LMWH","Renal function changed","Liver disease / varices concern","Cancer-associated thrombosis","Recurrent thrombosis on current therapy","Bleeding or high bleeding risk","Suspected/confirmed APS","Mechanical valve or rheumatic MS","Cost/access/adherence issue","Pregnancy/breastfeeding issue","Drug interaction","Patient preference","Other / unclear"],"The reason determines whether this is routine switching or a specialist individualized transition.")+
+    inputField("tr_summary","One-line transition summary","e.g. UFH to apixaban for discharge after PE; warfarin to apixaban for AF")+
+    '</div>'+
+
+    '<h4>1. Current anticoagulant</h4>'+
+    '<div class="grid2">'+
+    selectField("tr_current","Current anticoagulant",["Warfarin","Apixaban","Rivaroxaban","Dabigatran","Edoxaban","LMWH","UFH infusion","Fondaparinux","No anticoagulant currently","Unknown"],"")+
+    inputField("tr_current_dose","Current dose / regimen","e.g. apixaban 5 mg BID, enoxaparin 1 mg/kg BID, UFH infusion")+
+    inputField("tr_last_dose","Last dose / infusion status","e.g. last apixaban 08:00 today; UFH running; LMWH due 20:00")+
+    selectField("tr_indication","Indication",["AF stroke prevention","Acute VTE treatment","Extended VTE prevention","Cancer-associated thrombosis","Mechanical valve","APS / high-risk thrombophilia","SVT / prophylactic-intensity strategy","Other / unclear"],"")+
+    selectField("tr_phase","Treatment phase",["Initial acute treatment","Primary treatment 3-6 months","Extended/secondary prevention","Prophylaxis-intensity","Temporary transition","Unclear"],"")+
+    inputField("tr_inr","Most recent INR if warfarin involved","e.g. INR 1.8 today; INR pending; not applicable")+
+    '</div>'+
+
+    '<h4>2. Target anticoagulant</h4>'+
+    '<div class="grid2">'+
+    selectField("tr_target","Target anticoagulant",["Warfarin","Apixaban","Rivaroxaban","Dabigatran","Edoxaban","LMWH","UFH infusion","Fondaparinux","Hold anticoagulation temporarily","Specialist individualized plan"],"")+
+    inputField("tr_target_dose","Target dose / intended regimen","e.g. apixaban 10 mg BID x7 days then 5 mg BID; warfarin with LMWH overlap")+
+    selectField("tr_target_intent","Target intent",["Continue therapeutic anticoagulation without gap","Start therapeutic anticoagulation","Switch to extended/prevention dose","Switch to parenteral therapy temporarily","Hold because bleeding/procedure/safety dominates","Unclear"],"")+
+    '</div>'+
+
+    '<h4>3. Transition timing / matrix</h4>'+
+    '<div class="grid2">'+
+    selectField("tr_override","Transition plan mode",["Auto-suggest from current → target","Use clinician-entered plan"],"")+
+    inputField("tr_custom_plan","Clinician-entered transition plan if overriding","Stop ___ at ___. Start ___ at ___. Overlap/no overlap. Lab follow-up.")+
+    selectField("tr_first_dose","Target first-dose timing if known",["Auto-suggest","Now / same time old agent stopped","When next old dose would be due","When INR below threshold","After parenteral overlap established","After bleeding/safety issue corrected","Clinician-specified in plan"],"")+
+    '</div>'+
+
+    '<h4>4. Safety modifiers / hard stops</h4>'+
+    checks("tr_safety",[
+      "No major safety modifier selected",
+      "Active bleeding or hemodynamic concern",
+      "Major bleeding within 30 days",
+      "Platelets <50",
+      "Platelets 50-100",
+      "CrCl <15 or dialysis",
+      "AKI or fluctuating renal function",
+      "Significant liver disease / varices / synthetic dysfunction",
+      "Mechanical valve",
+      "Rheumatic moderate-to-severe mitral stenosis",
+      "High-risk APS",
+      "Pregnancy or breastfeeding",
+      "HIT suspected or confirmed",
+      "Thrombosis while adherent on therapeutic anticoagulation",
+      "Procedure or neuraxial anesthesia planned",
+      "Strong CYP3A4/P-gp interaction",
+      "Adherence, access, or affordability concern"
+    ])+
+    '<div class="grid2">'+
+    inputField("tr_crcl","Cockcroft–Gault CrCl / lab eGFR if CrCl unavailable","e.g. CrCl 42; eGFR 38; AKI improving")+
+    selectField("tr_safety_impact","Overall safety impact",["Routine transition reasonable","Caution: transition feasible with closer review/monitoring","Specialist individualized plan needed","Temporarily unsafe: hold or defer routine transition","Unclear — missing key safety data"],"")+
+    '</div>'+
+
+    '<h4>5. Monitoring and handoff</h4>'+
+    '<div class="grid2">'+
+    selectField("tr_manage_where","Where will transition be managed?",["Inpatient","Discharge transition","Outpatient clinic","Patient already at home","Anticoagulation clinic","Unclear"],"Setting is only used for handoff and monitoring ownership.")+
+    checks("tr_monitor",[
+      "CBC checked / ordered",
+      "Creatinine or CrCl checked / ordered",
+      "Liver tests checked / ordered",
+      "INR plan if warfarin involved",
+      "aPTT/anti-Xa monitoring plan if UFH involved",
+      "Medication access confirmed",
+      "Patient received clear written instructions",
+      "Follow-up owner identified",
+      "No monitoring issue today"
+    ])+
+    inputField("tr_follow_date","Follow-up lab/date/owner","e.g. INR in 2 days by anticoag clinic; CBC/CrCl in 1 week")+
+    inputField("tr_patient_instruction","Patient-specific instruction","e.g. last warfarin today; start apixaban after INR <2; do not take both unless instructed")+
+    '</div>'+
+
+    '<h4>6. Output</h4>'+
+    '<div class="grid2">'+
+    selectField("tr_output_mode","Output mode",["Formal consultant letter","Practical order / handoff plan","Patient instruction"],"")+
+    '</div>'+
+    '<div class="toolbar"><button class="primary" id="trGenerate">Generate transition plan</button><button id="trCopy">Copy output</button><button id="trReset">Reset pathway</button></div><div id="tr_out" class="output hidden"></div>'+
+    '</section>');
+    document.getElementById("trGenerate").addEventListener("click", calcAnticoagulantTransitions);
+    document.getElementById("trCopy").addEventListener("click", function(){ copyOut("tr_out"); });
+    document.getElementById("trReset").addEventListener("click", resetAnticoagulantTransitions);
+  }
+
+  function resetAnticoagulantTransitions(){
+    var out = document.getElementById("tr_out");
+    var card = out ? out.closest("section.card") : document;
+    if(!card) card = document;
+    card.querySelectorAll("input").forEach(function(el){ if(el.type === "checkbox" || el.type === "radio") el.checked = false; else el.value = ""; });
+    card.querySelectorAll("select").forEach(function(el){ el.selectedIndex = 0; });
+    if(out){ out.textContent = ""; out.className = "output hidden"; }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function trHas(arr, text){ return arr.some(function(x){ return x.indexOf(text)>=0; }); }
+  function trIsDOAC(x){ return ["Apixaban","Rivaroxaban","Dabigatran","Edoxaban"].indexOf(x)>=0; }
+  function trIsParenteral(x){ return ["LMWH","UFH infusion","Fondaparinux"].indexOf(x)>=0; }
+  function trWarfarinToDOACThreshold(target){
+    if(target === "Rivaroxaban") return "start when INR is <3.0, or per local protocol";
+    if(target === "Edoxaban") return "start when INR is ≤2.5, or per local protocol";
+    if(target === "Apixaban" || target === "Dabigatran") return "start when INR is <2.0, or per local protocol";
+    return "start when INR is below the agent-specific threshold";
+  }
+  function trTransitionTemplate(current, target){
+    if(current === target) return "Current and target anticoagulant are the same. Clarify whether this is a dose change, formulation change, temporary hold, or monitoring issue.";
+    if(target === "Hold anticoagulation temporarily") return "Hold anticoagulation temporarily because bleeding/procedure/safety dominates. Document the reason, reassessment time, and who will decide restart.";
+    if(target === "Specialist individualized plan") return "Use a specialist individualized plan. Do not apply a routine switch template.";
+    if(current === "No anticoagulant currently") return "Initiate the target anticoagulant according to indication, renal/liver safety, bleeding risk, and whether acute VTE loading or overlap is required.";
+    if(current === "Unknown") return "Current anticoagulant is unknown. Do not generate a routine switch until medication history and last dose are clarified.";
+    if(current === "Warfarin" && trIsDOAC(target)) return "Stop warfarin and start " + target + " once INR is below the agent-specific threshold: " + trWarfarinToDOACThreshold(target) + ". Avoid overlap unless a deliberate specialist plan exists.";
+    if(current === "Warfarin" && target === "LMWH") return "Stop warfarin and start treatment-dose LMWH when INR is <2.0, or per local protocol and indication-specific thrombotic risk.";
+    if(current === "Warfarin" && target === "UFH infusion") return "Stop warfarin and start UFH infusion when INR is <2.0, or earlier only with a deliberate specialist plan if thrombotic risk is extreme.";
+    if(current === "Warfarin" && target === "Fondaparinux") return "Stop warfarin and start fondaparinux when INR is below the local threshold, commonly <2.0, if fondaparinux is clinically appropriate.";
+    if(trIsDOAC(current) && trIsDOAC(target)) return "Stop " + current + " and start " + target + " when the next dose of " + current + " would have been due. Delay if renal dysfunction, bleeding risk, or drug interaction suggests residual anticoagulant effect.";
+    if(trIsDOAC(current) && target === "LMWH") return "Start LMWH when the next " + current + " dose would have been due. Consider delay or specialist review if renal dysfunction, bleeding risk, or supratherapeutic exposure is suspected.";
+    if(trIsDOAC(current) && target === "Fondaparinux") return "Start fondaparinux when the next " + current + " dose would have been due, with renal-function review and bleeding-risk check.";
+    if(trIsDOAC(current) && target === "UFH infusion") return "Start UFH infusion when the next " + current + " dose would have been due. If recent DOAC exposure or renal dysfunction is present, residual DOAC may interfere with UFH anti-Xa interpretation.";
+    if(trIsDOAC(current) && target === "Warfarin") return "Do not rely on INR while DOAC effect is present. Use local protocol: transition through LMWH/UFH/fondaparinux overlap with warfarin until INR is therapeutic, or use a carefully timed DOAC-warfarin overlap with INR checked at DOAC trough. For acute VTE, ensure continuous therapeutic anticoagulation until INR is therapeutic.";
+    if(current === "LMWH" && trIsDOAC(target)) return "Stop LMWH and start " + target + " when the next LMWH dose would have been due. Confirm whether acute VTE loading dose is required.";
+    if(current === "Fondaparinux" && trIsDOAC(target)) return "Stop fondaparinux and start " + target + " when the next fondaparinux dose would have been due. Confirm renal safety.";
+    if(current === "UFH infusion" && trIsDOAC(target)) return "Stop UFH infusion and start " + target + " at the time the infusion is stopped, or per local protocol. Confirm whether acute VTE loading dose is needed.";
+    if(trIsParenteral(current) && target === "Warfarin") return "Start warfarin and overlap with the parenteral anticoagulant until INR is therapeutic by local protocol. For acute VTE, overlap for at least 5 days and until INR is ≥2.0 for at least 24 hours.";
+    if(current === "UFH infusion" && target === "LMWH") return "Stop UFH infusion and start LMWH at the time UFH is stopped, or per local protocol, after renal/bleeding safety review.";
+    if(current === "LMWH" && target === "UFH infusion") return "Start UFH infusion when the next LMWH dose would have been due, or earlier only with specialist/local protocol if high thrombotic risk requires continuous anticoagulation.";
+    if(current === "LMWH" && target === "Fondaparinux") return "Start fondaparinux when the next LMWH dose would have been due, if renal function is suitable and HIT/clinical indication supports this choice.";
+    if(current === "Fondaparinux" && target === "LMWH") return "Start LMWH when the next fondaparinux dose would have been due, with renal and bleeding-risk review.";
+    return "No routine template matched. Use clinician-entered plan and specialist/local protocol.";
+  }
+
+  function calcAnticoagulantTransitions(){
+    var current = val("tr_current"), target = val("tr_target");
+    var safety = checked("tr_safety"), monitor = checked("tr_monitor"), mode = val("tr_output_mode");
+    var autoPlan = trTransitionTemplate(current, target);
+    var transitionPlan = val("tr_override") === "Use clinician-entered plan" && val("tr_custom_plan") ? val("tr_custom_plan") : autoPlan;
+    var hardStops = [], caution = [];
+    if(trHas(safety,"Active bleeding")) hardStops.push("active bleeding/hemodynamic concern");
+    if(trHas(safety,"Major bleeding within 30")) hardStops.push("recent major bleeding");
+    if(trHas(safety,"Platelets <50")) hardStops.push("platelets <50");
+    if(trHas(safety,"CrCl <15") || trHas(safety,"AKI")) hardStops.push("severe or unstable renal function");
+    if(trHas(safety,"Significant liver")) hardStops.push("significant liver disease/varices/synthetic dysfunction");
+    if(trHas(safety,"HIT")) hardStops.push("HIT suspected/confirmed — avoid heparin products");
+    if(trHas(safety,"Mechanical valve") && trIsDOAC(target)) hardStops.push("mechanical valve — DOAC target inappropriate");
+    if(trHas(safety,"Rheumatic") && trIsDOAC(target)) hardStops.push("rheumatic moderate-to-severe MS — warfarin/VKA pathway favored");
+    if(trHas(safety,"High-risk APS") && trIsDOAC(target)) hardStops.push("high-risk APS — warfarin-favored specialist pathway");
+    if(trHas(safety,"Pregnancy") && trIsDOAC(target)) hardStops.push("pregnancy/breastfeeding — avoid routine DOAC transition");
+    if(trHas(safety,"Procedure or neuraxial")) hardStops.push("procedure/neuraxial issue — use peri-procedural pathway");
+    if(trHas(safety,"Thrombosis while adherent")) hardStops.push("recurrent thrombosis on therapeutic anticoagulation — investigate before routine switch");
+    if(trHas(safety,"Platelets 50-100")) caution.push("platelets 50-100");
+    if(trHas(safety,"Strong CYP3A4")) caution.push("strong CYP3A4/P-gp interaction");
+    if(trHas(safety,"Adherence")) caution.push("adherence/access/affordability concern");
+    if(val("tr_safety_impact").indexOf("Specialist")>=0) hardStops.push("overall safety impact requires specialist individualized plan");
+    if(val("tr_safety_impact").indexOf("Temporarily unsafe")>=0) hardStops.push("temporarily unsafe to proceed with routine transition");
+    if(val("tr_safety_impact").indexOf("Unclear")>=0) caution.push("missing key safety data");
+    var monitoringPlan = [];
+    if(monitor.length) monitoringPlan.push("Monitoring items: " + monitor.join("; ") + ".");
+    if(val("tr_follow_date")) monitoringPlan.push("Follow-up owner/date: " + val("tr_follow_date") + ".");
+    if(val("tr_manage_where")) monitoringPlan.push("Transition setting/handoff: " + val("tr_manage_where") + ".");
+    if(!monitoringPlan.length) monitoringPlan.push("Monitoring owner, labs, and patient instructions need to be specified.");
+    var patientInstruction = val("tr_patient_instruction") || "Give clear written instructions for last dose of old anticoagulant, first dose of new anticoagulant, whether overlap is intended, and when to seek help.";
+    var warnings = [];
+    if(hardStops.length) warnings.push("This is not a routine transition: " + hardStops.join("; ") + ".");
+    if(caution.length) warnings.push("Caution modifiers: " + caution.join("; ") + ".");
+    if(current === "Warfarin" || target === "Warfarin") warnings.push("Warfarin involved: document INR target, INR timing, and who owns follow-up.");
+    if(current === "UFH infusion" || target === "UFH infusion") warnings.push("UFH involved: document aPTT/anti-Xa monitoring approach and recognize that lupus anticoagulant, inflammation, antithrombin issues, or residual DOAC may complicate interpretation.");
+    var transitionSummary = "Reason: " + val("tr_reason_main") + ". Current anticoagulant: " + current + " (" + (val("tr_current_dose") || "dose not entered") + "), last dose/status: " + (val("tr_last_dose") || "not entered") + ". Target: " + target + " (" + (val("tr_target_dose") || "dose not entered") + "). Indication/phase: " + val("tr_indication") + " / " + val("tr_phase") + ".";
+    var completed = [], missing = [];
+    function scoreItem(name, ok){ if(ok) completed.push(name); else missing.push(name); }
+    scoreItem("Reason documented", val("tr_reason_main"));
+    scoreItem("Current anticoagulant/last dose documented", current && val("tr_last_dose"));
+    scoreItem("Target anticoagulant documented", target && val("tr_target_intent"));
+    scoreItem("Transition timing plan generated", transitionPlan);
+    scoreItem("Safety modifiers reviewed", safety.length>0 && val("tr_safety_impact"));
+    scoreItem("Monitoring/handoff specified", monitor.length>0 && val("tr_manage_where") && val("tr_follow_date"));
+    var careScore = completed.length + "/6";
+    var careLabel = completed.length >= 5 ? "Complete" : (completed.length >= 4 ? "Mostly complete" : "Gaps remain");
+    var evidence = "Evidence anchors: Anticoagulation Forum transition charts and practical DOAC management guidance; Thrombosis Canada Warfarin and DOAC comparison guides; institutional anticoagulant conversion protocols. Apply local formulary and anticoagulation-service protocol for final dosing and timing.";
+    var formal = "Dear Colleague,\n\n" +
+      "Thank you for asking me to advise on anticoagulant transition. " + (val("tr_summary") ? "In brief, " + val("tr_summary") + ". " : "") + transitionSummary + "\n\n" +
+      "The proposed transition plan is: " + transitionPlan + "\n\n" +
+      (warnings.length ? "Important safety considerations: " + warnings.join(" ") + "\n\n" : "") +
+      "Monitoring and handoff: " + monitoringPlan.join(" ") + "\n\n" +
+      "Patient instruction should be explicit: " + patientInstruction + "\n\n" +
+      "Care standard completion: " + careScore + " — " + careLabel + (missing.length ? ". Remaining gaps: " + missing.join(", ") + "." : ".") + "\n\n" +
+      evidence + "\n\nSincerely,\nThrombosis / Vascular Medicine";
+    var handoff = "ANTICOAGULANT TRANSITION HANDOFF\n\n" +
+      "Indication: " + val("tr_indication") + "\n" +
+      "Reason for switch: " + val("tr_reason_main") + "\n" +
+      "Current agent: " + current + " — " + (val("tr_current_dose") || "dose not entered") + "\n" +
+      "Last dose/status: " + (val("tr_last_dose") || "not entered") + "\n" +
+      "Target agent: " + target + " — " + (val("tr_target_dose") || "dose not entered") + "\n\n" +
+      "STOP / START / OVERLAP PLAN:\n" + transitionPlan + "\n\n" +
+      "First-dose timing: " + val("tr_first_dose") + "\n" +
+      "INR if relevant: " + (val("tr_inr") || "not entered/not applicable") + "\n" +
+      "Renal function: " + (val("tr_crcl") || "not entered") + "\n\n" +
+      "Safety flags:\n" + (warnings.length ? warnings.join("\n") : "No major warning selected.") + "\n\n" +
+      "Monitoring/handoff:\n" + monitoringPlan.join("\n") + "\n\n" +
+      "Patient instruction:\n" + patientInstruction;
+    var patient = "ANTICOAGULANT SWITCH INSTRUCTIONS\n\n" +
+      "You are switching from: " + current + "\n" +
+      "To: " + target + "\n\n" +
+      "Your plan:\n" + transitionPlan + "\n\n" +
+      "Important instruction:\n" + patientInstruction + "\n\n" +
+      "Do not take both blood thinners together unless your doctor specifically tells you to overlap them. Do not stop a blood thinner early unless this was part of the written plan.\n\n" +
+      "Seek urgent care or contact your care team for major bleeding, black stools, vomiting blood, severe headache, new weakness, chest pain, shortness of breath, or new/worsening limb swelling or pain.\n\n" +
+      "Follow-up:\n" + monitoringPlan.join(" ");
+    var finalText = formal;
+    if(mode === "Practical order / handoff plan") finalText = handoff;
+    if(mode === "Patient instruction") finalText = patient;
+    var out = document.getElementById("tr_out");
+    out.className = "output " + (hardStops.length || missing.length ? "amber" : "green");
+    out.textContent = finalText;
+    out.classList.remove("hidden");
   }
 
 
