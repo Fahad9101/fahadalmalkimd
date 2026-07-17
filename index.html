@@ -98,7 +98,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   var tools = [
     {id:"pad-suspected",cat:"Vascular Medicine Clinic",title:"Suspected PAD Clinic Pathway",desc:"Deep guided vascular clinic pathway: symptoms, pulse exam, limb exam, ABI/TBI logic, diabetes, smoking, Lp(a), mimics, GDMT, referral urgency."},
     {id:"pad-confirmed",cat:"Vascular Medicine Clinic",title:"Confirmed PAD Clinic Pathway",desc:"Phenotype, GDMT, exercise, foot care, antithrombotic decisions, and revascularization triggers."},
-    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"anticoagulant-transitions",cat:"Vascular Medicine Clinic",title:"Anticoagulant Transitions Pathway",desc:"Medication-to-medication anticoagulant switching planner: current agent, target agent, last dose/INR/renal safety, transition timing, hard-stop modifiers, monitoring handoff, and patient instructions."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
+    {id:"thrombosis-clinic",cat:"Vascular Medicine Clinic",title:"Thrombosis Clinic Pathway",desc:"Core DVT/PE thrombosis clinic: new vs follow-up assessment, anticoagulant choice, duration, extended therapy, bleeding risk, thrombophilia/APS testing, and consultant notes."},{id:"af-anticoag",cat:"Vascular Medicine Clinic",title:"AF Anticoagulation Decision Aid",desc:"Version 2 AF long-term stroke-prevention aid: CHA₂DS₂-VASc with absolute benefit framing, HAS-BLED, DOAC eligibility/dose-safety, antiplatelet deprescribing, LAAO consideration, and natural consultant notes."},{id:"lipid-primary",cat:"Vascular Medicine Clinic",title:"Primary-Prevention Lipid Clinic Pathway",desc:"Lifetime atherogenic exposure, PREVENT risk, severe/FH and secondary-cause screening, Lp(a), apoB, CAC, individualized LDL/non-HDL targets, treatment gap, and monitoring plan."},{id:"anticoagulant-transitions",cat:"Vascular Medicine Clinic",title:"Anticoagulant Transitions Pathway",desc:"Medication-to-medication anticoagulant switching planner: current agent, target agent, last dose/INR/renal safety, transition timing, hard-stop modifiers, monitoring handoff, and patient instructions."},{id:"unusual-site-thrombosis",cat:"Vascular Medicine Clinic",title:"Unusual-Site Thrombosis Pathway",desc:"CVT, portal/splanchnic, upper-extremity/catheter-related DVT, SVT, renal/gonadal and other unusual venous thromboses; site-specific workup, anticoagulant choice, duration, and consultant notes."},
     {id:"antithrombotic",cat:"Thrombosis / Antithrombotic Safety",title:"Antithrombotic Safety Assistant",desc:"Bleeding and reversal, HIT/PF4, thrombosis despite treatment, DOAC danger zones, heparin/anti-Xa/antithrombin problems, and antiplatelet overlap."},
     {id:"postop-troponin",cat:"GIM Diagnostic Reasoning",title:"Perioperative Cardiac Risk & MINS Pathway",desc:"Preoperative cardiac-risk assessment, postoperative troponin surveillance, MINS/MI interpretation, bleeding-safe management, and copy-ready notes."},
     {id:"diarrhea",cat:"GIM Diagnostic Reasoning",title:"Adult Diarrhea Triage & Diagnostic Pathway",desc:"Focused triage, syndrome classification, selective stool testing, C. difficile safety, hydration, medication review, and escalation planning."},
@@ -207,6 +207,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(id === "pad-confirmed") return renderConfirmedPAD();
     if(id === "thrombosis-clinic") return renderCoreVTE();
     if(id === "af-anticoag" || id === "af-anticoagulation" || id === "af-decision") return renderAFDecisionAid();
+    if(id === "lipid-primary" || id === "lipid-clinic") return renderPrimaryLipid();
     if(id === "anticoagulant-transitions" || id === "anticoagulant-switching") return renderAnticoagulantTransitions();
     if(id === "unusual-site-thrombosis") return renderUnusualSiteThrombosis();
     if(id === "postop-troponin") return renderPostopMINS();
@@ -331,6 +332,157 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     var out=document.getElementById("ctu_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
   }
 
+
+  function renderPrimaryLipid(){
+    shell("Primary-Prevention Lipid Clinic Pathway","Adult primary-prevention assessment integrating lifetime atherogenic exposure, absolute risk, inherited and secondary dyslipidemia, risk enhancers, subclinical atherosclerosis, individualized targets, treatment gap, and follow-up.",
+    '<section class="card">'+
+    '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1 · 2026 ACC/AHA aligned</span><p><b>Calculate → personalize → reclassify → treat the gap.</b> First confirm true primary prevention, then identify severe or inherited disease before applying PREVENT risk. Use Lp(a), apoB, and CAC only where they improve the decision.</p><p class="hint">This clinician aid does not replace the official PREVENT calculator, FH diagnostic criteria, product labeling, pregnancy guidance, or local formulary. Values and proposed treatment must be clinically verified before prescribing.</p></div>'+
+
+    '<details class="pathStep" open><summary>1. Scope, visit, and patient frame</summary><div class="pathStepBody"><div class="grid2">'+
+    inputField("lip_summary","One-line clinical summary","e.g. age 46, untreated LDL 4.7 mmol/L, father MI at 54, no clinical ASCVD")+
+    selectField("lip_visit","Visit purpose",["New primary-prevention assessment","Treatment initiation discussion","Response / target reassessment","Possible statin-associated symptoms","Severe LDL / possible FH assessment","Elevated Lp(a) consultation","Uncertain risk / CAC discussion"],"")+
+    '<div class="field"><label>Age (years)</label><input id="lip_age" type="number" min="18" max="120" step="1" placeholder="e.g. 46"></div>'+
+    selectField("lip_sex","Sex used by risk equation",["Not entered","Female","Male"],"Use the definition required by the selected validated risk equation.")+
+    selectField("lip_scope","ASCVD / atherosclerosis status",["No known clinical ASCVD or subclinical atherosclerosis","Clinical ASCVD present or suspected","Known coronary plaque or CAC >0","Other subclinical atherosclerosis / arterial plaque","Status uncertain — clarify records"],"Established or subclinical disease changes the risk lane and target.")+
+    selectField("lip_status","Current lipid-treatment status",["Untreated / treatment-naive","Previously treated but currently off therapy","On stable lipid-lowering therapy","Recently started or intensified therapy","Adherence uncertain","Treatment status unclear"],"")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>2. Lipid phenotype and lifetime exposure</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("lip_unit","Cholesterol and triglyceride units",["mmol/L","mg/dL"],"All four standard lipid values must use this unit. The output displays both units.")+
+    '<div class="field"><label>Total cholesterol</label><input id="lip_tc" type="number" min="0" step="any" placeholder="e.g. 7.1"></div>'+
+    '<div class="field"><label>LDL-C</label><input id="lip_ldl" type="number" min="0" step="any" placeholder="e.g. 4.7"></div>'+
+    '<div class="field"><label>HDL-C</label><input id="lip_hdl" type="number" min="0" step="any" placeholder="e.g. 1.3"></div>'+
+    '<div class="field"><label>Triglycerides</label><input id="lip_tg" type="number" min="0" step="any" placeholder="e.g. 1.8"></div>'+
+    '<div class="field"><label>Highest known untreated LDL-C</label><input id="lip_untreated" type="number" min="0" step="any" placeholder="Use same cholesterol unit"></div>'+
+    '<div class="field"><label>ApoB (mg/dL)</label><input id="lip_apob" type="number" min="0" step="any" placeholder="Optional"></div>'+
+    '<div class="field"><label>Lp(a)</label><div class="unitrow"><input id="lip_lpa" type="number" min="0" step="any" placeholder="Optional"><select id="lip_lpa_unit"><option>nmol/L</option><option>mg/dL</option></select></div><span class="hint">Do not mathematically convert between units; apo(a) isoform size makes a fixed conversion unreliable.</span></div>'+
+    selectField("lip_sample","Sample context",["Current representative baseline","Fasting sample","Nonfasting sample","During acute illness","After recent medication change","Timing or reliability uncertain"],"")+
+    inputField("lip_previous","Previous lipid trajectory","e.g. LDL 5.1 untreated → 2.4 on rosuvastatin")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>3. Severe / inherited dyslipidemia and secondary causes</summary><div class="pathStepBody"><h4>Inherited-disease signals</h4>'+
+    checks("lip_fh",["No inherited-disease signal identified","Untreated LDL-C ≥4.9 mmol/L (190 mg/dL)","Untreated LDL-C ≥4.1 mmol/L (160 mg/dL) at young age","First-degree relative with premature ASCVD (male <55; female <65)","First-degree relative with very high LDL-C or known FH","Tendon xanthoma or premature corneal arcus","Known pathogenic FH variant","Sudden premature cardiac death in family","Family history incomplete"])+
+    '<h4>Secondary-cause review</h4>'+
+    checks("lip_secondary",["No secondary cause identified after review","TSH not checked / hypothyroidism possible","Diabetes uncontrolled or newly diagnosed","CKD, nephrotic-range proteinuria, or nephrotic syndrome","Cholestasis or significant liver disease","Pregnancy / conception / lactation consideration","Medication-associated dyslipidemia possible","Major recent dietary, weight, or activity change","Acute illness may distort current values","Secondary-cause evaluation incomplete"])+
+    '<div class="grid2">'+
+    inputField("lip_secondary_note","Secondary-cause evidence or plan","e.g. TSH normal; urine ACR and liver profile ordered")+
+    selectField("lip_family_plan","Family / cascade-screening plan",["Not indicated from current information","Obtain detailed three-generation lipid/ASCVD history","Screen first-degree relatives with lipid profile","Refer for FH scoring / lipid specialist assessment","Consider genetic testing after counseling","Already completed"],"")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>4. Absolute risk and risk enhancers</summary><div class="pathStepBody"><div class="grid2">'+
+    '<div class="field"><label>PREVENT-ASCVD 10-year risk (%)</label><input id="lip_prevent10" type="number" min="0" max="100" step="any" placeholder="Enter official calculator result"></div>'+
+    '<div class="field"><label>PREVENT-ASCVD 30-year risk (%)</label><input id="lip_prevent30" type="number" min="0" max="100" step="any" placeholder="Optional"></div>'+
+    selectField("lip_smoking","Tobacco exposure",["Never","Former","Current","Passive / other relevant exposure","Not assessed"],"")+
+    selectField("lip_bp","Blood-pressure status",["Normal / controlled","Hypertension controlled on treatment","Hypertension above individualized target","Untreated hypertension","Not assessed"],"")+
+    selectField("lip_diabetes","Diabetes",["No diabetes","Type 1 diabetes","Type 2 diabetes","Prediabetes / metabolic risk","Status uncertain"],"")+
+    selectField("lip_ckd","Kidney disease",["No CKD / eGFR preserved","CKD stage 1–2","CKD stage 3","CKD stage 4","CKD stage 5 / dialysis","Status uncertain"],"")+
+    selectField("lip_hiv","HIV",["No HIV","Living with HIV","Status not documented"],"")+
+    '<div class="field"><label>hs-CRP (mg/L)</label><input id="lip_hscrp" type="number" min="0" step="any" placeholder="Optional; interpret only when clinically stable"></div>'+
+    '</div><h4>Additional risk enhancers</h4>'+
+    checks("lip_enhancer",["No additional enhancer selected","Premature ASCVD in first-degree relative","Lp(a) ≥125 nmol/L or ≥50 mg/dL","Lp(a) ≥250 nmol/L or ≥100 mg/dL","Persistently elevated triglycerides ≥1.7 mmol/L (150 mg/dL)","ApoB elevated / LDL–apoB discordance","Metabolic syndrome","Chronic inflammatory disease","Premature menopause","Preeclampsia or other adverse pregnancy outcome","South Asian ancestry","Erectile dysfunction as possible vascular signal","Sleep apnea","Incidental arterial calcification or plaque"])+
+    '<div class="grid2">'+
+    selectField("lip_cac","CAC / coronary-plaque information",["Not performed / not indicated","CAC 0","CAC 1–99","CAC 100–299 or ≥75th percentile","CAC 300–999","CAC ≥1000","Coronary plaque on CT angiography","Incidental coronary calcium; not quantified"],"Use CAC when it will resolve uncertainty or change treatment intensity; do not order automatically.")+
+    inputField("lip_cac_context","CAC percentile / imaging context","e.g. CAC 112, 88th percentile; incidental moderate CAC on CT chest")+
+    '</div></div></details>'+
+
+    '<details class="pathStep" open><summary>5. Treatment history, preferences, and selected plan</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("lip_current_tx","Current regimen",["No lipid-lowering medication","Moderate-intensity statin","High-intensity statin","Statin plus ezetimibe","Statin plus another nonstatin","Ezetimibe without statin","Bempedoic acid-based regimen","PCSK9 monoclonal antibody regimen","Inclisiran regimen","Other / unclear"],"")+
+    selectField("lip_adherence","Adherence / exposure",["Not applicable — untreated","Consistent exposure confirmed","Occasional missed doses","Frequent missed doses / access problem","Stopped because of symptoms","Exposure insufficient to assess response","Uncertain"],"")+
+    selectField("lip_statins","Statin tolerance",["No prior statin exposure","Tolerates current statin","Previous symptoms not yet characterized","Symptoms improved with dechallenge","Symptoms recurred with rechallenge","Partial tolerance / lower dose or alternate statin tolerated","True complete intolerance remains unconfirmed","Documented intolerance after structured evaluation"],"Avoid labeling intolerance after one uncharacterized symptom episode.")+
+    selectField("lip_plan","Clinician-selected treatment direction",["Lifestyle optimization with defined reassessment","Start moderate-intensity statin","Start high-intensity statin","Maximize tolerated statin","Add ezetimibe","Early statin–ezetimibe combination","Add / consider bempedoic acid","Add / consider PCSK9 monoclonal antibody","Consider inclisiran after outcomes/formulary discussion","Structured statin-associated-symptom pathway","Defer medication after informed discussion","Pregnancy / conception / lactation pathway","Lipid specialist / FH pathway","Plan not finalized"],"The engine checks whether the selected direction is likely to close the calculated LDL gap.")+
+    selectField("lip_preference","Patient priorities / constraints",["No major constraint identified","Prefers lifestyle trial first","Prefers oral therapy","Open to injectable therapy","Concerned about adverse effects","Cost / formulary limitation","Pregnancy plans influence treatment","Polypharmacy concern","Decision remains uncertain"],"")+
+    '</div><h4>Selected lifestyle actions</h4>'+
+    checks("lip_lifestyle",["Replace saturated fats with unsaturated fats","Mediterranean-style dietary pattern","Increase soluble fibre from foods / appropriate supplements","Reduce refined carbohydrates and sugary drinks","Address high triglyceride dietary drivers","Regular physical activity appropriate to health status","Tobacco cessation support","Sleep and sleep-apnea assessment","Blood-pressure optimization","Diabetes / metabolic-risk optimization","Dietitian referral","No new lifestyle action selected"])+
+    inputField("lip_plan_note","Additional individualized plan","e.g. start therapy after shared decision; formulary request if target not reached")+
+    '</div></details>'+
+
+    '<details class="pathStep" open><summary>6. Monitoring, ownership, and output</summary><div class="pathStepBody"><div class="grid2">'+
+    selectField("lip_baseline","Baseline safety assessment",["Complete / no unresolved issue","ALT needed before initiation","CK indicated because of symptoms or muscle history","Medication-interaction review needed","Pregnancy status / contraception discussion needed","Multiple safety items pending","Not assessed"],"Routine CK testing is not required in an asymptomatic person without a relevant history.")+
+    selectField("lip_follow","Planned lipid reassessment",["4–6 weeks","6–8 weeks","8–12 weeks","3–6 months for lifestyle-only trial","Stable long-term follow-up","Not specified"],"Reassess adherence, percentage reduction, absolute targets, symptoms, and treatment access.")+
+    inputField("lip_owner","Follow-up owner","e.g. lipid clinic / Dr X / primary care")+
+    selectField("lip_output_mode","Output format",["Primary-prevention lipid assessment","Individualized treatment and monitoring plan","Patient shared-decision explanation"],"")+
+    '</div></div></details>'+
+
+    '<div class="toolbar"><button class="primary" id="lipGenerate">Generate individualized lipid plan</button><button id="lipCopy">Copy output</button><button id="lipReset">Reset pathway</button></div><div id="lip_out" class="output hidden"></div>'+
+    '<p class="hint">Evidence anchor: 2026 ACC/AHA multisociety dyslipidemia guideline. PREVENT is intended for adults 30–79 without clinical ASCVD or subclinical atherosclerosis and with LDL-C 1.8–4.9 mmol/L; consider calibration limitations outside the populations in which it was developed.</p></section>');
+    document.getElementById("lipGenerate").addEventListener("click",calcPrimaryLipid);
+    document.getElementById("lipCopy").addEventListener("click",function(){copyOut("lip_out");});
+    document.getElementById("lipReset").addEventListener("click",resetPrimaryLipid);
+  }
+
+  function resetPrimaryLipid(){
+    document.querySelectorAll('[id^="lip_"]').forEach(function(el){if(el.tagName==="SELECT")el.selectedIndex=0;else if(el.tagName==="INPUT")el.value="";});
+    document.querySelectorAll('input[name^="lip_"]').forEach(function(el){el.checked=false;});
+    var out=document.getElementById("lip_out");out.textContent="";out.className="output hidden";window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function lipNumber(id){var n=parseFloat(val(id));return isFinite(n)?n:null;}
+  function lipCholMmol(n,unit){return n===null?null:(unit==="mg/dL"?n/38.67:n);}
+  function lipTgMmol(n,unit){return n===null?null:(unit==="mg/dL"?n/88.57:n);}
+  function lipFmtChol(n){return n===null?"not entered":n.toFixed(2)+" mmol/L ("+Math.round(n*38.67)+" mg/dL)";}
+  function lipBullets(x){return atsBullets(x&&x.length?x:["None identified from completed fields."]);}
+
+  function calcPrimaryLipid(){
+    var unit=val("lip_unit"),age=lipNumber("lip_age"),scope=val("lip_scope"),ldl=lipCholMmol(lipNumber("lip_ldl"),unit),untreated=lipCholMmol(lipNumber("lip_untreated"),unit);
+    var tc=lipCholMmol(lipNumber("lip_tc"),unit),hdl=lipCholMmol(lipNumber("lip_hdl"),unit),tg=lipTgMmol(lipNumber("lip_tg"),unit),nonhdl=tc!==null&&hdl!==null?tc-hdl:null;
+    var p10=lipNumber("lip_prevent10"),p30=lipNumber("lip_prevent30"),apob=lipNumber("lip_apob"),lpa=lipNumber("lip_lpa"),lpaUnit=val("lip_lpa_unit");
+    var fh=checked("lip_fh"),secondary=checked("lip_secondary"),enh=checked("lip_enhancer"),lifestyle=checked("lip_lifestyle");
+    var cac=val("lip_cac"),diabetes=val("lip_diabetes"),ckd=val("lip_ckd"),hiv=val("lip_hiv"),plan=val("lip_plan");
+    function has(a,t){return a.some(function(x){return x.indexOf(t)>=0;});}
+    var clinical=scope==="Clinical ASCVD present or suspected",subclinical=scope==="Known coronary plaque or CAC >0"||scope==="Other subclinical atherosclerosis / arterial plaque";
+    var severe=(ldl!==null&&ldl>=4.9)||(untreated!==null&&untreated>=4.9)||has(fh,"≥4.9");
+    var lpaHigh=lpa!==null&&((lpaUnit==="nmol/L"&&lpa>=125)||(lpaUnit==="mg/dL"&&lpa>=50));
+    var lpaVery=lpa!==null&&((lpaUnit==="nmol/L"&&lpa>=250)||(lpaUnit==="mg/dL"&&lpa>=100));
+    var fhStrong=has(fh,"pathogenic")||has(fh,"xanthoma")||(severe&&(has(fh,"premature ASCVD")||has(fh,"known FH")||has(fh,"Sudden")));
+    var independent=age!==null&&age>=40&&age<=75&&(diabetes==="Type 1 diabetes"||diabetes==="Type 2 diabetes"||ckd==="CKD stage 3"||ckd==="CKD stage 4"||hiv==="Living with HIV");
+    var risk="Not calculable / not entered";if(p10!==null)risk=p10<3?"Low (<3%)":(p10<5?"Borderline (3% to <5%)":(p10<10?"Intermediate (5% to <10%)":"High (≥10%)"));
+    var cacTier="none";if(cac==="CAC ≥1000")cacTier="extreme";else if(cac==="CAC 300–999"||cac==="CAC 100–299 or ≥75th percentile"||cac==="Coronary plaque on CT angiography")cacTier="high";else if(cac==="CAC 1–99"||cac==="Incidental coronary calcium; not quantified")cacTier="present";else if(cac==="CAC 0")cacTier="zero";
+    var target=null,nonhdlTarget=null,pctTarget=0,targetReason=[];
+    if(cacTier==="extreme"){target=1.4;nonhdlTarget=2.2;pctTarget=50;targetReason.push("CAC ≥1000 identifies very high subclinical coronary burden");}
+    else if(cacTier==="high"){target=1.8;nonhdlTarget=2.6;pctTarget=50;targetReason.push("CAC ≥100 / ≥75th percentile, CAC 300–999, or coronary plaque supports intensive LDL lowering");}
+    else if((p10!==null&&p10>=10)||(independent&&(has(enh,"Premature")||lpaHigh||has(enh,"Metabolic")||val("lip_bp").indexOf("above")>=0))){target=1.8;nonhdlTarget=2.6;pctTarget=50;targetReason.push("high estimated risk or a high-risk disease state with additional risk features");}
+    else if(severe){target=2.6;nonhdlTarget=3.4;pctTarget=50;targetReason.push("severe hypercholesterolemia requires ≥50% reduction and an absolute primary-prevention goal");}
+    else if((p10!==null&&p10>=3)||independent||cacTier==="present"){target=2.6;nonhdlTarget=3.4;pctTarget=p10!==null&&p10>=5?30:30;targetReason.push("borderline/intermediate risk, independent treatment indication, or coronary calcium");}
+    else{pctTarget=0;targetReason.push("low short-term risk without a confirmed treatment-defining condition; lifetime exposure and enhancers still guide shared decision");}
+    if(severe&&(fhStrong||lpaVery||cacTier==="present")){target=1.8;nonhdlTarget=2.6;pctTarget=50;targetReason=["severe lifelong LDL exposure plus inherited/high-risk or subclinical-disease features supports an intensified individualized goal"];}
+    var gap=target!==null&&ldl!==null?Math.max(0,ldl-target):null,required=target!==null&&ldl!==null&&ldl>0?Math.max(0,(ldl-target)/ldl*100):null;
+    var phenotype=[];if(severe)phenotype.push("Severe hypercholesterolemia");if(fhStrong)phenotype.push("Strong FH signal — formal FH assessment and cascade screening indicated");if(tg!==null&&tg>=11.3)phenotype.push("Severe hypertriglyceridemia in pancreatitis-risk range");else if(tg!==null&&tg>=5.6)phenotype.push("Marked hypertriglyceridemia");else if(tg!==null&&tg>=1.7)phenotype.push("Mixed / triglyceride-rich phenotype");if(apob!==null&&ldl!==null&&apob>=100)phenotype.push("ApoB suggests increased atherogenic particle burden");if(lpaHigh)phenotype.push("Elevated Lp(a) risk enhancer"+(lpaVery?" — markedly elevated":""));if(!phenotype.length)phenotype.push("No severe or inherited phenotype established from entered values");
+    var safety=[],evaluation=[],treatment=[],monitoring=[];
+    if(clinical)safety.push("Clinical ASCVD is present or suspected: route out of routine primary prevention and use an ASCVD pathway.");
+    if(subclinical)safety.push("Known subclinical atherosclerosis requires a plaque/CAC-specific treatment lane rather than PREVENT alone.");
+    if(scope.indexOf("uncertain")>=0)safety.push("Clarify ASCVD and imaging history before finalizing the prevention category.");
+    if(tg!==null&&tg>=11.3)safety.push("Severe hypertriglyceridemia: assess symptoms, secondary causes, and pancreatitis-prevention management promptly under a dedicated triglyceride pathway.");
+    if(age===null)evaluation.push("Enter age to determine whether PREVENT and special-population recommendations apply.");else if(age<30||age>79)evaluation.push("PREVENT-ASCVD is not the standard 10-year tool at this age; use age-specific clinical judgment and lifetime exposure.");
+    if(age!==null&&age>=30&&age<=79&&!clinical&&!subclinical&&!severe&&p10===null)evaluation.push("Calculate official PREVENT-ASCVD 10-year risk before finalizing treatment.");
+    if(secondary.length===0||has(secondary,"incomplete"))evaluation.push("Complete secondary-cause review: thyroid, glycemia, kidney/proteinuria, liver/cholestasis, pregnancy context, medications, and acute illness.");
+    else if(secondary.some(function(x){return x!=="No secondary cause identified after review";}))evaluation.push("Address identified secondary contributors and repeat a representative lipid profile while treating ASCVD risk in parallel when indicated.");
+    if(lpa===null)evaluation.push("Measure Lp(a) once in adulthood.");else evaluation.push("Lp(a): "+lpa+" "+lpaUnit+(lpaHigh?" — risk-enhancing level; intensify control of LDL and other modifiable risk factors":" — below the 2026 guideline risk-enhancer threshold")+".");
+    if((tg!==null&&tg>=1.7)||diabetes!=="No diabetes"||has(enh,"discordance")){if(apob===null)evaluation.push("Consider apoB to assess particle burden and LDL/non-HDL discordance.");else evaluation.push("ApoB: "+apob+" mg/dL; interpret with LDL-C, non-HDL-C, triglycerides, and treatment status.");}
+    if((p10!==null&&p10>=3&&p10<10)&&(cac==="Not performed / not indicated"||cac==="CAC 0"))evaluation.push(cac==="CAC 0"?"CAC 0 may support deferral in selected patients, but must be weighed against severe LDL, diabetes/CKD/HIV, smoking, strong family history, and Lp(a).":"If the medication decision remains uncertain, discuss whether CAC would change initiation or intensity.");
+    if(severe)treatment.push("Do not rely on PREVENT to decide whether to treat severe hypercholesterolemia. Exclude secondary causes and use maximally tolerated statin therapy as the usual foundation.");
+    else if(p10!==null&&p10>=10)treatment.push("High 10-year risk: high-intensity statin therapy is the recommended foundation, targeting ≥50% LDL-C reduction.");
+    else if(p10!==null&&p10>=5)treatment.push("Intermediate risk: at least moderate-intensity statin therapy is recommended; consider high intensity toward the upper end or with important enhancers.");
+    else if(p10!==null&&p10>=3)treatment.push("Borderline risk: moderate-intensity statin therapy is reasonable after risk-enhancer and shared-decision review.");
+    else if(independent)treatment.push("Age 40–75 with diabetes, CKD stage 3–4, or HIV: LDL-lowering therapy is recommended regardless of PREVENT estimate.");
+    else treatment.push("Low short-term risk: prioritize lifetime exposure, health behaviors, and shared decision; early therapy may still be reasonable with LDL-C ≥4.1 mmol/L, strong premature family history, elevated Lp(a), or plaque.");
+    if(required!==null){if(required>=50)treatment.push("The current-to-goal gap requires approximately "+Math.ceil(required)+"% LDL-C lowering; high-intensity or combination therapy may be needed rather than slow sequential escalation.");else if(required>=30)treatment.push("The current-to-goal gap requires approximately "+Math.ceil(required)+"% LDL-C lowering; at least moderate-intensity therapy is likely required.");else if(required>0)treatment.push("The remaining LDL-C gap is approximately "+Math.ceil(required)+"%; confirm adherence and response before adding therapy.");else treatment.push("The entered LDL-C is at the selected absolute goal; confirm percentage response, non-HDL-C/apoB, adherence, and durability.");}
+    treatment.push("Clinician-selected direction: "+plan+".");
+    if(val("lip_adherence").indexOf("missed")>=0||val("lip_adherence")==="Uncertain")treatment.push("Resolve adherence/access before labeling biological nonresponse or escalating.");
+    if(val("lip_statins").indexOf("unconfirmed")>=0||val("lip_statins").indexOf("not yet characterized")>=0)treatment.push("Use a structured statin-symptom assessment with temporal relationship, interacting conditions, dechallenge/rechallenge, and tolerated alternatives.");
+    if(lifestyle.length&& !has(lifestyle,"No new"))treatment.push("Selected health actions: "+lifestyle.join("; ")+".");
+    monitoring.push("Baseline safety: "+val("lip_baseline")+".");
+    monitoring.push("Repeat lipids: "+val("lip_follow")+"; review adherence, adverse effects, LDL percentage change, LDL/non-HDL targets, apoB when used, and access.");
+    monitoring.push("Follow-up owner: "+(val("lip_owner")||"not documented")+".");
+    var level=clinical||scope.indexOf("uncertain")>=0||tg!==null&&tg>=11.3?"red":(safety.length||evaluation.some(function(x){return /Complete|Enter age|Calculate/.test(x);})||!val("lip_owner")||plan==="Plan not finalized"?"amber":"green");
+    var targetLine=target===null?"No medication target assigned from current data; complete risk/inherited-disease assessment and shared decision.":"LDL-C <"+target.toFixed(1)+" mmol/L (<"+Math.round(target*38.67)+" mg/dL), non-HDL-C <"+nonhdlTarget.toFixed(1)+" mmol/L (<"+Math.round(nonhdlTarget*38.67)+" mg/dL), and "+(pctTarget?("≥"+pctTarget+"% LDL-C reduction"):"individualized percentage reduction")+".";
+    var values="LDL-C: "+lipFmtChol(ldl)+". Non-HDL-C: "+lipFmtChol(nonhdl)+". Triglycerides: "+(tg===null?"not entered":tg.toFixed(2)+" mmol/L ("+Math.round(tg*88.57)+" mg/dL)")+".";
+    var core="Prevention category: "+scope+".\nRisk: "+risk+(p30!==null?"; 30-year PREVENT "+p30.toFixed(1)+"%":"; 30-year risk not entered")+".\n"+values+"\n\nLipid phenotype:\n"+lipBullets(phenotype)+"\n\nSafety / route-out:\n"+lipBullets(safety)+"\n\nRisk refinement and remaining evaluation:\n"+lipBullets(evaluation)+"\n\nIndividualized target:\n- "+targetLine+"\n- Rationale: "+targetReason.join("; ")+".\n- Absolute LDL-C gap: "+(gap===null?"not calculable":gap.toFixed(2)+" mmol/L")+".\n\nTreatment plan:\n"+lipBullets(treatment)+"\n\nMonitoring and ownership:\n"+lipBullets(monitoring)+(val("lip_plan_note")?"\n\nAdditional plan: "+val("lip_plan_note")+".":"");
+    var assessment="Primary-Prevention Lipid Assessment\n\n"+(val("lip_summary")?"Clinical summary: "+val("lip_summary")+".\n\n":"")+core+"\n\nEvidence basis: 2026 ACC/AHA multisociety dyslipidemia guideline; apply local formulary and validated regional risk interpretation.";
+    var planText="Individualized Lipid Treatment and Monitoring Plan\n\nCurrent status: "+values+"\nRisk/phenotype: "+risk+"; "+phenotype.join("; ")+".\n\nTarget:\n- "+targetLine+"\n- Required reduction from current LDL-C: "+(required===null?"not calculable":Math.ceil(required)+"%")+".\n\nActions:\n"+lipBullets(treatment)+"\n\nBefore / after treatment:\n"+lipBullets(evaluation.concat(monitoring))+"\n\nSafety:\n"+lipBullets(safety);
+    var patient="Shared-Decision Lipid Explanation\n\nYour cholesterol plan is based on more than one number. We considered your current LDL cholesterol, how long it may have been elevated, family history, blood pressure, diabetes/kidney status, Lp(a), and any evidence of early artery plaque.\n\nYour current LDL-C: "+lipFmtChol(ldl)+".\nProposed goal: "+targetLine+"\nWhy: "+targetReason.join("; ")+".\n\nRecommended next steps:\n"+lipBullets(treatment)+"\n\nFollow-up:\n"+lipBullets(monitoring)+"\n\nDo not start, stop, or change medication from this summary alone; confirm the final prescription and monitoring plan with the treating clinician.";
+    var finalText=assessment;if(val("lip_output_mode")==="Individualized treatment and monitoring plan")finalText=planText;if(val("lip_output_mode")==="Patient shared-decision explanation")finalText=patient;
+    var out=document.getElementById("lip_out");out.className="output "+level;out.textContent=finalText;out.classList.remove("hidden");
+  }
 
   function renderAnticoagulantTransitions(){
     shell("Anticoagulant Transitions Pathway","",
