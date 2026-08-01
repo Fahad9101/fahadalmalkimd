@@ -130,7 +130,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Annual ischemic stroke/MI/vascular-death rate 5.32% versus 5.83%; relative risk reduction 8.7%. The PAD subgroup appeared to derive greater benefit.",
       "safety": "Overall major safety was similar; gastrointestinal bleeding was somewhat less frequent with clopidogrel.",
       "implication": "Clopidogrel is a reasonable single-antiplatelet alternative and often preferred in symptomatic PAD. Subgroup superiority in PAD was not the prespecified primary comparison.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAPRIE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAPRIE+randomized+trial+primary+publication",
+      "publicationYear": 1996,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": "Class 1, LOE B-R — clopidogrel single-antiplatelet therapy in symptomatic PAD",
+      "evidenceEvolution": "Remains a current single-antiplatelet option. COMPASS added dual-pathway inhibition for selected patients; it did not invalidate clopidogrel monotherapy.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "charisma",
@@ -143,7 +153,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Primary CV death/MI/stroke was 6.8% versus 7.3%, not statistically significant overall; a symptomatic-disease subgroup suggested modest benefit.",
       "safety": "Moderate bleeding increased with dual therapy; severe bleeding was numerically higher.",
       "implication": "Do not use indefinite aspirin–clopidogrel routinely for stable PAD. Any apparent benefit is offset by bleeding and subgroup uncertainty.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CHARISMA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CHARISMA+randomized+trial+primary+publication",
+      "publicationYear": 2006,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "wave",
@@ -156,7 +176,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No reduction in major cardiovascular or limb ischemic outcomes.",
       "safety": "Life-threatening bleeding was markedly increased, about 4.0% versus 1.2%.",
       "implication": "Full-dose anticoagulation should not be added to antiplatelet therapy solely for stable PAD without another indication.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=WAVE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=WAVE+randomized+trial+primary+publication",
+      "publicationYear": 2007,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": "Class 3: Harm, LOE A — avoid full-intensity oral anticoagulation in PAD without another indication",
+      "evidenceEvolution": "COMPASS later showed that vascular-dose rivaroxaban plus aspirin is different from full-intensity anticoagulation. WAVE remains the key warning against routine full-dose anticoagulation in PAD.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "euclid",
@@ -169,7 +199,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "CV death/MI/ischemic stroke was 10.8% versus 10.6%; ticagrelor was not superior.",
       "safety": "Major bleeding was similar; dyspnea and drug discontinuation were more frequent with ticagrelor.",
       "implication": "Clopidogrel remains the practical P2Y12 agent for PAD; stronger platelet inhibition did not translate into better outcomes.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EUCLID+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EUCLID+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "tra-2-p-timi-50",
@@ -182,7 +222,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced CV death/MI/stroke overall; in PAD, reduced acute limb ischemia and peripheral revascularization.",
       "safety": "Moderate/severe and intracranial bleeding increased; harm was especially important in prior stroke.",
       "implication": "Demonstrated that intensified antithrombotic therapy can reduce limb events, but bleeding and limited practical use prevent routine adoption.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TRA+2%C2%B0P%E2%80%93TIMI+50+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TRA+2%C2%B0P%E2%80%93TIMI+50+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "compass",
@@ -195,7 +245,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban plus aspirin reduced CV death/MI/stroke: 4.1% versus 5.4%; ARR 1.3%, NNT about 77 over 23 months. PAD analyses also showed fewer major adverse limb events.",
       "safety": "Modified ISTH major bleeding increased: 3.1% versus 1.9%; no significant excess in fatal or intracranial bleeding.",
       "implication": "Use dual-pathway inhibition in selected stable symptomatic PAD/polyvascular patients at high ischemic and acceptable bleeding risk. Do not substitute full-dose rivaroxaban alone.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=COMPASS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=COMPASS+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": "Class 1, LOE A — low-dose rivaroxaban plus aspirin in symptomatic PAD",
+      "evidenceEvolution": "VOYAGER-PAD extended dual-pathway inhibition to the early post-revascularization population; it complemented rather than replaced COMPASS.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "voyager-pad",
@@ -208,7 +268,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Composite acute limb ischemia, major vascular amputation, MI, ischemic stroke, or CV death: 17.3% versus 19.9%; ARR 2.6%, NNT about 39 over 3 years.",
       "safety": "TIMI major bleeding was not significantly increased; ISTH major bleeding increased, 5.9% versus 4.1%.",
       "implication": "Supports early long-term dual-pathway inhibition after surgical or endovascular revascularization when bleeding risk is acceptable.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VOYAGER-PAD+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VOYAGER-PAD+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": "Class 1, LOE A — low-dose rivaroxaban plus aspirin after lower-extremity revascularization",
+      "evidenceEvolution": "Extends the COMPASS strategy to patients after lower-extremity revascularization. Later analyses refine benefit-risk but do not replace the primary trial.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "caspar",
@@ -221,7 +291,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No overall benefit for graft occlusion/revascularization/amputation/death; a prespecified prosthetic-graft subgroup benefited, unlike venous grafts.",
       "safety": "Severe bleeding was not significantly increased, but total bleeding was higher.",
       "implication": "Do not use DAPT routinely after all bypasses; consider the prosthetic below-knee graft signal while recognizing subgroup limitations.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CASPAR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CASPAR+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "mirror",
@@ -234,7 +314,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Target-lesion revascularization was lower at 6 months with DAPT, but the advantage was not sustained after clopidogrel stopped.",
       "safety": "Minor bleeding was more common; the trial was too small for robust major-bleeding estimates.",
       "implication": "Provides limited mechanistic support for short DAPT after endovascular therapy, not evidence for prolonged routine DAPT.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MIRROR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MIRROR+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "epad",
@@ -247,7 +337,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Restenosis/reocclusion outcomes were broadly similar; the study was underpowered for clinical events.",
       "safety": "Bleeding was not clearly different, but precision was poor.",
       "implication": "Shows feasibility of factor-Xa–based strategies but does not establish a standard regimen.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ePAD+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ePAD+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "clever",
@@ -260,7 +360,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Supervised exercise produced the greatest treadmill improvement; stenting produced greater disease-specific quality-of-life improvement.",
       "safety": "Procedural complications were uncommon; exercise had minimal treatment-related harm.",
       "implication": "Supervised exercise is first-line therapy; revascularization is appropriate when symptoms remain lifestyle-limiting after medical and exercise therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLEVER+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLEVER+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": "Class 1, LOE A — structured exercise is core therapy for chronic symptomatic PAD",
+      "evidenceEvolution": "ERASE reinforced that exercise and revascularization can be complementary; STRIDE later added GLP-1–based functional-outcome evidence in PAD with diabetes.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "erase",
@@ -273,7 +383,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Combination therapy improved walking distance and disease-specific quality of life more than exercise alone.",
       "safety": "No major new safety signal beyond expected procedural complications.",
       "implication": "Revascularization and structured exercise are complementary, not competing, for selected lifestyle-limiting claudication.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ERASE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ERASE+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": "Class 1, LOE A — structured exercise remains part of care when revascularization is considered",
+      "evidenceEvolution": "Builds on CLEVER by showing that supervised exercise can add benefit after revascularization.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "stride",
@@ -286,7 +406,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Demonstrated acceptable patency and symptom improvement, but lacked a randomized contemporary comparator.",
       "safety": "Device and access complications were within expected ranges.",
       "implication": "Recognition trial for device evolution; not a practice-defining comparative RCT.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STRIDE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STRIDE+randomized+trial+primary+publication",
+      "publicationYear": 2025,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "Published after the 2024 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "basil-1",
@@ -299,7 +429,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Early amputation-free survival was similar; among patients surviving beyond about 2 years, bypass-first was associated with better subsequent survival and limb outcomes.",
       "safety": "Surgery had greater early morbidity and cost.",
       "implication": "Anatomy, conduit, operative risk, and expected survival should guide strategy; durable bypass matters most when life expectancy is sufficient.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BASIL-1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BASIL-1+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "BEST-CLI and BASIL-2 updated revascularization strategy using contemporary techniques and conduit/anatomic considerations; BASIL-1 remains historical context.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "best-cli",
@@ -312,7 +452,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "With suitable single-segment great saphenous vein, surgery reduced major adverse limb event or death: 42.6% versus 57.4%. Without suitable vein, outcomes were similar.",
       "safety": "Perioperative adverse events were broadly comparable; repeat interventions were more frequent after endovascular treatment.",
       "implication": "Assess conduit before choosing strategy. Good-vein bypass is preferred for many average-risk CLTI patients; results do not imply surgery for everyone.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BEST-CLI+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BEST-CLI+randomized+trial+primary+publication",
+      "publicationYear": 2022,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Interpreted with BASIL-2 and BASIL-3. The trials address different anatomy and strategy questions and should not be treated as interchangeable.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "basil-2",
@@ -325,7 +475,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Major amputation or death occurred in 63% versus 53%; bypass-first had worse amputation-free survival, driven mainly by mortality.",
       "safety": "Early procedural morbidity did not fully explain the mortality difference.",
       "implication": "Supports an endovascular-first approach for many infrapopliteal CLTI patients, but contrasts with BEST-CLI because populations, anatomy, and strategies differed.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BASIL-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BASIL-2+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Complements BEST-CLI by focusing on patients requiring infrapopliteal revascularization; it does not supersede the conduit-specific BEST-CLI findings.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "basil-3",
@@ -338,7 +498,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Neither drug-coated balloon nor drug-eluting stent improved amputation-free survival or overall survival versus plain balloon strategy.",
       "safety": "No decisive safety advantage; uncertainty remained for device-specific harms and subgroup effects.",
       "implication": "Drug technology should not be assumed clinically superior in CLTI merely from patency data; patient-centered outcomes remain decisive.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BASIL-3+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=BASIL-3+randomized+trial+primary+publication",
+      "publicationYear": 2026,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "Published after the 2024 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "zilver-ptx",
@@ -351,7 +521,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Drug-eluting stenting improved primary patency and reduced target-lesion revascularization.",
       "safety": "No convincing trial-level excess in mortality, though later class-wide paclitaxel safety controversy affected interpretation.",
       "implication": "Established durable antiproliferative benefit in femoropopliteal disease; device choice still depends on lesion and patient factors.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ZILVER+PTX+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ZILVER+PTX+randomized+trial+primary+publication",
+      "publicationYear": 2011,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "in-pact-sfa",
@@ -364,7 +544,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Drug-coated balloon improved primary patency and reduced clinically driven target-lesion revascularization through long-term follow-up.",
       "safety": "Major adverse events were similar; subsequent paclitaxel-mortality concerns were not confirmed by later patient-level analyses.",
       "implication": "Supports drug-coated balloon use for appropriate femoropopliteal lesions when restenosis avoidance is important.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IN.PACT+SFA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IN.PACT+SFA+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "levant-2",
@@ -377,7 +567,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "12-month primary patency was higher with the drug-coated balloon, with modest absolute benefit.",
       "safety": "Safety endpoint was noninferior; no early major safety signal.",
       "implication": "Confirms a class effect of drug-coated balloons, although efficacy magnitude differs across devices and lesion complexity.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=LEVANT+2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=LEVANT+2+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "imperial",
@@ -390,7 +590,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Eluvia was noninferior for safety and superior for 12-month primary patency; longer-term differences narrowed and vessel-wall findings prompted caution.",
       "safety": "No clear mortality difference; concerns included aneurysmal degeneration and late vessel changes in some studies.",
       "implication": "A device-comparison trial: remember excellent patency, but do not extrapolate to a universal stent-first strategy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IMPERIAL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IMPERIAL+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ranger-ii-sfa",
@@ -403,7 +613,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Drug-coated balloon improved 12-month primary patency and reduced reintervention.",
       "safety": "No meaningful safety difference in the trial.",
       "implication": "Supports the Ranger device; recognition-level rather than a unique practice-changing principle.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RANGER+II+SFA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RANGER+II+SFA+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "compare",
@@ -416,7 +636,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "The lower-dose balloon was noninferior for 12-month primary patency.",
       "safety": "Safety outcomes were similar.",
       "implication": "Paclitaxel dose density alone does not determine clinical performance; device platforms cannot be assumed interchangeable without data.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=COMPARE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=COMPARE+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "in-pact-deep",
@@ -429,7 +659,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No significant efficacy benefit; a concerning numerical increase in major amputation emerged.",
       "safety": "Major amputation signal led to withdrawal of the device indication.",
       "implication": "Do not extrapolate successful femoropopliteal DCB data to infrapopliteal CLTI.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IN.PACT+DEEP+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IN.PACT+DEEP+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "life-btk",
@@ -442,7 +682,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "At 1 year, the scaffold was superior for freedom from above-ankle amputation, target-vessel occlusion, revascularization, or binary restenosis; benefit persisted in later follow-up.",
       "safety": "Periprocedural safety was noninferior; applicability is limited by lesion length and vessel anatomy studied.",
       "implication": "First major positive randomized below-knee scaffold trial; promising for selected lesions, not proof for all infrapopliteal disease.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=LIFE-BTK+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=LIFE-BTK+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "stile",
@@ -455,7 +705,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Surgery performed better for more chronic occlusions; thrombolysis showed advantages in selected acute presentations and reduced surgical magnitude.",
       "safety": "Thrombolysis caused more bleeding and distal embolization.",
       "implication": "Duration and severity of ischemia determine strategy; thrombolysis is not uniformly superior to surgery.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STILE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STILE+randomized+trial+primary+publication",
+      "publicationYear": 1994,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "topas",
@@ -468,7 +728,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Amputation-free survival was similar; thrombolysis reduced the need for open surgery in selected patients.",
       "safety": "Major bleeding was higher with thrombolysis, including intracranial hemorrhage.",
       "implication": "Supports catheter-directed lysis in carefully selected viable or marginally threatened limbs when time and bleeding risk permit.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TOPAS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TOPAS+randomized+trial+primary+publication",
+      "publicationYear": 1998,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "rochester-trial",
@@ -481,7 +751,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Limb salvage and survival were broadly similar, with less extensive surgery after successful lysis.",
       "safety": "Bleeding and catheter-related complications were important.",
       "implication": "Historical evidence underpinning selective thrombolysis; modern practice also incorporates thrombectomy devices and Rutherford class.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Rochester+Trial+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Rochester+Trial+randomized+trial+primary+publication",
+      "publicationYear": 1994,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 ACC/AHA Multisociety Lower-Extremity PAD Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001251",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "nascet",
@@ -494,7 +774,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "For 70–99% stenosis, 2-year ipsilateral stroke was about 9% versus 26%; benefit was smaller but present for selected 50–69% stenosis.",
       "safety": "Perioperative stroke/death risk offset benefit when operator outcomes were poor.",
       "implication": "CEA is strongly indicated for appropriate symptomatic severe stenosis and selectively for moderate stenosis, performed promptly by experienced teams.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=NASCET+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=NASCET+randomized+trial+primary+publication",
+      "publicationYear": 1991,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ecst",
@@ -507,7 +797,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Confirmed major benefit for severe symptomatic stenosis; later reanalysis aligned stenosis measurement with NASCET.",
       "safety": "Perioperative stroke/death was the principal hazard.",
       "implication": "Along with NASCET, established CEA for symptomatic disease; know that ECST and NASCET originally used different stenosis denominators.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ECST+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ECST+randomized+trial+primary+publication",
+      "publicationYear": 1991,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "acas",
@@ -520,7 +820,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Five-year ipsilateral stroke or perioperative stroke/death was about 5.1% versus 11.0%; ARR about 5.9%.",
       "safety": "Benefit required perioperative complication rates below 3%.",
       "implication": "Established historical benefit of CEA, but absolute benefit is likely smaller with contemporary intensive medical therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACAS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACAS+randomized+trial+primary+publication",
+      "publicationYear": 1995,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ACST-1 confirmed benefit in an earlier medical-therapy era; CREST-2 updates the question against contemporary intensive medical treatment.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "acst-1",
@@ -533,7 +843,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced long-term stroke risk by roughly 5–6% over 5–10 years, after accounting for perioperative events.",
       "safety": "About 3% perioperative stroke/death; benefit emerged slowly.",
       "implication": "Consider only in patients with low procedural risk and sufficient life expectancy; modern therapy lowers baseline risk.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACST-1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACST-1+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CREST-2 updates the asymptomatic-stenosis question in the modern medical-therapy era.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "acst-2",
@@ -546,7 +866,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Disabling or fatal stroke and long-term nonprocedural stroke were similarly uncommon; non-disabling procedural stroke was slightly more frequent with stenting.",
       "safety": "CEA caused more cranial-nerve injury and access-site complications; CAS caused more procedural stroke.",
       "implication": "When intervention is chosen, both can be effective in experienced hands; patient age, anatomy, and procedural risk drive selection.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACST-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACST-2+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CREST-2 provides the contemporary medical-therapy comparison that ACST-2 did not address.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "cavatas",
@@ -559,7 +889,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Major stroke/death rates were similar but restenosis was more common after endovascular therapy.",
       "safety": "Cranial-nerve injury favored endovascular therapy; procedural neurologic events remained important.",
       "implication": "Historical bridge to modern CAS; devices and protection techniques were outdated.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAVATAS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAVATAS+randomized+trial+primary+publication",
+      "publicationYear": 2001,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "eva-3s",
@@ -572,7 +912,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "30-day stroke/death was substantially higher with CAS, about 9.6% versus 3.9%; the trial stopped early.",
       "safety": "Procedural neurologic harm drove the difference.",
       "implication": "Routine CAS was unsafe in inexperienced/early-era settings; operator experience and device evolution matter.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVA-3S+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVA-3S+randomized+trial+primary+publication",
+      "publicationYear": 2006,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "space",
@@ -585,7 +935,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "CAS failed to demonstrate noninferiority for 30-day ipsilateral stroke or death.",
       "safety": "Procedural stroke tended to be higher with CAS; local complications favored CAS.",
       "implication": "Reinforced CEA as standard for most conventional-risk symptomatic patients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SPACE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SPACE+randomized+trial+primary+publication",
+      "publicationYear": 2006,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "icss",
@@ -598,7 +958,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "CAS produced more procedural stroke, death, or MI, mainly due to nondisabling stroke; long-term disabling/fatal stroke was more similar.",
       "safety": "CEA caused more cranial-nerve palsy and hematoma; CAS caused more cerebral ischemic lesions.",
       "implication": "CEA remains preferred for most symptomatic patients, especially older patients, unless surgical/anatomic risk favors stenting.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ICSS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ICSS+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "sapphire",
@@ -611,7 +981,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "CAS was noninferior for 1-year death/stroke/MI, driven partly by more perioperative MI after CEA.",
       "safety": "Stroke tended to favor CEA; cranial-nerve and wound complications favored CAS.",
       "implication": "Supports CAS in carefully selected high-surgical-risk patients; mixed symptomatic status and composite endpoints limit extrapolation.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SAPPHIRE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SAPPHIRE+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CREST and ACST-2 broadened procedure comparisons; contemporary selection depends on symptoms, procedural risk, anatomy, and operator outcomes.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "crest",
@@ -624,7 +1004,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Composite stroke/MI/death was similar; CAS caused more periprocedural stroke, CEA more periprocedural MI. Outcomes favored CEA with increasing age.",
       "safety": "Different complication profiles: cranial-nerve injury with CEA, stroke with CAS.",
       "implication": "Select procedure by age, anatomy, comorbidity, and patient values; CEA generally favored in older symptomatic patients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CREST+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CREST+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ACST-2 added an asymptomatic procedure comparison and CREST-2 tested revascularization against contemporary intensive medical therapy.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "act-i",
@@ -637,7 +1027,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "CAS was noninferior for death/stroke/MI within 30 days or ipsilateral stroke within 1 year.",
       "safety": "Stroke numerically favored CEA; MI and cranial-nerve injury favored CAS.",
       "implication": "Shows CAS can perform well in selected younger asymptomatic patients with experienced operators.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACT+I+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACT+I+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "space-2",
@@ -650,7 +1050,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Under-recruitment left the trial underpowered; event rates were low and no definitive difference was shown.",
       "safety": "Procedural events occurred in both intervention arms.",
       "implication": "Demonstrated feasibility problems and low modern event rates; it could not settle intervention versus medical therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SPACE-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SPACE-2+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "crest-2",
@@ -663,7 +1073,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "CAS plus medical therapy reduced the primary outcome, 2.8% versus 6.0%. CEA was numerically better, 3.7% versus 5.3%, but did not reach statistical significance.",
       "safety": "Early procedural events remained crucial; benefit depended on expert centers and intensive risk-factor treatment in both groups.",
       "implication": "Updates the field: selected asymptomatic patients may benefit from CAS, while routine CEA benefit was not proven. Generalizability outside credentialed centers is a major limitation.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CREST-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CREST-2+randomized+trial+primary+publication",
+      "publicationYear": 2026,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "Published after the 2021 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "uksat",
@@ -676,7 +1096,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No long-term survival advantage from immediate repair; operative mortality offset rupture prevention.",
       "safety": "Open repair carried substantial perioperative mortality and morbidity.",
       "implication": "Surveil most asymptomatic AAAs below 5.5 cm in men, with individualized decisions for women, rapid growth, symptoms, and anatomy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=UKSAT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=UKSAT+randomized+trial+primary+publication",
+      "publicationYear": 1998,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ADAM independently supported surveillance rather than early repair for small AAA; modern guidelines preserve this principle.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "adam",
@@ -689,7 +1119,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No mortality benefit from early surgery despite lower rupture risk.",
       "safety": "Operative mortality and surgical morbidity offset benefit.",
       "implication": "Confirmed the 5.5-cm threshold for most men with asymptomatic infrarenal AAA.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADAM+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADAM+randomized+trial+primary+publication",
+      "publicationYear": 2002,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "UKSAT provided concordant evidence supporting surveillance of small AAA.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "mass",
@@ -702,7 +1142,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced AAA-related mortality and emergency rupture surgery over long-term follow-up; all-cause mortality effect was small.",
       "safety": "Screening led to more elective operations and surveillance, with low direct harm.",
       "implication": "Foundational evidence for one-time ultrasound screening in older men.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MASS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MASS+randomized+trial+primary+publication",
+      "publicationYear": 2002,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "viborg",
@@ -715,7 +1165,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced AAA-related mortality and emergency operations; cost-effectiveness was favorable.",
       "safety": "More elective repairs occurred.",
       "implication": "Supports organized one-time male screening, consistent with MASS.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Viborg+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Viborg+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "chichester",
@@ -728,7 +1188,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Clear benefit was seen mainly in men; low prevalence and event rates limited benefit in women.",
       "safety": "Potential overdiagnosis and elective procedures accompanied screening.",
       "implication": "Historical support for sex-specific screening policies.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Chichester+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Chichester+randomized+trial+primary+publication",
+      "publicationYear": 1995,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "evar-1",
@@ -741,7 +1211,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "EVAR reduced 30-day mortality, but the early survival advantage disappeared over long-term follow-up because of late aneurysm-related deaths and reinterventions.",
       "safety": "EVAR had fewer early complications but more late reinterventions and surveillance burden.",
       "implication": "EVAR offers lower perioperative risk, not guaranteed lifetime superiority; durable follow-up and sac surveillance are essential.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVAR-1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVAR-1+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "DREAM, OVER, and ACE confirmed early EVAR advantages with convergence of long-term survival and ongoing reintervention considerations.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "evar-2",
@@ -754,7 +1234,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "EVAR reduced aneurysm-related mortality but did not improve overall survival in the original analysis because competing mortality was high.",
       "safety": "Perioperative mortality remained substantial in this frail population.",
       "implication": "Do not offer EVAR solely because open surgery is unsuitable; assess life expectancy, frailty, and whether rupture prevention will translate into meaningful survival.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVAR-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVAR-2+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Remains central evidence that EVAR does not rescue outcomes when severe comorbidity and limited life expectancy dominate risk.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "dream",
@@ -767,7 +1257,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Lower perioperative mortality with EVAR; no durable overall survival advantage over longer follow-up.",
       "safety": "More reinterventions and device-related surveillance after EVAR.",
       "implication": "Confirms the early-benefit/late-catch-up pattern of EVAR.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DREAM+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DREAM+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "over",
@@ -780,7 +1280,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "EVAR lowered perioperative mortality; long-term survival was similar, with convergence over time.",
       "safety": "Reintervention patterns differed; late rupture after EVAR was uncommon with surveillance.",
       "implication": "Procedure choice should balance early risk, anatomy, durability, and follow-up reliability.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=OVER+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=OVER+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ace",
@@ -793,7 +1303,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No significant difference in mortality; EVAR had more reinterventions.",
       "safety": "Open repair had greater early physiologic burden.",
       "implication": "Even in lower-risk patients, EVAR is not clearly superior long term.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACE+randomized+trial+primary+publication",
+      "publicationYear": 2011,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "caesar",
@@ -806,7 +1326,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No mortality or rupture advantage from early EVAR; many surveillance patients eventually crossed to repair as aneurysms enlarged.",
       "safety": "Early EVAR exposed patients to procedure and surveillance harms sooner.",
       "implication": "Do not repair small asymptomatic AAA simply because EVAR is technically feasible.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAESAR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAESAR+randomized+trial+primary+publication",
+      "publicationYear": 2011,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "pivotal",
@@ -819,7 +1349,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No difference in all-cause mortality or rupture/AAA-related death.",
       "safety": "Procedure-related risk and long-term device surveillance remained.",
       "implication": "Reinforces surveillance for small AAA.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PIVOTAL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PIVOTAL+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "improve",
@@ -832,7 +1372,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "30-day mortality was not significantly reduced overall, but EVAR strategy improved discharge home and may benefit women and anatomically suitable patients; cost-effectiveness favored the strategy.",
       "safety": "Open conversion and logistical delay were important; outcomes depended on system organization.",
       "implication": "Use an endovascular-capable pathway rather than assuming EVAR itself guarantees survival benefit.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IMPROVE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IMPROVE+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "AJAX and ECAR were smaller ruptured-AAA strategy trials; pooled interpretation supports an endovascular-first strategy only when anatomy and systems permit.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ajax",
@@ -845,7 +1395,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No significant mortality difference; the trial was relatively small.",
       "safety": "Complication patterns differed without decisive safety superiority.",
       "implication": "One of several RCTs showing no clear universal mortality advantage for EVAR in rupture.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AJAX+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AJAX+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ecar",
@@ -858,7 +1418,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No significant difference in 30-day mortality; EVAR reduced some resource-use measures.",
       "safety": "No major unexpected safety signal.",
       "implication": "Supports individualized use of EVAR within experienced systems rather than a blanket mortality claim.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ECAR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ECAR+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "instead",
@@ -871,7 +1441,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "At 2 years, no survival benefit, but TEVAR produced substantially more favorable aortic remodeling.",
       "safety": "Early procedure-related neurologic and vascular complications occurred.",
       "implication": "Routine early TEVAR was not justified by short-term survival alone; remodeling benefit motivated longer follow-up and selected preemptive intervention.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=INSTEAD+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=INSTEAD+randomized+trial+primary+publication",
+      "publicationYear": 2009,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "INSTEAD-XL supplied longer-term follow-up suggesting delayed aortic benefit in selected uncomplicated type B dissection.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "instead-xl",
@@ -884,7 +1464,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "At 5 years, TEVAR reduced aorta-specific mortality and disease progression after an early hazard period.",
       "safety": "Late benefit had to be weighed against initial procedural risk.",
       "implication": "Supports preemptive TEVAR in selected uncomplicated patients with high-risk anatomy and adequate procedural expertise.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=INSTEAD-XL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=INSTEAD-XL+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "adsorb",
@@ -897,7 +1487,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "TEVAR improved false-lumen thrombosis and aortic remodeling at 1 year; the trial was not powered for mortality.",
       "safety": "Procedural complications were relatively infrequent but sample size was small.",
       "implication": "An imaging-remodeling trial, not definitive proof of clinical-event benefit.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADSORB+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADSORB+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 ACC/AHA Aortic Disease Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "emma",
@@ -910,7 +1510,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No clear overall blood-pressure or renal-function benefit; some medication reduction occurred.",
       "safety": "Procedural complications were nontrivial in the early angioplasty era.",
       "implication": "Historical evidence against routine intervention for uncomplicated atherosclerotic stenosis.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EMMA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EMMA+randomized+trial+primary+publication",
+      "publicationYear": 1998,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "drastic",
@@ -923,7 +1533,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No durable clinically important blood-pressure or renal-function advantage for routine angioplasty.",
       "safety": "Procedure-related complications occurred; crossover weakened interpretation.",
       "implication": "Routine revascularization is not indicated for stable hypertension alone.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DRASTIC+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DRASTIC+randomized+trial+primary+publication",
+      "publicationYear": 2000,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "scottish-and-newcastle-ras-trial",
@@ -936,7 +1556,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No convincing overall advantage; possible signal in bilateral disease was hypothesis-generating.",
       "safety": "Small sample and procedural risk limited certainty.",
       "implication": "Recognition-level historical trial supporting selective rather than routine angioplasty.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Scottish+and+Newcastle+RAS+Trial+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Scottish+and+Newcastle+RAS+Trial+randomized+trial+primary+publication",
+      "publicationYear": 1998,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "star",
@@ -949,7 +1579,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Stenting did not prevent decline in renal function.",
       "safety": "Serious procedure-related complications occurred, including deaths and cholesterol embolization.",
       "implication": "Do not stent stable renal artery stenosis solely to preserve kidney function.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STAR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STAR+randomized+trial+primary+publication",
+      "publicationYear": 2009,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "astral",
@@ -962,7 +1602,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No meaningful benefit in renal function, blood pressure, cardiovascular events, or mortality.",
       "safety": "Serious procedural complications occurred.",
       "implication": "Routine renal-artery revascularization is ineffective in broadly selected stable disease; selection bias excluded patients thought to definitely need intervention.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ASTRAL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ASTRAL+randomized+trial+primary+publication",
+      "publicationYear": 2009,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "CORAL subsequently confirmed no routine clinical benefit from renal-artery stenting; later guidance reserves revascularization for selected high-risk syndromes.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "coral",
@@ -975,7 +1625,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No reduction in CV/renal composite events; systolic blood pressure was only about 2 mmHg lower with stenting.",
       "safety": "Procedure-related complications were uncommon but not absent.",
       "implication": "Medical therapy is standard. Trials do not fully address recurrent flash pulmonary edema, rapidly declining kidney function, or truly refractory hypertension.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CORAL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CORAL+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Confirms the broader negative randomized program (DRASTIC, STAR, ASTRAL); it does not exclude benefit in carefully selected high-risk presentations underrepresented in trials.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "niter",
@@ -988,7 +1648,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Did not establish a robust renal or cardiovascular benefit; recruitment and power were limited.",
       "safety": "Procedural complications remained relevant.",
       "implication": "Small study consistent with the negative randomized evidence base.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=NITER+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=NITER+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Trial-design publication year; definitive outcome report not identified",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "radar",
@@ -1001,7 +1671,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Stopped early/underpowered and did not demonstrate clear clinical benefit.",
       "safety": "Limited precision for safety.",
       "implication": "Not practice-changing; remember the overall trial program is negative for routine stenting.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RADAR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RADAR+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA Scientific Statement on Renovascular Revascularization",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000217",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "cadiss",
@@ -1014,7 +1694,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent stroke was rare and did not differ significantly between groups.",
       "safety": "Major bleeding was uncommon; the trial was underpowered because event rates were very low.",
       "implication": "Either antiplatelet therapy or anticoagulation is reasonable for most extracranial dissections; individualize for thrombus, infarct burden, bleeding, and intracranial extension.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CADISS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CADISS+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "TREAT-CAD provided a second randomized comparison; together they have not established clear superiority of antiplatelet therapy or anticoagulation for most patients.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "treat-cad",
@@ -1027,7 +1717,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Aspirin failed to demonstrate noninferiority; ischemic strokes occurred only in the aspirin group, although absolute numbers were small.",
       "safety": "Major bleeding was rare and occurred in the anticoagulation group.",
       "implication": "CADISS and TREAT-CAD together do not establish one universal strategy; anticoagulation may be favored in selected high-embolism-risk patients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TREAT-CAD+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TREAT-CAD+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "Society for Vascular Surgery Extracranial Cerebrovascular Disease Guideline",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/34153348/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Adds to CADISS; the two trials are complementary and leave residual uncertainty rather than one superseding the other.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "matisse-dvt",
@@ -1040,7 +1740,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Fondaparinux was noninferior for recurrent VTE.",
       "safety": "Major bleeding and mortality were similar.",
       "implication": "Established fondaparinux as an effective parenteral option for initial DVT treatment.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MATISSE-DVT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MATISSE-DVT+randomized+trial+primary+publication",
+      "publicationYear": 2003,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "matisse-pe",
@@ -1053,7 +1763,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Fondaparinux was noninferior for recurrent VTE.",
       "safety": "Major bleeding and mortality were similar.",
       "implication": "Validated simple weight-based fondaparinux for stable PE; UFH remains useful when rapid reversal or procedures are anticipated.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MATISSE-PE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MATISSE-PE+randomized+trial+primary+publication",
+      "publicationYear": 2003,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-cover-i",
@@ -1066,7 +1786,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Dabigatran was noninferior for recurrent VTE or VTE-related death.",
       "safety": "Major bleeding was similar, while major or clinically relevant nonmajor bleeding was lower with dabigatran.",
       "implication": "Established dabigatran as a DOAC option, but it requires 5–10 days of initial parenteral anticoagulation.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-COVER+I+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-COVER+I+randomized+trial+primary+publication",
+      "publicationYear": 2009,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-cover-ii",
@@ -1079,7 +1809,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Confirmed noninferiority for recurrent VTE; pooled evidence strengthened consistency.",
       "safety": "Bleeding profile again favored dabigatran for overall clinically relevant bleeding.",
       "implication": "Remember as confirmation of RE-COVER I rather than a separate practice principle.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-COVER+II+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-COVER+II+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "einstein-dvt",
@@ -1092,7 +1832,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban was noninferior for recurrent VTE.",
       "safety": "Major plus clinically relevant nonmajor bleeding was similar.",
       "implication": "Established the single-drug rivaroxaban regimen without heparin lead-in.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-DVT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-DVT+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "EINSTEIN-PE extended the same single-drug rivaroxaban strategy to pulmonary embolism; EINSTEIN-CHOICE later addressed extended prevention.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "einstein-pe",
@@ -1105,7 +1855,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban was noninferior for recurrent VTE.",
       "safety": "Major bleeding was lower with rivaroxaban, about 1.1% versus 2.2%.",
       "implication": "Supports single-drug rivaroxaban for stable PE; avoid extrapolation to shock or patients needing thrombolysis.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-PE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-PE+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "amplify",
@@ -1118,7 +1878,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Apixaban was noninferior for recurrent VTE/VTE death, about 2.3% versus 2.7%.",
       "safety": "Major bleeding was substantially lower, 0.6% versus 1.8%.",
       "implication": "Established single-drug apixaban as a preferred acute VTE option because efficacy is preserved with less bleeding.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AMPLIFY+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AMPLIFY+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "AMPLIFY-EXT addressed lower-dose extended apixaban after initial treatment; it did not replace AMPLIFY's acute-treatment evidence.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "hokusai-vte",
@@ -1131,7 +1901,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Edoxaban was noninferior for recurrent symptomatic VTE; benefit was consistent in severe PE with RV dysfunction.",
       "safety": "Major or clinically relevant nonmajor bleeding was lower with edoxaban.",
       "implication": "Effective DOAC option requiring heparin lead-in and dose adjustment.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Hokusai-VTE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Hokusai-VTE+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Later cancer-specific trials, including Hokusai VTE Cancer, addressed a distinct population with different bleeding considerations.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "einstein-extension",
@@ -1144,7 +1924,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was 1.3% versus 7.1%; ARR 5.8%, NNT about 17.",
       "safety": "Major bleeding occurred in 0.7% versus 0%, with more clinically relevant bleeding.",
       "implication": "Extended full-dose rivaroxaban is highly effective when recurrence risk outweighs bleeding risk.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-Extension+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-Extension+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "einstein-choice",
@@ -1157,7 +1947,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was 1.5%, 1.2%, and 4.4%, respectively; both rivaroxaban doses were superior to aspirin.",
       "safety": "Major bleeding was low and similar: about 0.5%, 0.4%, and 0.3%.",
       "implication": "Low-dose rivaroxaban is an effective extended option; aspirin is substantially less protective.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-CHOICE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EINSTEIN-CHOICE+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "amplify-ext",
@@ -1170,7 +1970,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE or VTE death was about 1.7% with either apixaban dose versus 8.8% with placebo.",
       "safety": "Major bleeding was very low and not increased; clinically relevant nonmajor bleeding rose modestly.",
       "implication": "Apixaban 2.5 mg twice daily is a standard reduced-dose extended strategy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AMPLIFY-EXT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AMPLIFY-EXT+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-medy",
@@ -1183,7 +1993,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Dabigatran was noninferior for recurrent VTE.",
       "safety": "Overall bleeding was lower, but acute coronary events were numerically more frequent with dabigatran.",
       "implication": "Supports extended dabigatran as an alternative to warfarin; requires attention to renal function and GI tolerability.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-MEDY+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-MEDY+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-sonate",
@@ -1196,7 +2016,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Dabigatran markedly reduced recurrent VTE, approximately 0.4% versus 5.6%.",
       "safety": "Major bleeding was rare, but clinically relevant bleeding increased.",
       "implication": "Confirms that stopping anticoagulation exposes persistent recurrence risk after unprovoked VTE.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-SONATE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-SONATE+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "warfasa",
@@ -1209,7 +2039,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Aspirin reduced recurrence from about 11.2% to 6.6% per year.",
       "safety": "Major bleeding was very low and similar.",
       "implication": "Aspirin offers modest protection only when anticoagulation is declined or unsuitable; it is not equivalent to a reduced-dose DOAC.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=WARFASA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=WARFASA+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "aspire",
@@ -1222,7 +2062,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "The primary recurrent-VTE reduction did not reach significance alone, but vascular composite outcomes improved; pooled with WARFASA, recurrence was reduced by about one-third.",
       "safety": "Major bleeding was low.",
       "implication": "Aspirin is a weak fallback strategy, not preferred extended therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ASPIRE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ASPIRE+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "padis-pe",
@@ -1235,7 +2085,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Extended therapy prevented recurrence while given, but the benefit disappeared after anticoagulation stopped.",
       "safety": "Bleeding occurred during extended warfarin.",
       "implication": "Anticoagulation suppresses rather than cures recurrence risk; duration decisions should be framed as indefinite versus stopping, not merely adding a finite interval.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PADIS-PE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PADIS-PE+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "dulcis",
@@ -1248,7 +2108,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Negative serial D-dimer identified a lower-risk group, but recurrence was not negligible and sex differences were important.",
       "safety": "Bleeding was concentrated among those continuing therapy.",
       "implication": "D-dimer may refine but should not dictate duration; modern practice relies more on recurrence phenotype, sex, bleeding risk, and preference.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DULCIS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DULCIS+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "herdoo2",
@@ -1261,7 +2131,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Women with 0–1 HERDOO2 criteria had recurrence about 3% per patient-year after stopping; no low-risk male group was identified.",
       "safety": "Bleeding among continuers was low but present.",
       "implication": "Validated a rule for stopping in selected women only. Do not apply it to men, cancer, unusual-site thrombosis, or strong persistent risk factors.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HERDOO2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HERDOO2+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "clot",
@@ -1274,7 +2154,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was 9% versus 17%; relative reduction about 52%, without survival benefit.",
       "safety": "Major bleeding was similar.",
       "implication": "Established LMWH as the historical standard for cancer-associated thrombosis.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLOT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLOT+randomized+trial+primary+publication",
+      "publicationYear": 2003,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CATCH reaffirmed LMWH-era practice; Hokusai VTE Cancer, SELECT-D, ADAM VTE, CARAVAGGIO, CASTA-DIVA, and CANVAS progressively established selected DOAC options.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "catch",
@@ -1287,7 +2177,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was numerically lower but not statistically significant; symptomatic DVT was reduced.",
       "safety": "Major bleeding was similar; clinically relevant nonmajor bleeding favored tinzaparin.",
       "implication": "Confirmed practical advantages of LMWH, though the primary efficacy endpoint was neutral.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CATCH+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CATCH+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "hokusai-vte-cancer",
@@ -1300,7 +2200,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Composite recurrent VTE or major bleeding was noninferior: 12.8% versus 13.5%; recurrence was lower with edoxaban.",
       "safety": "Major bleeding was higher with edoxaban, driven mainly by gastrointestinal cancers.",
       "implication": "DOACs are effective in cancer, but luminal GI lesions and bleeding risk must guide selection.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Hokusai+VTE+Cancer+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Hokusai+VTE+Cancer+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "SELECT-D and CARAVAGGIO expanded DOAC evidence; gastrointestinal and genitourinary bleeding considerations remain population-specific.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "select-d",
@@ -1313,7 +2223,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was lower with rivaroxaban, about 4% versus 11%.",
       "safety": "Major bleeding was numerically higher and clinically relevant nonmajor bleeding clearly higher, especially in GI and genitourinary sites.",
       "implication": "Rivaroxaban is effective but requires careful mucosal-bleeding assessment.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SELECT-D+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SELECT-D+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "adam-vte",
@@ -1326,7 +2246,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was lower with apixaban, about 0.7% versus 6.3%.",
       "safety": "Major bleeding was 0% versus 1.4%; the trial was small.",
       "implication": "Supported apixaban use, but event counts were limited and CARAVAGGIO provides stronger evidence.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADAM+VTE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADAM+VTE+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "caravaggio",
@@ -1339,7 +2269,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was 5.6% versus 7.9%; apixaban was noninferior.",
       "safety": "Major bleeding was 3.8% versus 4.0%, without a clear excess in major GI bleeding.",
       "implication": "Apixaban is a preferred option for many cancer patients, while drug interactions, thrombocytopenia, absorption, and mucosal lesions still matter.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CARAVAGGIO+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CARAVAGGIO+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CANVAS later supported pragmatic DOAC use; CARAVAGGIO remains the pivotal apixaban comparison with dalteparin.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "casta-diva",
@@ -1352,7 +2292,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was low in both groups, but the small trial did not conclusively prove noninferiority.",
       "safety": "Bleeding was broadly similar with limited precision.",
       "implication": "Consistent with DOAC efficacy but not independently definitive.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CASTA-DIVA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CASTA-DIVA+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "canvas",
@@ -1365,7 +2315,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "DOACs were noninferior for recurrent VTE, with low absolute recurrence rates.",
       "safety": "Major bleeding was similar overall.",
       "implication": "Strengthens real-world generalizability of DOACs across cancer types; individual bleeding and interaction assessment remains essential.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CANVAS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CANVAS+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "Published after the 2021 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "avert",
@@ -1378,7 +2338,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "During treatment, VTE was 1.0% versus 7.3%; in the full period, 4.2% versus 10.2%.",
       "safety": "Major bleeding increased, 3.5% versus 1.8%.",
       "implication": "Consider prophylaxis in selected high-risk ambulatory cancer patients after bleeding and interaction assessment; do not treat Khorana score alone.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AVERT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=AVERT+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "cassini",
@@ -1391,7 +2361,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "The 180-day primary endpoint was not significantly reduced, but VTE/death was lower during the on-treatment period.",
       "safety": "Major bleeding was low but numerically increased.",
       "implication": "Prophylaxis works while taken; interruptions and competing risk matter. Selection should focus on patients with meaningful thrombotic risk and acceptable bleeding risk.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CASSINI+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CASSINI+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "ASH VTE Prevention and Treatment in Patients With Cancer Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/cancer",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "peitho",
@@ -1404,7 +2384,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Death or hemodynamic decompensation at 7 days was 2.6% versus 5.6%, driven by less decompensation; mortality was not reduced.",
       "safety": "Major extracranial bleeding was 6.3% versus 1.2%; hemorrhagic stroke was about 2.0% versus 0.2%.",
       "implication": "Do not use routine full-dose systemic thrombolysis for intermediate-risk PE; reserve rescue reperfusion for deterioration or exceptional low-bleeding-risk cases.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEITHO+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEITHO+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Later catheter-directed and thrombectomy studies improved surrogate outcomes, but most did not replace PEITHO's hard-outcome and bleeding evidence for systemic thrombolysis.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "peitho-2",
@@ -1417,7 +2407,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "The 6-month composite of recurrent VTE, PE-related death, or major bleeding was low.",
       "safety": "Major bleeding was uncommon.",
       "implication": "Supports transition to oral therapy in stable intermediate-risk PE, but it was not a randomized reperfusion trial.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEITHO-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEITHO-2+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "mopett",
@@ -1430,7 +2430,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced a composite of pulmonary hypertension and recurrent PE, largely through echocardiographic pulmonary-pressure findings; mortality was not convincingly changed.",
       "safety": "No major bleeding was reported, but the trial was small.",
       "implication": "Hypothesis-generating only; definitions and surrogate-heavy outcomes limit routine low-dose thrombolysis.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MOPETT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MOPETT+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "topcoat",
@@ -1443,7 +2453,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Suggested improved composite functional outcomes but was terminated early and underpowered.",
       "safety": "Bleeding risk remained a concern.",
       "implication": "Not definitive; reinforces the need for adequately powered clinical-outcome trials.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TOPCOAT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TOPCOAT+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ultima",
@@ -1456,7 +2476,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "RV/LV ratio improved more at 24 hours; no trial-powered mortality or recurrence benefit was shown.",
       "safety": "No major bleeding in the small trial.",
       "implication": "Established rapid RV improvement with low-dose catheter thrombolysis, but clinical-outcome benefit remained unproven.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ULTIMA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ULTIMA+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "SEATTLE II and OPTALYSE PE extended catheter-directed thrombolysis evidence; PEERLESS added a head-to-head device comparison, while clinical-outcome certainty remains limited.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "seattle-ii",
@@ -1469,7 +2499,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Improved RV/LV ratio and pulmonary pressures at 48 hours.",
       "safety": "Moderate/severe bleeding occurred in about 10%; no intracranial hemorrhage was reported.",
       "implication": "Demonstrated feasibility and surrogate improvement, not superiority to anticoagulation.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SEATTLE+II+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SEATTLE+II+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "optalyse-pe",
@@ -1482,7 +2522,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "All regimens improved RV/LV ratio; very low-dose short-duration protocols appeared effective on imaging.",
       "safety": "Major bleeding occurred in about 4%; intracranial hemorrhage occurred, including one attributed to tPA.",
       "implication": "Lower-dose, shorter catheter thrombolysis is feasible, but surrogate endpoints and absent control group limit claims of clinical benefit.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=OPTALYSE+PE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=OPTALYSE+PE+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "SUNSET sPE questioned whether ultrasound assistance adds value over standard catheter-directed thrombolysis; PEERLESS later compared thrombectomy with catheter-directed thrombolysis.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "sunset-spe",
@@ -1495,7 +2545,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Ultrasound assistance did not improve thrombus reduction; RV improvement was similar.",
       "safety": "Major bleeding occurred only in the ultrasound-assisted arm, though numbers were small.",
       "implication": "The ultrasound component itself has not proven superior to conventional infusion catheters.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SUNSET+sPE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SUNSET+sPE+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "canary",
@@ -1508,7 +2568,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Fewer patients had persistent RV dilation at 3 months; the primary analysis was limited by early termination and small sample.",
       "safety": "Major bleeding was uncommon but present.",
       "implication": "Suggests potential durable RV benefit, not definitive clinical-outcome evidence.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CANARY+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CANARY+randomized+trial+primary+publication",
+      "publicationYear": 2022,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "flare",
@@ -1521,7 +2591,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "RV/LV ratio fell significantly at 48 hours; clinical deterioration was uncommon.",
       "safety": "Major adverse events were about 3.8%; major bleeding was low.",
       "implication": "Established feasibility of mechanical thrombectomy but did not compare it with anticoagulation or thrombolysis.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FLARE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FLARE+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "extract-pe",
@@ -1534,7 +2614,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "RV/LV ratio improved at 48 hours.",
       "safety": "Major adverse events and major bleeding were low; blood loss and access complications remain device concerns.",
       "implication": "Supports feasibility of aspiration thrombectomy, not proven patient-centered superiority.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EXTRACT-PE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EXTRACT-PE+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "peerless",
@@ -1547,7 +2637,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "A hierarchical composite favored thrombectomy, driven by less clinical deterioration/escalation and lower ICU use; mortality was low and similar.",
       "safety": "Major bleeding was similar and low.",
       "implication": "When intervention is chosen, thrombectomy may offer faster stabilization and less ICU utilization; it does not prove intervention is better than anticoagulation alone.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEERLESS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEERLESS+randomized+trial+primary+publication",
+      "publicationYear": 2024,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Adds comparative device evidence after single-arm FLARE and EXTRACT-PE; the 2026 PE guideline still emphasizes selective use and the need for stronger patient-centered outcomes.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "hi-peitho",
@@ -1560,7 +2660,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "PE-related death, decompensation/collapse, or symptomatic recurrence occurred in about 4.0% versus 10.3%, driven mainly by less decompensation.",
       "safety": "Major bleeding was increased but intracranial hemorrhage was uncommon; exact net benefit depends on endpoint definitions and patient selection.",
       "implication": "First randomized evidence of clinical benefit for catheter-directed reperfusion over anticoagulation in selected intermediate-high-risk PE; external validation and guideline integration are needed.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HI-PEITHO+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HI-PEITHO+randomized+trial+primary+publication",
+      "publicationYear": 2026,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 AHA/ACC Multisociety Acute Pulmonary Embolism Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001415",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "cavent",
@@ -1573,7 +2683,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "PTS at 2 years was 41.1% versus 55.6%; ARR 14.4%, NNT about 7. Patency improved.",
       "safety": "Major bleeding occurred with thrombolysis, including serious events.",
       "implication": "Selected young, low-bleeding-risk patients with extensive iliofemoral DVT may gain PTS reduction; not for routine proximal DVT.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CaVenT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CaVenT+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ATTRACT and CAVA tempered routine thrombus-removal use; current interpretation favors highly selected iliofemoral DVT patients.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "attract",
@@ -1586,7 +2706,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Did not reduce overall PTS incidence, 47% versus 48%; reduced PTS severity and early symptoms, especially in iliofemoral subgroup analyses.",
       "safety": "Major bleeding increased, 1.7% versus 0.3% within 10 days.",
       "implication": "Do not routinely lyse proximal DVT. Consider only selected severe iliofemoral cases with low bleeding risk after shared decision-making.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ATTRACT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ATTRACT+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CAVA added another negative/uncertain catheter-directed trial; C-TRACT later tested intervention for established post-thrombotic syndrome rather than acute DVT prevention.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "cava",
@@ -1599,7 +2729,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Did not significantly reduce 1-year PTS; longer follow-up suggested possible reduction but interpretation was limited.",
       "safety": "Bleeding increased with intervention.",
       "implication": "Another negative/uncertain trial arguing against routine thrombolysis.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAVA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CAVA+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "torpedo",
@@ -1612,7 +2752,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reported lower recurrent VTE and PTS with intervention.",
       "safety": "Bleeding and procedural risks were incompletely generalizable.",
       "implication": "Positive but lower-quality evidence; outweighed by larger multicenter trials for routine practice.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TORPEDO+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TORPEDO+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "sox",
@@ -1625,7 +2775,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No reduction in PTS, approximately 14% in both groups.",
       "safety": "Stocking-related discomfort and adherence limitations were common; no major safety issue.",
       "implication": "Do not prescribe elastic compression stockings routinely solely to prevent PTS; use them for symptom relief.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SOX+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SOX+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ideal-dvt",
@@ -1638,7 +2798,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Individualized shorter treatment was noninferior for PTS prevention and reduced stocking use.",
       "safety": "No important safety difference.",
       "implication": "Tailor compression duration to symptoms rather than mandating 2 years.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IDEAL+DVT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IDEAL+DVT+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "c-tract",
@@ -1651,7 +2821,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "At 6 months, venous clinical severity was lower and disease-specific quality of life was better with endovascular therapy.",
       "safety": "Bleeding and procedure-related complications were increased.",
       "implication": "Supports iliac-vein intervention in carefully selected symptomatic obstructive PTS at experienced centers; durability and patient selection remain critical.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=C-TRACT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=C-TRACT+randomized+trial+primary+publication",
+      "publicationYear": 2026,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "Published after the 2024 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "prepic",
@@ -1664,7 +2844,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Filters reduced PE but increased recurrent DVT; no survival benefit at long-term follow-up.",
       "safety": "Filter thrombosis and chronic venous complications accumulated over time.",
       "implication": "Do not add a permanent filter routinely when anticoagulation is feasible.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREPIC+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREPIC+randomized+trial+primary+publication",
+      "publicationYear": 1998,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "PREPIC2 showed no benefit from adding a retrievable filter to anticoagulation in severe PE; filters remain reserved for selected patients with contraindications or failure scenarios.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "prepic2",
@@ -1677,7 +2867,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No reduction in recurrent symptomatic PE at 3 months.",
       "safety": "Filter complications occurred, including thrombosis and retrieval failure.",
       "implication": "A retrievable filter is not useful as routine adjunctive therapy; reserve filters for absolute anticoagulation contraindication or selected recurrence despite adequate therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREPIC2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREPIC2+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "stenox",
@@ -1690,7 +2890,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Anticoagulant and NSAID strategies reduced early extension/recurrence compared with placebo; events rose after short treatment stopped.",
       "safety": "Major bleeding was rare.",
       "implication": "Established SVT as thrombotic disease requiring risk-based treatment; duration used was probably too short.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STENOX+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STENOX+randomized+trial+primary+publication",
+      "publicationYear": 2003,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "calisto",
@@ -1703,7 +2913,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Death/PE/DVT/extension to junction/recurrence was 0.9% versus 5.9%; ARR 5%, NNT 20.",
       "safety": "Major bleeding was 0.1% in each group.",
       "implication": "Fondaparinux 2.5 mg for 45 days is the benchmark regimen for clinically significant SVT.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CALISTO+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CALISTO+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "surprise",
@@ -1716,7 +2936,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban was noninferior for thromboembolic complications.",
       "safety": "No major bleeding occurred; clinically relevant bleeding was uncommon.",
       "implication": "Rivaroxaban 10 mg daily is a convenient alternative, though fondaparinux has the strongest placebo-controlled evidence.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SURPRISE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SURPRISE+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2024,
+      "guidelineLabel": "CHEST Antithrombotic Therapy for VTE Disease Guideline Update",
+      "guidelineUrl": "https://journal.chestnet.org/article/S0012-3692(24)00292-7/fulltext",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "raps",
@@ -1729,7 +2959,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban did not meet the prespecified laboratory noninferiority endpoint, but no clinical thromboses occurred during short follow-up.",
       "safety": "No major bleeding occurred.",
       "implication": "A surrogate, low-risk, short trial that cannot establish DOAC safety in high-risk APS.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAPS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAPS+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "2019 EULAR Antiphospholipid Syndrome Recommendations",
+      "guidelineUrl": "https://ard.bmj.com/content/78/10/1296",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "TRAPS, Ordi-Ros, and ASTRO-APS shifted practice away from routine DOAC use in thrombotic APS, especially high-risk phenotypes.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "traps",
@@ -1742,7 +2982,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Stopped early because thrombotic/vascular events were higher with rivaroxaban, especially arterial stroke and MI.",
       "safety": "Major bleeding was not lower enough to offset thrombotic harm.",
       "implication": "Avoid DOACs in triple-positive APS, particularly with arterial events; warfarin remains standard.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TRAPS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TRAPS+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2019,
+      "guidelineLabel": "2019 EULAR Antiphospholipid Syndrome Recommendations",
+      "guidelineUrl": "https://ard.bmj.com/content/78/10/1296",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Ordi-Ros and ASTRO-APS reinforced concern across factor-Xa inhibitors; warfarin remains the standard for high-risk thrombotic APS.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ordi-ros",
@@ -1755,7 +3005,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban failed noninferiority and was associated with more recurrent thrombosis, particularly stroke.",
       "safety": "Bleeding was not clearly reduced.",
       "implication": "Reinforces avoidance of rivaroxaban in thrombotic APS beyond only the TRAPS population.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Ordi-Ros+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Ordi-Ros+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2019,
+      "guidelineLabel": "2019 EULAR Antiphospholipid Syndrome Recommendations",
+      "guidelineUrl": "https://ard.bmj.com/content/78/10/1296",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "astro-aps",
@@ -1768,7 +3028,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "The trial ended early; strokes occurred in the apixaban arm and none in the warfarin arm.",
       "safety": "Small sample prevented precise bleeding comparison.",
       "implication": "Apixaban should not be substituted routinely for warfarin in thrombotic APS, especially with prior arterial events.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ASTRO-APS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ASTRO-APS+randomized+trial+primary+publication",
+      "publicationYear": 2022,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2019,
+      "guidelineLabel": "2019 EULAR Antiphospholipid Syndrome Recommendations",
+      "guidelineUrl": "https://ard.bmj.com/content/78/10/1296",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-spect-cvt",
@@ -1781,7 +3051,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No recurrent VTE occurred in either arm; recanalization and functional outcomes were similar.",
       "safety": "Major bleeding was uncommon in both groups, including intracranial bleeding events.",
       "implication": "Supports dabigatran as a reasonable option in selected CVT, but the trial was small and excluded unstable patients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-SPECT+CVT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-SPECT+CVT+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 AHA Scientific Statement on Cerebral Venous Thrombosis",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/STR.0000000000000456",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "SECRET added feasibility evidence for rivaroxaban; current AHA guidance incorporates the wider emerging DOAC evidence without treating either small trial as definitive alone.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "secret",
@@ -1794,7 +3074,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Clinical events were rare and efficacy appeared similar, but the study was not powered for noninferiority.",
       "safety": "Bleeding was uncommon.",
       "implication": "Adds supportive but not definitive randomized evidence for DOACs in CVT.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SECRET+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SECRET+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 AHA Scientific Statement on Cerebral Venous Thrombosis",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/STR.0000000000000456",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "to-act",
@@ -1807,7 +3097,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No improvement in good functional outcome; the trial stopped early for futility.",
       "safety": "Procedure-related complications and intracranial hemorrhage occurred.",
       "implication": "Do not use routine endovascular therapy for severe CVT; consider rescue only in highly selected deterioration despite anticoagulation.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TO-ACT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TO-ACT+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2024,
+      "guidelineLabel": "2024 AHA Scientific Statement on Cerebral Venous Thrombosis",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/STR.0000000000000456",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "highlow",
@@ -1820,7 +3120,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Recurrent VTE was low and not significantly reduced by intermediate dosing, about 2% versus 3%.",
       "safety": "Major bleeding was similar; clinically relevant bleeding and neuraxial-timing complexity matter.",
       "implication": "Low-dose LMWH is sufficient for most women with prior VTE; routine intermediate dosing adds burden without proven benefit.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Highlow+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=Highlow+randomized+trial+primary+publication",
+      "publicationYear": 2022,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE in Pregnancy Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/pregnancy",
+      "guidelineRole": "Published after the 2018 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "medenox",
@@ -1833,7 +3143,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Enoxaparin 40 mg reduced venographic/symptomatic VTE to about 5.5% versus 14.9%; the 20-mg dose was ineffective.",
       "safety": "Major bleeding was uncommon and not significantly increased.",
       "implication": "Established standard-dose LMWH prophylaxis in appropriately selected acutely ill medical inpatients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MEDENOX+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MEDENOX+randomized+trial+primary+publication",
+      "publicationYear": 1999,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "PREVENT and ARTEMIS confirmed inpatient prophylaxis efficacy; EXCLAIM, ADOPT, MAGELLAN, APEX, and MARINER refined why routine extended prophylaxis is not universal.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "prevent",
@@ -1846,7 +3166,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced proximal DVT, symptomatic VTE, and fatal PE composite, about 2.8% versus 4.9%.",
       "safety": "Major bleeding was very low and similar.",
       "implication": "Confirmed benefit of inpatient LMWH prophylaxis when VTE risk is sufficient.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREVENT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREVENT+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "artemis",
@@ -1859,7 +3189,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced VTE from about 10.5% to 5.6% and suggested fewer fatal PEs.",
       "safety": "Major bleeding was rare and similar.",
       "implication": "Fondaparinux is effective inpatient prophylaxis when renal function permits.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ARTEMIS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ARTEMIS+randomized+trial+primary+publication",
+      "publicationYear": 2006,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "exclaim",
@@ -1872,7 +3212,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Extended therapy modestly reduced VTE, with benefit concentrated in selected high-risk subgroups.",
       "safety": "Major bleeding increased, about 0.8% versus 0.3%.",
       "implication": "Routine extended LMWH after medical hospitalization is not justified; selection must be stringent.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EXCLAIM+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EXCLAIM+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "adopt",
@@ -1885,7 +3235,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Apixaban was not superior for VTE prevention.",
       "safety": "Major bleeding increased with apixaban, 0.47% versus 0.19%.",
       "implication": "Do not extend prophylaxis routinely with apixaban after medical admission.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADOPT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADOPT+randomized+trial+primary+publication",
+      "publicationYear": 2011,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "MAGELLAN, APEX, and MARINER refined extended-prophylaxis selection; benefit depends on identifying high VTE risk without excessive bleeding risk.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "magellan",
@@ -1898,7 +3258,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban was noninferior during hospitalization and reduced VTE by day 35.",
       "safety": "Major and clinically relevant bleeding increased, especially in patients with active cancer, ulcers, bronchiectasis, or recent bleeding.",
       "implication": "Extended rivaroxaban can work, but net benefit depends on excluding high-bleeding-risk phenotypes.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MAGELLAN+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MAGELLAN+randomized+trial+primary+publication",
+      "publicationYear": 2013,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "apex",
@@ -1911,7 +3281,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "The prespecified primary cohort narrowly missed significance; the overall population had fewer VTE events.",
       "safety": "Major bleeding was not significantly increased, but clinically relevant bleeding was higher.",
       "implication": "Supported the concept of selected extended prophylaxis, though betrixaban is no longer clinically available in many markets.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=APEX+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=APEX+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "mariner",
@@ -1924,7 +3304,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Did not significantly reduce the primary composite of symptomatic VTE and VTE-related death; symptomatic nonfatal VTE was reduced.",
       "safety": "Major bleeding was low and not significantly increased.",
       "implication": "Routine post-discharge prophylaxis remains unsupported; a narrowly selected high-risk/low-bleeding-risk approach may be considered.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MARINER+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=MARINER+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2018,
+      "guidelineLabel": "ASH VTE Prophylaxis for Medical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prophylaxis-for-medical-patients",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "record-1",
@@ -1937,7 +3327,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban reduced total VTE and major VTE.",
       "safety": "Major bleeding was low and not significantly different.",
       "implication": "Established rivaroxaban efficacy after hip replacement.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+1+randomized+trial+primary+publication",
+      "publicationYear": 2008,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "record-2",
@@ -1950,7 +3350,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Extended rivaroxaban markedly reduced VTE.",
       "safety": "Major bleeding remained uncommon.",
       "implication": "Demonstrated the importance of extended prophylaxis after hip arthroplasty.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+2+randomized+trial+primary+publication",
+      "publicationYear": 2008,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "record-3",
@@ -1963,7 +3373,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban reduced total VTE.",
       "safety": "Major bleeding was low with no definitive difference.",
       "implication": "Established rivaroxaban as an effective knee-replacement prophylaxis option.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+3+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+3+randomized+trial+primary+publication",
+      "publicationYear": 2008,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "record-4",
@@ -1976,7 +3396,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rivaroxaban reduced total VTE.",
       "safety": "Bleeding was numerically higher but major bleeding differences were not definitive.",
       "implication": "Confirms efficacy against the intensive North American enoxaparin regimen.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+4+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RECORD+4+randomized+trial+primary+publication",
+      "publicationYear": 2009,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "advance-1",
@@ -1989,7 +3419,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Apixaban did not meet the prespecified noninferiority criterion, despite similar event rates.",
       "safety": "Bleeding was lower with apixaban.",
       "implication": "Regimen and noninferiority margin matter; later ADVANCE trials established efficacy against once-daily enoxaparin.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVANCE-1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVANCE-1+randomized+trial+primary+publication",
+      "publicationYear": 2009,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "advance-2",
@@ -2002,7 +3442,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Apixaban was superior for VTE prevention.",
       "safety": "Major or clinically relevant bleeding was similar.",
       "implication": "Supports apixaban after knee replacement.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVANCE-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVANCE-2+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "advance-3",
@@ -2015,7 +3465,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Apixaban reduced VTE without sacrificing safety.",
       "safety": "Major and clinically relevant bleeding were similar.",
       "implication": "Supports extended apixaban prophylaxis after hip replacement.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVANCE-3+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVANCE-3+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-model",
@@ -2028,7 +3488,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Both dabigatran regimens were noninferior for VTE prevention.",
       "safety": "Bleeding was similar.",
       "implication": "European evidence supporting dabigatran after knee replacement.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-MODEL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-MODEL+randomized+trial+primary+publication",
+      "publicationYear": 2007,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-novate",
@@ -2041,7 +3511,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Dabigatran was noninferior.",
       "safety": "Bleeding was similar.",
       "implication": "Established dabigatran as an orthopedic prophylaxis option in jurisdictions where approved.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-NOVATE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-NOVATE+randomized+trial+primary+publication",
+      "publicationYear": 2007,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-novate-ii",
@@ -2054,7 +3534,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Dabigatran was noninferior for total VTE/death and reduced major VTE in a secondary analysis.",
       "safety": "Major bleeding was similar.",
       "implication": "Confirmatory rather than uniquely practice-changing.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-NOVATE+II+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-NOVATE+II+randomized+trial+primary+publication",
+      "publicationYear": 2011,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "epcat-ii",
@@ -2067,7 +3557,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Symptomatic VTE was 0.64% versus 0.70%; aspirin was noninferior.",
       "safety": "Major bleeding was similarly low.",
       "implication": "In selected lower-risk arthroplasty patients, aspirin is reasonable only after an initial DOAC course; this was not aspirin from day 1.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EPCAT+II+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EPCAT+II+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CRISTAL later found higher symptomatic VTE with aspirin than enoxaparin in a different pragmatic regimen, limiting broad extrapolation of EPCAT II.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "cristal",
@@ -2080,7 +3580,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Symptomatic VTE was higher with aspirin, 3.45% versus 1.82%; enoxaparin was superior.",
       "safety": "Major bleeding and death were similar.",
       "implication": "Do not assume aspirin monotherapy from day 1 is equivalent to LMWH; reconcile CRISTAL with EPCAT II’s initial anticoagulant phase.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CRISTAL+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CRISTAL+randomized+trial+primary+publication",
+      "publicationYear": 2022,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "Published after the 2019 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Updates aspirin-versus-anticoagulant prophylaxis evidence after EPCAT II; regimen design and initial anticoagulant lead-in explain why the trials are not directly interchangeable.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "prevent-clot",
@@ -2093,7 +3603,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Aspirin was noninferior for 90-day mortality; PE was similar, but DVT was modestly more frequent with aspirin.",
       "safety": "Bleeding and wound complications were similar.",
       "implication": "Aspirin is acceptable for many orthopedic-trauma patients, but LMWH may be preferred when DVT risk is particularly high.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREVENT+CLOT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PREVENT+CLOT+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2019,
+      "guidelineLabel": "ASH VTE Prevention in Hospitalized Surgical Patients Guideline",
+      "guidelineUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/prevention-in-hospitalized-surgical-patients",
+      "guidelineRole": "Published after the 2019 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "eschar",
@@ -2106,7 +3626,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Surgery did not accelerate initial healing but reduced ulcer recurrence substantially over long-term follow-up.",
       "safety": "Surgical complications were generally minor.",
       "implication": "Treat superficial reflux to prevent recurrence even when compression heals the ulcer.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ESCHAR+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ESCHAR+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2023,
+      "guidelineLabel": "SVS/AVF/AVLS Varicose Veins Guideline, Part II",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/37652254/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "EVRA moved superficial venous intervention earlier during active-ulcer care; ESCHAR remains foundational for recurrence reduction.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "evra",
@@ -2119,7 +3649,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Median healing time was 56 versus 82 days; ulcer-free time improved and recurrence burden fell.",
       "safety": "Procedural complications were uncommon; DVT occurred rarely.",
       "implication": "Early reflux ablation is part of active ulcer treatment, not merely recurrence prevention after healing.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVRA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EVRA+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2023,
+      "guidelineLabel": "SVS/AVF/AVLS Varicose Veins Guideline, Part II",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/37652254/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Extends ESCHAR by supporting early rather than deferred ablation during active venous-ulcer treatment.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "class",
@@ -2132,7 +3672,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Quality of life improved with all; laser and surgery generally achieved better anatomic results than foam, with differing recovery and cost profiles.",
       "safety": "Procedural adverse events differed by modality; serious events were uncommon.",
       "implication": "Treatment should be individualized; minimally invasive ablation usually offers efficient recovery, while foam may have more residual/recurrent veins.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLASS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLASS+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2023,
+      "guidelineLabel": "SVS/AVF/AVLS Varicose Veins Guideline, Part II",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/37652254/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "relacs",
@@ -2145,7 +3695,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Early quality-of-life outcomes were similar; long-term same-site recurrence patterns differed, with more saphenofemoral recurrence after laser in some follow-up.",
       "safety": "Laser caused less early pain and quicker recovery; both had procedure-specific complications.",
       "implication": "Endovenous therapy improves recovery, but long-term recurrence and technique quality remain relevant.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RELACS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RELACS+randomized+trial+primary+publication",
+      "publicationYear": 2012,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2023,
+      "guidelineLabel": "SVS/AVF/AVLS Varicose Veins Guideline, Part II",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/37652254/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "venus-iv",
@@ -2158,7 +3718,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Healing was similar; hosiery reduced recurrence in adherent patients but was harder for some to tolerate.",
       "safety": "Treatment changes due to discomfort were more common with hosiery.",
       "implication": "Choose an effective high-compression system the patient can apply and sustain; adherence matters more than a single universal device.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VenUS+IV+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VenUS+IV+randomized+trial+primary+publication",
+      "publicationYear": 2014,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2023,
+      "guidelineLabel": "SVS/AVF/AVLS Varicose Veins Guideline, Part II",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/37652254/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "vuert",
@@ -2171,7 +3741,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Ablation improved healing and reduced recurrence, consistent with EVRA-era evidence.",
       "safety": "Procedural harms were uncommon.",
       "implication": "Supports correction of superficial reflux in addition to compression; smaller and less definitive than EVRA.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VUERT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VUERT+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2023,
+      "guidelineLabel": "SVS/AVF/AVLS Varicose Veins Guideline, Part II",
+      "guidelineUrl": "https://pubmed.ncbi.nlm.nih.gov/37652254/",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "4s",
@@ -2184,7 +3764,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced all-cause mortality from 11.5% to 8.2% and major coronary events substantially.",
       "safety": "Serious toxicity was uncommon.",
       "implication": "Foundational proof that LDL lowering with statins saves lives in secondary prevention.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=4S+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=4S+randomized+trial+primary+publication",
+      "publicationYear": 1994,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "HPS broadened statin benefit to a wider high-risk population; later intensive-statin and nonstatin trials extended LDL lowering rather than superseding 4S.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "hps",
@@ -2197,7 +3787,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Major vascular events fell by about 24%, with benefit across PAD, age, sex, and baseline LDL subgroups.",
       "safety": "Myopathy and liver toxicity were rare.",
       "implication": "Treat high-risk vascular patients regardless of whether baseline LDL appears merely 'average.'",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HPS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HPS+randomized+trial+primary+publication",
+      "publicationYear": 2002,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "PROVE IT–TIMI 22 and TNT established greater benefit with more intensive LDL lowering; IMPROVE-IT, FOURIER, and ODYSSEY OUTCOMES extended benefit beyond statins.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "prove-it-timi-22",
@@ -2210,7 +3810,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Intensive therapy reduced death/major CV events, 22.4% versus 26.3%, with benefit emerging early.",
       "safety": "Liver-enzyme elevations were more frequent with atorvastatin; serious muscle toxicity was uncommon.",
       "implication": "Supports immediate high-intensity statin therapy after acute vascular events.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PROVE+IT%E2%80%93TIMI+22+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PROVE+IT%E2%80%93TIMI+22+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "TNT confirmed intensive-statin benefit in stable coronary disease; later nonstatin trials showed that additional LDL lowering further reduces events.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "tnt",
@@ -2223,7 +3833,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Major cardiovascular events were reduced, 8.7% versus 10.9%, without a mortality difference.",
       "safety": "More transaminase elevations with high-dose therapy.",
       "implication": "Lower LDL is better in established atherosclerosis; monitor tolerability rather than accepting moderate-intensity treatment by default.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TNT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=TNT+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "improve-it",
@@ -2236,7 +3856,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Primary events were 32.7% versus 34.7%; ARR 2.0%, NNT about 50 over 7 years.",
       "safety": "Safety was similar, without excess cancer or major muscle/liver toxicity.",
       "implication": "First outcomes proof that adding a nonstatin and lowering LDL below prior targets improves events.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IMPROVE-IT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=IMPROVE-IT+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "FOURIER and ODYSSEY OUTCOMES extended the lower-is-better principle with PCSK9 inhibition; CLEAR Outcomes added bempedoic-acid outcomes evidence.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "fourier",
@@ -2249,7 +3879,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Primary composite was 9.8% versus 11.3%; key CV death/MI/stroke endpoint 5.9% versus 7.4%.",
       "safety": "Injection-site reactions increased slightly; no major neurocognitive, diabetes, or bleeding signal.",
       "implication": "PCSK9 inhibition reduces events rapidly in very-high-risk ASCVD, including PAD with substantial limb-event benefit.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FOURIER+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FOURIER+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ODYSSEY OUTCOMES provided concordant PCSK9 outcomes evidence; VESALIUS-CV later extended evolocumab outcomes evidence to high-risk patients without prior major ASCVD events.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "odyssey-outcomes",
@@ -2262,7 +3902,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "MACE was 9.5% versus 11.1%; all-cause mortality was modestly lower, with greatest absolute benefit at higher baseline LDL.",
       "safety": "Injection-site reactions increased; no major overall safety signal.",
       "implication": "Use PCSK9 therapy for residual high risk after ACS when LDL remains above threshold despite maximally tolerated therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ODYSSEY+OUTCOMES+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ODYSSEY+OUTCOMES+randomized+trial+primary+publication",
+      "publicationYear": 2018,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "clear-outcomes",
@@ -2275,7 +3925,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Four-component MACE was 11.7% versus 13.3%; ARR 1.6%.",
       "safety": "Gout, hyperuricemia, cholelithiasis, and small creatinine/liver-enzyme increases were more frequent.",
       "implication": "Bempedoic acid has outcomes evidence for statin-intolerant patients; LDL reduction and absolute benefit are less than with potent PCSK9 therapy.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLEAR+Outcomes+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CLEAR+Outcomes+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Adds outcomes evidence for bempedoic acid in statin-intolerant patients; it complements rather than replaces statin and PCSK9 evidence.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "orion-9",
@@ -2288,7 +3948,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "LDL cholesterol fell by about 48–50% versus placebo.",
       "safety": "Injection-site reactions were more frequent; serious adverse events were similar.",
       "implication": "Demonstrates durable LDL lowering and adherence advantages; it was not an outcomes trial.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ORION-9+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ORION-9+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "orion-10",
@@ -2301,7 +3971,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "LDL fell by about 52% at day 510.",
       "safety": "Mild injection-site reactions increased; overall safety was similar.",
       "implication": "Strong LDL-efficacy evidence, but cardiovascular outcome benefit awaits dedicated outcomes trials.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ORION-10+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ORION-10+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ORION-9 and ORION-11 confirmed durable LDL lowering in complementary populations; outcomes trials remain necessary to establish event reduction.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "orion-11",
@@ -2314,7 +3994,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "LDL fell by about 50%.",
       "safety": "Injection-site reactions were the main excess adverse event.",
       "implication": "Supports implementation for adherence and LDL control; do not claim proven event reduction from this trial alone.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ORION-11+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ORION-11+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "vesalius-cv",
@@ -2327,7 +4017,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Evolocumab reduced first major cardiovascular events, including about a 25% relative reduction in coronary death, MI, or ischemic stroke.",
       "safety": "Overall safety was similar, with mild injection-site reactions.",
       "implication": "Extends PCSK9 outcome benefit to very-high-risk patients before a first MI or stroke; absolute benefit depends on baseline risk.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VESALIUS-CV+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=VESALIUS-CV+randomized+trial+primary+publication",
+      "publicationYear": 2026,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "reduce-it",
@@ -2340,7 +4040,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Primary ischemic events were 17.2% versus 22.0%; ARR 4.8%, NNT about 21.",
       "safety": "Atrial fibrillation/flutter hospitalization and serious bleeding were increased.",
       "implication": "Use purified EPA in appropriately selected high-risk patients; do not generalize to over-the-counter fish oil or mixed omega-3 products.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=REDUCE-IT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=REDUCE-IT+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "STRENGTH's neutral result showed that REDUCE-IT should not be generalized to all omega-3 formulations; PROMINENT was also neutral for fibrate-like triglyceride lowering.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "strength",
@@ -2353,7 +4063,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No reduction in major adverse cardiovascular events; trial stopped for futility.",
       "safety": "Atrial fibrillation increased; gastrointestinal adverse events were common.",
       "implication": "Mixed EPA/DHA therapy is not interchangeable with icosapent ethyl.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STRENGTH+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=STRENGTH+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Does not negate REDUCE-IT; it shows that formulation, achieved biology, and trial population matter.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "prominent",
@@ -2366,7 +4086,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Lowered triglycerides but did not reduce cardiovascular events.",
       "safety": "Renal adverse events and venous thromboembolism increased, with some reduction in nonalcoholic fatty liver disease.",
       "implication": "Triglyceride lowering without favorable apoB/remnant-particle reduction does not necessarily improve outcomes.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PROMINENT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PROMINENT+randomized+trial+primary+publication",
+      "publicationYear": 2022,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "field",
@@ -2379,7 +4109,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Primary coronary events were not significantly reduced; nonfatal MI and some microvascular outcomes improved.",
       "safety": "Creatinine increased reversibly; pancreatitis and pulmonary embolism were uncommon concerns.",
       "implication": "Fenofibrate is not routine ASCVD prevention but may help severe hypertriglyceridemia and selected microvascular disease.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FIELD+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FIELD+randomized+trial+primary+publication",
+      "publicationYear": 2005,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "accord-lipid",
@@ -2392,7 +4132,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No overall cardiovascular benefit; a high-triglyceride/low-HDL subgroup signal was hypothesis-generating.",
       "safety": "No major myopathy excess, but creatinine increased.",
       "implication": "Do not add fenofibrate routinely to statins for ASCVD prevention.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACCORD-Lipid+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ACCORD-Lipid+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "hope",
@@ -2405,7 +4155,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced MI, stroke, and cardiovascular death, about 14.0% versus 17.8%.",
       "safety": "Cough, hypotension, and rare angioedema increased.",
       "implication": "ACE inhibition provides vascular protection in appropriate high-risk patients beyond simple office-BP reduction.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HOPE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HOPE+randomized+trial+primary+publication",
+      "publicationYear": 2000,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "HOPE-3 extended prevention evidence to intermediate-risk patients without established cardiovascular disease.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "hope-3",
@@ -2418,7 +4178,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Statin therapy reduced cardiovascular events; blood-pressure therapy benefited mainly those with higher baseline pressure.",
       "safety": "Muscle symptoms/cataract surgery were slightly more frequent with statin; hypotension/dizziness increased with BP therapy.",
       "implication": "Risk-based statin therapy is effective in intermediate-risk primary prevention; BP drugs should be targeted to baseline BP.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HOPE-3+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=HOPE-3+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "sprint",
@@ -2431,7 +4201,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Intensive treatment reduced major CV events, 5.2% versus 6.8%, and all-cause mortality, 3.3% versus 4.5%.",
       "safety": "Hypotension, syncope, electrolyte abnormalities, and acute kidney injury increased.",
       "implication": "Intensive BP control benefits selected high-risk patients, but measurement technique, frailty, orthostasis, and renal risk are essential.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SPRINT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SPRINT+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "empa-reg-outcome",
@@ -2444,7 +4224,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced CV death by 38%, heart-failure hospitalization by 35%, and all-cause mortality by 32%; MACE fell modestly.",
       "safety": "Genital infections increased; volume depletion and rare ketoacidosis are relevant.",
       "implication": "Established SGLT2 inhibitors as cardiovascular and heart-failure therapy, not merely glucose-lowering drugs.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EMPA-REG+OUTCOME+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=EMPA-REG+OUTCOME+randomized+trial+primary+publication",
+      "publicationYear": 2015,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "CANVAS and DECLARE–TIMI 58 confirmed class cardiovascular and kidney benefits while defining population-specific differences.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "canvas-program",
@@ -2457,7 +4247,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced MACE and heart-failure hospitalization and slowed renal decline.",
       "safety": "Approximately doubled lower-limb amputation risk in CANVAS, plus genital infection and fracture signals; later studies did not consistently reproduce the amputation signal.",
       "implication": "SGLT2 benefit is substantial, but active foot disease, prior amputation, volume status, and infection risk require attention.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CANVAS+Program+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=CANVAS+Program+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "declare-timi-58",
@@ -2470,7 +4270,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Did not significantly reduce MACE overall but reduced CV death or HF hospitalization, driven by fewer HF admissions; renal outcomes improved.",
       "safety": "Genital infections and ketoacidosis increased; major hypoglycemia did not.",
       "implication": "SGLT2 therapy prevents heart failure and kidney disease even in many primary-prevention patients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DECLARE%E2%80%93TIMI+58+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DECLARE%E2%80%93TIMI+58+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "leader",
@@ -2483,7 +4293,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced MACE, 13.0% versus 14.9%, CV death, and all-cause mortality.",
       "safety": "GI adverse effects increased; gallbladder disease and rare pancreatitis are considerations.",
       "implication": "GLP-1 receptor agonists reduce atherosclerotic events and are particularly relevant in obesity and established ASCVD.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=LEADER+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=LEADER+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "SUSTAIN-6 and REWIND expanded GLP-1 receptor agonist cardiovascular evidence; SELECT later extended semaglutide benefit to obesity without diabetes.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "sustain-6",
@@ -2496,7 +4316,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced MACE, driven largely by fewer nonfatal strokes.",
       "safety": "Diabetic retinopathy complications increased, especially with rapid glycemic improvement in patients with pre-existing retinopathy.",
       "implication": "Semaglutide has strong ASCVD benefit; assess retinopathy and avoid overly rapid glucose reduction in high-risk eyes.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SUSTAIN-6+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SUSTAIN-6+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "rewind",
@@ -2509,7 +4339,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced MACE, 12.0% versus 13.4%, with a notable stroke reduction.",
       "safety": "GI adverse effects increased; severe hypoglycemia was not increased.",
       "implication": "Extends GLP-1 benefit to a broad, lower-event-rate diabetes population.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=REWIND+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=REWIND+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "select",
@@ -2522,7 +4362,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "MACE was 6.5% versus 8.0%; relative reduction 20%.",
       "safety": "GI-related discontinuation increased; gallbladder complications and rare pancreatitis are considerations.",
       "implication": "Obesity pharmacotherapy can reduce cardiovascular events independently of diabetes; benefit requires long-term treatment and attention to tolerability.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SELECT+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=SELECT+randomized+trial+primary+publication",
+      "publicationYear": 2023,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "FLOW subsequently established kidney outcomes benefit in type 2 diabetes with CKD; the populations and primary objectives are complementary.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "flow",
@@ -2535,7 +4385,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced major kidney outcomes, cardiovascular death, and all-cause mortality; the trial stopped early for efficacy.",
       "safety": "GI adverse events caused more discontinuation; no unexpected major safety signal.",
       "implication": "Adds kidney-outcome evidence for GLP-1 therapy alongside SGLT2 inhibitors and renin–angiotensin system blockade.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FLOW+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=FLOW+randomized+trial+primary+publication",
+      "publicationYear": 2024,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "rapids-1",
@@ -2548,7 +4408,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reduced the number of new digital ulcers but did not accelerate healing of existing ulcers.",
       "safety": "Liver-enzyme elevation, edema, and teratogenicity were important.",
       "implication": "Bosentan is preventive therapy for recurrent ulcers, not a healing drug.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAPIDS-1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAPIDS-1+randomized+trial+primary+publication",
+      "publicationYear": 2004,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Contextual evidence",
+      "guidelineYear": 2023,
+      "guidelineLabel": "EULAR Systemic Sclerosis Treatment Recommendations, 2023 Update",
+      "guidelineUrl": "https://ard.bmj.com/content/early/2024/10/17/ard-2024-226430",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "rapids-2",
@@ -2561,7 +4431,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "New ulcers were reduced by about 30%, but healing time of the cardinal ulcer was unchanged.",
       "safety": "Hepatotoxicity, edema, and anemia require monitoring.",
       "implication": "Confirms bosentan for prevention of recurrent digital ulcers in selected patients.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAPIDS-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAPIDS-2+randomized+trial+primary+publication",
+      "publicationYear": 2011,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-supporting",
+      "guidelineYear": 2023,
+      "guidelineLabel": "EULAR Systemic Sclerosis Treatment Recommendations, 2023 Update",
+      "guidelineUrl": "https://ard.bmj.com/content/early/2024/10/17/ard-2024-226430",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "dual-1",
@@ -2574,7 +4454,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Did not reduce new digital ulcers.",
       "safety": "Headache, edema, anemia, and liver monitoring remained class considerations.",
       "implication": "Do not extrapolate bosentan’s ulcer-prevention effect to all endothelin-receptor antagonists.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DUAL-1+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DUAL-1+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2023,
+      "guidelineLabel": "EULAR Systemic Sclerosis Treatment Recommendations, 2023 Update",
+      "guidelineUrl": "https://ard.bmj.com/content/early/2024/10/17/ard-2024-226430",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "dual-2",
@@ -2587,7 +4477,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Also negative for prevention of new ulcers.",
       "safety": "No safety advantage sufficient to change the negative efficacy conclusion.",
       "implication": "Together with DUAL-1, establishes lack of efficacy for macitentan in this indication.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DUAL-2+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=DUAL-2+randomized+trial+primary+publication",
+      "publicationYear": 2016,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Negative/safety-defining",
+      "guidelineYear": 2023,
+      "guidelineLabel": "EULAR Systemic Sclerosis Treatment Recommendations, 2023 Update",
+      "guidelineUrl": "https://ard.bmj.com/content/early/2024/10/17/ard-2024-226430",
+      "guidelineRole": "The current guidance uses the wider evidence base to limit, avoid, or selectively apply this strategy; the negative or safety result remains clinically relevant.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "rave",
@@ -2600,7 +4500,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Rituximab was noninferior for remission and superior in relapsing disease.",
       "safety": "Serious adverse events were similar; infection and hypogammaglobulinemia require monitoring.",
       "implication": "Rituximab is a standard induction option, especially in relapsing disease or when fertility/cyclophosphamide toxicity matters.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAVE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RAVE+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "2021 ACR/Vasculitis Foundation Guideline",
+      "guidelineUrl": "https://rheumatology.org/vasculitis-guideline",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "RITUXVAS supplied concordant induction evidence; later follow-up and guidelines established rituximab as a major induction and maintenance option.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "rituxvas",
@@ -2613,7 +4523,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Sustained remission and mortality were similar.",
       "safety": "Severe adverse events and infections were similar.",
       "implication": "Confirmed rituximab efficacy in severe renal disease, although the regimen was not cyclophosphamide-free.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RITUXVAS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RITUXVAS+randomized+trial+primary+publication",
+      "publicationYear": 2010,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "2021 ACR/Vasculitis Foundation Guideline",
+      "guidelineUrl": "https://rheumatology.org/vasculitis-guideline",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "pexivas",
@@ -2626,7 +4546,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Plasma exchange did not reduce death or end-stage kidney disease overall. Reduced-dose steroids were noninferior.",
       "safety": "Reduced-dose steroids caused fewer serious infections.",
       "implication": "Avoid routine plasma exchange; use lower cumulative glucocorticoid exposure. Selected catastrophic pulmonary hemorrhage or anti-GBM overlap remains individualized.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEXIVAS+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=PEXIVAS+randomized+trial+primary+publication",
+      "publicationYear": 2020,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "2021 ACR/Vasculitis Foundation Guideline",
+      "guidelineUrl": "https://rheumatology.org/vasculitis-guideline",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ADVOCATE later showed a steroid-sparing induction strategy with avacopan; it complements PEXIVAS glucocorticoid-dose evidence.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "advocate",
@@ -2639,7 +4569,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Avacopan was noninferior for remission at week 26 and superior for sustained remission at week 52; renal recovery favored avacopan.",
       "safety": "Serious adverse events were similar; liver injury and infection require monitoring.",
       "implication": "Avacopan is a steroid-sparing option, not monotherapy; cost and long-term safety matter.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVOCATE+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ADVOCATE+randomized+trial+primary+publication",
+      "publicationYear": 2021,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "2021 ACR/Vasculitis Foundation Guideline",
+      "guidelineUrl": "https://rheumatology.org/vasculitis-guideline",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "giacta",
@@ -2652,7 +4592,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Sustained glucocorticoid-free remission was about 56% with weekly tocilizumab versus 14–18% with placebo regimens.",
       "safety": "Infection, neutropenia, liver-enzyme and lipid changes occurred; CRP becomes unreliable during IL-6 blockade.",
       "implication": "Tocilizumab is an effective steroid-sparing therapy; clinical assessment and imaging may be needed because inflammatory markers are suppressed.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=GiACTA+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=GiACTA+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2021,
+      "guidelineLabel": "2021 ACR/Vasculitis Foundation Guideline",
+      "guidelineUrl": "https://rheumatology.org/vasculitis-guideline",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Current guidance synthesizes this result with the wider evidence base; no single successor trial is designated as replacing it in version 1.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "re-verse-ad",
@@ -2665,7 +4615,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Reversed unbound dabigatran effect in nearly all evaluable patients; procedural hemostasis was usually normal and bleeding cessation occurred within hours.",
       "safety": "Thrombotic events occurred, often before anticoagulation was restarted; no direct control group.",
       "implication": "Idarucizumab is specific first-line reversal for dabigatran, followed by source control and timely anticoagulation resumption when safe.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-VERSE+AD+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=RE-VERSE+AD+randomized+trial+primary+publication",
+      "publicationYear": 2017,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA/ASA Spontaneous Intracerebral Hemorrhage Guideline and current reversal guidance",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/STR.0000000000000407",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "Established specific dabigatran reversal; ANNEXA-4 and ANNEXA-I address factor-Xa inhibitor reversal and are not direct successor trials.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "annexa-4",
@@ -2678,7 +4638,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Anti-Xa activity fell by more than 90%; excellent or good hemostasis occurred in about 80%.",
       "safety": "Thrombotic events occurred in about 10% and mortality was substantial, reflecting severe bleeding; no randomized comparator.",
       "implication": "Established andexanet as a specific reversal option, but cost, thrombosis, availability, and lack of control group require comparison with four-factor PCC.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ANNEXA-4+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ANNEXA-4+randomized+trial+primary+publication",
+      "publicationYear": 2019,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Guideline-linked",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA/ASA Spontaneous Intracerebral Hemorrhage Guideline and current reversal guidance",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/STR.0000000000000407",
+      "guidelineRole": "The clinical strategy is addressed in current guidance. The recommendation reflects the total evidence base rather than this trial alone.",
+      "corLoe": null,
+      "evidenceEvolution": "ANNEXA-I added randomized efficacy and thrombotic-safety evidence, updating the single-arm ANNEXA-4 evidence base.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "annexa-i",
@@ -2691,7 +4661,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "Hemostatic efficacy was higher with andexanet, driven by less hematoma expansion; 30-day functional outcome and mortality were not improved.",
       "safety": "Thrombotic events, especially ischemic stroke, were increased.",
       "implication": "Andexanet improves radiographic hemostasis in Xa-associated ICH but has a thrombotic trade-off; use requires individualized net-benefit assessment.",
-      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ANNEXA-I+randomized+trial+primary+publication"
+      "source": "https://pubmed.ncbi.nlm.nih.gov/?term=ANNEXA-I+randomized+trial+primary+publication",
+      "publicationYear": 2024,
+      "yearDefinition": "Primary results publication year",
+      "currentEvidenceStatus": "Post-guideline evidence",
+      "guidelineYear": 2022,
+      "guidelineLabel": "2022 AHA/ASA Spontaneous Intracerebral Hemorrhage Guideline and current reversal guidance",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/STR.0000000000000407",
+      "guidelineRole": "Published after the 2022 guidance evidence window; treat as emerging evidence pending formal incorporation or focused update.",
+      "corLoe": null,
+      "evidenceEvolution": "Updates ANNEXA-4 with randomized intracerebral-hemorrhage evidence; post-2022 guideline incorporation should be checked in subsequent focused updates.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "orion-4",
@@ -2704,7 +4684,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No clinical-outcome result is available yet; the primary question is whether durable PCSK9-silencing LDL reduction lowers major vascular events.",
       "safety": "Long-term safety, injection reactions, hepatic/renal effects, and adherence are being assessed.",
       "implication": "Do not claim cardiovascular-event reduction from inclisiran until ORION-4 or another outcomes trial reports.",
-      "source": "https://clinicaltrials.gov/search?term=ORION-4"
+      "source": "https://clinicaltrials.gov/search?term=ORION-4",
+      "publicationYear": null,
+      "yearDefinition": "Results pending",
+      "currentEvidenceStatus": "Awaiting results",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "Results are pending; the trial has not yet been incorporated into practice recommendations.",
+      "corLoe": null,
+      "evidenceEvolution": "Await primary results and subsequent guideline assessment.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "victorion-2p",
@@ -2717,7 +4707,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No outcome results yet.",
       "safety": "Safety surveillance focuses on injection reactions and long-term exposure.",
       "implication": "A confirmatory outcomes program complementary to ORION-4; current inclisiran evidence is LDL lowering, not proven MACE reduction.",
-      "source": "https://clinicaltrials.gov/search?term=VICTORION-2P"
+      "source": "https://clinicaltrials.gov/search?term=VICTORION-2P",
+      "publicationYear": null,
+      "yearDefinition": "Results pending",
+      "currentEvidenceStatus": "Awaiting results",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "Results are pending; the trial has not yet been incorporated into practice recommendations.",
+      "corLoe": null,
+      "evidenceEvolution": "Await primary results and subsequent guideline assessment.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "lp-a-horizon",
@@ -2730,7 +4730,17 @@ window.VASCULAR_TRIALS={
       "efficacy": "No definitive outcomes result was publicly available at the workbook cutoff; the trial tests whether selective Lp(a) lowering reduces MACE.",
       "safety": "Injection reactions, platelet count, renal/hepatic effects, and long-term safety are monitored.",
       "implication": "The field-defining causal outcomes trial: do not prescribe an Lp(a)-lowering strategy based solely on biomarker reduction.",
-      "source": "https://clinicaltrials.gov/search?term=Lp%28a%29HORIZON"
+      "source": "https://clinicaltrials.gov/search?term=Lp%28a%29HORIZON",
+      "publicationYear": null,
+      "yearDefinition": "Results pending",
+      "currentEvidenceStatus": "Awaiting results",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "Results are pending; the trial has not yet been incorporated into practice recommendations.",
+      "corLoe": null,
+      "evidenceEvolution": "Await primary results and subsequent guideline assessment.",
+      "evidenceReviewed": "1 August 2026"
     },
     {
       "id": "ocean-a-outcomes",
@@ -2743,7 +4753,26 @@ window.VASCULAR_TRIALS={
       "efficacy": "No cardiovascular-outcome result yet; phase 2 studies showed profound Lp(a) reduction.",
       "safety": "Long-term safety and injection-related effects remain under study.",
       "implication": "Will test whether very large sustained Lp(a) reduction translates into fewer events.",
-      "source": "https://clinicaltrials.gov/search?term=OCEAN%28a%29-Outcomes"
+      "source": "https://clinicaltrials.gov/search?term=OCEAN%28a%29-Outcomes",
+      "publicationYear": null,
+      "yearDefinition": "Results pending",
+      "currentEvidenceStatus": "Awaiting results",
+      "guidelineYear": 2026,
+      "guidelineLabel": "2026 ACC/AHA Multisociety Dyslipidemia Guideline",
+      "guidelineUrl": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001423",
+      "guidelineRole": "Results are pending; the trial has not yet been incorporated into practice recommendations.",
+      "corLoe": null,
+      "evidenceEvolution": "Await primary results and subsequent guideline assessment.",
+      "evidenceReviewed": "1 August 2026"
     }
-  ]
+  ],
+  "evidenceReviewed": "1 August 2026",
+  "evidenceStatusCounts": {
+    "Guideline-linked": 67,
+    "Contextual evidence": 66,
+    "Negative/safety-defining": 26,
+    "Guideline-supporting": 30,
+    "Post-guideline evidence": 9,
+    "Awaiting results": 4
+  }
 };
