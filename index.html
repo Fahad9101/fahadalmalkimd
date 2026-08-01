@@ -71,7 +71,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 .trialStat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.trialStat b{display:block;font-size:23px;color:#074b57}.trialStat span{color:var(--muted);font-size:13px;font-weight:750}
 .trialToolbar{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0}
 .trialSearch{position:relative}.trialSearch input{padding:14px 44px 14px 15px;font-size:16px}.trialSearch span{position:absolute;right:15px;top:12px;color:#66818a;font-size:20px}
-.trialFilters{display:grid;grid-template-columns:1.2fr .7fr .7fr 1fr auto;gap:10px;align-items:end;margin-top:12px}.trialFilters .field{margin:0}
+.trialFilters{display:grid;grid-template-columns:1.2fr .7fr .7fr 1fr .75fr auto;gap:10px;align-items:end;margin-top:12px}.trialFilters .field{margin:0}
 .topicGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 20px}
 .topicChip{border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;text-align:left;color:#17434d}.topicChip:hover,.topicChip.active{border-color:#0d7888;background:#eef8fa}.topicChip b{display:block}.topicChip span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
 .trialResultMeta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:18px 0 10px}.trialResultMeta p{margin:0}
@@ -317,18 +317,25 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
       '<div class="field"><label>Priority</label><select id="trialPriority"><option value="">All priorities</option><option>Core</option><option>Know</option><option>Recognize</option><option>Ongoing</option></select></div>'+
       '<div class="field"><label>Status</label><select id="trialStatus"><option value="">All statuses</option><option>Published</option><option>Results pending</option></select></div>'+
       '<div class="field"><label>Evidence today</label><select id="trialEvidence"><option value="">All evidence statuses</option>'+Object.keys(data.evidenceStatusCounts||{}).map(function(item){return '<option>'+esc(item)+'</option>';}).join("")+'</select></div>'+
+      '<div class="field"><label>Sort</label><select id="trialOrder"><option value="newest">Newest first</option><option value="core">Core first</option><option value="az">A–Z</option></select></div>'+
       '<button id="trialReset">Reset</button></div></section>'+
       '<div class="trialResultMeta"><p><b id="trialCount">'+data.count+' trials</b><span id="trialContext"></span></p><span class="hint">Evidence summaries support appraisal; they do not replace the full publication or patient-specific judgment. Updated through '+esc(data.updatedThrough)+'.</span></div><div class="trialList" id="trialList"></div>';
     app().innerHTML = html;
 
-    var search=document.getElementById("trialSearch"), domain=document.getElementById("trialDomain"), priority=document.getElementById("trialPriority"), status=document.getElementById("trialStatus"), evidence=document.getElementById("trialEvidence"), activeTopic=presetTopic;
+    var search=document.getElementById("trialSearch"), domain=document.getElementById("trialDomain"), priority=document.getElementById("trialPriority"), status=document.getElementById("trialStatus"), evidence=document.getElementById("trialEvidence"), order=document.getElementById("trialOrder"), activeTopic=presetTopic;
     function renderCards(){
       var results=data.trials.filter(function(trial){
         return (!activeTopic || trialTopicFor(trial.domain)===activeTopic) && (!domain.value || trial.domain===domain.value) && (!priority.value || trial.priority===priority.value) && (!status.value || trial.status===status.value) && (!evidence.value || trial.currentEvidenceStatus===evidence.value) && trialMatches(trial,search.value);
       });
-      if(selectedId){ results.sort(function(a,b){return (a.id===selectedId?-1:0)-(b.id===selectedId?-1:0);}); }
+      var priorityRank={Core:0,Know:1,Recognize:2,Ongoing:3};
+      results.sort(function(a,b){
+        if(selectedId){if(a.id===selectedId)return -1;if(b.id===selectedId)return 1;}
+        if(order.value==="az")return a.trial.localeCompare(b.trial);
+        if(order.value==="core")return (priorityRank[a.priority]-priorityRank[b.priority])||((b.publicationYear||0)-(a.publicationYear||0))||a.trial.localeCompare(b.trial);
+        return ((a.publicationYear==null)-(b.publicationYear==null))||((b.publicationYear||0)-(a.publicationYear||0))||((priorityRank[a.priority]||0)-(priorityRank[b.priority]||0))||a.trial.localeCompare(b.trial);
+      });
       document.getElementById("trialCount").textContent=results.length+" trial"+(results.length===1?"":"s");
-      document.getElementById("trialContext").textContent=activeTopic ? " · "+activeTopic : "";
+      document.getElementById("trialContext").textContent=(activeTopic ? " · "+activeTopic : "")+" · "+order.options[order.selectedIndex].text;
       Array.prototype.forEach.call(document.querySelectorAll("[data-topic-choice]"),function(button){button.classList.toggle("active",button.getAttribute("data-topic-choice")===activeTopic);});
       var list=document.getElementById("trialList");
       if(!results.length){list.innerHTML='<div class="trialEmpty"><h3>No matching trials</h3><p>Try fewer terms, clear a filter, or browse another clinical topic.</p></div>';return;}
@@ -340,9 +347,9 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
       }).join("");
       Array.prototype.forEach.call(document.querySelectorAll(".copyTrial"),function(button){button.addEventListener("click",function(e){e.stopPropagation();var trial=data.trials.find(function(x){return x.id===button.getAttribute("data-copy-id");});if(trial)copyTrialSummary(trial,button);});});
     }
-    search.addEventListener("input",renderCards); domain.addEventListener("change",renderCards); priority.addEventListener("change",renderCards); status.addEventListener("change",renderCards); evidence.addEventListener("change",renderCards);
+    search.addEventListener("input",renderCards); domain.addEventListener("change",renderCards); priority.addEventListener("change",renderCards); status.addEventListener("change",renderCards); evidence.addEventListener("change",renderCards); order.addEventListener("change",renderCards);
     Array.prototype.forEach.call(document.querySelectorAll("[data-topic-choice]"),function(button){button.addEventListener("click",function(){var choice=button.getAttribute("data-topic-choice");activeTopic=activeTopic===choice?"":choice;renderCards();});});
-    document.getElementById("trialReset").addEventListener("click",function(){search.value="";domain.value="";priority.value="";status.value="";evidence.value="";activeTopic="";selectedId="";renderCards();});
+    document.getElementById("trialReset").addEventListener("click",function(){search.value="";domain.value="";priority.value="";status.value="";evidence.value="";order.value="newest";activeTopic="";selectedId="";renderCards();});
     renderCards();
     if(selectedId){setTimeout(function(){var selected=document.getElementById("trial-"+selectedId);if(selected&&selected.scrollIntoView)selected.scrollIntoView({behavior:"smooth",block:"center"});},50);}
   }
