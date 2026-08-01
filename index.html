@@ -65,6 +65,23 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 .scenarioPanel{border:1px solid var(--line);border-radius:16px;background:#fbfdfe;padding:20px;margin:18px 0}
 .scenarioPanel>h3{color:#073f4a;margin-bottom:4px}.scenarioPanel>.hint{margin-bottom:16px}
 
+.trialHero{background:linear-gradient(135deg,#073642,#0b6673);color:#fff;border-radius:20px;padding:28px;margin-bottom:20px}
+.trialHero h2,.trialHero p,.trialHero small{color:#fff}.trialHero p{margin-bottom:0;max-width:900px}
+.trialStats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+.trialStat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.trialStat b{display:block;font-size:23px;color:#074b57}.trialStat span{color:var(--muted);font-size:13px;font-weight:750}
+.trialToolbar{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0}
+.trialSearch{position:relative}.trialSearch input{padding:14px 44px 14px 15px;font-size:16px}.trialSearch span{position:absolute;right:15px;top:12px;color:#66818a;font-size:20px}
+.trialFilters{display:grid;grid-template-columns:1.3fr .8fr .8fr auto;gap:10px;align-items:end;margin-top:12px}.trialFilters .field{margin:0}
+.topicGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 20px}
+.topicChip{border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;text-align:left;color:#17434d}.topicChip:hover,.topicChip.active{border-color:#0d7888;background:#eef8fa}.topicChip b{display:block}.topicChip span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.trialResultMeta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:18px 0 10px}.trialResultMeta p{margin:0}
+.trialList{display:grid;gap:11px}.trialCard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.trialCard[open]{border-color:#9bc8d0;box-shadow:0 12px 28px rgba(4,42,52,.07)}
+.trialCard>summary{cursor:pointer;list-style:none;padding:17px 18px}.trialCard>summary::-webkit-details-marker{display:none}.trialCard>summary:after{content:"＋";float:right;color:var(--teal2);font-size:19px}.trialCard[open]>summary:after{content:"−"}
+.trialTitle{font-size:18px;font-weight:900;color:#073f4a;margin-right:25px}.trialDomain{color:var(--muted);font-size:13px;font-weight:750;margin-top:2px}.trialBadges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.trialBadge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:900;background:#eef3f5;color:#38525b}.trialBadge.core{background:#e9f8f2;color:#067647}.trialBadge.know{background:#eef8fa;color:#086274}.trialBadge.recognize{background:#fff5e7;color:#92530a}.trialBadge.ongoing{background:#f2edff;color:#6840a3}
+.trialImplication{margin:10px 0 0;color:#31505a;font-size:14px}.trialBody{border-top:1px solid var(--line);padding:18px;background:#fbfdfe}.trialLine{display:grid;grid-template-columns:32px 1fr;gap:10px;padding:8px 0}.trialLineNo{width:27px;height:27px;display:grid;place-items:center;border-radius:50%;background:#e6f4f6;color:#086274;font-weight:900;font-size:12px}.trialLine b{display:block;color:#173c46;font-size:13px}.trialLine p{margin:2px 0 0}.trialActions,.evidenceLinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.trialEmpty{padding:32px;text-align:center;background:#fff;border:1px dashed var(--line);border-radius:16px}.trialEmpty p{margin-bottom:0}
+.evidenceBox{margin-top:18px;background:#f4fafb;border:1px solid #cfe4e8;border-radius:14px;padding:14px}.evidenceBox p{margin:5px 0 0}
+@media(max-width:850px){.trialStats,.topicGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.trialFilters{grid-template-columns:1fr}.trialResultMeta{align-items:flex-start;flex-direction:column}}
+
 </style>
 </head>
 <body>
@@ -74,6 +91,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     <nav class="navlinks">
       <button data-page="home">Home</button>
       <button data-page="pathways">Clinical Pathways</button>
+      <button data-page="trials">EBM Trials</button>
       <button data-page="crft">CRFT</button>
       <button class="contact" data-page="contact">Contact</button>
     </nav>
@@ -89,6 +107,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 <main id="app"></main>
 <footer>Fahad Almalki, MD · General Internal Medicine · Vascular Medicine</footer>
 
+<script src="trials-data.js"></script>
 <script>
 (function(){
   var USERNAME = "fahad";
@@ -133,6 +152,10 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(p){ setHash(p.getAttribute("data-page")); }
     var t = e.target.closest("[data-tool]");
     if(t){ setHash("tool", t.getAttribute("data-tool")); }
+    var tr = e.target.closest("[data-trial]");
+    if(tr){ setHash("trials", tr.getAttribute("data-trial")); }
+    var tt = e.target.closest("[data-trial-topic]");
+    if(tt){ window.__trialPresetTopic = tt.getAttribute("data-trial-topic"); setHash("trials"); }
   });
   window.addEventListener("hashchange", render);
 
@@ -144,13 +167,14 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     if(page === "contact") return renderContact();
     if(page === "crft") return renderCrft();
     if(page === "pathways") return authed ? renderPathways() : renderLogin("pathways");
+    if(page === "trials") return authed ? renderTrialLibrary(param) : renderLogin("trials" + (param ? ":" + param : ""));
     if(page === "tool") return authed ? renderTool(param) : renderLogin("tool:" + param);
     renderHome();
   }
 
   function renderHome(){
     showHero(true);
-    app().innerHTML = '<section><h2>Clinical pathway system</h2><p class="lead">A structured bedside library designed to standardize safe clinical reasoning, vascular medicine assessment, antithrombotic decisions, and General Internal Medicine diagnostic pathways.</p><div class="grid section"><div class="card"><small>Protected library</small><h3>Clinical Pathways</h3><p>Guided bedside workflows: danger first, phenotype, minimum standard assessment, action plan, and copy-ready notes.</p><button class="primary" data-page="pathways">Open pathways</button></div><div class="card"><small>Education</small><h3>CRFT</h3><p>Clinical reasoning education focused on problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><button data-page="crft">View CRFT</button></div><div class="card"><small>Contact</small><h3>Professional inquiries</h3><p>For academic, educational, clinical pathway, and quality-improvement communication.</p><button data-page="contact">Contact</button></div></div></section>';
+    app().innerHTML = '<section><h2>Clinical pathway system</h2><p class="lead">A structured bedside library designed to standardize safe clinical reasoning, vascular medicine assessment, antithrombotic decisions, and General Internal Medicine diagnostic pathways.</p><div class="grid section"><div class="card"><small>Protected library</small><h3>Clinical Pathways</h3><p>Guided bedside workflows: danger first, phenotype, minimum standard assessment, action plan, and copy-ready notes.</p><button class="primary" data-page="pathways">Open pathways</button></div><div class="card"><small>Evidence library</small><h3>Vascular Medicine EBM Trials</h3><p>Browse 202 landmark and emerging trials by clinical topic, question, therapy, or trial name.</p><button data-page="trials">Browse trials</button></div><div class="card"><small>Education</small><h3>CRFT</h3><p>Clinical reasoning education focused on problem framing, hypothesis generation, data interpretation, management planning, anticipation, and metacognition.</p><button data-page="crft">View CRFT</button></div><div class="card"><small>Contact</small><h3>Professional inquiries</h3><p>For academic, educational, clinical pathway, and quality-improvement communication.</p><button data-page="contact">Contact</button></div></div></section>';
   }
 
   function renderContact(){
@@ -193,6 +217,125 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     });
     html += '</section>';
     app().innerHTML = html;
+  }
+
+  var TRIAL_TOPICS = [
+    "PAD & Limb Ischemia",
+    "VTE & Anticoagulation",
+    "Aortic & Aneurysm",
+    "Carotid & Cerebrovascular",
+    "Chronic Venous Disease",
+    "Lipids & Vascular Prevention",
+    "Renal & Systemic Vascular Disease",
+    "Other Vascular Evidence"
+  ];
+
+  function trialTopicFor(domain){
+    if(/PAD|Claudication|CLTI|limb ischemia|Femoropopliteal|Infrapopliteal/i.test(domain)) return TRIAL_TOPICS[0];
+    if(/Chronic venous disease/i.test(domain)) return TRIAL_TOPICS[4];
+    if(/VTE|Pulmonary embolism|DVT|thrombotic syndrome|IVC filters|Superficial vein|thromboprophylaxis|prophylaxis|Anticoagulant reversal|Cerebral venous|Antiphospholipid|Pregnancy-associated/i.test(domain)) return TRIAL_TOPICS[1];
+    if(/AAA|aortic dissection/i.test(domain)) return TRIAL_TOPICS[2];
+    if(/Carotid|Cervical artery dissection/i.test(domain)) return TRIAL_TOPICS[3];
+    if(/Lipid|Lp\(a\)|Triglyceride|Blood pressure|Vascular risk reduction|Diabetes vascular|Kidney\/diabetes|Obesity vascular/i.test(domain)) return TRIAL_TOPICS[5];
+    if(/Renal artery stenosis|ANCA|Giant cell|Systemic sclerosis/i.test(domain)) return TRIAL_TOPICS[6];
+    return TRIAL_TOPICS[7];
+  }
+
+  function trialNormalize(value){
+    return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  }
+
+  function trialAliases(trial){
+    var topic = trialTopicFor(trial.domain), aliases = "";
+    if(topic === TRIAL_TOPICS[0]) aliases += " pad peripheral artery disease leg ischemia claudication walking limb revascularization antithrombotic anticoagulant antiplatelet ";
+    if(topic === TRIAL_TOPICS[1]) aliases += " vte venous thromboembolism dvt deep vein thrombosis pe pulmonary embolism blood thinner anticoagulant ";
+    if(topic === TRIAL_TOPICS[2]) aliases += " aorta aneurysm aaa dissection ";
+    if(topic === TRIAL_TOPICS[3]) aliases += " carotid stroke cerebrovascular tia ";
+    if(topic === TRIAL_TOPICS[4]) aliases += " venous insufficiency varicose ulcer reflux ";
+    if(topic === TRIAL_TOPICS[5]) aliases += " cholesterol lipid ldl prevention cardiovascular risk ";
+    return aliases;
+  }
+
+  function trialMatches(trial, query){
+    if(!query) return true;
+    var expanded = String(query).toLowerCase().replace(/blood thinners?/g,"anticoagulant").replace(/heart attack/g,"myocardial infarction");
+    var stop = {a:1,an:1,and:1,for:1,the:1,to:1,of:1,in:1,on:1,with:1,after:1,about:1,study:1,trial:1,treatment:1,therapy:1,management:1};
+    var tokens = trialNormalize(expanded).split(" ").filter(function(token){ return token && !stop[token]; });
+    var blob = trialNormalize([trial.trial,trial.domain,trial.priority,trial.status,trial.population,trial.intervention,trial.efficacy,trial.safety,trial.implication,trialAliases(trial)].join(" "));
+    return tokens.every(function(token){ return blob.indexOf(token) >= 0; });
+  }
+
+  function trialRelatedPathways(trial){
+    var topic = trialTopicFor(trial.domain);
+    if(topic === TRIAL_TOPICS[0]) return [{id:"pad-suspected",label:"Suspected PAD pathway"},{id:"pad-confirmed",label:"Confirmed PAD pathway"}];
+    if(topic === TRIAL_TOPICS[1]) return [{id:"thrombosis-clinic",label:"Thrombosis clinic"},{id:"anticoagulant-transitions",label:"Anticoagulant transitions"},{id:"antithrombotic",label:"Antithrombotic safety"}];
+    if(topic === TRIAL_TOPICS[5]) return [{id:"lipid-primary",label:"Primary-prevention lipid pathway"}];
+    return [];
+  }
+
+  function trialSummaryText(trial){
+    return trial.trial + " — " + trial.domain + "\n" +
+      "1. Population / question: " + trial.population + "\n" +
+      "2. Intervention / comparator / duration: " + trial.intervention + "\n" +
+      "3. Primary efficacy result: " + trial.efficacy + "\n" +
+      "4. Major safety result: " + trial.safety + "\n" +
+      "5. Practice implication + key limitation: " + trial.implication + "\n" +
+      "Primary source: " + trial.source;
+  }
+
+  function copyTrialSummary(trial, button){
+    var text = trialSummaryText(trial);
+    function done(){ var old=button.textContent; button.textContent="Copied"; setTimeout(function(){button.textContent=old;},1200); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done); return; }
+    var temp=document.createElement("textarea"); temp.value=text; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); temp.remove(); done();
+  }
+
+  function renderTrialLibrary(selectedId){
+    showHero(false);
+    var data = window.VASCULAR_TRIALS;
+    if(!data || !Array.isArray(data.trials)){
+      app().innerHTML = '<div class="breadcrumb"><button data-page="home">← Home</button></div><section class="card"><h2>Trial library unavailable</h2><p>The evidence data file could not be loaded. Please refresh the page.</p></section>';
+      return;
+    }
+    var presetTopic = window.__trialPresetTopic || ""; window.__trialPresetTopic = "";
+    var topicCounts = {};
+    TRIAL_TOPICS.forEach(function(topic){ topicCounts[topic]=data.trials.filter(function(t){return trialTopicFor(t.domain)===topic;}).length; });
+    var domainOptions = data.domains.map(function(domain){return '<option value="'+esc(domain)+'">'+esc(domain)+' ('+data.domainCounts[domain]+')</option>';}).join("");
+    var html = '<div class="breadcrumb"><button data-page="home">← Home</button> <button data-page="pathways">Clinical Pathways</button></div>'+
+      '<section class="trialHero"><small>Evidence-based medicine</small><h2>'+esc(data.title)+'</h2><p>Find the evidence by clinical problem, therapy, outcome, or trial name. Open any card for a standardized five-line appraisal and primary-source link.</p></section>'+
+      '<div class="trialStats"><div class="trialStat"><b>'+data.count+'</b><span>Total trials</span></div><div class="trialStat"><b>'+data.priorities.Core+'</b><span>Core</span></div><div class="trialStat"><b>'+data.priorities.Know+'</b><span>Know</span></div><div class="trialStat"><b>'+data.priorities.Recognize+'</b><span>Recognize · '+data.priorities.Ongoing+' ongoing</span></div></div>'+
+      '<section><h3>Browse by clinical topic</h3><p class="hint">Start here when you know the patient problem but not the trial name.</p><div class="topicGrid" id="trialTopics">'+TRIAL_TOPICS.map(function(topic){return '<button class="topicChip'+(presetTopic===topic?' active':'')+'" data-topic-choice="'+esc(topic)+'"><b>'+esc(topic)+'</b><span>'+topicCounts[topic]+' trials</span></button>';}).join("")+'</div></section>'+
+      '<section class="trialToolbar"><div class="trialSearch"><input id="trialSearch" type="search" autocomplete="off" placeholder="Try: walking for claudication, anticoagulant after PAD revascularization, carotid stenting…"><span>⌕</span></div><div class="trialFilters">'+
+      '<div class="field"><label>Specific domain</label><select id="trialDomain"><option value="">All domains</option>'+domainOptions+'</select></div>'+
+      '<div class="field"><label>Priority</label><select id="trialPriority"><option value="">All priorities</option><option>Core</option><option>Know</option><option>Recognize</option><option>Ongoing</option></select></div>'+
+      '<div class="field"><label>Status</label><select id="trialStatus"><option value="">All statuses</option><option>Published</option><option>Results pending</option></select></div>'+
+      '<button id="trialReset">Reset</button></div></section>'+
+      '<div class="trialResultMeta"><p><b id="trialCount">'+data.count+' trials</b><span id="trialContext"></span></p><span class="hint">Evidence summaries support appraisal; they do not replace the full publication or patient-specific judgment. Updated through '+esc(data.updatedThrough)+'.</span></div><div class="trialList" id="trialList"></div>';
+    app().innerHTML = html;
+
+    var search=document.getElementById("trialSearch"), domain=document.getElementById("trialDomain"), priority=document.getElementById("trialPriority"), status=document.getElementById("trialStatus"), activeTopic=presetTopic;
+    function renderCards(){
+      var results=data.trials.filter(function(trial){
+        return (!activeTopic || trialTopicFor(trial.domain)===activeTopic) && (!domain.value || trial.domain===domain.value) && (!priority.value || trial.priority===priority.value) && (!status.value || trial.status===status.value) && trialMatches(trial,search.value);
+      });
+      if(selectedId){ results.sort(function(a,b){return (a.id===selectedId?-1:0)-(b.id===selectedId?-1:0);}); }
+      document.getElementById("trialCount").textContent=results.length+" trial"+(results.length===1?"":"s");
+      document.getElementById("trialContext").textContent=activeTopic ? " · "+activeTopic : "";
+      Array.prototype.forEach.call(document.querySelectorAll("[data-topic-choice]"),function(button){button.classList.toggle("active",button.getAttribute("data-topic-choice")===activeTopic);});
+      var list=document.getElementById("trialList");
+      if(!results.length){list.innerHTML='<div class="trialEmpty"><h3>No matching trials</h3><p>Try fewer terms, clear a filter, or browse another clinical topic.</p></div>';return;}
+      list.innerHTML=results.map(function(trial){
+        var related=trialRelatedPathways(trial);
+        var lines=[["Population / question",trial.population],["Intervention / comparator / duration",trial.intervention],["Primary efficacy result",trial.efficacy],["Major safety result",trial.safety],["Practice implication + key limitation",trial.implication]];
+        return '<details class="trialCard" id="trial-'+esc(trial.id)+'"'+(trial.id===selectedId?' open':'')+'><summary><div class="trialTitle">'+esc(trial.trial)+'</div><div class="trialDomain">'+esc(trial.domain)+'</div><div class="trialBadges"><span class="trialBadge '+esc(trial.priority.toLowerCase())+'">'+esc(trial.priority)+'</span><span class="trialBadge">'+esc(trial.status)+'</span></div><p class="trialImplication">'+esc(trial.implication)+'</p></summary><div class="trialBody">'+lines.map(function(line,index){return '<div class="trialLine"><span class="trialLineNo">'+(index+1)+'</span><div><b>'+esc(line[0])+'</b><p>'+esc(line[1])+'</p></div></div>';}).join("")+'<div class="trialActions"><a class="btn primary" href="'+esc(trial.source)+'" target="_blank" rel="noopener">Open primary source</a><button class="copyTrial" data-copy-id="'+esc(trial.id)+'">Copy five-line summary</button></div>'+(related.length?'<div class="evidenceLinks"><span class="hint">Related pathways:</span>'+related.map(function(path){return '<button data-tool="'+path.id+'">'+esc(path.label)+'</button>';}).join("")+'</div>':'')+'</div></details>';
+      }).join("");
+      Array.prototype.forEach.call(document.querySelectorAll(".copyTrial"),function(button){button.addEventListener("click",function(e){e.stopPropagation();var trial=data.trials.find(function(x){return x.id===button.getAttribute("data-copy-id");});if(trial)copyTrialSummary(trial,button);});});
+    }
+    search.addEventListener("input",renderCards); domain.addEventListener("change",renderCards); priority.addEventListener("change",renderCards); status.addEventListener("change",renderCards);
+    Array.prototype.forEach.call(document.querySelectorAll("[data-topic-choice]"),function(button){button.addEventListener("click",function(){var choice=button.getAttribute("data-topic-choice");activeTopic=activeTopic===choice?"":choice;renderCards();});});
+    document.getElementById("trialReset").addEventListener("click",function(){search.value="";domain.value="";priority.value="";status.value="";activeTopic="";selectedId="";renderCards();});
+    renderCards();
+    if(selectedId){setTimeout(function(){var selected=document.getElementById("trial-"+selectedId);if(selected&&selected.scrollIntoView)selected.scrollIntoView({behavior:"smooth",block:"center"});},50);}
   }
 
   function shell(title, subtitle, body){
@@ -337,6 +480,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     shell("Primary-Prevention Lipid Clinic Pathway","Adult primary-prevention assessment integrating lifetime atherogenic exposure, absolute risk, inherited and secondary dyslipidemia, risk enhancers, subclinical atherosclerosis, individualized targets, treatment gap, and follow-up.",
     '<section class="card">'+
     '<div class="subtlebox"><span class="badgeNote">Website protocol · Version 1 · 2026 ACC/AHA aligned</span><p><b>Calculate → personalize → reclassify → treat the gap.</b> First confirm true primary prevention, then identify severe or inherited disease before applying PREVENT risk. Use Lp(a), apoB, and CAC only where they improve the decision.</p><p class="hint">This clinician aid does not replace the official PREVENT calculator, FH diagnostic criteria, product labeling, pregnancy guidance, or local formulary. Values and proposed treatment must be clinically verified before prescribing.</p></div>'+
+    '<div class="evidenceBox"><b>Connected evidence</b><p class="hint">Review landmark and emerging lipid-outcomes trials alongside this pathway.</p><div class="evidenceLinks"><button data-trial-topic="Lipids &amp; Vascular Prevention">Browse lipid and prevention trials</button><button data-trial="fourier">FOURIER</button><button data-trial="odyssey-outcomes">ODYSSEY OUTCOMES</button><button data-trial="clear-outcomes">CLEAR Outcomes</button></div></div>'+
 
     '<details class="pathStep" open><summary>1. Scope, visit, and patient frame</summary><div class="pathStepBody"><div class="grid2">'+
     inputField("lip_summary","One-line clinical summary","e.g. age 46, untreated LDL 4.7 mmol/L, father MI at 54, no clinical ASCVD")+
@@ -695,6 +839,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     shell("Suspected Lower-Extremity PAD: Diagnosis & Triage","A clinic operating standard that answers three questions: Is the limb threatened? Is PAD objectively supported? What test, treatment, or referral is required next?",
     '<section class="card">'+
     '<div class="subtlebox"><span class="badgeNote">Clinic standard · Version 1</span><p><b>Standardization rule:</b> the same documented findings generate the same default disposition. Any departure from the default plan should have a reason, owner, and review date.</p><p class="hint">Complete the pathway from limb safety to objective physiology. An unentered field is not interpreted as normal.</p></div>'+
+    '<div class="evidenceBox"><b>Connected evidence</b><p class="hint">Browse PAD trials by the clinical problem; no trial-name knowledge is required.</p><div class="evidenceLinks"><button data-trial-topic="PAD &amp; Limb Ischemia">Browse PAD and limb-ischemia trials</button><button data-trial="clever">CLEVER</button><button data-trial="erase">ERASE</button></div></div>'+
 
     '<h4>0. Visit type</h4>'+
     '<div class="grid2">'+
@@ -1285,6 +1430,7 @@ patientCounsel + "\n\n" +
   function renderCoreVTE(){
     shell("Thrombosis Clinic Pathway","",
     '<section class="card">'+
+    '<div class="evidenceBox"><b>Connected evidence</b><p class="hint">Search acute treatment, extended prevention, pulmonary embolism, cancer-associated thrombosis, and special-population trials.</p><div class="evidenceLinks"><button data-trial-topic="VTE &amp; Anticoagulation">Browse VTE and anticoagulation trials</button><button data-trial="amplify">AMPLIFY</button><button data-trial="einstein-dvt">EINSTEIN-DVT</button><button data-trial="einstein-choice">EINSTEIN-CHOICE</button></div></div>'+
 
     '<h4>0. Visit type</h4>'+
     '<div class="grid2">'+
@@ -4545,6 +4691,7 @@ evidence + "\n\n" +
     shell("Confirmed Lower-Extremity PAD: Longitudinal Management & Revascularization Readiness","A clinic operating standard that answers three questions at every visit: Is the limb safe? Is systemic ASCVD risk optimized? Is function, wound status, or post-revascularization trajectory improving?",
     '<section class="card">'+
     '<div class="subtlebox"><span class="badgeNote">Clinic standard · Version 1</span><p><b>Standardization rule:</b> the same PAD phenotype, objective findings, contraindications, and patient preferences generate the same default care bundle. Variations require a documented reason, owner, and review date.</p><p class="hint">Revascularization is driven by limb threat or persistent meaningful functional limitation—not anatomy alone.</p></div>'+
+    '<div class="evidenceBox"><b>Connected evidence</b><p class="hint">Open the PAD evidence most likely to change longitudinal management or revascularization decisions.</p><div class="evidenceLinks"><button data-trial-topic="PAD &amp; Limb Ischemia">Browse all PAD trials</button><button data-trial="compass">COMPASS</button><button data-trial="voyager-pad">VOYAGER-PAD</button><button data-trial="caprie">CAPRIE</button><button data-trial="euclid">EUCLID</button><button data-trial="clever">CLEVER</button></div></div>'+
 
     '<h4>0. Visit type</h4>'+
     '<div class="grid2">'+
