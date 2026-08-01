@@ -71,14 +71,16 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
 .trialStat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.trialStat b{display:block;font-size:23px;color:#074b57}.trialStat span{color:var(--muted);font-size:13px;font-weight:750}
 .trialToolbar{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0}
 .trialSearch{position:relative}.trialSearch input{padding:14px 44px 14px 15px;font-size:16px}.trialSearch span{position:absolute;right:15px;top:12px;color:#66818a;font-size:20px}
-.trialFilters{display:grid;grid-template-columns:1.3fr .8fr .8fr auto;gap:10px;align-items:end;margin-top:12px}.trialFilters .field{margin:0}
+.trialFilters{display:grid;grid-template-columns:1.2fr .7fr .7fr 1fr auto;gap:10px;align-items:end;margin-top:12px}.trialFilters .field{margin:0}
 .topicGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 20px}
 .topicChip{border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;text-align:left;color:#17434d}.topicChip:hover,.topicChip.active{border-color:#0d7888;background:#eef8fa}.topicChip b{display:block}.topicChip span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
 .trialResultMeta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:18px 0 10px}.trialResultMeta p{margin:0}
 .trialList{display:grid;gap:11px}.trialCard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.trialCard[open]{border-color:#9bc8d0;box-shadow:0 12px 28px rgba(4,42,52,.07)}
 .trialCard>summary{cursor:pointer;list-style:none;padding:17px 18px}.trialCard>summary::-webkit-details-marker{display:none}.trialCard>summary:after{content:"＋";float:right;color:var(--teal2);font-size:19px}.trialCard[open]>summary:after{content:"−"}
 .trialTitle{font-size:18px;font-weight:900;color:#073f4a;margin-right:25px}.trialDomain{color:var(--muted);font-size:13px;font-weight:750;margin-top:2px}.trialBadges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.trialBadge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:900;background:#eef3f5;color:#38525b}.trialBadge.core{background:#e9f8f2;color:#067647}.trialBadge.know{background:#eef8fa;color:#086274}.trialBadge.recognize{background:#fff5e7;color:#92530a}.trialBadge.ongoing{background:#f2edff;color:#6840a3}
+.trialYear{display:inline-block;margin-left:7px;border-left:1px solid #bad1d6;padding-left:8px;color:#0d7888;font-size:14px}.trialBadge.guideline-linked{background:#e9f8f2;color:#067647}.trialBadge.guideline-supporting{background:#eef8fa;color:#086274}.trialBadge.negative-safety-defining{background:#fff0ee;color:#a13b31}.trialBadge.post-guideline-evidence{background:#fff5e7;color:#92530a}.trialBadge.awaiting-results{background:#f2edff;color:#6840a3}
 .trialImplication{margin:10px 0 0;color:#31505a;font-size:14px}.trialBody{border-top:1px solid var(--line);padding:18px;background:#fbfdfe}.trialLine{display:grid;grid-template-columns:32px 1fr;gap:10px;padding:8px 0}.trialLineNo{width:27px;height:27px;display:grid;place-items:center;border-radius:50%;background:#e6f4f6;color:#086274;font-weight:900;font-size:12px}.trialLine b{display:block;color:#173c46;font-size:13px}.trialLine p{margin:2px 0 0}.trialActions,.evidenceLinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.trialEmpty{padding:32px;text-align:center;background:#fff;border:1px dashed var(--line);border-radius:16px}.trialEmpty p{margin-bottom:0}
+.evidenceToday{margin-top:15px;border:1px solid #cfe4e8;border-radius:14px;background:#fff;padding:15px}.evidenceToday h4{margin:0 0 10px}.evidenceRow{padding:8px 0;border-top:1px solid #e8f0f2}.evidenceRow:first-of-type{border-top:0}.evidenceRow b{display:block;color:#173c46;font-size:13px}.evidenceRow p{margin:2px 0 0}.evidenceRow a{font-weight:800;color:#086274}.evidenceReview{font-size:12px;color:#71808a;margin-top:10px}
 .evidenceBox{margin-top:18px;background:#f4fafb;border:1px solid #cfe4e8;border-radius:14px;padding:14px}.evidenceBox p{margin:5px 0 0}
 @media(max-width:850px){.trialStats,.topicGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.trialFilters{grid-template-columns:1fr}.trialResultMeta{align-items:flex-start;flex-direction:column}}
 
@@ -261,7 +263,7 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     var expanded = String(query).toLowerCase().replace(/blood thinners?/g,"anticoagulant").replace(/heart attack/g,"myocardial infarction");
     var stop = {a:1,an:1,and:1,for:1,the:1,to:1,of:1,in:1,on:1,with:1,after:1,about:1,study:1,trial:1,treatment:1,therapy:1,management:1};
     var tokens = trialNormalize(expanded).split(" ").filter(function(token){ return token && !stop[token]; });
-    var blob = trialNormalize([trial.trial,trial.domain,trial.priority,trial.status,trial.population,trial.intervention,trial.efficacy,trial.safety,trial.implication,trialAliases(trial)].join(" "));
+    var blob = trialNormalize([trial.trial,trial.publicationYear,trial.domain,trial.priority,trial.status,trial.currentEvidenceStatus,trial.guidelineLabel,trial.guidelineRole,trial.evidenceEvolution,trial.population,trial.intervention,trial.efficacy,trial.safety,trial.implication,trialAliases(trial)].join(" "));
     return tokens.every(function(token){ return blob.indexOf(token) >= 0; });
   }
 
@@ -274,12 +276,17 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
   }
 
   function trialSummaryText(trial){
-    return trial.trial + " — " + trial.domain + "\n" +
+    return trial.trial + " (" + (trial.publicationYear || "results pending") + ") — " + trial.domain + "\n" +
       "1. Population / question: " + trial.population + "\n" +
       "2. Intervention / comparator / duration: " + trial.intervention + "\n" +
       "3. Primary efficacy result: " + trial.efficacy + "\n" +
       "4. Major safety result: " + trial.safety + "\n" +
-      "5. Practice implication + key limitation: " + trial.implication + "\n" +
+      "5. Practice implication + key limitation: " + trial.implication + "\n\n" +
+      "Evidence today: " + trial.currentEvidenceStatus + "\n" +
+      "Current guideline context: " + (trial.guidelineLabel || "not assigned") + "\n" +
+      "Guideline role: " + trial.guidelineRole + (trial.corLoe ? "\nRecommendation strength: " + trial.corLoe : "") + "\n" +
+      "Evidence evolution: " + trial.evidenceEvolution + "\n" +
+      "Evidence reviewed: " + trial.evidenceReviewed + "\n" +
       "Primary source: " + trial.source;
   }
 
@@ -302,21 +309,22 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
     TRIAL_TOPICS.forEach(function(topic){ topicCounts[topic]=data.trials.filter(function(t){return trialTopicFor(t.domain)===topic;}).length; });
     var domainOptions = data.domains.map(function(domain){return '<option value="'+esc(domain)+'">'+esc(domain)+' ('+data.domainCounts[domain]+')</option>';}).join("");
     var html = '<div class="breadcrumb"><button data-page="home">← Home</button> <button data-page="pathways">Clinical Pathways</button></div>'+
-      '<section class="trialHero"><small>Evidence-based medicine</small><h2>'+esc(data.title)+'</h2><p>Find the evidence by clinical problem, therapy, outcome, or trial name. Open any card for a standardized five-line appraisal and primary-source link.</p></section>'+
+      '<section class="trialHero"><small>Evidence-based medicine</small><h2>'+esc(data.title)+'</h2><p>Find the evidence by clinical problem, therapy, outcome, or trial name. Each card includes the primary-results year, a five-line appraisal, current guideline context, and how later trials changed—or did not change—the evidence.</p></section>'+
       '<div class="trialStats"><div class="trialStat"><b>'+data.count+'</b><span>Total trials</span></div><div class="trialStat"><b>'+data.priorities.Core+'</b><span>Core</span></div><div class="trialStat"><b>'+data.priorities.Know+'</b><span>Know</span></div><div class="trialStat"><b>'+data.priorities.Recognize+'</b><span>Recognize · '+data.priorities.Ongoing+' ongoing</span></div></div>'+
       '<section><h3>Browse by clinical topic</h3><p class="hint">Start here when you know the patient problem but not the trial name.</p><div class="topicGrid" id="trialTopics">'+TRIAL_TOPICS.map(function(topic){return '<button class="topicChip'+(presetTopic===topic?' active':'')+'" data-topic-choice="'+esc(topic)+'"><b>'+esc(topic)+'</b><span>'+topicCounts[topic]+' trials</span></button>';}).join("")+'</div></section>'+
       '<section class="trialToolbar"><div class="trialSearch"><input id="trialSearch" type="search" autocomplete="off" placeholder="Try: walking for claudication, anticoagulant after PAD revascularization, carotid stenting…"><span>⌕</span></div><div class="trialFilters">'+
       '<div class="field"><label>Specific domain</label><select id="trialDomain"><option value="">All domains</option>'+domainOptions+'</select></div>'+
       '<div class="field"><label>Priority</label><select id="trialPriority"><option value="">All priorities</option><option>Core</option><option>Know</option><option>Recognize</option><option>Ongoing</option></select></div>'+
       '<div class="field"><label>Status</label><select id="trialStatus"><option value="">All statuses</option><option>Published</option><option>Results pending</option></select></div>'+
+      '<div class="field"><label>Evidence today</label><select id="trialEvidence"><option value="">All evidence statuses</option>'+Object.keys(data.evidenceStatusCounts||{}).map(function(item){return '<option>'+esc(item)+'</option>';}).join("")+'</select></div>'+
       '<button id="trialReset">Reset</button></div></section>'+
       '<div class="trialResultMeta"><p><b id="trialCount">'+data.count+' trials</b><span id="trialContext"></span></p><span class="hint">Evidence summaries support appraisal; they do not replace the full publication or patient-specific judgment. Updated through '+esc(data.updatedThrough)+'.</span></div><div class="trialList" id="trialList"></div>';
     app().innerHTML = html;
 
-    var search=document.getElementById("trialSearch"), domain=document.getElementById("trialDomain"), priority=document.getElementById("trialPriority"), status=document.getElementById("trialStatus"), activeTopic=presetTopic;
+    var search=document.getElementById("trialSearch"), domain=document.getElementById("trialDomain"), priority=document.getElementById("trialPriority"), status=document.getElementById("trialStatus"), evidence=document.getElementById("trialEvidence"), activeTopic=presetTopic;
     function renderCards(){
       var results=data.trials.filter(function(trial){
-        return (!activeTopic || trialTopicFor(trial.domain)===activeTopic) && (!domain.value || trial.domain===domain.value) && (!priority.value || trial.priority===priority.value) && (!status.value || trial.status===status.value) && trialMatches(trial,search.value);
+        return (!activeTopic || trialTopicFor(trial.domain)===activeTopic) && (!domain.value || trial.domain===domain.value) && (!priority.value || trial.priority===priority.value) && (!status.value || trial.status===status.value) && (!evidence.value || trial.currentEvidenceStatus===evidence.value) && trialMatches(trial,search.value);
       });
       if(selectedId){ results.sort(function(a,b){return (a.id===selectedId?-1:0)-(b.id===selectedId?-1:0);}); }
       document.getElementById("trialCount").textContent=results.length+" trial"+(results.length===1?"":"s");
@@ -327,13 +335,14 @@ label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}.field{marg
       list.innerHTML=results.map(function(trial){
         var related=trialRelatedPathways(trial);
         var lines=[["Population / question",trial.population],["Intervention / comparator / duration",trial.intervention],["Primary efficacy result",trial.efficacy],["Major safety result",trial.safety],["Practice implication + key limitation",trial.implication]];
-        return '<details class="trialCard" id="trial-'+esc(trial.id)+'"'+(trial.id===selectedId?' open':'')+'><summary><div class="trialTitle">'+esc(trial.trial)+'</div><div class="trialDomain">'+esc(trial.domain)+'</div><div class="trialBadges"><span class="trialBadge '+esc(trial.priority.toLowerCase())+'">'+esc(trial.priority)+'</span><span class="trialBadge">'+esc(trial.status)+'</span></div><p class="trialImplication">'+esc(trial.implication)+'</p></summary><div class="trialBody">'+lines.map(function(line,index){return '<div class="trialLine"><span class="trialLineNo">'+(index+1)+'</span><div><b>'+esc(line[0])+'</b><p>'+esc(line[1])+'</p></div></div>';}).join("")+'<div class="trialActions"><a class="btn primary" href="'+esc(trial.source)+'" target="_blank" rel="noopener">Open primary source</a><button class="copyTrial" data-copy-id="'+esc(trial.id)+'">Copy five-line summary</button></div>'+(related.length?'<div class="evidenceLinks"><span class="hint">Related pathways:</span>'+related.map(function(path){return '<button data-tool="'+path.id+'">'+esc(path.label)+'</button>';}).join("")+'</div>':'')+'</div></details>';
+        var evidenceClass=trialNormalize(trial.currentEvidenceStatus).replace(/ /g,"-");
+        return '<details class="trialCard" id="trial-'+esc(trial.id)+'"'+(trial.id===selectedId?' open':'')+'><summary><div class="trialTitle">'+esc(trial.trial)+'<span class="trialYear">'+esc(trial.publicationYear || "Results pending")+'</span></div><div class="trialDomain">'+esc(trial.domain)+'</div><div class="trialBadges"><span class="trialBadge '+esc(trial.priority.toLowerCase())+'">'+esc(trial.priority)+'</span><span class="trialBadge '+esc(evidenceClass)+'">'+esc(trial.currentEvidenceStatus)+'</span></div><p class="trialImplication">'+esc(trial.implication)+'</p></summary><div class="trialBody">'+lines.map(function(line,index){return '<div class="trialLine"><span class="trialLineNo">'+(index+1)+'</span><div><b>'+esc(line[0])+'</b><p>'+esc(line[1])+'</p></div></div>';}).join("")+'<div class="evidenceToday"><h4>Evidence today</h4><div class="evidenceRow"><b>Current status</b><p>'+esc(trial.currentEvidenceStatus)+'. '+esc(trial.guidelineRole)+'</p></div><div class="evidenceRow"><b>Current guideline context</b><p>'+(trial.guidelineUrl?'<a href="'+esc(trial.guidelineUrl)+'" target="_blank" rel="noopener">'+esc(trial.guidelineLabel)+'</a>':esc(trial.guidelineLabel||"No guideline assigned"))+'</p></div>'+(trial.corLoe?'<div class="evidenceRow"><b>Recommendation strength</b><p>'+esc(trial.corLoe)+'</p></div>':'')+'<div class="evidenceRow"><b>Evidence evolution</b><p>'+esc(trial.evidenceEvolution)+'</p></div><div class="evidenceReview">'+esc(trial.yearDefinition)+': '+esc(trial.publicationYear || "pending")+' · Evidence reviewed '+esc(trial.evidenceReviewed)+'</div></div><div class="trialActions"><a class="btn primary" href="'+esc(trial.source)+'" target="_blank" rel="noopener">Open primary source</a><button class="copyTrial" data-copy-id="'+esc(trial.id)+'">Copy evidence summary</button></div>'+(related.length?'<div class="evidenceLinks"><span class="hint">Related pathways:</span>'+related.map(function(path){return '<button data-tool="'+path.id+'">'+esc(path.label)+'</button>';}).join("")+'</div>':'')+'</div></details>';
       }).join("");
       Array.prototype.forEach.call(document.querySelectorAll(".copyTrial"),function(button){button.addEventListener("click",function(e){e.stopPropagation();var trial=data.trials.find(function(x){return x.id===button.getAttribute("data-copy-id");});if(trial)copyTrialSummary(trial,button);});});
     }
-    search.addEventListener("input",renderCards); domain.addEventListener("change",renderCards); priority.addEventListener("change",renderCards); status.addEventListener("change",renderCards);
+    search.addEventListener("input",renderCards); domain.addEventListener("change",renderCards); priority.addEventListener("change",renderCards); status.addEventListener("change",renderCards); evidence.addEventListener("change",renderCards);
     Array.prototype.forEach.call(document.querySelectorAll("[data-topic-choice]"),function(button){button.addEventListener("click",function(){var choice=button.getAttribute("data-topic-choice");activeTopic=activeTopic===choice?"":choice;renderCards();});});
-    document.getElementById("trialReset").addEventListener("click",function(){search.value="";domain.value="";priority.value="";status.value="";activeTopic="";selectedId="";renderCards();});
+    document.getElementById("trialReset").addEventListener("click",function(){search.value="";domain.value="";priority.value="";status.value="";evidence.value="";activeTopic="";selectedId="";renderCards();});
     renderCards();
     if(selectedId){setTimeout(function(){var selected=document.getElementById("trial-"+selectedId);if(selected&&selected.scrollIntoView)selected.scrollIntoView({behavior:"smooth",block:"center"});},50);}
   }
